@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="UserRepositoryOld")
  */
-class User
+class User implements UserInterface //, \Serializable
 {
 
   public const ROLE_ADMIN = 'administrator';
@@ -27,7 +30,7 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190, unique=true)
      */
     private $username;
 
@@ -37,7 +40,7 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=190, unique=true)
      */
     private $email;
 
@@ -47,12 +50,12 @@ class User
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=190, nullable=true)
      */
     private $surname;
 
@@ -115,7 +118,9 @@ class User
 
     public function getRoles(): ?array
     {
-        return $this->roles;
+      //todo: fix this
+       // return $this->roles;
+      return [User::ROLE_ADMIN];
     }
 
     public function setRoles(?array $roles): self
@@ -185,4 +190,36 @@ class User
 
         return $this;
     }
+
+  public function getSalt() {
+    // TODO: Implement getSalt() method.
+  }
+
+  public function eraseCredentials() {
+    // TODO: Implement eraseCredentials() method.
+  }
+//
+//  public function serialize() {
+//
+//      return serialize(  [
+//      $this->id,
+//      $this->username,
+//      $this->email,
+//      $this->password
+//    ]);
+//
+//  }
+//
+//  public function unserialize($serialized) {
+//
+//    list(
+//      $this->id,
+//      $this->username,
+//      $this->email,
+//      $this->password
+//      ) = unserialize($serialized, ['allowed_classes' => false]);
+//
+//  }
+
+
 }

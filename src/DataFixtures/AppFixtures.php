@@ -6,10 +6,18 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Region;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+  private $encoder;
+
+  public function __construct(UserPasswordEncoderInterface $encoder) {
+    $this->encoder = $encoder;
+  }
+
+
+  public function load(ObjectManager $manager)
     {
         // $product = new Product();
         // $manager->persist($product);
@@ -44,7 +52,7 @@ class AppFixtures extends Fixture
       $userAdmin = new User();
       $userAdmin
         ->setUsername('admin')
-        ->setPassword('admin1')
+        ->setPassword($this->encoder->encodePassword($userAdmin, 'admin'))
         ->setEmail('admin@email.com')
         ->setName('Administrator')
         ->setSurname('Administrator')
@@ -60,7 +68,7 @@ class AppFixtures extends Fixture
         $userTeacher[$i] = new User();
         $userTeacher[$i]
           ->setUsername('teacher' . $i)
-          ->setPassword('teacher' . $i)
+          ->setPassword($this->encoder->encodePassword($userTeacher[$i],'teacher' . $i))
           ->setEmail('teacher' . $i .'@email.com')
           ->setName('Teachername' . $i )
           ->setSurname('Teachersurname' . $i)
@@ -76,7 +84,7 @@ class AppFixtures extends Fixture
         $userParticipant[$i] = new User();
         $userParticipant[$i]
           ->setUsername('participant' . $i)
-          ->setPassword('participant' . $i)
+          ->setPassword($this->encoder->encodePassword($userParticipant[$i], 'participant' . $i))
           ->setEmail('participant' . $i .'@email.com')
           ->setName('Participantname' . $i )
           ->setSurname('Participantsurname' . $i)
