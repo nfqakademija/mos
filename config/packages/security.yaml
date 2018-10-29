@@ -2,15 +2,14 @@ security:
     encoders:
         App\Entity\User:
             algorithm: bcrypt
-
-
+            cost: 12
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        my_provider:
-            entity:
-                class: App\Entity\User
-                property: username
+#        my_provider:
+#            entity:
+#                class: App\Entity\User
+#                property: username
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
@@ -28,7 +27,7 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                provider: my_provider
+                provider: app_user_provider
 
             # activate different ways to authenticate
 
