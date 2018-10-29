@@ -10,7 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
 
-
+  public const ROLE_ADMIN = 'administrator';
+  public const ROLE_TEACHER = 'teacher';
+  public const ROLE_PARTICIPANT = 'participant';
+//  public const ROLE_TYPES = [
+//    self::ROLE_ADMIN,
+//    self::ROLE_TEACHER,
+//    self::ROLE_PARTICIPANT,
+//  ];
 
     /**
      * @ORM\Id()
@@ -54,17 +61,16 @@ class User
      */
     private $birthDate;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @todo type should be Region? As Region should be selected from list, not a free text entry.
-     */
-    private $region;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="users")
+     */
+    private $region;
 
     public function getId(): ?int
     {
@@ -155,17 +161,6 @@ class User
         return $this;
     }
 
-    public function getRegion(): ?string
-    {
-        return $this->region;
-    }
-
-    public function setRegion(?string $region): self
-    {
-        $this->region = $region;
-
-        return $this;
-    }
 
     public function getPhone(): ?string
     {
@@ -175,6 +170,18 @@ class User
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
 
         return $this;
     }
