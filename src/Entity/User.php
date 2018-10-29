@@ -5,23 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
-
 /**
- * @ORM\Entity(repositoryClass="UserRepositoryOld")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface //, \Serializable
+class User implements UserInterface
 {
-
-  public const ROLE_ADMIN = 'administrator';
-  public const ROLE_TEACHER = 'teacher';
-  public const ROLE_PARTICIPANT = 'participant';
-//  public const ROLE_TYPES = [
-//    self::ROLE_ADMIN,
-//    self::ROLE_TEACHER,
-//    self::ROLE_PARTICIPANT,
-//  ];
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,71 +18,56 @@ class User implements UserInterface //, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=190, unique=true)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", length=190, unique=true)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array")
      */
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=190)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private $name;
+    private $password;
 
-    /**
-     * @ORM\Column(type="string", length=190, nullable=true)
-     */
-    private $surname;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $birthDate;
-
-
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="users")
-     */
-    private $region;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getEmail(): ?string
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername(string $username): self
+    public function setEmail(string $email): self
     {
-        $this->username = $username;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->password;
+        return (string) $this->email;
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -104,122 +77,42 @@ class User implements UserInterface //, \Serializable
         return $this;
     }
 
-    public function getEmail(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
     {
-        return $this->email;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function setEmail(?string $email): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getRoles(): ?array
-    {
-      //todo: fix this
-       // return $this->roles;
-      return [User::ROLE_ADMIN];
-    }
-
-    public function setRoles(?array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
-
-    public function setSurname(?string $surname): self
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    public function getBirthDate(): ?\DateTimeInterface
-    {
-        return $this->birthDate;
-    }
-
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
-    {
-        $this->birthDate = $birthDate;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
 
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
+  /**
+   * @see UserInterface
+   */
+  public function getRoles(): array
+  {
+    $roles = $this->roles;
+    // guarantee every user at least has ROLE_USER
+    $roles[] = 'ROLE_USER';
 
-    public function setPhone(?string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getRegion(): ?Region
-    {
-        return $this->region;
-    }
-
-    public function setRegion(?Region $region): self
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-  public function getSalt() {
-    // TODO: Implement getSalt() method.
+    return array_unique($roles);
   }
 
-  public function eraseCredentials() {
-    // TODO: Implement eraseCredentials() method.
+  public function setRoles(array $roles): self
+  {
+    $this->roles = $roles;
+
+    return $this;
   }
-//
-//  public function serialize() {
-//
-//      return serialize(  [
-//      $this->id,
-//      $this->username,
-//      $this->email,
-//      $this->password
-//    ]);
-//
-//  }
-//
-//  public function unserialize($serialized) {
-//
-//    list(
-//      $this->id,
-//      $this->username,
-//      $this->email,
-//      $this->password
-//      ) = unserialize($serialized, ['allowed_classes' => false]);
-//
-//  }
 
 
 }
