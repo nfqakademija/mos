@@ -11,6 +11,9 @@
         {% block canonical_meta %}{% endblock %}
     </head>
     <body>
+        {% block menu %}
+          {% include 'menu/main.html.twig' %}
+        {% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="{{ asset('build/js/app.js') }}"></script>

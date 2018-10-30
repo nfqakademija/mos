@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile view{% endblock %}
+
+
+{% block body %}
+
+  <table >
+
+    <tr>
+      <th>Label</th>
+      <th>Data</th>
+    </tr>
+
+    <tr>
+      <td>Username</td>
+      <td>{{ user.username}}</td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td>{{ user.email}}</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>{{ user.name}}</td>
+    </tr>
+    <tr>
+      <td>Surname</td>
+      <td>{{ user.surname}}</td>
+    </tr>
+    <tr>
+      <td>Birth date</td>
+      <td>{{ user.birthdate|date('Y-m-d')}}</td>
+    </tr>
+    <tr>
+      <td>Region</td>
+      <td>{{ user.region.title}}</td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td>{{ user.address}}</td>
+    </tr>
+    <tr>
+      <td>Phone number</td>
+      <td>{{ user.phone}}</td>
+    </tr>
+    <tr>
+      <td>Roles</td>
+      <td>{{ user.roles|join(', ')}}</td>
+    </tr>
+
+
+
+
+
+
+
+  </table>
+
+
+{% endblock %}
