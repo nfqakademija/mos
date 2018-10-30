@@ -10,6 +10,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+
+  public const ROLE_ADMIN = 'ROLE_ADMIN';
+  public const ROLE_TEACHER = 'ROLE_TEACHER';
+  public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
+  public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
+
+//  public const ROLES = [
+//    self::ROLE_ADMIN,
+//    self::ROLE_TEACHER,
+//    self::ROLE_PARTICIPANT,
+//    self::ROLE_INSPECTOR,
+//  ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,7 +33,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private $username;
 
     /**
      * @ORM\Column(type="array")
@@ -33,22 +46,44 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=190, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=190, nullable=true)
+     */
+    private $surname;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $birthDate;
+
+    /**
+     * @ORM\Column(type="string", length=190, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region")
+     */
+    private $region;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -58,9 +93,34 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
 
     /**
      * @see UserInterface
@@ -94,25 +154,87 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-  /**
-   * @see UserInterface
-   */
-  public function getRoles(): array
-  {
-    $roles = $this->roles;
-    // guarantee every user at least has ROLE_USER
-    $roles[] = 'ROLE_USER';
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
 
-    return array_unique($roles);
-  }
+        return $this;
+    }
 
-  public function setRoles(array $roles): self
-  {
-    $this->roles = $roles;
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
 
-    return $this;
-  }
+    public function setSurname(?string $surname): self
+    {
+        $this->surname = $surname;
 
+        return $this;
+    }
 
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
 }

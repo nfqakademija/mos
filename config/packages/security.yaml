@@ -2,7 +2,6 @@ security:
     encoders:
         App\Entity\User:
             algorithm: bcrypt
-            cost: 12
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -10,8 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
-        # used to reload user from session & other features (e.g. switch_user)
+                property: username
 #        in_memory: { memory: ~ }
     firewalls:
         dev:
