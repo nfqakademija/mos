@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -80,6 +81,16 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Region")
      */
     private $region;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registrationDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastAccessDate;
 
     public function getId(): ?int
     {
@@ -237,4 +248,42 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getRegistrationDate(): ?\DateTimeInterface
+    {
+        return $this->registrationDate;
+    }
+
+    public function setRegistrationDate(\DateTimeInterface $registrationDate): self
+    {
+        $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    public function getLastAccessDate(): ?\DateTimeInterface
+    {
+        return $this->lastAccessDate;
+    }
+
+    public function setLastAccessDate(?\DateTimeInterface $lastAccessDate): self
+    {
+        $this->lastAccessDate = $lastAccessDate;
+
+        return $this;
+    }
+
+  /**
+   * @ORM\PrePersist()
+   */
+  public function prePersist() {
+    $this->registrationDate = new \DateTime();
+  }
+
+  /**
+   * @ORM\PreUpdate()
+   */
+  public function preUpdate() {
+
+  }
 }
