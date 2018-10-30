@@ -10,7 +10,7 @@ class ProfileController extends AbstractController
 {
     /**
      * @Route("/profile/view/{user}",
-     *   name="profile.view",
+     *   name="profile.view.user",
      *   methods="GET",
      *   requirements={"user" = "\d+"})
      * @var User $user
@@ -22,5 +22,20 @@ class ProfileController extends AbstractController
         return $this->render('profile/view.html.twig', [
             'user' => $user,
         ]);
+    }
+    /**
+     * @Route("/profile/view",
+     *   name="profile.view",
+     *   methods="GET")
+     * @return
+     */
+    public function profileViewMy()
+    {
+
+      $me = $this->getUser();
+
+      return $this->render('profile/view.html.twig', [
+            'user' => $me,
+      ]);
     }
 }

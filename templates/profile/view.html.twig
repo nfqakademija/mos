@@ -34,7 +34,11 @@
     </tr>
     <tr>
       <td>Region</td>
-      <td>{{ user.region.title}}</td>
+      <td>
+        {% if user.region is not null %}
+          {{ user.region.title}}
+        {% endif %}
+      </td>
     </tr>
     <tr>
       <td>Address</td>
