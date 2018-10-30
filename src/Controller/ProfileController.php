@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,4 +39,20 @@ class ProfileController extends AbstractController
             'user' => $me,
       ]);
     }
+
+  /**
+   * @Route("/profile/viewlist",
+   *   name="profile.viewall",
+   *   methods="GET")
+   * @return
+   */
+  public function profileViewList(EntityManagerInterface $em)
+  {
+
+    $users = $em->getRepository(User::class)->findAll();
+
+    return $this->render('profile/viewlist.html.twig', [
+      'users' => $users,
+    ]);
+  }
 }
