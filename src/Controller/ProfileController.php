@@ -42,7 +42,7 @@ class ProfileController extends AbstractController
 
   /**
    * @Route("/profile/viewlist",
-   *   name="profile.viewall",
+   *   name="profile.viewlist",
    *   methods="GET")
    * @return
    */
