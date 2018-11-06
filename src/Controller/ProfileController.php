@@ -54,21 +54,8 @@ class ProfileController extends AbstractController
     /** @var User $me */
     $me = $this->getUser();
 
-    $meArray = [
-      'username' => $me->getUsername(),
-      'name' => $me->getName(),
-      'surname' => $me->getSurname(),
-      'birth_date' => $me->getBirthDate(),
-      'email' => $me->getEmail(),
-      'phone' => $me->getPhone(),
-      'region' => $me->getRegion()->getTitle(),
-      'address' => $me->getAddress(),
-      'reg_date' => $me->getRegistrationDate(),
-      'last_access_date' => $me->getLastAccessDate(),
-      'roles' => $me->getRoles(),
-    ];
+    $meArray = $this->userObjectToArray($me);
 
-//    return $this->json($me);
     return $this->json($meArray);
   }
 
@@ -100,9 +87,36 @@ class ProfileController extends AbstractController
 
     $users = $em->getRepository(User::class)->findAll();
 
-    return $this->json($users);
+    $usersArray = [];
+    foreach ($users as $user) {
+      $usersArray[] = $this->userObjectToArray($user);
+    }
+
+    return $this->json($usersArray);
 
   }
 
+
+  private function userObjectToArray(User $user) {
+    $arr = [
+      'username' => $user->getUsername(),
+      'name' => $user->getName(),
+      'surname' => $user->getSurname(),
+      'birth_date' => $user->getBirthDate(),
+      'email' => $user->getEmail(),
+      'phone' => $user->getPhone(),
+      'region' => NULL,
+      'address' => $user->getAddress(),
+      'reg_date' => $user->getRegistrationDate(),
+      'last_access_date' => $user->getLastAccessDate(),
+      'roles' => $user->getRoles(),
+    ];
+
+    if(!empty($user->getRegion())) {
+     $arr['region'] = $user->getRegion()->getTitle();
+    }
+
+    return $arr;
+  }
 
 }
