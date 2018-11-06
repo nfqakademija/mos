@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {getToken, setError} from "../actions/auth";
 
 class Login extends Component {
   constructor() {
@@ -6,22 +8,9 @@ class Login extends Component {
 
     this.state = {
       username: '',
-      password: '',
-      errorMessage: ''
+      password: ''
     };
   }
-
-  setError = error => {
-    this.setState({
-      errorMessage: error
-    })
-  };
-
-  resetError = () => {
-    this.setState({
-      errorMessage: ''
-    })
-  };
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -30,25 +19,24 @@ class Login extends Component {
   };
 
   handleSubmit = e => {
+    const { onError } = this.props;
     const { username, password }  = this.state;
 
     e.preventDefault();
     username.length === 0 || password.length === 0
-      ? this.setError('Visi laukeliai privalo būti užpildyti')
+      ? onError('Visi laukeliai privalo būti užpildyti')
       : this.requestUser();
-
   };
 
   requestUser = () => {
-    const { username, password, errorMessage } = this.state;
+    const { onLogin } = this.props;
+    const { username, password } = this.state;
 
-    errorMessage.length > 0 && this.resetError();
-
-    // vieta requestui
+    onLogin({ username, password });
   };
 
   render() {
-    const { errorMessage } = this.state;
+    const { errorMessage } = this.props;
 
     return (
       <div className="modal fade" id="loginModal">
@@ -98,4 +86,13 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = ({ auth: { errorMessage } }) => ({
+  errorMessage
+});
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: user => dispatch(getToken(user)),
+  onError: message => dispatch(setError(message))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

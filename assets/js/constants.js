@@ -1,0 +1,6 @@
+export default {
+  SET_TOKEN: "SET_TOKEN",
+  RESET_TOKEN: "RESET_TOKEN",
+  GET_TOKEN: "GET_TOKEN",
+  SET_ERROR: "SET_ERROR"
+};

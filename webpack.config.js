@@ -42,7 +42,7 @@ Encore
   .enableReactPreset()
 
   .configureBabel(function(babelConfig) {
-    babelConfig.plugins = ["transform-class-properties"]
+    babelConfig.plugins = ["transform-object-rest-spread","transform-class-properties"]
   })
 
 // uncomment if you use TypeScript
