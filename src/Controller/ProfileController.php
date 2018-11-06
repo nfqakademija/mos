@@ -24,6 +24,8 @@ class ProfileController extends AbstractController
             'user' => $user,
         ]);
     }
+
+
     /**
      * @Route("/profile/view",
      *   name="profile.view",
@@ -39,6 +41,19 @@ class ProfileController extends AbstractController
             'user' => $me,
       ]);
     }
+
+  /**
+   * @Route("api/profile/view",
+   *   name="api.profile.view",
+   *   methods="GET")
+   * @return
+   */
+  public function apiProfileViewMy()
+  {
+
+    $me = $this->getUser();
+    return $this->json($me);
+  }
 
   /**
    * @Route("/profile/viewlist",
