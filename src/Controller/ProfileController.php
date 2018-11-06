@@ -51,8 +51,25 @@ class ProfileController extends AbstractController
   public function apiProfileViewMy()
   {
 
+    /** @var User $me */
     $me = $this->getUser();
-    return $this->json($me);
+
+    $meArray = [
+      'username' => $me->getUsername(),
+      'name' => $me->getName(),
+      'surname' => $me->getSurname(),
+      'birth_date' => $me->getBirthDate(),
+      'email' => $me->getEmail(),
+      'phone' => $me->getPhone(),
+      'region' => $me->getRegion()->getTitle(),
+      'address' => $me->getAddress(),
+      'reg_date' => $me->getRegistrationDate(),
+      'last_access_date' => $me->getLastAccessDate(),
+      'roles' => $me->getRoles(),
+    ];
+
+//    return $this->json($me);
+    return $this->json($meArray);
   }
 
   /**
