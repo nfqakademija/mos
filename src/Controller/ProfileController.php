@@ -55,4 +55,22 @@ class ProfileController extends AbstractController
       'users' => $users,
     ]);
   }
+
+
+  /**
+   * @Route("api/profile/viewlist",
+   *   name="api.profile.viewlist",
+   *   methods="GET")
+   * @return
+   */
+  public function apiProfileViewList(EntityManagerInterface $em)
+  {
+
+    $users = $em->getRepository(User::class)->findAll();
+
+    return $this->json($users);
+
+  }
+
+
 }
