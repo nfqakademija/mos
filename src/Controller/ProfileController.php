@@ -20,7 +20,7 @@ class ProfileController extends AbstractController
     public function profileView(User $user)
     {
 
-        return $this->render('profile/view.html.twig', [
+        return $this->render('base.html.twig', [
             'user' => $user,
         ]);
     }
@@ -35,7 +35,7 @@ class ProfileController extends AbstractController
 
       $me = $this->getUser();
 
-      return $this->render('profile/view.html.twig', [
+      return $this->render('base.html.twig', [
             'user' => $me,
       ]);
     }
@@ -51,7 +51,7 @@ class ProfileController extends AbstractController
 
     $users = $em->getRepository(User::class)->findAll();
 
-    return $this->render('profile/viewlist.html.twig', [
+    return $this->render('base.html.twig', [
       'users' => $users,
     ]);
   }
