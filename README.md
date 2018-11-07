@@ -1,3 +1,18 @@
+Endpoints:
+
+@Route("api/profile/view/{id}", name="api.profile.view.id", methods="POST")
+
+http://127.0.0.1:8000/api/profile/view/2
+
+Result:
+
+{"username":"teacher1","name":"Teachername1","surname":"Teachersurname1","birth_date":null,"email":"teacher1@email.com","phone":null,"region":null,"address":null,"reg_date":{"date":"2018-11-07 08:54:07.000000","timezone_type":3,"timezone":"UTC"},"last_access_date":null,"roles":["ROLE_TEACHER","ROLE_USER"]}
+
+
+
+
+
+
 Useful stuff during development.
 
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
@@ -25,6 +26,21 @@ class ProfileController extends AbstractController
         ]);
     }
 
+  /**
+   * @Route("api/profile/view/{id}", name="api.profile.view.id", methods="POST")
+   */
+  public function apiProfileViewById($id, EntityManagerInterface $em ) {
+
+    //$data = json_decode($request->getContent());
+
+    $user = $em->getRepository(User::class)->find($id);
+
+
+    return $this->json($this->userObjectToArray($user));
+
+  }
+
+
 
   /**
    * @Route("api/profile/view",
@@ -42,6 +58,7 @@ class ProfileController extends AbstractController
 
     return $this->json($meArray);
   }
+
 
 
   /**
