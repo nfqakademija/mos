@@ -1,15 +1,18 @@
 import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Login from './Login';
 import { connect } from 'react-redux';
 import {resetToken} from "../actions/auth";
+import {openModal} from "../actions/modal";
 
 class Menu extends Component {
 
   renderGuestMenu = () => {
+    const { onOpen } = this.props;
+
     return (
       <li className="nav-item">
-        <a className="nav-link" data-toggle="modal" data-target="#loginModal">
+        <a className="nav-link" onClick={onOpen}>
           Login
         </a>
       </li>
@@ -22,19 +25,19 @@ class Menu extends Component {
     return (
       <Fragment>
         <li className="nav-item">
-          <div className="nav-link" onClick={onLogout}>
-            Logout
-          </div>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/profile/view">
+          <Link className="nav-link" to="/profile/view">
             My Profile
-          </NavLink>
+          </Link>
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link" to="/profile/viewlist">
+          <Link className="nav-link" to="/profile/viewlist">
             Profile list
-          </NavLink>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/" onClick={onLogout}>
+            Logout
+          </Link>
         </li>
       </Fragment>
     )
@@ -51,6 +54,11 @@ class Menu extends Component {
           </button>
           <div className="collapse navbar-collapse" id="navbar">
             <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
+              </li>
               {!loggedIn ? this.renderGuestMenu() : this.renderUserMenu()}
             </ul>
           </div>
@@ -66,7 +74,8 @@ const mapStateToProps = ({ auth: { token } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLogout: () => dispatch(resetToken())
+  onLogout: () => dispatch(resetToken()),
+  onOpen: () => dispatch(openModal())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

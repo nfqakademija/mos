@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 class Home extends Component {
   render() {
     return (
-      <div className="container">
+      <h5>
         Home
-      </div>
+      </h5>
     )
   }
 }
