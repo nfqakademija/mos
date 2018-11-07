@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   switch(action.type) {
     case C.SET_TOKEN:
       return {
-        errorMessage: null,
+        ...state,
         token: action.payload
       };
     case C.RESET_TOKEN:
@@ -21,6 +21,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         errorMessage: action.payload
+      };
+    case C.RESET_ERROR:
+      return {
+        ...state,
+        errorMessage: null
       };
     default:
       return state;

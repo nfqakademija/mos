@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getToken, setError } from "../actions/auth";
 import Modal from 'react-modal';
-import {closeModal} from "../actions/modal";
+import { closeLogin } from "../actions/modal";
 
 Modal.setAppElement('#root');
 
@@ -36,7 +36,7 @@ class Login extends Component {
     e.preventDefault();
     this.resetInputs();
     username.length === 0 || password.length === 0
-      ? onError('Visi laukeliai privalo būti užpildyti')
+      ? onError('Fields must not be empty')
       : onLogin({ username, password });
   };
 
@@ -109,7 +109,7 @@ const mapStateToProps = ({ auth: { errorMessage }, modal }) => ({
 const mapDispatchToProps = dispatch => ({
   onLogin: user => dispatch(getToken(user)),
   onError: message => dispatch(setError(message)),
-  onClose: () => dispatch(closeModal())
+  onClose: () => dispatch(closeLogin())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

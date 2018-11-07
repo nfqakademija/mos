@@ -1,6 +1,6 @@
 import C from '../constants';
 import axios from "axios";
-import { closeModal } from "./modal";
+import { closeLogin } from "./modal";
 
 export const setToken = token => ({
   type: C.SET_TOKEN,
@@ -16,12 +16,16 @@ export const setError = error => ({
   payload: error
 });
 
+export const resetError = () => ({
+  type: C.RESET_ERROR
+});
+
 export const getToken = ({ username, password }) => dispatch => {
   axios
     .post('/api/login', { username, password })
     .then(({ data: { token } }) => {
       dispatch(setToken((token)));
-      dispatch(closeModal())
+      dispatch(closeLogin());
     })
     .catch(({ request: { response } }) => dispatch(setError(JSON.parse(response).message)));
 };
