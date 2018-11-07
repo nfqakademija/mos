@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {getToken, setError} from "../actions/auth";
+import { getToken, setError } from "../actions/auth";
+import Modal from 'react-modal';
+import {closeModal} from "../actions/modal";
+
+Modal.setAppElement('#root');
 
 class Login extends Component {
   constructor() {
@@ -18,81 +22,94 @@ class Login extends Component {
     })
   };
 
+  resetInputs = () => {
+    this.setState({
+      username: '',
+      password: ''
+    });
+  };
+
   handleSubmit = e => {
-    const { onError } = this.props;
+    const { onError, onLogin } = this.props;
     const { username, password }  = this.state;
 
     e.preventDefault();
+    this.resetInputs();
     username.length === 0 || password.length === 0
       ? onError('Visi laukeliai privalo būti užpildyti')
-      : this.requestUser();
+      : onLogin({ username, password });
   };
 
-  requestUser = () => {
-    const { onLogin } = this.props;
-    const { username, password } = this.state;
+  closeModal = () => {
+    const { onClose } = this.props;
 
-    onLogin({ username, password });
+    this.resetInputs();
+    onClose();
   };
 
   render() {
-    const { errorMessage } = this.props;
+    const { errorMessage, open } = this.props;
 
     return (
-      <div className="modal fade" id="loginModal">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <form onSubmit={this.handleSubmit}>
-              <div className="modal-header">
-                <h5 className="modal-title">Prisijungimas</h5>
-                <button type="button" className="close" data-dismiss="modal">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-                <div className="form-group">
-                  <label htmlFor="username">Vartotojo vardas</label>
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder="Vartotojo vardas"
-                    onChange={this.handleChange}
-                    className="form-control"
-                    id="username"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Slaptažodis</label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Slaptažodis"
-                    onChange={this.handleChange}
-                    className="form-control"
-                    id="password"
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Uždaryti</button>
-                <button type="submit" className="btn btn-primary">Patvirtinti</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <Modal
+        className="modal-dialog"
+        isOpen={open}
+        overlayClassName="loginModal"
+        onRequestClose={this.closeModal}
+      >
+         <div className="modal-content">
+           <form onSubmit={this.handleSubmit}>
+             <div className="modal-header">
+               <h5 className="modal-title">Prisijungimas</h5>
+               <button type="button" className="close">
+                 <span onClick={this.closeModal}>&times;</span>
+               </button>
+             </div>
+             <div className="modal-body">
+               {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+               <div className="form-group">
+                 <label htmlFor="username">Vartotojo vardas</label>
+                 <input
+                   type="text"
+                   name="username"
+                   placeholder="Vartotojo vardas"
+                   onChange={this.handleChange}
+                   className="form-control"
+                   id="username"
+                 />
+               </div>
+               <div className="form-group">
+                 <label htmlFor="password">Slaptažodis</label>
+                 <input
+                   type="password"
+                   name="password"
+                   placeholder="Slaptažodis"
+                   onChange={this.handleChange}
+                   className="form-control"
+                   id="password"
+                 />
+               </div>
+             </div>
+             <div className="modal-footer">
+               <button type="button" className="btn btn-secondary" onClick={this.closeModal}>Uždaryti</button>
+               <button type="submit" className="btn btn-primary">Patvirtinti</button>
+             </div>
+           </form>
+         </div>
+      </Modal>
     )
   }
 }
 
-const mapStateToProps = ({ auth: { errorMessage } }) => ({
-  errorMessage
+const mapStateToProps = ({ auth: { errorMessage }, modal }) => ({
+  errorMessage,
+  open: modal
 });
 
 const mapDispatchToProps = dispatch => ({
   onLogin: user => dispatch(getToken(user)),
-  onError: message => dispatch(setError(message))
+  onError: message => dispatch(setError(message)),
+  onClose: () => dispatch(closeModal())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
