@@ -55,3 +55,4 @@ npm-debug.log
 ###< lexik/jwt-authentication-bundle ###
 
 /Migrations/*
+/config/jwt/*
