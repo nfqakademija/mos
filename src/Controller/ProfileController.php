@@ -31,15 +31,12 @@ class ProfileController extends AbstractController
    */
   public function apiProfileViewById($id, EntityManagerInterface $em ) {
 
-    //$data = json_decode($request->getContent());
-
+    /** @var User $user */
     $user = $em->getRepository(User::class)->find($id);
 
-
-    return $this->json($this->userObjectToArray($user));
+    return $this->json($user->toArray());
 
   }
-
 
 
   /**
@@ -54,7 +51,7 @@ class ProfileController extends AbstractController
     /** @var User $user */
     $user = $this->getUser();
 
-    $meArray = $this->userObjectToArray($user);
+    $meArray = $user->toArray();
 
     return $this->json($meArray);
   }
@@ -69,12 +66,12 @@ class ProfileController extends AbstractController
    */
   public function apiProfileViewList(EntityManagerInterface $em)
   {
-
     $users = $em->getRepository(User::class)->findAll();
 
     $usersArray = [];
+    /** @var User $user */
     foreach ($users as $user) {
-      $usersArray[] = $this->userObjectToArray($user);
+      $usersArray[] = $user->toArray();
     }
 
     return $this->json($usersArray);
@@ -82,26 +79,6 @@ class ProfileController extends AbstractController
   }
 
 
-  private function userObjectToArray(User $user) {
-    $arr = [
-      'username' => $user->getUsername(),
-      'name' => $user->getName(),
-      'surname' => $user->getSurname(),
-      'birth_date' => $user->getBirthDate(),
-      'email' => $user->getEmail(),
-      'phone' => $user->getPhone(),
-      'region' => NULL,
-      'address' => $user->getAddress(),
-      'reg_date' => $user->getRegistrationDate(),
-      'last_access_date' => $user->getLastAccessDate(),
-      'roles' => $user->getRoles(),
-    ];
 
-    if(!empty($user->getRegion())) {
-     $arr['region'] = $user->getRegion()->getTitle();
-    }
-
-    return $arr;
-  }
 
 }

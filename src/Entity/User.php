@@ -360,4 +360,28 @@ class User implements UserInterface
 
       return $this;
   }
+
+
+  public function toArray() {
+    $arr = [
+      'username' => $this->getUsername(),
+      'name' => $this->getName(),
+      'surname' => $this->getSurname(),
+      'birth_date' => $this->getBirthDate(),
+      'email' => $this->getEmail(),
+      'phone' => $this->getPhone(),
+      'region' => NULL,
+      'address' => $this->getAddress(),
+      'reg_date' => $this->getRegistrationDate(),
+      'last_access_date' => $this->getLastAccessDate(),
+      'roles' => $this->getRoles(),
+    ];
+
+    if(!empty($this->getRegion())) {
+      $arr['region'] = $this->getRegion()->getTitle();
+    }
+
+    return $arr;
+  }
+
 }
