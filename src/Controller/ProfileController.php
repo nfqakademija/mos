@@ -21,7 +21,7 @@ class ProfileController extends AbstractController
     public function profileView(User $user)
     {
 
-        return $this->render('base.html.twig', [
+        return $this->render('profile/view.html.twig', [
             'user' => $user,
         ]);
     }
@@ -31,12 +31,10 @@ class ProfileController extends AbstractController
    */
   public function apiProfileViewById($id, EntityManagerInterface $em ) {
 
-    //$data = json_decode($request->getContent());
-
+    /** @var User $user */
     $user = $em->getRepository(User::class)->find($id);
 
-
-    return $this->json($this->userObjectToArray($user));
+    return $this->json($user->toArray());
 
   }
 
@@ -51,10 +49,10 @@ class ProfileController extends AbstractController
   public function apiProfileViewMy()
   {
 
-    /** @var User $me */
-    $me = $this->getUser();
+    /** @var User $user */
+    $user = $this->getUser();
 
-    $meArray = $this->userObjectToArray($me);
+    $meArray = $user->toArray();
 
     return $this->json($meArray);
   }
@@ -88,8 +86,9 @@ class ProfileController extends AbstractController
     $users = $em->getRepository(User::class)->findAll();
 
     $usersArray = [];
+    /** @var User $user */
     foreach ($users as $user) {
-      $usersArray[] = $this->userObjectToArray($user);
+      $usersArray[] = $user->toArray();
     }
 
     return $this->json($usersArray);

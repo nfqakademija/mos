@@ -40,6 +40,8 @@ security:
     access_control:
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
-    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-    - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-    - { path: ^/, roles: ROLE_USER }
+
+    #for dev. purpuoses now allow all. Below anonymous allow to access only login page
+#    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+#    - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+#    - { path: ^/, roles: ROLE_USER }

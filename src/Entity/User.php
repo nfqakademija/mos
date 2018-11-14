@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,17 +14,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 
-  public const ROLE_ADMIN = 'ROLE_ADMIN';
-  public const ROLE_TEACHER = 'ROLE_TEACHER';
-  public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
-  public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_TEACHER = 'ROLE_TEACHER';
+    public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
+    public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
 
-//  public const ROLES = [
-//    self::ROLE_ADMIN,
-//    self::ROLE_TEACHER,
-//    self::ROLE_PARTICIPANT,
-//    self::ROLE_INSPECTOR,
-//  ];
+    //  public const ROLES = [
+    //    self::ROLE_ADMIN,
+    //    self::ROLE_TEACHER,
+    //    self::ROLE_PARTICIPANT,
+    //    self::ROLE_INSPECTOR,
+    //  ];
 
     /**
      * @ORM\Id()
@@ -91,6 +93,21 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastAccessDate;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\LearningGroup", mappedBy="participants")
+     */
+    private $learningGroups;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="participants")
+     */
+    private $learningGroup;
+
+    public function __construct()
+    {
+        $this->learningGroups = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -273,17 +290,53 @@ class User implements UserInterface
         return $this;
     }
 
-  /**
-   * @ORM\PrePersist()
-   */
-  public function prePersist() {
-    $this->registrationDate = new \DateTime();
-  }
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist() {
+        $this->registrationDate = new \DateTime();
+    }
 
-  /**
-   * @ORM\PreUpdate()
-   */
-  public function preUpdate() {
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate() {
 
-  }
+    }
+
+    public function toArray()
+    {
+        $arr = [
+          'username' => $this->getUsername(),
+          'name' => $this->getName(),
+          'surname' => $this->getSurname(),
+          'birth_date' => $this->getBirthDate(),
+          'email' => $this->getEmail(),
+          'phone' => $this->getPhone(),
+          'region' => null,
+          'address' => $this->getAddress(),
+          'reg_date' => $this->getRegistrationDate(),
+          'last_access_date' => $this->getLastAccessDate(),
+          'roles' => $this->getRoles(),
+        ];
+
+        if(!empty($this->getRegion())) {
+            $arr['region'] = $this->getRegion()->getTitle();
+        }
+
+        return $arr;
+    }
+
+    public function getLearningGroup(): ?LearningGroup
+    {
+        return $this->learningGroup;
+    }
+
+    public function setLearningGroup(?LearningGroup $learningGroup): self
+    {
+        $this->learningGroup = $learningGroup;
+
+        return $this;
+    }
+
 }
