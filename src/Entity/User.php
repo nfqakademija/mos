@@ -14,17 +14,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 
-  public const ROLE_ADMIN = 'ROLE_ADMIN';
-  public const ROLE_TEACHER = 'ROLE_TEACHER';
-  public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
-  public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_TEACHER = 'ROLE_TEACHER';
+    public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
+    public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
 
-//  public const ROLES = [
-//    self::ROLE_ADMIN,
-//    self::ROLE_TEACHER,
-//    self::ROLE_PARTICIPANT,
-//    self::ROLE_INSPECTOR,
-//  ];
+    //  public const ROLES = [
+    //    self::ROLE_ADMIN,
+    //    self::ROLE_TEACHER,
+    //    self::ROLE_PARTICIPANT,
+    //    self::ROLE_INSPECTOR,
+    //  ];
 
     /**
      * @ORM\Id()
@@ -291,97 +291,44 @@ class User implements UserInterface
         return $this;
     }
 
-  /**
-   * @ORM\PrePersist()
-   */
-  public function prePersist() {
-    $this->registrationDate = new \DateTime();
-  }
-
-  /**
-   * @ORM\PreUpdate()
-   */
-  public function preUpdate() {
-
-  }
-
-  /**
-   * @return Collection|Group[]
-   */
-  public function getGroups(): Collection
-  {
-      return $this->groups;
-  }
-
-  public function addGroup(Group $group): self
-  {
-      if (!$this->groups->contains($group)) {
-          $this->groups[] = $group;
-          $group->addParticipant($this);
-      }
-
-      return $this;
-  }
-
-  public function removeGroup(Group $group): self
-  {
-      if ($this->groups->contains($group)) {
-          $this->groups->removeElement($group);
-          $group->removeParticipant($this);
-      }
-
-      return $this;
-  }
-
-  /**
-   * @return Collection|LearningGroup[]
-   */
-  public function getLearningGroups(): Collection
-  {
-      return $this->learningGroups;
-  }
-
-  public function addLearningGroup(LearningGroup $learningGroup): self
-  {
-      if (!$this->learningGroups->contains($learningGroup)) {
-          $this->learningGroups[] = $learningGroup;
-          $learningGroup->addParticipant($this);
-      }
-
-      return $this;
-  }
-
-  public function removeLearningGroup(LearningGroup $learningGroup): self
-  {
-      if ($this->learningGroups->contains($learningGroup)) {
-          $this->learningGroups->removeElement($learningGroup);
-          $learningGroup->removeParticipant($this);
-      }
-
-      return $this;
-  }
-
-
-  public function toArray() {
-    $arr = [
-      'username' => $this->getUsername(),
-      'name' => $this->getName(),
-      'surname' => $this->getSurname(),
-      'birth_date' => $this->getBirthDate(),
-      'email' => $this->getEmail(),
-      'phone' => $this->getPhone(),
-      'region' => NULL,
-      'address' => $this->getAddress(),
-      'reg_date' => $this->getRegistrationDate(),
-      'last_access_date' => $this->getLastAccessDate(),
-      'roles' => $this->getRoles(),
-    ];
-
-    if(!empty($this->getRegion())) {
-      $arr['region'] = $this->getRegion()->getTitle();
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist() {
+        $this->registrationDate = new \DateTime();
     }
 
-    return $arr;
-  }
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate() {
+
+    }
+
+
+
+
+    public function toArray()
+    {
+        $arr = [
+          'username' => $this->getUsername(),
+          'name' => $this->getName(),
+          'surname' => $this->getSurname(),
+          'birth_date' => $this->getBirthDate(),
+          'email' => $this->getEmail(),
+          'phone' => $this->getPhone(),
+          'region' => null,
+          'address' => $this->getAddress(),
+          'reg_date' => $this->getRegistrationDate(),
+          'last_access_date' => $this->getLastAccessDate(),
+          'roles' => $this->getRoles(),
+        ];
+
+        if(!empty($this->getRegion())) {
+            $arr['region'] = $this->getRegion()->getTitle();
+        }
+
+        return $arr;
+    }
 
 }

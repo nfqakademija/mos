@@ -43,31 +43,6 @@ class LearningGroup
         return $this->id;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getParticipants(): Collection
-    {
-        return $this->participants;
-    }
-
-    public function addParticipant(User $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(User $participant): self
-    {
-        if ($this->participants->contains($participant)) {
-            $this->participants->removeElement($participant);
-        }
-
-        return $this;
-    }
 
     public function getTimeSlots(): ?TimeSlot
     {

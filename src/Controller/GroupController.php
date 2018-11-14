@@ -7,20 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class LearningGroupController
+ * Class GroupController
  *
  * @package App\Controller
  */
-class LearningGroupController extends AbstractController
+class GroupController extends AbstractController
 {
     /**
-     * @Route("/group/view", name="learning_group")
+     * @Route("/group/view/{group}", name="group")
      */
     public function view(LearningGroup $group)
     {
 
-        return $this->render('learning_group/index.html.twig', [
-            'group' => $group,
+        return $this->render('group/index.html.twig', [
+//            'group' => $group,
         ]);
     }
 }
