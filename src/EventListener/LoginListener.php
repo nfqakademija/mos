@@ -19,8 +19,7 @@ class LoginListener
     {
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
-        if ($user instanceof User) 
-        {
+        if ($user instanceof User) {
             $user->setLastAccessDate(new \DateTime());
 
             // Persist the data to database.

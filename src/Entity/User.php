@@ -314,8 +314,7 @@ class User implements UserInterface
           'roles' => $this->getRoles(),
         ];
 
-        if (!empty($this->getRegion())) 
-        {
+        if (!empty($this->getRegion())) {
             $arr['region'] = $this->getRegion()->getTitle();
         }
 
