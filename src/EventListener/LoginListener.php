@@ -13,7 +13,6 @@ class LoginListener
 
     public function __construct(EntityManagerInterface $em)
     {
-
         $this->em = $em;
     }
 
