@@ -21,7 +21,7 @@ class ProfileController extends AbstractController
     public function profileView(User $user)
     {
 
-        return $this->render('base.html.twig', [
+        return $this->render('profile/view.html.twig', [
             'user' => $user,
         ]);
     }
