@@ -39,6 +39,7 @@ class ProfileController extends AbstractController
   }
 
 
+
   /**
    * @Route("api/profile/view",
    *   name="api.profile.view",
@@ -56,6 +57,21 @@ class ProfileController extends AbstractController
     return $this->json($meArray);
   }
 
+    /**
+     * @Route("/profile/view",
+     *   name="profile.view",
+     *   methods="GET")
+     * @return
+     */
+    public function profileViewMy()
+    {
+
+        $me = $this->getUser();
+
+        return $this->render('profile/view.html.twig', [
+          'user' => $me,
+        ]);
+    }
 
 
   /**
@@ -66,6 +82,7 @@ class ProfileController extends AbstractController
    */
   public function apiProfileViewList(EntityManagerInterface $em)
   {
+
     $users = $em->getRepository(User::class)->findAll();
 
     $usersArray = [];
@@ -79,6 +96,20 @@ class ProfileController extends AbstractController
   }
 
 
+    /**
+     * @Route("/profile/viewlist",
+     *   name="profile.viewlist",
+     *   methods="GET")
+     * @return
+     */
+    public function profileViewList(EntityManagerInterface $em)
+    {
 
+        $users = $em->getRepository(User::class)->findAll();
+
+        return $this->render('profile/viewlist.html.twig', [
+          'users' => $users,
+        ]);
+    }
 
 }
