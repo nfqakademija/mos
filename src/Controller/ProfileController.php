@@ -51,10 +51,10 @@ class ProfileController extends AbstractController
   public function apiProfileViewMy()
   {
 
-    /** @var User $me */
-    $me = $this->getUser();
+    /** @var User $user */
+    $user = $this->getUser();
 
-    $meArray = $this->userObjectToArray($me);
+    $meArray = $this->userObjectToArray($user);
 
     return $this->json($meArray);
   }
