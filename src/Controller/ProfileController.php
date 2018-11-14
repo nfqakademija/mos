@@ -59,6 +59,21 @@ class ProfileController extends AbstractController
     return $this->json($meArray);
   }
 
+    /**
+     * @Route("/profile/view",
+     *   name="profile.view",
+     *   methods="GET")
+     * @return
+     */
+    public function profileViewMy()
+    {
+
+        $me = $this->getUser();
+
+        return $this->render('profile/view.html.twig', [
+          'user' => $me,
+        ]);
+    }
 
 
   /**
@@ -82,26 +97,20 @@ class ProfileController extends AbstractController
   }
 
 
-  private function userObjectToArray(User $user) {
-    $arr = [
-      'username' => $user->getUsername(),
-      'name' => $user->getName(),
-      'surname' => $user->getSurname(),
-      'birth_date' => $user->getBirthDate(),
-      'email' => $user->getEmail(),
-      'phone' => $user->getPhone(),
-      'region' => NULL,
-      'address' => $user->getAddress(),
-      'reg_date' => $user->getRegistrationDate(),
-      'last_access_date' => $user->getLastAccessDate(),
-      'roles' => $user->getRoles(),
-    ];
+    /**
+     * @Route("/profile/viewlist",
+     *   name="profile.viewlist",
+     *   methods="GET")
+     * @return
+     */
+    public function profileViewList(EntityManagerInterface $em)
+    {
 
-    if(!empty($user->getRegion())) {
-     $arr['region'] = $user->getRegion()->getTitle();
+        $users = $em->getRepository(User::class)->findAll();
+
+        return $this->render('profile/viewlist.html.twig', [
+          'users' => $users,
+        ]);
     }
-
-    return $arr;
-  }
 
 }
