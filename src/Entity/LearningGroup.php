@@ -19,11 +19,6 @@ class LearningGroup
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="learningGroups")
-     */
-    private $participants;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\TimeSlot", cascade={"persist", "remove"})
      */
     private $timeSlots;
@@ -32,6 +27,11 @@ class LearningGroup
      * @ORM\Column(type="string", length=190)
      */
     private $address;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="learningGroup")
+     */
+    private $participants;
 
     public function __construct()
     {
@@ -64,6 +64,37 @@ class LearningGroup
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(User $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setLearningGroup($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(User $participant): self
+    {
+        if ($this->participants->contains($participant)) {
+            $this->participants->removeElement($participant);
+            // set the owning side to null (unless already changed)
+            if ($participant->getLearningGroup() === $this) {
+                $participant->setLearningGroup(null);
+            }
+        }
 
         return $this;
     }

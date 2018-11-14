@@ -95,18 +95,17 @@ class User implements UserInterface
     private $lastAccessDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Group", mappedBy="participant")
-     */
-    private $groups;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\LearningGroup", mappedBy="participants")
      */
     private $learningGroups;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="participants")
+     */
+    private $learningGroup;
+
     public function __construct()
     {
-        $this->groups = new ArrayCollection();
         $this->learningGroups = new ArrayCollection();
     }
 
@@ -329,6 +328,18 @@ class User implements UserInterface
         }
 
         return $arr;
+    }
+
+    public function getLearningGroup(): ?LearningGroup
+    {
+        return $this->learningGroup;
+    }
+
+    public function setLearningGroup(?LearningGroup $learningGroup): self
+    {
+        $this->learningGroup = $learningGroup;
+
+        return $this;
     }
 
 }
