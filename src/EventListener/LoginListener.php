@@ -19,7 +19,7 @@ class LoginListener
     {
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
-        if ($user instanceof User)
+        if ($user instanceof User) 
         { //on logout we don't get a User object
             // Update your field here
             $user->setLastAccessDate(new \DateTime());
