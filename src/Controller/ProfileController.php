@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
+
     /**
      * @Route("/profile/view/{user}",
      *   name="profile.view.user",
@@ -22,40 +23,41 @@ class ProfileController extends AbstractController
     {
 
         return $this->render('profile/view.html.twig', [
-            'user' => $user,
+          'user' => $user,
         ]);
     }
 
-  /**
-   * @Route("api/profile/view/{id}", name="api.profile.view.id", methods="POST")
-   */
-  public function apiProfileViewById($id, EntityManagerInterface $em ) {
+    /**
+     * @Route("api/profile/view/{id}", name="api.profile.view.id",
+     *   methods="POST")
+     */
+    public function apiProfileViewById($id, EntityManagerInterface $em)
+    {
 
-    /** @var User $user */
-    $user = $em->getRepository(User::class)->find($id);
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
 
-    return $this->json($user->toArray());
+        return $this->json($user->toArray());
 
-  }
+    }
 
 
+    /**
+     * @Route("api/profile/view",
+     *   name="api.profile.view",
+     *   methods="GET")
+     * @return
+     */
+    public function apiProfileViewMy()
+    {
 
-  /**
-   * @Route("api/profile/view",
-   *   name="api.profile.view",
-   *   methods="GET")
-   * @return
-   */
-  public function apiProfileViewMy()
-  {
+        /** @var User $user */
+        $user = $this->getUser();
 
-    /** @var User $user */
-    $user = $this->getUser();
+        $meArray = $user->toArray();
 
-    $meArray = $user->toArray();
-
-    return $this->json($meArray);
-  }
+        return $this->json($meArray);
+    }
 
     /**
      * @Route("/profile/view",
@@ -74,26 +76,26 @@ class ProfileController extends AbstractController
     }
 
 
-  /**
-   * @Route("api/profile/viewlist",
-   *   name="api.profile.viewlist",
-   *   methods="GET")
-   * @return
-   */
-  public function apiProfileViewList(EntityManagerInterface $em)
-  {
+    /**
+     * @Route("api/profile/viewlist",
+     *   name="api.profile.viewlist",
+     *   methods="GET")
+     * @return
+     */
+    public function apiProfileViewList(EntityManagerInterface $em)
+    {
 
-    $users = $em->getRepository(User::class)->findAll();
+        $users = $em->getRepository(User::class)->findAll();
 
-    $usersArray = [];
-    /** @var User $user */
-    foreach ($users as $user) {
-      $usersArray[] = $user->toArray();
+        $usersArray = [];
+        /** @var User $user */
+        foreach ($users as $user) {
+            $usersArray[] = $user->toArray();
+        }
+
+        return $this->json($usersArray);
+
     }
-
-    return $this->json($usersArray);
-
-  }
 
 
     /**

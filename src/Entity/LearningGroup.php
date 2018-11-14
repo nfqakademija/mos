@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LearningGroup
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -111,7 +112,7 @@ class LearningGroup
         ];
 
         $timeslots = $this->getTimeSlots();
-        if(!empty($timeslots)) {
+        if (!empty($timeslots)) {
             /** @var \App\Entity\TimeSlot $timeslot */
             foreach ($timeslots as $timeslot) {
                 $arr['timeslots'][] = [
@@ -122,8 +123,8 @@ class LearningGroup
             }
         }
         $participants = $this->getParticipants();
-        if(!empty($participants)) {
-            foreach ($participants as $participant){
+        if (!empty($participants)) {
+            foreach ($participants as $participant) {
                 $arr['participants'][] = $participant->toArray();
             }
         }

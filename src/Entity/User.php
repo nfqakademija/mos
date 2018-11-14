@@ -293,14 +293,16 @@ class User implements UserInterface
     /**
      * @ORM\PrePersist()
      */
-    public function prePersist() {
+    public function prePersist()
+    {
         $this->registrationDate = new \DateTime();
     }
 
     /**
      * @ORM\PreUpdate()
      */
-    public function preUpdate() {
+    public function preUpdate()
+    {
 
     }
 
@@ -320,7 +322,8 @@ class User implements UserInterface
           'roles' => $this->getRoles(),
         ];
 
-        if(!empty($this->getRegion())) {
+        if (!empty($this->getRegion()))
+        {
             $arr['region'] = $this->getRegion()->getTitle();
         }
 
