@@ -38,4 +38,3 @@ class GroupController extends AbstractController
         ]);
     }
 }
-

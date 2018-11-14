@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TimeSlot
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
