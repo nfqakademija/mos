@@ -19,7 +19,8 @@ class LearningGroup
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\TimeSlot", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\TimeSlot", cascade={"persist",
+     *   "remove"})
      */
     private $timeSlots;
 
@@ -97,5 +98,36 @@ class LearningGroup
         }
 
         return $this;
+    }
+
+
+    public function toArray()
+    {
+        $arr = [
+          'id' => $this->getId(),
+          'timeslots' => [],
+          'address' => $this->getAddress(),
+          'participants' => [],
+        ];
+
+        $timeslots = $this->getTimeSlots();
+        if(!empty($timeslots)) {
+            /** @var \App\Entity\TimeSlot $timeslot */
+            foreach ($timeslots as $timeslot) {
+                $arr['timeslots'][] = [
+                  'id' => $timeslot->getId(),
+                  'startTime' => $timeslot->getStartTime(),
+                  'durationMinutes' => $timeslot->getDurationMinutes(),
+                ];
+            }
+        }
+        $participants = $this->getParticipants();
+        if(!empty($participants)) {
+            foreach ($participants as $participant){
+                $arr['participants'][] = $participant->toArray();
+            }
+        }
+
+        return $arr;
     }
 }

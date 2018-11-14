@@ -304,9 +304,6 @@ class User implements UserInterface
 
     }
 
-
-
-
     public function toArray()
     {
         $arr = [
