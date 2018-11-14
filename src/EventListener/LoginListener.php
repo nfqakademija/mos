@@ -2,7 +2,6 @@
 
 namespace App\EventListener;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Event\AuthenticationEvent;
 use App\Entity\User;
@@ -20,7 +19,8 @@ class LoginListener
     {
         /** @var User $user */
         $user = $event->getAuthenticationToken()->getUser();
-        if($user instanceof User ) { //on logout we don't get a User object
+        if ($user instanceof User )
+        { //on logout we don't get a User object
             // Update your field here.
             $user->setLastAccessDate(new \DateTime());
 

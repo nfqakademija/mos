@@ -38,7 +38,6 @@ class ProfileController extends AbstractController
         $user = $em->getRepository(User::class)->find($id);
 
         return $this->json($user->toArray());
-
     }
 
 
@@ -94,7 +93,6 @@ class ProfileController extends AbstractController
         }
 
         return $this->json($usersArray);
-
     }
 
 
@@ -113,5 +111,4 @@ class ProfileController extends AbstractController
           'users' => $users,
         ]);
     }
-
 }

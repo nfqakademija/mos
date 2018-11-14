@@ -298,14 +298,6 @@ class User implements UserInterface
         $this->registrationDate = new \DateTime();
     }
 
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function preUpdate()
-    {
-
-    }
-
     public function toArray()
     {
         $arr = [
@@ -341,5 +333,4 @@ class User implements UserInterface
 
         return $this;
     }
-
 }
