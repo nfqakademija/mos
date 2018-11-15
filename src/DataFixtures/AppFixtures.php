@@ -99,11 +99,26 @@ class AppFixtures extends Fixture
         $timeSlot1 = new TimeSlot();
         $timeSlot1->setStartTime(new \DateTime("2019-01-01"));
         $timeSlot1->setDurationMinutes(90);
+        $manager->persist($timeSlot1);
+
+        $timeSlot2 = new TimeSlot();
+        $timeSlot2->setStartTime(new \DateTime("2019-01-03"));
+        $timeSlot2->setDurationMinutes(90);
+        $manager->persist($timeSlot2);
+
+        $timeSlot3 = new TimeSlot();
+        $timeSlot3->setStartTime(new \DateTime("2019-01-07"));
+        $timeSlot3->setDurationMinutes(90);
+        $manager->persist($timeSlot3);
+
         //generate Group
         $group1 = new LearningGroup();
-        $group1->setAddress('Lapių 16, Kulautuva');
-        $group1->addParticipant($userParticipant[1]);
-        $group1->addParticipant($userParticipant[3]);
+        $group1->setAddress('Lapių 16, Kulautuva')
+            ->addParticipant($userParticipant[1])
+            ->addParticipant($userParticipant[3])
+            ->addTimeSlot($timeSlot1)
+            ->addTimeSlot($timeSlot2)
+            ->addTimeSlot($timeSlot3);
 
         $manager->persist($group1);
 
