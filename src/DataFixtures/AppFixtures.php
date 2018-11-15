@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\LearningGroup;
+use App\Entity\TimeSlot;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -94,10 +95,18 @@ class AppFixtures extends Fixture
 
 
         //demo group
+        //generate TimeSlot
+        $timeSlot1 = new TimeSlot();
+        $timeSlot1->setStartTime(new \DateTime("2019-01-01"));
+        $timeSlot1->setDurationMinutes(90);
         //generate Group
-        $group = new LearningGroup();
-        $group->setAddress('Lapių 16, Kulautuva');
-        $manager->persist($group);
+        $group1 = new LearningGroup();
+        $group1->setAddress('Lapių 16, Kulautuva');
+        $group1->addParticipant($userParticipant[1]);
+        $group1->addParticipant($userParticipant[3]);
+
+        $manager->persist($group1);
+
 
 
         $manager->flush();
