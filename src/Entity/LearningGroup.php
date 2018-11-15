@@ -20,12 +20,6 @@ class LearningGroup
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\TimeSlot", cascade={"persist",
-     *   "remove"})
-     */
-    private $timeSlots;
-
-    /**
      * @ORM\Column(type="string", length=190)
      */
     private $address;
@@ -35,9 +29,15 @@ class LearningGroup
      */
     private $participants;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TimeSlot", mappedBy="learningGroup")
+     */
+    private $timeSlots;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->timeSlots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -45,18 +45,6 @@ class LearningGroup
         return $this->id;
     }
 
-
-    public function getTimeSlots(): ?TimeSlot
-    {
-        return $this->timeSlots;
-    }
-
-    public function setTimeSlots(?TimeSlot $timeSlots): self
-    {
-        $this->timeSlots = $timeSlots;
-
-        return $this;
-    }
 
     public function getAddress(): ?string
     {
@@ -130,5 +118,36 @@ class LearningGroup
         }
 
         return $arr;
+    }
+
+    /**
+     * @return Collection|TimeSlot[]
+     */
+    public function getTimeSlots(): Collection
+    {
+        return $this->timeSlots;
+    }
+
+    public function addTimeSlot(TimeSlot $timeSlot): self
+    {
+        if (!$this->timeSlots->contains($timeSlot)) {
+            $this->timeSlots[] = $timeSlot;
+            $timeSlot->setLearningGroup($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTimeSlot(TimeSlot $timeSlot): self
+    {
+        if ($this->timeSlots->contains($timeSlot)) {
+            $this->timeSlots->removeElement($timeSlot);
+            // set the owning side to null (unless already changed)
+            if ($timeSlot->getLearningGroup() === $this) {
+                $timeSlot->setLearningGroup(null);
+            }
+        }
+
+        return $this;
     }
 }

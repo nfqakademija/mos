@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\LearningGroup;
+use App\Entity\TimeSlot;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -94,10 +95,55 @@ class AppFixtures extends Fixture
 
 
         //demo group
+        //generate TimeSlot
+        $timeSlot1 = new TimeSlot();
+        $timeSlot1->setStartTime(new \DateTime("2019-01-01"));
+        $timeSlot1->setDurationMinutes(90);
+        $manager->persist($timeSlot1);
+
+        $timeSlot2 = new TimeSlot();
+        $timeSlot2->setStartTime(new \DateTime("2019-01-03"));
+        $timeSlot2->setDurationMinutes(90);
+        $manager->persist($timeSlot2);
+
+        $timeSlot3 = new TimeSlot();
+        $timeSlot3->setStartTime(new \DateTime("2019-01-07"));
+        $timeSlot3->setDurationMinutes(90);
+        $manager->persist($timeSlot3);
+
         //generate Group
-        $group = new LearningGroup();
-        $group->setAddress('Lapių 16, Kulautuva');
-        $manager->persist($group);
+        $group1 = new LearningGroup();
+        $group1->setAddress('Lapių 16, Kulautuva')
+            ->addParticipant($userParticipant[1])
+            ->addParticipant($userParticipant[2])
+            ->addTimeSlot($timeSlot1)
+            ->addTimeSlot($timeSlot2)
+            ->addTimeSlot($timeSlot3);
+
+        $manager->persist($group1);
+
+
+        //generate TimeSlot
+        $timeSlot4 = new TimeSlot();
+        $timeSlot4->setStartTime(new \DateTime("2019-10-10"));
+        $timeSlot4->setDurationMinutes(90);
+        $manager->persist($timeSlot4);
+
+        $timeSlot5 = new TimeSlot();
+        $timeSlot5->setStartTime(new \DateTime("2019-10-15"));
+        $timeSlot5->setDurationMinutes(90);
+        $manager->persist($timeSlot5);
+
+
+        //generate Group
+        $group2 = new LearningGroup();
+        $group2->setAddress('Savanorių pr. 254, Kaunas')
+          ->addParticipant($userParticipant[3])
+          ->addParticipant($userParticipant[4])
+          ->addTimeSlot($timeSlot4)
+          ->addTimeSlot($timeSlot5);
+
+        $manager->persist($group2);
 
 
         $manager->flush();

@@ -27,6 +27,11 @@ class TimeSlot
      */
     private $durationMinutes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="timeSlots")
+     */
+    private $learningGroup;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class TimeSlot
     public function setDurationMinutes(int $durationMinutes): self
     {
         $this->durationMinutes = $durationMinutes;
+
+        return $this;
+    }
+
+    public function getLearningGroup(): ?LearningGroup
+    {
+        return $this->learningGroup;
+    }
+
+    public function setLearningGroup(?LearningGroup $learningGroup): self
+    {
+        $this->learningGroup = $learningGroup;
 
         return $this;
     }
