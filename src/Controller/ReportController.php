@@ -22,5 +22,4 @@ class ReportController extends AbstractController
           'users' => $users,
         ]);
     }
-    
 }
