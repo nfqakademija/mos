@@ -80,9 +80,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jonasarts/tcpdf-bundle": {
-        "version": "v4.0.3"
-    },
     "nikic/php-parser": {
         "version": "v4.0.4"
     },
@@ -271,9 +268,6 @@
     },
     "symfony/yaml": {
         "version": "v4.1.6"
-    },
-    "tecnickcom/tcpdf": {
-        "version": "6.2.26"
     },
     "twig/twig": {
         "version": "v2.5.0"
