@@ -104,9 +104,15 @@ class User implements UserInterface
      */
     private $learningGroup;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LearningGroup", mappedBy="teacher")
+     */
+    private $learningGroupsUserTeaches;
+
     public function __construct()
     {
         $this->learningGroups = new ArrayCollection();
+        $this->learningGroupsUserTeaches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -329,6 +335,37 @@ class User implements UserInterface
     public function setLearningGroup(?LearningGroup $learningGroup): self
     {
         $this->learningGroup = $learningGroup;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LearningGroup[]
+     */
+    public function getLearningGroupsUserTeaches(): Collection
+    {
+        return $this->learningGroupsUserTeaches;
+    }
+
+    public function addLearningGroupsUserTeach(LearningGroup $learningGroupsUserTeach): self
+    {
+        if (!$this->learningGroupsUserTeaches->contains($learningGroupsUserTeach)) {
+            $this->learningGroupsUserTeaches[] = $learningGroupsUserTeach;
+            $learningGroupsUserTeach->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLearningGroupsUserTeach(LearningGroup $learningGroupsUserTeach): self
+    {
+        if ($this->learningGroupsUserTeaches->contains($learningGroupsUserTeach)) {
+            $this->learningGroupsUserTeaches->removeElement($learningGroupsUserTeach);
+            // set the owning side to null (unless already changed)
+            if ($learningGroupsUserTeach->getTeacher() === $this) {
+                $learningGroupsUserTeach->setTeacher(null);
+            }
+        }
 
         return $this;
     }
