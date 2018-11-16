@@ -109,6 +109,16 @@ class User implements UserInterface
      */
     private $learningGroupsUserTeaches;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $livingAreaType;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $genre;
+
     public function __construct()
     {
         $this->learningGroups = new ArrayCollection();
@@ -366,6 +376,30 @@ class User implements UserInterface
                 $learningGroupsUserTeach->setTeacher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLivingAreaType(): ?string
+    {
+        return $this->livingAreaType;
+    }
+
+    public function setLivingAreaType(?string $livingAreaType): self
+    {
+        $this->livingAreaType = $livingAreaType;
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?string $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }
