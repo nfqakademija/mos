@@ -21,6 +21,9 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $livingAreaTypes = ['miestas', 'kaimas'];
+        $genres = ['vyras', 'moteris'];
+        
         //generate Regions
         $regionKaunas = new Region();
         $regionKaunas
@@ -89,7 +92,9 @@ class AppFixtures extends Fixture
               ->setSurname('Participantsurname' . $i)
               ->setRegion($regionJonavosR)
               ->setBirthDate(new \DateTime('1961-04-24'))
-              ->setRoles([User::ROLE_PARTICIPANT]);
+              ->setRoles([User::ROLE_PARTICIPANT])
+              ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
+              ->setGenre($genres[array_rand($genres, 1)]);
             $manager->persist($userParticipant[$i]);
         }
 
