@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report view{% endblock %}
+
+
+{% block body %}
+
+    <h1>Report: Participants</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Birth date</th>
+            <th>Region/city</th>
+            <th>Living area type</th>
+            <th>Address</th>
+            <th>Phone number</th>
+            <th>Email</th>
+            <th>Genre</th>
+        </tr>
+        
+        {% for user in users %}
+            
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.birthDate|date('Y-m-d') }}</td>
+                <td>{{ user.region.title }}</td>
+                <td>{{ user.livingAreaType }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.genre }}</td>
+                
+            </tr>
+            
+        {% endfor %}
+        
+    </table>
+
+{% endblock %}

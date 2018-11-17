@@ -28,37 +28,6 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("api/profile/view/{id}", name="api.profile.view.id",
-     *   methods="POST")
-     */
-    public function apiProfileViewById($id, EntityManagerInterface $em)
-    {
-
-        /** @var User $user */
-        $user = $em->getRepository(User::class)->find($id);
-
-        return $this->json($user->toArray());
-    }
-
-
-    /**
-     * @Route("api/profile/view",
-     *   name="api.profile.view",
-     *   methods="GET")
-     * @return
-     */
-    public function apiProfileViewMy()
-    {
-
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $meArray = $user->toArray();
-
-        return $this->json($meArray);
-    }
-
-    /**
      * @Route("/profile/view",
      *   name="profile.view",
      *   methods="GET")
@@ -73,28 +42,6 @@ class ProfileController extends AbstractController
           'user' => $me,
         ]);
     }
-
-
-    /**
-     * @Route("api/profile/viewlist",
-     *   name="api.profile.viewlist",
-     *   methods="GET")
-     * @return
-     */
-    public function apiProfileViewList(EntityManagerInterface $em)
-    {
-
-        $users = $em->getRepository(User::class)->findAll();
-
-        $usersArray = [];
-        /** @var User $user */
-        foreach ($users as $user) {
-            $usersArray[] = $user->toArray();
-        }
-
-        return $this->json($usersArray);
-    }
-
 
     /**
      * @Route("/profile/viewlist",

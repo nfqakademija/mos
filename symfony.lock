@@ -80,24 +80,6 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jonasarts/tcpdf-bundle": {
-        "version": "v4.0.3"
-    },
-    "lcobucci/jwt": {
-        "version": "3.2.4"
-    },
-    "lexik/jwt-authentication-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "509b1542f3180a1cfe248ade8b7bf5092c2d4127"
-        }
-    },
-    "namshi/jose": {
-        "version": "7.2.3"
-    },
     "nikic/php-parser": {
         "version": "v4.0.4"
     },
@@ -298,9 +280,6 @@
     },
     "symfony/yaml": {
         "version": "v4.1.6"
-    },
-    "tecnickcom/tcpdf": {
-        "version": "6.2.26"
     },
     "twig/twig": {
         "version": "v2.5.0"

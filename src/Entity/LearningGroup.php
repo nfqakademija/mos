@@ -34,6 +34,11 @@ class LearningGroup
      */
     private $timeSlots;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="learningGroupsUserTeaches")
+     */
+    private $teacher;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -147,6 +152,18 @@ class LearningGroup
                 $timeSlot->setLearningGroup(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeacher(): ?User
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?User $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

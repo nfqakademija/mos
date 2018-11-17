@@ -62,6 +62,20 @@
       <td>Last access date</td>
       <td>{{ user.lastAccessDate|date('Y-m-d h:m')}}</td>
     </tr>
+    <tr>
+      {% if user.learningGroupsUserTeaches is not empty  %}
+      <td>Teacher in group(s):</td>
+          {% for group in user.learningGroupsUserTeaches %}
+            <td><a href="{{ path('group.view', {'group': group.id }) }}"> Id:{{ group.id }}  Address: {{ group.address }} </a></td>
+          {% endfor %}
+      {% endif %}
+    </tr>
+    <tr>
+        {% if user.learningGroup is not empty  %}
+          <td>Studying in group:</td>
+              <td>Id:{{ user.learningGroup.id }}  Address: {{ user.learningGroup.address }}</td>
+        {% endif %}
+    </tr>
 
   </table>
 

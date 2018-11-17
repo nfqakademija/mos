@@ -21,6 +21,9 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $livingAreaTypes = ['miestas', 'kaimas'];
+        $genres = ['vyras', 'moteris'];
+        
         //generate Regions
         $regionKaunas = new Region();
         $regionKaunas
@@ -89,7 +92,9 @@ class AppFixtures extends Fixture
               ->setSurname('Participantsurname' . $i)
               ->setRegion($regionJonavosR)
               ->setBirthDate(new \DateTime('1961-04-24'))
-              ->setRoles([User::ROLE_PARTICIPANT]);
+              ->setRoles([User::ROLE_PARTICIPANT])
+              ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
+              ->setGenre($genres[array_rand($genres, 1)]);
             $manager->persist($userParticipant[$i]);
         }
 
@@ -114,6 +119,7 @@ class AppFixtures extends Fixture
         //generate Group
         $group1 = new LearningGroup();
         $group1->setAddress('Lapių 16, Kulautuva')
+            ->setTeacher($userTeacher[1])
             ->addParticipant($userParticipant[1])
             ->addParticipant($userParticipant[2])
             ->addTimeSlot($timeSlot1)
@@ -121,8 +127,8 @@ class AppFixtures extends Fixture
             ->addTimeSlot($timeSlot3);
 
         $manager->persist($group1);
-
-
+        
+        
         //generate TimeSlot
         $timeSlot4 = new TimeSlot();
         $timeSlot4->setStartTime(new \DateTime("2019-10-10"));
@@ -133,19 +139,18 @@ class AppFixtures extends Fixture
         $timeSlot5->setStartTime(new \DateTime("2019-10-15"));
         $timeSlot5->setDurationMinutes(90);
         $manager->persist($timeSlot5);
-
-
+        
         //generate Group
         $group2 = new LearningGroup();
         $group2->setAddress('Savanorių pr. 254, Kaunas')
+          ->setTeacher($userTeacher[2])
           ->addParticipant($userParticipant[3])
           ->addParticipant($userParticipant[4])
           ->addTimeSlot($timeSlot4)
           ->addTimeSlot($timeSlot5);
-
         $manager->persist($group2);
 
-
+        
         $manager->flush();
     }
 }

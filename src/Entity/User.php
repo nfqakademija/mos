@@ -104,9 +104,25 @@ class User implements UserInterface
      */
     private $learningGroup;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LearningGroup", mappedBy="teacher")
+     */
+    private $learningGroupsUserTeaches;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $livingAreaType;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $genre;
+
     public function __construct()
     {
         $this->learningGroups = new ArrayCollection();
+        $this->learningGroupsUserTeaches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -329,6 +345,61 @@ class User implements UserInterface
     public function setLearningGroup(?LearningGroup $learningGroup): self
     {
         $this->learningGroup = $learningGroup;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LearningGroup[]
+     */
+    public function getLearningGroupsUserTeaches(): Collection
+    {
+        return $this->learningGroupsUserTeaches;
+    }
+
+    public function addLearningGroupsUserTeach(LearningGroup $learningGroupsUserTeach): self
+    {
+        if (!$this->learningGroupsUserTeaches->contains($learningGroupsUserTeach)) {
+            $this->learningGroupsUserTeaches[] = $learningGroupsUserTeach;
+            $learningGroupsUserTeach->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLearningGroupsUserTeach(LearningGroup $learningGroupsUserTeach): self
+    {
+        if ($this->learningGroupsUserTeaches->contains($learningGroupsUserTeach)) {
+            $this->learningGroupsUserTeaches->removeElement($learningGroupsUserTeach);
+            // set the owning side to null (unless already changed)
+            if ($learningGroupsUserTeach->getTeacher() === $this) {
+                $learningGroupsUserTeach->setTeacher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLivingAreaType(): ?string
+    {
+        return $this->livingAreaType;
+    }
+
+    public function setLivingAreaType(?string $livingAreaType): self
+    {
+        $this->livingAreaType = $livingAreaType;
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?string $genre): self
+    {
+        $this->genre = $genre;
 
         return $this;
     }
