@@ -29,7 +29,6 @@ class UserRepository extends ServiceEntityRepository
             ->andWhere('u.roles LIKE :val')
             ->setParameter('val', '%"'.$role.'"%')
             ->orderBy('u.id', 'ASC')
-            ->setMaxResults(1000)
             ->getQuery()
             ->getResult();
     }

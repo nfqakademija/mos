@@ -19,22 +19,25 @@ class LearningGroupRepository extends ServiceEntityRepository
         parent::__construct($registry, LearningGroup::class);
     }
 
-//    /**
-//     * @return LearningGroup[] Returns an array of LearningGroup objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Gets id's of groups ending int date range 
+     * (end date by the last record of the timeslots)
+     * 
+     * @return LearningGroup[] Returns an array of LearningGroup objects
+     */
+    public function findByEndDate($dateFrom, $dateTo)
     {
+        //TODO: make it work. Get groups, get group timeslots and retur group id's
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
+//            ->andWhere('l.endDate >= :dateFrom AND l.startDate <= :dateTo')
+//            ->setParameter('dateFrom', $dateFrom)
+//            ->setParameter('dateTo', $dateTo)
             ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?LearningGroup

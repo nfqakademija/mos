@@ -18,7 +18,6 @@ class ReportController extends AbstractController
      */
     public function filter(Request $request)
     {
-
         $defaultData = [];
         $reportFilterForm = $this->createForm(ReportFilterType::class, $defaultData);
         
@@ -26,7 +25,25 @@ class ReportController extends AbstractController
 
         if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
             $data = $reportFilterForm->getData();
-            return $this->redirectToRoute('report.participants', $data);
+            /** @var \DateTime $dateFrom */
+            $dateFrom = $data['dateFrom'];
+            if(empty($dateFrom))
+                $dateFromUnix = 0;
+            else {
+                $dateFromUnix = $dateFrom->getTimestamp();
+            }
+            /** @var \DateTime $dateTo */
+            $dateTo = $data['dateTo'];
+            if(empty($dateTo))
+                $dateToUnix =  2555555555;
+            else {
+                $dateToUnix = $dateTo->getTimestamp();
+            }
+            
+            return $this->redirectToRoute('report.participants', [
+              'dateFrom' => $dateFromUnix, 
+              'dateTo' => $dateToUnix
+            ] );
         }
         
         return $this->render('report/filter.html.twig', [
@@ -40,11 +57,10 @@ class ReportController extends AbstractController
      */
     public function participants(UserRepository $ur, Request $request)
     {
+        $dateFrom = $request->get('dateFrom');
+        $dateTo = $request->get('dateTo');
         
-        //var_dump($request->getQueryString());
-        var_dump($request->request);
-        die;
-        
+        //TODO: get groups by enddate range, then get groups participants
         $users =  $ur->findByRole(User::ROLE_PARTICIPANT);
 
         return $this->render('report/participants.html.twig', [
