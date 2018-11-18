@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Filters {% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" class="btn" value="Filter" />
+    {{ form_end(form) }}
+
+{% endblock %}
