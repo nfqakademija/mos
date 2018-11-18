@@ -15,7 +15,6 @@ $(document).ready(function() {
 
   $('.participants').on('click', '.participant__password-generate-button', function(e) {
     e.preventDefault();
-    console.log($(this).html());
     $(this).parent().find('.participant__password').val(randomString());
   });
 
