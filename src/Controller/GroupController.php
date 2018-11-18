@@ -59,17 +59,11 @@ class GroupController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($group);
-            $i = 10;
 
             foreach($groupType->getParticipants() as $participant) {
-                $user = new User();
-                $user->setUsername('name' . $i);
-                $user->setPassword('pw'.$i);
-                $user->setName($participant['name']);
-                $user->setSurname($participant['surname']);
-                $user->setLearningGroup($group);
-                $entityManager->persist($user);
-                $i++;
+                $participant->setLearningGroup($group);
+                $participant->setRoles([User::ROLE_PARTICIPANT]);
+                $entityManager->persist($participant);
             }
 
             $entityManager->flush();

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -35,6 +36,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Enter username")
      */
     private $username;
 
@@ -46,21 +48,24 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Enter password")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=190, nullable=true)
+     * @Assert\NotBlank(message="Enter name")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=190, nullable=true)
+     * @Assert\NotBlank(message="Enter surname")
      */
     private $surname;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $birthDate;
 
@@ -117,7 +122,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $genre;
+    private $gender;
 
     public function __construct()
     {
@@ -392,14 +397,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getGenre(): ?string
+    public function getGender(): ?string
     {
-        return $this->genre;
+        return $this->gender;
     }
 
-    public function setGenre(?string $genre): self
+    public function setGender(?string $gender): self
     {
-        $this->genre = $genre;
+        $this->gender = $gender;
 
         return $this;
     }

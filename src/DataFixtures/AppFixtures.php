@@ -94,7 +94,7 @@ class AppFixtures extends Fixture
               ->setBirthDate(new \DateTime('1961-04-24'))
               ->setRoles([User::ROLE_PARTICIPANT])
               ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
-              ->setGenre($genres[array_rand($genres, 1)]);
+              ->setGender($genres[array_rand($genres, 1)]);
             $manager->persist($userParticipant[$i]);
         }
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningGroupRepository")
@@ -21,11 +22,13 @@ class LearningGroup
 
     /**
      * @ORM\Column(type="string", length=190)
+     * @Assert\NotBlank(message="Enter address")
      */
     private $address;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="learningGroup")
+     * @Assert\Valid
      */
     private $participants;
 
