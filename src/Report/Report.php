@@ -51,7 +51,6 @@ class Report
                 ];
             }
         }
-
         return $results;
     }
 
@@ -99,7 +98,7 @@ class Report
 
     private function getLatestTimeslot($timeSlots, bool $nullIfNotExist = false)
     {
-        if (empty($timeSlots)) {
+        if (sizeof($timeSlots) === 0) {
             if ($nullIfNotExist) {
                 return null;
             } else {
@@ -121,7 +120,7 @@ class Report
 
     private function getEarliestTimeslot($timeSlots, bool $nullIfNotExist = false)
     {
-        if (empty($timeSlots)) {
+        if (sizeof($timeSlots) === 0) {
             if ($nullIfNotExist) {
                 return null;
             } else {
