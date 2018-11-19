@@ -6,6 +6,7 @@ namespace App\Report;
 use App\Entity\TimeSlot;
 use App\Entity\LearningGroup;
 use App\Repository\LearningGroupRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class Report
 {
@@ -54,9 +55,44 @@ class Report
         return $results;
     }
 
-    public function ()
+    public function getRangeFromFormData($data)
     {
-        
+        $range = ['dateFrom' => '', 'dateTo' => ''];
+
+        if (!empty($data['dateFrom'])) {
+            $range['dateFrom'] = $data['dateFrom']->format('Y-m-d');
+        }
+
+        if (!empty($data['dateTo'])) {
+            $range['dateTo'] = $data['dateTo']->format('Y-m-d');
+        }
+
+        return $range;
+    }
+
+    public function getRangeFromRequest(Request $request)
+    {
+        if (empty($request->get('dateFrom'))) {
+            $dateFrom = new \DateTime('1970-01-01');
+        } else {
+            try {
+                $dateFrom = new \DateTime($request->get('dateFrom'));
+            } catch (\Exception $e) {
+                $dateFrom = new \DateTime('1970-01-01');
+            }
+        }
+
+        if (empty($request->get('dateTo'))) {
+            $dateTo = new \DateTime('2050-12-31');
+        } else {
+            try {
+                $dateTo = new \DateTime($request->get('dateTo'));
+            } catch (\Exception $e) {
+                $dateTo = new \DateTime('2050-12-31');
+            }
+        }
+
+        return ['dateFrom' => $dateFrom, 'dateTo' => $dateTo];
     }
     
 
