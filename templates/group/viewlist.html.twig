@@ -1,19 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Groups list view{% endblock %}
-
-
+{% block title %}Groups{% endblock %}
 
 {% block body %}
-<h1>Groups list view</h1>
-
-  <ul>
-    {% for group in groups %}
-
-      <li><a href="{{ path('group.view', {'group': group.id}) }}">
-          {{ group.id }} {{ group.address }}) </a></li>
-
-    {% endfor %}
-  </ul>
-
+    <div class="container">
+        {% for message in app.flashes('notice') %}
+            <div class="group-success alert alert-success mt-3">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <h2 class="text-center mt-3">Groups</h2>
+        <a class="btn btn-outline-secondary my-3" href="{{ path('group.create') }}">Create group</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Address</th>
+                </tr>
+            </thead>
+            {% for group in groups %}
+                <tr>
+                    <th scope="row">{{ group.id }}</th>
+                    <td>
+                        <a href="{{ path('group.view', {'group': group.id}) }}">
+                            {{ group.address }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}

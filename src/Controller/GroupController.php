@@ -77,6 +77,8 @@ class GroupController extends AbstractController
                 'notice',
                 'Group was successfully created!'
             );
+
+            return $this->redirectToRoute('group.viewlist');
         }
 
         return $this->render('group/create.html.twig', [
