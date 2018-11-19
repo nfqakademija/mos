@@ -17,21 +17,28 @@
             <th>Phone number</th>
             <th>Email</th>
             <th>Gendre</th>
+            <th>Course start date</th>
+            <th>Course end date</th>
+            <th>Group Id</th>
+            <th>Successfully finished</th>
+
         </tr>
         
-        {% for user in users %}
-            
+        {% for result in results %}
             <tr>
-                <td>{{ user.name }}</td>
-                <td>{{ user.surname }}</td>
-                <td>{{ user.birthDate|date('Y-m-d') }}</td>
-                <td>{{ user.region.title }}</td>
-                <td>{{ user.livingAreaType }}</td>
-                <td>{{ user.address }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.gender }}</td>
-                
+                <td>{{ result.name }}</td>
+                <td>{{ result.surname }}</td>
+                <td>{{ result.birthDate|date('Y-m-d') }}</td>
+                <td>{{ result.region }}</td>
+                <td>{{ result.livingAreaType }}</td>
+                <td>{{ result.address }}</td>
+                <td>{{ result.phone }}</td>
+                <td>{{ result.email }}</td>
+                <td>{{ result.gender }}</td>
+                <td>{{ result.startDate|date('Y-m-d') }}</td>
+                <td>{{ result.endDate|date('Y-m-d') }}</td>
+                <td>{{ result.groupId }}</td>
+                <td></td>
             </tr>
             
         {% endfor %}

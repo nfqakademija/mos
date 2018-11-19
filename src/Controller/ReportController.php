@@ -3,12 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Report\Report;
+use App\Repository\LearningGroupRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ReportFilterType;
 
+/**
+ * Class ReportController
+ *
+ * @package App\Controller
+ */
 class ReportController extends AbstractController
 {
 
@@ -25,25 +32,11 @@ class ReportController extends AbstractController
 
         if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
             $data = $reportFilterForm->getData();
-            /** @var \DateTime $dateFrom */
-            $dateFrom = $data['dateFrom'];
-            if(empty($dateFrom))
-                $dateFromUnix = 0;
-            else {
-                $dateFromUnix = $dateFrom->getTimestamp();
-            }
-            /** @var \DateTime $dateTo */
-            $dateTo = $data['dateTo'];
-            if(empty($dateTo))
-                $dateToUnix =  2555555555;
-            else {
-                $dateToUnix = $dateTo->getTimestamp();
-            }
-            
+
             return $this->redirectToRoute('report.participants', [
-              'dateFrom' => $dateFromUnix, 
-              'dateTo' => $dateToUnix
-            ] );
+              'dateFrom' => $data['dateFrom']->format('Y-m-d'),
+              'dateTo' => $data['dateTo']->format('Y-m-d')
+            ]);
         }
         
         return $this->render('report/filter.html.twig', [
@@ -55,16 +48,36 @@ class ReportController extends AbstractController
      * @Route("/report/participants", name="report.participants",)
      * @return
      */
-    public function participants(UserRepository $ur, Request $request)
+    public function participants(Report $report, LearningGroupRepository $gr, Request $request)
     {
-        $dateFrom = $request->get('dateFrom');
-        $dateTo = $request->get('dateTo');
-        
-        //TODO: get groups by enddate range, then get groups participants
-        $users =  $ur->findByRole(User::ROLE_PARTICIPANT);
+
+        if (empty($request->get('dateFrom'))) {
+            $dateFrom = new \DateTime('1970-01-01');
+        } else {
+            try {
+                $dateFrom = new \DateTime($request->get('dateFrom'));
+            } catch (\Exception $e) {
+                $dateFrom = new \DateTime('1970-01-01');
+            }
+        }
+
+        if (empty($request->get('dateTo'))) {
+            $dateTo = new \DateTime('2050-12-31');
+        } else {
+            try {
+                $dateTo = new \DateTime($request->get('dateTo'));
+            } catch (\Exception $e) {
+                $dateTo = new \DateTime('2050-12-31');
+            }
+        }
+
+        var_dump($dateTo);
+        die;
+
+        $results = $report->getParticipantsReport($gr, $dateFrom, $dateTo);
 
         return $this->render('report/participants.html.twig', [
-          'users' => $users,
+          'results' => $results,
         ]);
     }
 }
