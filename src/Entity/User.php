@@ -81,6 +81,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Email(message="Wrong email format")
      */
     private $email;
 

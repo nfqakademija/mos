@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="float-right">
-            <button class="participant__toggle-additional-button btn-outline-secondary btn" type="button">Toggle</button>
+            <button class="participant__toggle-additional-button btn-outline-secondary btn" type="button">More</button>
             <button class="participant__remove-button btn-outline-danger btn" type="button">Delete</button>
         </div>
     </div>
@@ -63,15 +63,25 @@
 
 
 {% block body %}
-    <div class="container">
+    <div class="container group-form">
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         {{ form_start(form) }}
         {{ form_row(form.address) }}
-        <div class="participants" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
+        <div class="participants clearfix" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
             {% for participant in form.participants %}
                 {{ formMacros.printParticipant(participant) }}
             {% endfor %}
-            <button class="participant__add-button btn-primary btn my-2" type="button">Add a participant</button>
+            <button class="participant__add-button btn-outline-secondary btn my-2 float-right" type="button">
+                Add participant
+            </button>
         </div>
-        {{ form_end(form, {'render_rest': true }) }}
+        <div class="participant__submit-button-wrapper">
+            {{ form_widget(form.save, {'attr': {'class': 'participant__submit-button btn btn-primary mb-3'}}) }}
+        </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

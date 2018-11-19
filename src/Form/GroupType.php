@@ -29,7 +29,9 @@ class GroupType extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, array(
+                'label' => 'Submit'
+            ))
         ;
     }
 
