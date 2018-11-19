@@ -7,25 +7,25 @@
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-      <input type="submit" class="btn" value="Filter" />
+      <input type="submit" class="btn" value={% trans %}Filter{% endtrans %} />
     {{ form_end(form) }}
 
     <h1>Report: Participants</h1>
     <table>
         <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Birth date</th>
-            <th>Region/city</th>
-            <th>Living area type</th>
-            <th>Address</th>
-            <th>Phone number</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Course start date</th>
-            <th>Course end date</th>
-            <th>Group Id</th>
-            <th>Successfully finished</th>
+            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Surname{% endtrans %}</th>
+            <th>{% trans %}Birth date{% endtrans %}</th>
+            <th>{% trans %}Region/city{% endtrans %}</th>
+            <th>{% trans %}Living area type{% endtrans %}</th>
+            <th>{% trans %}Address{% endtrans %}</th>
+            <th>{% trans %}Phone number{% endtrans %}</th>
+            <th>{% trans %}Email{% endtrans %}</th>
+            <th>{% trans %}Gender{% endtrans %}</th>
+            <th>{% trans %}Course start date{% endtrans %}</th>
+            <th>{% trans %}Course end date{% endtrans %}</th>
+            <th>{% trans %}Group Id{% endtrans %}</th>
+            <th>{% trans %}Successfully finished{% endtrans %}</th>
 
         </tr>
         

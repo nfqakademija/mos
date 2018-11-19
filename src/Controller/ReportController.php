@@ -19,33 +19,6 @@ use App\Form\ReportFilterType;
  */
 class ReportController extends AbstractController
 {
-
-    /**
-     * @Route ("/report/filter", name="report.filter",)
-     * @return
-     */
-    public function filter(Request $request, Report $report)
-    {
-        $defaultData = [];
-        $reportFilterForm = $this->createForm(ReportFilterType::class, $defaultData);
-        
-        $reportFilterForm->handleRequest($request);
-
-        if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
-            $data = $reportFilterForm->getData();
-
-            $range = $report->getRangeFromFormData($data);
-
-            return $this->redirectToRoute('report.participants', [
-              'dateFrom' => $range['dateFrom'],
-              'dateTo' => $range['dateTo'],
-            ]);
-        }
-        
-        return $this->render('report/filter.html.twig', [
-          'form' => $reportFilterForm->createView(),
-        ]);
-    }
     
     /**
      * @Route("/report/participants", name="report.participants",)
