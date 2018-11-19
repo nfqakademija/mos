@@ -16,12 +16,14 @@ class ReportFilterType extends AbstractType
             ->add('dateFrom', DateType::class, [
                 'widget' => 'single_text',
                 'label' =>"Date from:",
-                'required' => false,
+                'required' => true,
+                'data' => new \DateTime('first day of this month')
             ])
             ->add('dateTo', DateType::class, [
                 'widget' => 'single_text',
                 'label' =>"to:",
-                'required' => false,
+                'required' => true,
+                'data' => new \DateTime('last day of this month')
                 ]);
     }
 

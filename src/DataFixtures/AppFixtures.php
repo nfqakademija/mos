@@ -102,17 +102,17 @@ class AppFixtures extends Fixture
         //demo group
         //generate TimeSlot
         $timeSlot1 = new TimeSlot();
-        $timeSlot1->setStartTime(new \DateTime("2019-01-01"));
+        $timeSlot1->setStartTime(new \DateTime("2018-11-01"));
         $timeSlot1->setDurationMinutes(90);
         $manager->persist($timeSlot1);
 
         $timeSlot2 = new TimeSlot();
-        $timeSlot2->setStartTime(new \DateTime("2019-01-03"));
+        $timeSlot2->setStartTime(new \DateTime("2018-11-03"));
         $timeSlot2->setDurationMinutes(90);
         $manager->persist($timeSlot2);
 
         $timeSlot3 = new TimeSlot();
-        $timeSlot3->setStartTime(new \DateTime("2019-01-07"));
+        $timeSlot3->setStartTime(new \DateTime("2018-11-07"));
         $timeSlot3->setDurationMinutes(90);
         $manager->persist($timeSlot3);
 
@@ -131,12 +131,12 @@ class AppFixtures extends Fixture
         
         //generate TimeSlot
         $timeSlot4 = new TimeSlot();
-        $timeSlot4->setStartTime(new \DateTime("2019-10-10"));
+        $timeSlot4->setStartTime(new \DateTime("2018-12-10"));
         $timeSlot4->setDurationMinutes(90);
         $manager->persist($timeSlot4);
 
         $timeSlot5 = new TimeSlot();
-        $timeSlot5->setStartTime(new \DateTime("2019-10-15"));
+        $timeSlot5->setStartTime(new \DateTime("2018-12-15"));
         $timeSlot5->setDurationMinutes(90);
         $manager->persist($timeSlot5);
         
