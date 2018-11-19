@@ -45,8 +45,8 @@ class Report
                     'phone' => $participant->getPhone(),
                     'email' => $participant->getEmail(),
                     'gender' => $participant->getGender(),
-                    'startDate' => $this->getEarliestTimeslot($group->getTimeSlots()),
-                    'endDate' => $this->getLatestTimeslot($group->getTimeSlots()),
+                    'startDate' => $this->getEarliestTimeslot($group->getTimeSlots(), true),
+                    'endDate' => $this->getLatestTimeslot($group->getTimeSlots(), true),
                     'groupId' => $group->getId(),
                 ];
             }
@@ -97,22 +97,38 @@ class Report
     
 
 
-    private function getLatestTimeslot($timeSlots)
+    private function getLatestTimeslot($timeSlots, bool $nullIfNotExist = false)
     {
-        $lastDate = new \DateTime('1970-01-01');
-
-        /** @var TimeSlot $timeSlot */
-        foreach ($timeSlots as $timeSlot) {
-            if ($timeSlot->getStartTime() > $lastDate) {
-                $lastDate = $timeSlot->getStartTime();
+        if (empty($timeSlots)) {
+            if ($nullIfNotExist) {
+                return null;
+            } else {
+                return new \DateTime('1970-01-01');
             }
         }
 
-        return $lastDate;
+        $latestDate = new \DateTime('1970-01-01');
+
+        /** @var TimeSlot $timeSlot */
+        foreach ($timeSlots as $timeSlot) {
+            if ($timeSlot->getStartTime() > $latestDate) {
+                $latestDate = $timeSlot->getStartTime();
+            }
+        }
+
+        return $latestDate;
     }
 
-    private function getEarliestTimeslot($timeSlots)
+    private function getEarliestTimeslot($timeSlots, bool $nullIfNotExist = false)
     {
+        if (empty($timeSlots)) {
+            if ($nullIfNotExist) {
+                return null;
+            } else {
+                return new \DateTime('2050-12-31');
+            }
+        }
+
         $earliestDate = new \DateTime('2050-12-31');
 
         /** @var TimeSlot $timeSlot */

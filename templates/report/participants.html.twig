@@ -16,7 +16,7 @@
             <th>Address</th>
             <th>Phone number</th>
             <th>Email</th>
-            <th>Gendre</th>
+            <th>Gender</th>
             <th>Course start date</th>
             <th>Course end date</th>
             <th>Group Id</th>
@@ -28,15 +28,15 @@
             <tr>
                 <td>{{ result.name }}</td>
                 <td>{{ result.surname }}</td>
-                <td>{{ result.birthDate|date('Y-m-d') }}</td>
+                <td>{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
                 <td>{{ result.region }}</td>
                 <td>{{ result.livingAreaType }}</td>
                 <td>{{ result.address }}</td>
                 <td>{{ result.phone }}</td>
                 <td>{{ result.email }}</td>
                 <td>{{ result.gender }}</td>
-                <td>{{ result.startDate|date('Y-m-d') }}</td>
-                <td>{{ result.endDate|date('Y-m-d') }}</td>
+                <td>{{ result.startDate ? result.startDate|date('Y-m-d') }}</td>
+                <td>{{ result.endDate ? result.endDate|date('Y-m-d') }}</td>
                 <td>{{ result.groupId }}</td>
                 <td></td>
             </tr>
