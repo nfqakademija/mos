@@ -49,4 +49,4 @@ npm-debug.log
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 /Migrations/*
-/config/jwt/*
+

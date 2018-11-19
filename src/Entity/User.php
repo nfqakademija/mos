@@ -20,13 +20,6 @@ class User implements UserInterface
     public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
     public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
 
-    //  public const ROLES = [
-    //    self::ROLE_ADMIN,
-    //    self::ROLE_TEACHER,
-    //    self::ROLE_PARTICIPANT,
-    //    self::ROLE_INSPECTOR,
-    //  ];
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
