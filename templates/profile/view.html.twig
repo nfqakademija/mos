@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}{% trans %}Profile{% endtrans %}{% endblock %}
 
 
 {% block body %}
@@ -14,27 +14,27 @@
       </tr>
       </thead>
       <tr>
-        <td>Username</td>
+        <td>{% trans %}Username{% endtrans %}</td>
         <td>{{ user.username}}</td>
       </tr>
       <tr>
-        <td>Email</td>
+        <td>{% trans %}Email{% endtrans %}</td>
         <td>{{ user.email}}</td>
       </tr>
       <tr>
-        <td>Name</td>
+        <td>{% trans %}Name{% endtrans %}</td>
         <td>{{ user.name}}</td>
       </tr>
       <tr>
-        <td>Surname</td>
+        <td>{% trans %}Surname{% endtrans %}</td>
         <td>{{ user.surname}}</td>
       </tr>
       <tr>
-        <td>Birth date</td>
+        <td>{% trans %}Birth date{% endtrans %}</td>
         <td>{{ user.birthdate|date('Y-m-d')}}</td>
       </tr>
       <tr>
-        <td>Region</td>
+        <td>{% trans %}Region{% endtrans %}</td>
         <td>
             {% if user.region is not null %}
                 {{ user.region.title}}
@@ -42,28 +42,28 @@
         </td>
       </tr>
       <tr>
-        <td>Address</td>
+        <td>{% trans %}Address{% endtrans %}</td>
         <td>{{ user.address}}</td>
       </tr>
       <tr>
-        <td>Phone number</td>
+        <td>{% trans %}Phone number{% endtrans %}</td>
         <td>{{ user.phone}}</td>
       </tr>
       <tr>
-        <td>Roles</td>
+        <td>{% trans %}Roles{% endtrans %}</td>
         <td>{{ user.roles|join(', ')}}</td>
       </tr>
       <tr>
-        <td>Registration date</td>
+        <td>{% trans %}Registration date{% endtrans %}</td>
         <td>{{ user.registrationDate|date('Y-m-d')}}</td>
       </tr>
       <tr>
-        <td>Last access date</td>
+        <td>{% trans %}Last access date{% endtrans %}</td>
         <td>{{ user.lastAccessDate|date('Y-m-d h:m')}}</td>
       </tr>
       <tr>
           {% if user.learningGroupsUserTeaches is not empty  %}
-            <td>Teacher in group(s):</td>
+            <td>{% trans %}Teacher in group(s){% endtrans %}:</td>
               {% for group in user.learningGroupsUserTeaches %}
                 <td><a href="{{ path('group.view', {'group': group.id }) }}"> Id:{{ group.id }}  Address: {{ group.address }} </a></td>
               {% endfor %}
@@ -71,8 +71,8 @@
       </tr>
       <tr>
           {% if user.learningGroup is not empty  %}
-            <td>Studying in group:</td>
-            <td>Id:{{ user.learningGroup.id }}  Address: {{ user.learningGroup.address }}</td>
+            <td>{% trans %}Studying in group{% endtrans %}:</td>
+            <td>{% trans %}Id{% endtrans %}:{{ user.learningGroup.id }}  {% trans %}Address{% endtrans %}: {{ user.learningGroup.address }}</td>
           {% endif %}
       </tr>
     </table>
