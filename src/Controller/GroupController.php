@@ -67,6 +67,16 @@ class GroupController extends AbstractController
             }
 
             $entityManager->flush();
+
+            unset($groupType);
+            unset($form);
+            $groupType = new LearningGroup();
+            $form = $this->createForm(GroupType::class, $groupType);
+
+            $this->addFlash(
+                'notice',
+                'Group was successfully created!'
+            );
         }
 
         return $this->render('group/create.html.twig', [

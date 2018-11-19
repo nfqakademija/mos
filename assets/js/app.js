@@ -3,19 +3,25 @@ const $ = require('jquery');
 const randomString = require('random-string');
 
 $(document).ready(function() {
+
+  $(".container .alert-success").fadeTo(2000, 500).slideUp(500, function(){
+    $(".container .alert-success").slideUp(500);
+  });
+
   $('.participants').on('click', '.participant__toggle-additional-button', function(e) {
     e.preventDefault();
-    $(this).parent().find('.participant__additional').toggle();
+    $(this).parent().parent().find('.participant__additional').toggle();
+    $(this).text() === 'More' ? $(this).text('Less') : $(this).text('More');
   });
 
   $('.participants').on('click', '.participant__username-generate-button', function(e) {
     e.preventDefault();
-    $(this).parent().find('.participant__username').val(randomString());
+    $(this).parent().parent().find('.participant__username').val(randomString());
   });
 
   $('.participants').on('click', '.participant__password-generate-button', function(e) {
     e.preventDefault();
-    $(this).parent().find('.participant__password').val(randomString());
+    $(this).parent().parent().find('.participant__password').val(randomString());
   });
 
   const $collectionHolder = $('div.participants');
@@ -32,7 +38,7 @@ $(document).ready(function() {
 
   $('.participants').on('click', '.participant__remove-button', function(e) {
     e.preventDefault();
-    $(this).parent().remove();
+    $(this).parent().parent().remove();
   });
 });
 
