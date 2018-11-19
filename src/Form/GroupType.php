@@ -13,6 +13,7 @@ use App\Entity\LearningGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,7 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address')
+            ->add('address', TextType::class)
             ->add('participants', CollectionType::class, array(
                 'entry_type' => UserType::class,
                 'allow_add' => true,
@@ -36,6 +37,7 @@ class GroupType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => LearningGroup::class,
+            'attr'=> array('novalidate' => 'novalidate')
         ));
     }
 }

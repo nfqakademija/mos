@@ -4,29 +4,67 @@
 {% extends 'base.html.twig' %}
 
 {% macro printParticipant(participant) %}
-    <div class="participant" >
-        {{ form_row(participant.name) }}
-        {{ form_row(participant.surname) }}
-        {{ form_row(participant.username, {'attr': {'class': 'participant__username'}}) }}
-        <button class="participant__username-generate-button btn-secondary btn">Generate</button>
-        {{ form_row(participant.password, {'attr': {'class': 'participant__password'}}) }}
-        <button class="participant__password-generate-button btn-secondary btn">Generate</button>
-        <div class="participant__additional">
-            {{ form_row(participant.birthDate) }}
-            {{ form_row(participant.address) }}
-            {{ form_row(participant.email) }}
-            {{ form_row(participant.phone) }}
-            {{ form_row(participant.gender) }}
+    <div class="participant border border-dark p-3 rounded clearfix mb-3">
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(participant.name) }}
+            </div>
+            <div class="col-sm">
+                {{ form_row(participant.surname) }}
+            </div>
         </div>
-        <button class="participant__toggle-additional-button btn-secondary btn" type="button">Toggle</button>
-        <button class="participant__remove-button btn-secondary btn" type="button">Delete</button>
+        <div class="row">
+            <div class="col-sm">
+                {{ form_label(participant.username) }}
+                <div class="input-group mb-3">
+                    {{ form_widget(participant.username, {'attr': {'class': 'participant__username'}}) }}
+                    <div class="input-group-append">
+                        <button class="participant__username-generate-button btn btn-outline-secondary">Generate</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                {{ form_label(participant.password) }}
+                <div class="input-group mb-3">
+                    {{ form_widget(participant.password, {'attr': {'class': 'participant__password'}}) }}
+                    <div class="input-group-append">
+                        <button class="participant__password-generate-button btn btn-outline-secondary">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="participant__additional">
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_row(participant.address) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(participant.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_row(participant.birthDate) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(participant.phone) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(participant.gender) }}
+                </div>
+            </div>
+        </div>
+        <div class="float-right">
+            <button class="participant__toggle-additional-button btn-outline-secondary btn" type="button">Toggle</button>
+            <button class="participant__remove-button btn-outline-danger btn" type="button">Delete</button>
+        </div>
     </div>
 {% endmacro %}
 
 
 {% block body %}
     <div class="container">
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_start(form) }}
         {{ form_row(form.address) }}
         <div class="participants" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
             {% for participant in form.participants %}
