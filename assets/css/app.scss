@@ -1,5 +1,7 @@
 
 // the ~ allows you to reference things in node_modules
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
 @import "~bootstrap/scss/bootstrap";
 @import "group-form";
 @import "participant";

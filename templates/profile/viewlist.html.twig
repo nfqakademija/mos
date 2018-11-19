@@ -1,19 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users list view{% endblock %}
-
-
+{% block title %}Users{% endblock %}
 
 {% block body %}
-<h1>Users list view</h1>
-
-  <ul>
-    {% for user in users %}
-
-      <li><a href="{{ path('profile.view.user', {'user': user.id}) }}">
-          {{ user.name }} {{ user.surname }} ( {{ user.username }} ) </a></li>
-
-    {% endfor %}
-  </ul>
-
+  <div class="container">
+    <h2 class="text-center mt-3">Users</h2>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Username</th>
+      </tr>
+      </thead>
+        {% for user in users %}
+          <tr>
+            <th scope="row">{{ user.id }}</th>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>
+              <a href="{{ path('profile.view.user', {'user': user.id}) }}">
+                {{ user.username }}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+    </table>
+  </div>
 {% endblock %}

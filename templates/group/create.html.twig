@@ -19,7 +19,9 @@
                 <div class="input-group mb-3">
                     {{ form_widget(participant.username, {'attr': {'class': 'participant__username'}}) }}
                     <div class="input-group-append">
-                        <button class="participant__username-generate-button btn btn-outline-secondary">Generate</button>
+                        <button class="participant__username-generate-button btn btn-outline-secondary">
+                            Generate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -28,7 +30,9 @@
                 <div class="input-group mb-3">
                     {{ form_widget(participant.password, {'attr': {'class': 'participant__password'}}) }}
                     <div class="input-group-append">
-                        <button class="participant__password-generate-button btn btn-outline-secondary">Generate</button>
+                        <button class="participant__password-generate-button btn btn-outline-secondary">
+                            Generate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -63,12 +67,9 @@
 
 
 {% block body %}
-    <div class="container group-form">
-        {% for message in app.flashes('notice') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
+    <div class="container group-form mt-3">
+        <a class="btn btn-secondary" href="{{ path('group.viewlist') }}"><i class="fa fa-arrow-left"></i> Atgal</a>
+        <h2 class="text-center">Group form</h2>
         {{ form_start(form) }}
         {{ form_row(form.address) }}
         <div class="participants clearfix" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
