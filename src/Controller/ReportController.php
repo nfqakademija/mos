@@ -53,11 +53,22 @@ class ReportController extends AbstractController
      */
     public function participants(Request $request, LearningGroupRepository $groupRepo, Report $report)
     {
-        $range =  $report->getRangeFromRequest($request);
+        $defaultData = [];
+        $range = ['dateFrom' => null, 'dateTo' => null];
+        $reportFilterForm = $this->createForm(ReportFilterType::class, $defaultData);
 
-        $results = $report->getParticipantsReport($groupRepo, $range['dateFrom'], $range['dateTo']);
+        $reportFilterForm->handleRequest($request);
+
+        if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
+            $data = $reportFilterForm->getData();
+
+            $range = $report->getRangeFromFormData($data);
+        }
+
+        $results = $report->getParticipa ntsReport($groupRepo, $range['dateFrom'], $range['dateTo']);
 
         return $this->render('report/participants.html.twig', [
+          'form' => $reportFilterForm->createView(),
           'results' => $results,
         ]);
     }
