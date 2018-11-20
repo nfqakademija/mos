@@ -27,6 +27,11 @@ class Region
      */
     private $isCity;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isProblematic;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,4 +60,17 @@ class Region
 
         return $this;
     }
+
+    public function getIsProblematic(): ?bool
+    {
+        return $this->isProblematic;
+    }
+
+    public function setIsProblematic(bool $isProblematic): self
+    {
+        $this->isProblematic = $isProblematic;
+
+        return $this;
+    }
+
 }

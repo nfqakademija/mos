@@ -53,14 +53,13 @@ class GroupController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $group = new LearningGroup();
             $group->setAddress($groupType->getAddress());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($group);
 
-            foreach($groupType->getParticipants() as $participant) {
+            foreach ($groupType->getParticipants() as $participant) {
                 $participant->setLearningGroup($group);
                 $participant->setRoles([User::ROLE_PARTICIPANT]);
                 $entityManager->persist($participant);
