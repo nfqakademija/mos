@@ -9,7 +9,7 @@ set -x # Show commands being executed
 # Downloading dependencies and building frontend
 #composer install --no-dev --no-scripts --no-interaction --optimize-autoloader
 #temporary install dev bundles to production (for fixtures...)
-composer install --no-scripts --no-interaction --optimize-autoloader
+composer install --no-interaction --optimize-autoloader
 
 yarn
 yarn run encore production
