@@ -3,7 +3,6 @@
 {% block title %}Groups{% endblock %}
 
 {% block body %}
-    <div class="container">
         {% for message in app.flashes('notice') %}
             <div class="group-success alert alert-success mt-3">
                 {{ message }}
@@ -29,5 +28,4 @@
                 </tr>
             {% endfor %}
         </table>
-    </div>
 {% endblock %}
