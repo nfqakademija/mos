@@ -1,27 +1,37 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('login') }}">{% trans %}Login{% endtrans %}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('logout') }}">{% trans %}Logout{% endtrans %}</a>
-      </li>
+<nav class="nav-wrapper blue darken-3">
 
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('profile.view') }}">{% trans %}My Profile{% endtrans %}</a>
+    <ul class="left hide-on-med-and-down">
+      <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
+        <a href="{{ path('group.viewlist') }}">
+            {% trans %}Groups{% endtrans %}
+        </a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('profile.viewlist') }}">{% trans %}Users{% endtrans %}</a>
+      <li class="{{ app.request.get('_route') == 'profile.viewlist' ? 'active' }}">
+        <a href="{{ path('profile.viewlist') }}">
+            {% trans %}Users{% endtrans %}
+        </a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('group.viewlist') }}">{% trans %}Groups{% endtrans %}</a>
+      <li class="{{ app.request.get('_route') == 'report.participants' ? 'active' }}">
+        <a href="{{ path('report.participants') }}">
+            {% trans %}Participants report{% endtrans %}
+        </a>
       </li>
-
-      <li class="nav-item">
-          <a class="nav-link" href="{{ path('report.participants') }}">{% trans %}Participants report{% endtrans %} </a>
+    </ul>
+    <ul class="right hide-on-med-and-down">
+      <li>
+        <a href="{{ path('profile.view') }}">
+            {% trans %}My Profile{% endtrans %}
+        </a>
       </li>
-      
+      <li>
+        <a href="{{ path('login') }}">
+            {% trans %}Login{% endtrans %}
+        </a>
+      </li>
+      <li>
+        <a href="{{ path('logout') }}">
+            {% trans %}Logout{% endtrans %}
+        </a>
+      </li>
     </ul>
 </nav>

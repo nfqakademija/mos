@@ -1,4 +1,5 @@
 require('bootstrap');
+require('materialize-css/dist/js/materialize.min');
 const $ = require('jquery');
 const randomString = require('random-string');
 

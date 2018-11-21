@@ -1,0 +1,78 @@
+{% import _self as formMacros %}
+
+{% macro printParticipant(participant) %}
+    <div class="participant border border-dark p-3 rounded clearfix mb-3">
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(participant.name) }}
+            </div>
+            <div class="col-sm">
+                {{ form_row(participant.surname) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                {{ form_label(participant.username) }}
+                <div class="input-group mb-3">
+                    {{ form_widget(participant.username, {'attr': {'class': 'participant__username'}}) }}
+                    <div class="input-group-append">
+                        <button class="participant__username-generate-button btn btn-outline-secondary">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                {{ form_label(participant.password) }}
+                <div class="input-group mb-3">
+                    {{ form_widget(participant.password, {'attr': {'class': 'participant__password'}}) }}
+                    <div class="input-group-append">
+                        <button class="participant__password-generate-button btn btn-outline-secondary">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="participant__additional">
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_row(participant.address) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(participant.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    {{ form_row(participant.birthDate) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(participant.phone) }}
+                </div>
+                <div class="col-sm">
+                    {{ form_row(participant.gender) }}
+                </div>
+            </div>
+        </div>
+        <div class="float-right">
+            <button class="participant__toggle-additional-button btn-outline-secondary btn" type="button">More</button>
+            <button class="participant__remove-button btn-outline-danger btn" type="button">Delete</button>
+        </div>
+    </div>
+{% endmacro %}
+
+{{ form_start(form) }}
+{{ form_row(form.address) }}
+<div class="participants clearfix" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
+    {% for participant in form.participants %}
+        {{ formMacros.printParticipant(participant) }}
+    {% endfor %}
+    <button class="participant__add-button btn-outline-secondary btn my-2 float-right" type="button">
+        Add participant
+    </button>
+</div>
+<div class="participant__submit-button-wrapper">
+    {{ form_widget(form.save, {'attr': {'class': 'participant__submit-button btn btn-primary mb-3'}}) }}
+</div>
+{{ form_end(form) }}
