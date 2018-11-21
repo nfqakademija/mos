@@ -12,9 +12,27 @@ use Symfony\Component\HttpFoundation\Request;
 class Report
 {
 
+    /**
+     * @param \App\Repository\LearningGroupRepository $gr
+     * @param \DateTime $dateFrom
+     * @param \DateTime $dateTo
+     *
+     * @return array
+     */
     public function getParticipantsReport(LearningGroupRepository $gr, \DateTime $dateFrom, \DateTime $dateTo)
     {
-        //TODo: rebuild using DQL
+        //TODO: rewrite using DQL if any performance issues
+
+        //1. gets groups with end date on the range
+//        SELECT learning_group.id, gr.starttime, gr.endtime FROM learning_group
+//INNER JOIN (
+//      SELECT learning_group.id, MIN(time_slot.start_time) AS starttime, MAX(time_slot.start_time) AS endtime FROM learning_group
+//INNER JOIN time_slot ON learning_group.id = time_slot.learning_group_id
+//GROUP BY learning_group.id
+//) AS gr
+//ON learning_group.id = gr.id AND gr.endtime >= '2018-11-01' AND gr.endtime <= '2019-01-01';
+
+
 
         $results = [];
         $groupsInPeriod = [];

@@ -18,5 +18,4 @@ class LearningGroupRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, LearningGroup::class);
     }
-    
 }
