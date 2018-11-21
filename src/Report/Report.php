@@ -6,6 +6,8 @@ namespace App\Report;
 use App\Entity\TimeSlot;
 use App\Entity\LearningGroup;
 use App\Repository\LearningGroupRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,18 +23,34 @@ class Report
      */
     public function getParticipantsReport(LearningGroupRepository $gr, \DateTime $dateFrom, \DateTime $dateTo)
     {
-        //TODO: rewrite using DQL if any performance issues
+        //TODO: rewrite using DQL or SQL
 
         //1. gets groups with end date on the range
-//        SELECT learning_group.id, gr.starttime, gr.endtime FROM learning_group
+//        SELECT * FROM `user`
+//INNER JOIN
+//    (
+//      SELECT learning_group.id, gr.starttime, gr.endtime FROM learning_group
 //INNER JOIN (
 //      SELECT learning_group.id, MIN(time_slot.start_time) AS starttime, MAX(time_slot.start_time) AS endtime FROM learning_group
 //INNER JOIN time_slot ON learning_group.id = time_slot.learning_group_id
 //GROUP BY learning_group.id
 //) AS gr
-//ON learning_group.id = gr.id AND gr.endtime >= '2018-11-01' AND gr.endtime <= '2019-01-01';
+//ON learning_group.id = gr.id AND gr.endtime >= '2018-12-01' AND gr.endtime <= '2018-12-02'
+//) AS gr_range 
+//ON `user`.learning_group_id = gr_range.id;
+
+//
+//        $this->createQueryBuilder('u')
+//          ->andWhere('u.roles LIKE :val')
+//          ->setParameter('val', '%"'.$role.'"%')
+//          ->orderBy('u.id', 'ASC')
+//          ->getQuery()
+//          ->getResult();
 
 
+        
+
+        ////////////////////////////////////////////////
 
         $results = [];
         $groupsInPeriod = [];
