@@ -14,7 +14,9 @@
         {% block menu %}
           {% include 'menu/main.html.twig' %}
         {% endblock %}
-        {% block body %}{% endblock %}
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}
             <script src="{{ asset('build/js/app.js') }}"></script>
         {% endblock %}
