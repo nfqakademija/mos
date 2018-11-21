@@ -6,7 +6,9 @@ namespace App\Report;
 use App\Entity\TimeSlot;
 use App\Entity\LearningGroup;
 use App\Repository\LearningGroupRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,85 +16,33 @@ use Symfony\Component\HttpFoundation\Request;
 class Report
 {
 
-    /**
-     * @param \App\Repository\LearningGroupRepository $gr
-     * @param \DateTime $dateFrom
-     * @param \DateTime $dateTo
-     *
-     * @return array
-     */
-    public function getParticipantsReport(LearningGroupRepository $gr, \DateTime $dateFrom, \DateTime $dateTo)
+
+    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo,  EntityManagerInterface $em)
     {
-        //TODO: rewrite using DQL or SQL
+        $conn = $em->getConnection();
+        $sql = "SELECT `user`.learning_group_id AS groupId, name, surname, region_id AS region, birth_date AS birthDate, address, phone, 
+email,living_area_type AS livingAreaType, gender, starttime AS startDate, endtime AS endDate FROM `user`
+                INNER JOIN
+                    (
+                      SELECT learning_group.id, gr.starttime, gr.endtime FROM learning_group
+                INNER JOIN (
+                      SELECT learning_group.id, MIN(time_slot.start_time) AS starttime, MAX(time_slot.start_time) AS endtime FROM learning_group
+                INNER JOIN time_slot ON learning_group.id = time_slot.learning_group_id
+                GROUP BY learning_group.id
+                ) AS gr
+                ON learning_group.id = gr.id AND gr.endtime >= '" . $dateFrom->format('Y-m-d') . "' AND gr.endtime <= '" . $dateTo->format('Y-m-d') . "' 
+                ) AS gr_range 
+                ON `user`.learning_group_id = gr_range.id;";
 
-        //1. gets groups with end date on the range
-//        SELECT * FROM `user`
-//INNER JOIN
-//    (
-//      SELECT learning_group.id, gr.starttime, gr.endtime FROM learning_group
-//INNER JOIN (
-//      SELECT learning_group.id, MIN(time_slot.start_time) AS starttime, MAX(time_slot.start_time) AS endtime FROM learning_group
-//INNER JOIN time_slot ON learning_group.id = time_slot.learning_group_id
-//GROUP BY learning_group.id
-//) AS gr
-//ON learning_group.id = gr.id AND gr.endtime >= '2018-12-01' AND gr.endtime <= '2018-12-02'
-//) AS gr_range 
-//ON `user`.learning_group_id = gr_range.id;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
 
-//
-//        $this->createQueryBuilder('u')
-//          ->andWhere('u.roles LIKE :val')
-//          ->setParameter('val', '%"'.$role.'"%')
-//          ->orderBy('u.id', 'ASC')
-//          ->getQuery()
-//          ->getResult();
-
-
-        
-
-        ////////////////////////////////////////////////
-
-        $results = [];
-        $groupsInPeriod = [];
-
-        $groups = $gr->findAll();
-        foreach ($groups as $group) {
-            $timeSlots = $group->getTimeSlots();
-            $latestTimeslot = $this->getLatestTimeslot($timeSlots);
-            if (($latestTimeslot >= $dateFrom) and ($latestTimeslot <= $dateTo)) {
-                $groupsInPeriod[] = $group;
-            }
-        }
-
-        /** @var LearningGroup $group */
-        foreach ($groupsInPeriod as $group) {
-            $participants = $group->getParticipants();
-            foreach ($participants as $participant) {
-                $region = '';
-                if (!empty($participant->getRegion())) {
-                    $region = $participant->getRegion()->getTitle();
-                }
-
-                $results[] = [
-                    'name' => $participant->getName(),
-                    'surname' => $participant->getSurname(),
-                    'birthDate' => $participant->getBirthDate(),
-                    'region' => $region,
-                    'livingAreaType' => $participant->getLivingAreaType(),
-                    'address' => $participant->getAddress(),
-                    'phone' => $participant->getPhone(),
-                    'email' => $participant->getEmail(),
-                    'gender' => $participant->getGender(),
-                    'startDate' => $this->getEarliestTimeslot($group->getTimeSlots(), true),
-                    'endDate' => $this->getLatestTimeslot($group->getTimeSlots(), true),
-                    'groupId' => $group->getId(),
-                ];
-            }
-        }
-        return $results;
+        return $result;
     }
-
-
+    
+    
+    
     /**
      * @param $data
      *
