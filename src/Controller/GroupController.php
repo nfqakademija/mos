@@ -47,30 +47,22 @@ class GroupController extends AbstractController
      */
     public function createGroup(Request $request)
     {
-        $groupType = new LearningGroup();
-        $form = $this->createForm(GroupType::class, $groupType);
+        $group = new LearningGroup();
+        $form = $this->createForm(GroupType::class, $group);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $group = new LearningGroup();
-            $group->setAddress($groupType->getAddress());
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($group);
 
-            foreach ($groupType->getParticipants() as $participant) {
+            foreach ($group->getParticipants() as $participant) {
                 $participant->setLearningGroup($group);
                 $participant->setRoles([User::ROLE_PARTICIPANT]);
                 $entityManager->persist($participant);
             }
 
             $entityManager->flush();
-
-            unset($groupType);
-            unset($form);
-            $groupType = new LearningGroup();
-            $form = $this->createForm(GroupType::class, $groupType);
 
             $this->addFlash(
                 'notice',
@@ -82,6 +74,40 @@ class GroupController extends AbstractController
 
         return $this->render('group/create.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/group/edit/{group}", name="group.edit")
+     */
+    public function editGroup(Request $request, $group)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $group = $entityManager->getRepository(LearningGroup::class)->find($group);
+
+        $form = $this->createForm(GroupType::class, $group);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($group->getParticipants() as $participant) {
+                $participant->setLearningGroup($group);
+                $participant->setRoles([User::ROLE_PARTICIPANT]);
+                $entityManager->persist($participant);
+            }
+
+            $entityManager->flush();
+
+            $this->addFlash(
+                'notice',
+                'Group was successfully updated!'
+            );
+
+            return $this->redirectToRoute('group.viewlist');
+        }
+
+        return $this->render('group/edit.html.twig', [
+            'form' => $form->createView(),
+            'id' => $group->getId()
         ]);
     }
 }

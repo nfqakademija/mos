@@ -1,17 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Group{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Group view ✅</h1>
-
-    {{ dump(group) }}
-
-</div>
+    <div class="container">
+        <h2 class="text-center mt-3">Group</h2>
+        <a class="btn btn-secondary mb-3" href="{{ path('group.edit', {'group': group.id}) }}">
+            Edit
+        </a>
+        <h4>Information</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Address</th>
+            </tr>
+            </thead>
+            <tr>
+                <td>{{ group.address }}</td>
+            </tr>
+        </table>
+        <h4>Participants</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Username</th>
+                <th scope="col">Birth date</th>
+            </tr>
+            </thead>
+            {% for participant in group.participants %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ participant.name }}</td>
+                    <td>{{ participant.surname }}</td>
+                    <td>{{ participant.username }}</td>
+                    <td>{{ participant.birth_date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
