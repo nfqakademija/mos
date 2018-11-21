@@ -4,50 +4,55 @@
 
 
 {% block body %}
+  <h2>{% trans %}Participants report{% endtrans %}</h2>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-      <input type="submit" class="btn" value={% trans %}Filter{% endtrans %} />
-    {{ form_end(form) }}
+  {{ form_start(form) }}
+  <div class="row">
+    <div class="col-sm-6">
+      {{ form_row(form.dateFrom) }}
+    </div>
+    <div class="col-sm-6">
+      {{ form_row(form.dateTo) }}
+    </div>
+  </div>
+  <input type="submit" class="btn" value={% trans %}Filter{% endtrans %} />
+  {{ form_end(form) }}
 
-    <h1>{% trans %}Participants report{% endtrans %}</h1>
-    <table>
-        <tr>
-            <th>{% trans %}Name{% endtrans %}</th>
-            <th>{% trans %}Surname{% endtrans %}</th>
-            <th>{% trans %}Birth date{% endtrans %}</th>
-            <th>{% trans %}Region/city{% endtrans %}</th>
-            <th>{% trans %}Living area type{% endtrans %}</th>
-            <th>{% trans %}Address{% endtrans %}</th>
-            <th>{% trans %}Phone number{% endtrans %}</th>
-            <th>{% trans %}Email{% endtrans %}</th>
-            <th>{% trans %}Gender{% endtrans %}</th>
-            <th>{% trans %}Course start date{% endtrans %}</th>
-            <th>{% trans %}Course end date{% endtrans %}</th>
-            <th>{% trans %}Group Id{% endtrans %}</th>
-            <th>{% trans %}Successfully finished{% endtrans %}</th>
+  <table>
+    <tr>
+      <th>{% trans %}Name{% endtrans %}</th>
+      <th>{% trans %}Surname{% endtrans %}</th>
+      <th>{% trans %}Birth date{% endtrans %}</th>
+      <th>{% trans %}Region/city{% endtrans %}</th>
+      <th>{% trans %}Living area type{% endtrans %}</th>
+      <th>{% trans %}Address{% endtrans %}</th>
+      <th>{% trans %}Phone number{% endtrans %}</th>
+      <th>{% trans %}Email{% endtrans %}</th>
+      <th>{% trans %}Gender{% endtrans %}</th>
+      <th>{% trans %}Course start date{% endtrans %}</th>
+      <th>{% trans %}Course end date{% endtrans %}</th>
+      <th>{% trans %}Group Id{% endtrans %}</th>
+    </tr>
 
-        </tr>
-        
-        {% for result in results %}
-            <tr>
-                <td>{{ result.name }}</td>
-                <td>{{ result.surname }}</td>
-                <td>{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
-                <td>{{ result.region }}</td>
-                <td>{{ result.livingAreaType }}</td>
-                <td>{{ result.address }}</td>
-                <td>{{ result.phone }}</td>
-                <td>{{ result.email }}</td>
-                <td>{{ result.gender }}</td>
-                <td>{{ result.startDate ? result.startDate|date('Y-m-d') }}</td>
-                <td>{{ result.endDate ? result.endDate|date('Y-m-d') }}</td>
-                <td>{{ result.groupId }}</td>
-                <td></td>
-            </tr>
-            
-        {% endfor %}
-        
-    </table>
+    {% for result in results %}
+      <tr>
+        <td>{{ result.name }}</td>
+        <td>{{ result.surname }}</td>
+        <td>{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
+        <td>{{ result.region }}</td>
+        <td>{{ result.livingAreaType }}</td>
+        <td>{{ result.address }}</td>
+        <td>{{ result.phone }}</td>
+        <td>{{ result.email }}</td>
+        <td>{{ result.gender }}</td>
+        <td>{{ result.startDate ? result.startDate|date('Y-m-d') }}</td>
+        <td>{{ result.endDate ? result.endDate|date('Y-m-d') }}</td>
+        <td>{{ result.groupId }}</td>
+        <td></td>
+      </tr>
+
+    {% endfor %}
+
+  </table>
 
 {% endblock %}
