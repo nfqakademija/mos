@@ -4,12 +4,18 @@
 
 {% block body %}
         {% for message in app.flashes('notice') %}
-            <div class="group-success alert alert-success mt-3">
+            <div class="">
                 {{ message }}
             </div>
         {% endfor %}
-        <h2 class="text-center mt-3">Groups</h2>
-        <a class="btn btn-outline-secondary my-3" href="{{ path('group.create') }}">Create group</a>
+        <h2 class="center-align">
+            Groups
+        </h2>
+        <a class="blue darken-3 hoverable add-button pulse" href="{{ path('group.create') }}">
+            <i class="add-button__icon material-icons">
+                add
+            </i>
+        </a>
         <table class="table">
             <thead>
                 <tr>

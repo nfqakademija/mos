@@ -1,78 +1,113 @@
 {% import _self as formMacros %}
+{% form_theme form 'group/form_errors.html.twig' %}
 
 {% macro printParticipant(participant) %}
-    <div class="participant border border-dark p-3 rounded clearfix mb-3">
+    <div class="participant">
         <div class="row">
-            <div class="col-sm">
-                {{ form_row(participant.name) }}
+            <div class="input-field col s4">
+                {{ form_label(participant.name) }}
+                {{ form_widget(participant.name, {'attr': {'class': 'validate'}}) }}
+                {{ form_errors(participant.name) }}
             </div>
-            <div class="col-sm">
-                {{ form_row(participant.surname) }}
+            <div class="input-field col s5">
+                {{ form_label(participant.surname) }}
+                {{ form_widget(participant.surname, {'attr': {'class': 'validate participant__surname'}}) }}
+                {{ form_errors(participant.surname) }}
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                {{ form_label(participant.username) }}
-                <div class="input-group mb-3">
-                    {{ form_widget(participant.username, {'attr': {'class': 'participant__username'}}) }}
-                    <div class="input-group-append">
-                        <button class="participant__username-generate-button btn btn-outline-secondary">
-                            Generate
-                        </button>
-                    </div>
-                </div>
+            <div class="participant__button-wrapper col s2">
+                <button class="participant__toggle-additional-button blue darken-3 btn hoverable" type="button">
+                    More
+                </button>
             </div>
-            <div class="col-sm">
-                {{ form_label(participant.password) }}
-                <div class="input-group mb-3">
-                    {{ form_widget(participant.password, {'attr': {'class': 'participant__password'}}) }}
-                    <div class="input-group-append">
-                        <button class="participant__password-generate-button btn btn-outline-secondary">
-                            Generate
-                        </button>
-                    </div>
-                </div>
+            <div class="participant__button-wrapper col s1">
+                <i class="participant__remove-button material-icons">
+                    close
+                </i>
             </div>
         </div>
         <div class="participant__additional">
             <div class="row">
-                <div class="col-sm">
-                    {{ form_row(participant.address) }}
+                <div class="input-field col s6">
+                    <div class="row">
+                        <div class="col s8">
+                            {{ form_label(participant.username) }}
+                            {{ form_widget(participant.username, {'attr': {'class': 'validate participant__username'}}) }}
+                            {{ form_errors(participant.username) }}
+                        </div>
+                        <div class="col s4 participant__button-wrapper">
+                            <button class="participant__username-generate-button btn blue darken-3">
+                                Generate
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    {{ form_row(participant.email) }}
+                <div class="input-field col s6">
+                    <div class="row">
+                        <div class="col s8">
+                            {{ form_label(participant.password) }}
+                            {{ form_widget(participant.password, {'attr': {'class': 'validate participant__password'}}) }}
+                            {{ form_errors(participant.password) }}
+                        </div>
+                        <div class="col s4 participant__button-wrapper">
+                            <button class="participant__password-generate-button btn blue darken-3">
+                                Generate
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm">
-                    {{ form_row(participant.birthDate) }}
+                <div class="input-field col s6">
+                    {{ form_label(participant.address) }}
+                    {{ form_widget(participant.address, {'attr': {'class': 'validate'}}) }}
+                    {{ form_errors(participant.address) }}
                 </div>
-                <div class="col-sm">
-                    {{ form_row(participant.phone) }}
-                </div>
-                <div class="col-sm">
-                    {{ form_row(participant.gender) }}
+                <div class="input-field col s6">
+                    {{ form_label(participant.email) }}
+                    {{ form_widget(participant.email, {'attr': {'class': 'validate'}}) }}
+                    {{ form_errors(participant.email) }}
                 </div>
             </div>
-        </div>
-        <div class="float-right">
-            <button class="participant__toggle-additional-button btn-outline-secondary btn" type="button">More</button>
-            <button class="participant__remove-button btn-outline-danger btn" type="button">Delete</button>
+            <div class="row">
+                <div class="input-field col s4">
+                    {{ form_label(participant.birthDate) }}
+                    {{ form_widget(participant.birthDate, {'attr': {'class': 'validate datepicker'}}) }}
+                    {{ form_errors(participant.birthDate) }}
+                </div>
+                <div class="input-field col s4">
+                    {{ form_label(participant.phone) }}
+                    {{ form_widget(participant.phone, {'attr': {'class': 'validate'}}) }}
+                    {{ form_errors(participant.phone) }}
+                </div>
+                <div class="col s4">
+                    {{ form_widget(participant.gender) }}
+                    {{ form_label(participant.gender) }}
+                    {{ form_errors(participant.gender) }}
+                </div>
+            </div>
         </div>
     </div>
 {% endmacro %}
 
-{{ form_start(form) }}
-{{ form_row(form.address) }}
-<div class="participants clearfix" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
-    {% for participant in form.participants %}
-        {{ formMacros.printParticipant(participant) }}
-    {% endfor %}
-    <button class="participant__add-button btn-outline-secondary btn my-2 float-right" type="button">
-        Add participant
-    </button>
+<div class="row">
+    {{ form_start(form, {'attr': {'class': 'col s12'}}) }}
+    <div class="row">
+        <div class="input-field col s12">
+            {{ form_label(form.address) }}
+            {{ form_widget(form.address, {'attr': {'class': 'validate'}}) }}
+            {{ form_errors(form.address) }}
+        </div>
+    </div>
+    <div class="participants" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
+        {% for participant in form.participants %}
+            {{ formMacros.printParticipant(participant) }}
+        {% endfor %}
+        <button class="participants__add-button btn blue darken-3" type="button">
+            Add participant
+        </button>
+    </div>
+    <div class="participants__submit-button-wrapper">
+        {{ form_widget(form.save, {'attr': {'class': 'participants__submit-button btn blue darken-3'}}) }}
+    </div>
+    {{ form_end(form) }}
 </div>
-<div class="participant__submit-button-wrapper">
-    {{ form_widget(form.save, {'attr': {'class': 'participant__submit-button btn btn-primary mb-3'}}) }}
-</div>
-{{ form_end(form) }}

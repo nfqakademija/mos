@@ -1,15 +1,55 @@
-.participant__additional {
-  display: none;
+.participant {
+  padding: 10px 20px;
+
+  &.participant--active {
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .participant__additional {
+    display: none;
+  }
+
+  .participants__submit-button-wrapper {
+    position: relative;
+
+    .participants__submit-button {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 50px;
+    }
+  }
+
+  .participant__button-wrapper {
+    position: relative;
+    height: 60px;
+
+    & > * {
+      position: absolute;
+    }
+  }
+
+  .participant__remove-button {
+    top: 50%;
+    right: 0;
+    transform: translateX(-50%);
+    cursor: pointer;
+    color: #9e9e9e;
+  }
+  .participant__toggle-additional-button {
+    bottom: 0;
+    right: 0;
+  }
+
+  .participant__username-generate-button,
+  .participant__password-generate-button {
+    bottom: 0;
+    left: 5%;
+  }
 }
 
-.participant__submit-button-wrapper {
-  position: relative;
-
-  .participant__submit-button {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 50px;
-  }
+.participants__add-button {
+  float: right;
 }

@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="mt-3">
-        <a class="btn btn-secondary" href="{{ path('group.viewlist') }}"><i class="fa fa-arrow-left"></i> Atgal</a>
-        <h2 class="text-center">Group form</h2>
-        {% include 'group/form.html.twig' %}
-    </div>
+    <a class="btn blue darken-3 back-button" href="{{ path('group.viewlist') }}">
+        <i class="material-icons">
+            arrow_back
+        </i>
+        <span class="back-button__text">
+            Atgal
+        </span>
+    </a>
+    <h2>Group form</h2>
+    {% include 'group/form.html.twig' %}
 {% endblock %}

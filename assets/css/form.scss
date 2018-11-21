@@ -1,0 +1,14 @@
+.input-field input[type=text].valid,
+.input-field input[type=email]:not(.browser-default).valid {
+  border-bottom: 1px solid #1565C0;
+  box-shadow: 0 1px 0 0 #1565C0;
+}
+
+.form-error-wrapper {
+  margin: 0;
+
+  .form-error {
+    color: rgb(244, 67, 54);
+    font-size: 12px;
+  }
+}
