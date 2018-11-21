@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 /**
  * @method LearningGroup|null find($id, $lockMode = null, $lockVersion = null)
  * @method LearningGroup|null findOneBy(array $criteria, array $orderBy = null)
- * @method LearningGroup[]    findAll()
  * @method LearningGroup[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class LearningGroupRepository extends ServiceEntityRepository
@@ -18,5 +17,10 @@ class LearningGroupRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, LearningGroup::class);
     }
-    
+
+    public function findAll()
+    {
+        return $this->findBy(array(), array('id' => 'DESC'));
+    }
 }
+
