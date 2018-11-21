@@ -28,25 +28,30 @@ class AppFixtures extends Fixture
         $regionKaunas = new Region();
         $regionKaunas
           ->setTitle('Kaunas')
-          ->setIsCity(true);
+          ->setIsCity(true)
+          ->setIsProblematic('false');
+
         $manager->persist($regionKaunas);
 
         $regionKaunoR = new Region();
         $regionKaunoR
           ->setTitle('Kauno raj.')
-          ->setIsCity(false);
+          ->setIsCity(false)
+          ->setIsProblematic('false');
         $manager->persist($regionKaunoR);
 
         $regionJonava = new Region();
         $regionJonava
           ->setTitle('Jonava')
-          ->setIsCity(true);
+          ->setIsCity(true)
+          ->setIsProblematic('true');
         $manager->persist($regionJonava);
 
         $regionJonavosR = new Region();
         $regionJonavosR
           ->setTitle('Jonavos raj.')
-          ->setIsCity(false);
+          ->setIsCity(false)
+          ->setIsProblematic('true');
         $manager->persist($regionJonavosR);
 
         //generate Users///////////////////////////////////////////
@@ -82,7 +87,7 @@ class AppFixtures extends Fixture
         /**
          * @var $userParticipant User[]
          */
-        for ($i=1; $i<=5; $i++) {
+        for ($i=1; $i<=110; $i++) {
             $userParticipant[$i] = new User();
             $userParticipant[$i]
               ->setUsername('participant' . $i)
@@ -144,12 +149,32 @@ class AppFixtures extends Fixture
         $group2 = new LearningGroup();
         $group2->setAddress('Savanorių pr. 254, Kaunas')
           ->setTeacher($userTeacher[2])
+          ->addParticipant($userParticipant[1])
+          ->addParticipant($userParticipant[2])
           ->addParticipant($userParticipant[3])
-          ->addParticipant($userParticipant[4])
           ->addTimeSlot($timeSlot4)
           ->addTimeSlot($timeSlot5);
         $manager->persist($group2);
 
+
+        for ($i=1; $i<=100; $i++) {
+            //generate TimeSlot
+            $timeSlot[$i] = new TimeSlot();
+            $timeSlot[$i]->setStartTime(new \DateTime("2018-". rand(11, 12). '-' . rand(1, 29)));
+            $timeSlot[$i]->setDurationMinutes(90);
+            $manager->persist($timeSlot[$i]);
+
+            //generate Group
+            $group[$i] = new LearningGroup();
+            $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas')
+              ->setTeacher($userTeacher[2])
+              ->addParticipant($userParticipant[$i])
+              ->addParticipant($userParticipant[$i+1])
+              ->addParticipant($userParticipant[$i+2])
+              ->addParticipant($userParticipant[$i+3])
+              ->addTimeSlot($timeSlot[$i]);
+            $manager->persist($group[$i]);
+        }
         
         $manager->flush();
     }

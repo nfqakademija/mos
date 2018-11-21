@@ -6,6 +6,7 @@ namespace App\Report;
 use App\Entity\TimeSlot;
 use App\Entity\LearningGroup;
 use App\Repository\LearningGroupRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 
 class Report
@@ -13,6 +14,7 @@ class Report
 
     public function getParticipantsReport(LearningGroupRepository $gr, \DateTime $dateFrom, \DateTime $dateTo)
     {
+        //TODo: rebuild using DQL
 
         $results = [];
         $groupsInPeriod = [];
@@ -58,7 +60,7 @@ class Report
     /**
      * @param $data
      *
-     * @return \DateTime[] $range 
+     * @return \DateTime[] $range
      */
     public function getRangeFromFormData($data)
     {
@@ -118,5 +120,4 @@ class Report
 
         return $earliestDate;
     }
-
 }
