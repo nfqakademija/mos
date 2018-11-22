@@ -5,6 +5,7 @@ namespace App\Report;
 
 use App\Entity\TimeSlot;
 use App\Entity\LearningGroup;
+use App\Entity\User;
 use App\Repository\LearningGroupRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -40,7 +41,15 @@ email,living_area_type AS livingAreaType, gender, starttime AS startDate, endtim
 
         return $result;
     }
-    
+
+
+    public function participantsReportDql(\DateTime $dateFrom, \DateTime $dateTo,  EntityManagerInterface $em)
+    {
+      
+        $ur = new UserRepository()
+        
+        return $result;
+    }
     
     
     /**
