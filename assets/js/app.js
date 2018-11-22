@@ -12,7 +12,7 @@ $(document).ready(function() {
   $collectionHolder.data('index', $collectionHolder.find(':input').length);
 });
 
-function addTagForm($collectionHolder, $addParticipantLink) {
+function addTagForm($collectionHolder) {
   const prototype = $collectionHolder.data('prototype');
 
   const index = $collectionHolder.data('index');
@@ -21,9 +21,8 @@ function addTagForm($collectionHolder, $addParticipantLink) {
 
   $collectionHolder.data('index', index + 1);
 
-  const $newFormLi = $('<div class="participant"></div>').append(newForm);
-
-  $addParticipantLink.before($newFormLi);
+  $('.participants').append(newForm);
+  $('.participants').find('.participant:last').hide().slideDown('fast');
 }
 
 function clickEvents($collectionHolder) {
@@ -33,7 +32,7 @@ function clickEvents($collectionHolder) {
 
   $('.participants').on('click', '.participant__toggle-additional-button', function(e) {
     e.preventDefault();
-    $(this).parent().parent().parent().find('.participant__additional').toggle();
+    $(this).parent().parent().parent().find('.participant__additional').slideToggle('slow');
 
     if($(this).text() === 'Less') {
       $(this).text('More');
@@ -54,9 +53,9 @@ function clickEvents($collectionHolder) {
     $(this).parent().parent().find('.participant__password').val(randomString());
   });
 
-  $('.participants').on('click', '.participants__add-button', function(e) {
+  $('.group-form__add-button').on('click', function(e) {
     e.preventDefault();
-    addTagForm($collectionHolder, $('.participants__add-button'));
+    addTagForm($collectionHolder);
     $(this).prev().find('.participant__username').val(randomString());
     $(this).prev().find('.participant__password').val(randomString());
     M.updateTextFields();
@@ -64,14 +63,22 @@ function clickEvents($collectionHolder) {
 
   $('.participants').on('click', '.participant__remove-button', function(e) {
     e.preventDefault();
-    $(this).parent().parent().parent().remove();
+
+    $(this).parent().parent().parent().slideUp('fast', function(e) {
+      $(this).remove();
+    });
+
   });
 
   $('.participants').on('keydown', '.participant__surname', function(e) {
     const keyCode = e.keyCode || e.which;
 
+    if(keyCode === 13) {
+      e.preventDefault();
+    }
+
     if ((keyCode === 9 || keyCode === 13) && !$(this).parent().parent().parent().next().is('.participant')) {
-      addTagForm($collectionHolder, $('.participants__add-button'));
+      addTagForm($collectionHolder);
 
       $(this).prev().find('.participant__username').val(randomString());
       $(this).prev().find('.participant__password').val(randomString());

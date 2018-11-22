@@ -1,9 +1,9 @@
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-            <ul class="form-error-wrapper">
+            <ul class="group-form__error-wrapper">
                 {% for error in errors %}
-                    <li class="form-error">{{ error.message }}</li>
+                    <li class="group-form__error">{{ error.message }}</li>
                 {% endfor %}
             </ul>
         {% endif %}

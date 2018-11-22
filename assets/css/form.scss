@@ -1,14 +1,19 @@
-.input-field input[type=text].valid,
-.input-field input[type=email]:not(.browser-default).valid {
-  border-bottom: 1px solid #1565C0;
-  box-shadow: 0 1px 0 0 #1565C0;
-}
+.group-form {
 
-.form-error-wrapper {
-  margin: 0;
+  .group-form__address {
+    padding: 10px 20px;
+  }
 
-  .form-error {
-    color: rgb(244, 67, 54);
-    font-size: 12px;
+  .group-form__error-wrapper {
+    margin: 0;
+
+    .group-form__error {
+      color: rgb(244, 67, 54);
+      font-size: 12px;
+    }
+  }
+
+  .group-form__add-button {
+    float: right;
   }
 }
