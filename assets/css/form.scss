@@ -1,7 +1,8 @@
 .group-form {
+  padding: 10px 30px;
 
-  .group-form__address {
-    padding: 10px 20px;
+  .group-form__title {
+    padding: 0 .75rem;
   }
 
   .group-form__error-wrapper {
@@ -15,5 +16,13 @@
 
   .group-form__add-button {
     float: right;
+    line-height: 56px;
+    margin: 20px 0;
+  }
+
+  .group-form__submit-button-wrapper {
+    clear: both;
+    margin-top: 20px;
+    @extend .center-element;
   }
 }

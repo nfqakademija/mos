@@ -1,9 +1,8 @@
 .participant {
-  padding: 10px 20px;
-
   &.participant--active {
     border-radius: 5px;
     margin-bottom: 20px;
+    padding: 10px 0;
   }
 
   .participant__additional {
@@ -11,16 +10,9 @@
   }
 
   .participant__button-wrapper {
-    position: relative;
     height: 54px;
     margin: 15px 0;
-
-    & > * {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-    }
+    @extend .center-element;
   }
 
   .participant__remove-button,

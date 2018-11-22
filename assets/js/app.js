@@ -1,33 +1,25 @@
-require('materialize-css/dist/js/materialize.min');
+import * as M from 'materialize-css/dist/js/materialize';
 const $ = require('jquery');
 const randomString = require('random-string');
 
 $(document).ready(function() {
+
   $('.participant__additional').hide();
 
-  const $collectionHolder = $('div.participants');
+  const addButton = $('<div class="clearfix"><i class="group-form__add-button btn-floating btn-large blue darken-3 material-icons">add</i></div>');
 
-  clickEvents($collectionHolder);
+  const collectionHolder = $('div.participants');
 
-  $collectionHolder.data('index', $collectionHolder.find(':input').length);
+  collectionHolder.append(addButton);
+
+  events(collectionHolder, addButton);
+
+  collectionHolder.data('index', collectionHolder.find(':input').length);
 });
 
-function addTagForm($collectionHolder) {
-  const prototype = $collectionHolder.data('prototype');
-
-  const index = $collectionHolder.data('index');
-
-  const newForm = prototype.replace(/__name__/g, index);
-
-  $collectionHolder.data('index', index + 1);
-
-  $('.participants').append(newForm);
-  $('.participants').find('.participant:last').hide().slideDown('fast');
-}
-
-function clickEvents($collectionHolder) {
-  $(".container .alert-success").fadeTo(2000, 500).slideUp(500, function(){
-    $(".container .alert-success").slideUp(500);
+function events(collectionHolder, addButton) {
+  $(".container .alert").fadeTo(2000, 500).slideUp(500, function(){
+    $(".container .alert").slideUp(500);
   });
 
   $('.participants').on('click', '.participant__toggle-additional-button', function(e) {
@@ -40,6 +32,7 @@ function clickEvents($collectionHolder) {
     } else {
       $(this).text('Less');
       $(this).parent().parent().parent().addClass('participant--active z-depth-5');
+      M.AutoInit();
     }
   });
 
@@ -55,9 +48,9 @@ function clickEvents($collectionHolder) {
 
   $('.group-form__add-button').on('click', function(e) {
     e.preventDefault();
-    addTagForm($collectionHolder);
-    $(this).prev().find('.participant__username').val(randomString());
-    $(this).prev().find('.participant__password').val(randomString());
+    addTagForm(collectionHolder, addButton);
+    $(this).parent().prev().find('.participant__username').val(randomString());
+    $(this).parent().prev().find('.participant__password').val(randomString());
     M.updateTextFields();
   });
 
@@ -67,7 +60,6 @@ function clickEvents($collectionHolder) {
     $(this).parent().parent().parent().slideUp('fast', function(e) {
       $(this).remove();
     });
-
   });
 
   $('.participants').on('keydown', '.participant__surname', function(e) {
@@ -78,11 +70,24 @@ function clickEvents($collectionHolder) {
     }
 
     if ((keyCode === 9 || keyCode === 13) && !$(this).parent().parent().parent().next().is('.participant')) {
-      addTagForm($collectionHolder);
-
-      $(this).prev().find('.participant__username').val(randomString());
-      $(this).prev().find('.participant__password').val(randomString());
+      addTagForm(collectionHolder, addButton);
+      $(this).parent().prev().find('.participant__username').val(randomString());
+      $(this).parent().prev().find('.participant__password').val(randomString());
     }
   });
+}
+
+function addTagForm(collectionHolder, addButton) {
+  const prototype = collectionHolder.data('prototype');
+
+  const index = collectionHolder.data('index');
+
+  const newForm = prototype.replace(/__name__/g, index);
+
+  collectionHolder.data('index', index + 1);
+
+  addButton.before(newForm);
+
+  $('.participants').find('.participant:last').hide().slideDown('fast');
 }
 

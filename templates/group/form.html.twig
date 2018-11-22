@@ -79,7 +79,7 @@
                     {{ form_widget(participant.phone, {'attr': {'class': 'validate'}}) }}
                     {{ form_errors(participant.phone) }}
                 </div>
-                <div class="col s4">
+                <div class="input-field col s4">
                     {{ form_widget(participant.gender) }}
                     {{ form_label(participant.gender) }}
                     {{ form_errors(participant.gender) }}
@@ -91,23 +91,21 @@
 
 <div class="group-form row">
     {{ form_start(form, {'attr': {'class': 'col s12'}}) }}
-    <div class="group-form__address row">
+    <div class="row">
         <div class="input-field col s12">
             {{ form_label(form.address) }}
             {{ form_widget(form.address, {'attr': {'class': 'validate'}}) }}
             {{ form_errors(form.address) }}
         </div>
     </div>
+    <h5 class="group-form__title">Participants</h5>
     <div class="participants" data-prototype="{{ formMacros.printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
         {% for participant in form.participants %}
             {{ formMacros.printParticipant(participant) }}
         {% endfor %}
     </div>
-    <button class="group-form__add-button btn blue darken-3" type="button">
-        Add participant
-    </button>
     <div class="group-form__submit-button-wrapper">
-        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn blue darken-3'}}) }}
+        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn-large blue darken-3'}}) }}
     </div>
     {{ form_end(form) }}
 </div>
