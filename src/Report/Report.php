@@ -77,47 +77,5 @@ class Report
         return $range;
     }
 
-    private function getLatestTimeslot($timeSlots, bool $nullIfNotExist = false)
-    {
-        if (sizeof($timeSlots) === 0) {
-            if ($nullIfNotExist) {
-                return null;
-            } else {
-                return new \DateTime('1970-01-01');
-            }
-        }
-
-        $latestDate = new \DateTime('1970-01-01');
-
-        /** @var TimeSlot $timeSlot */
-        foreach ($timeSlots as $timeSlot) {
-            if ($timeSlot->getStartTime() > $latestDate) {
-                $latestDate = $timeSlot->getStartTime();
-            }
-        }
-
-        return $latestDate;
-    }
-
-    private function getEarliestTimeslot($timeSlots, bool $nullIfNotExist = false)
-    {
-        if (sizeof($timeSlots) === 0) {
-            if ($nullIfNotExist) {
-                return null;
-            } else {
-                return new \DateTime('2050-12-31');
-            }
-        }
-
-        $earliestDate = new \DateTime('2050-12-31');
-
-        /** @var TimeSlot $timeSlot */
-        foreach ($timeSlots as $timeSlot) {
-            if ($timeSlot->getStartTime() < $earliestDate) {
-                $earliestDate = $timeSlot->getStartTime();
-            }
-        }
-
-        return $earliestDate;
-    }
+ 
 }
