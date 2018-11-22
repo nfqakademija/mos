@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Groups{% endblock %}
+{% block title %}{% trans %}Groups{% endtrans %} {% endblock %}
 
 {% block body %}
         {% for message in app.flashes('notice') %}
@@ -9,7 +9,7 @@
             </div>
         {% endfor %}
         <h2 class="center-align">
-            Groups
+            {% trans %}Groups list{% endtrans %}
         </h2>
         <a class="blue darken-3 hoverable add-button pulse" href="{{ path('group.create') }}">
             <i class="add-button__icon material-icons">
