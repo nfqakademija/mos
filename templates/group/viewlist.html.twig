@@ -20,10 +20,10 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Start date</th>
-                    <th scope="col">End date</th>
-                    <th scope="col">Participants</th>
+                    <th scope="col">{% trans %}Address{% endtrans %}</th>
+                    <th scope="col">{% trans %}Start date{% endtrans %}</th>
+                    <th scope="col">{% trans %}End date{% endtrans %}</th>
+                    <th scope="col">{% trans %}Participants{% endtrans %}</th>
                 </tr>
             </thead>
             {% for group in groups %}
@@ -35,10 +35,11 @@
                         </a>
                     </td>
                     <td>
-                        {{ group.startDate|date('Y-m-d') }}
+                        {{ group.startDate ? group.startDate|date('Y-m-d') }}
                     </td>
+                    
                     <td>
-                        {{ group.endDate|date('Y-m-d') }}
+                        {{ group.endDate ? group.endDate|date('Y-m-d') }}
                     </td>
                     <td>
                         {{ group.participants|length }}

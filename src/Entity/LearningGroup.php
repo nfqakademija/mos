@@ -172,7 +172,7 @@ class LearningGroup
     }
 
 
-    public function getEndDate( bool $nullIfNotExist = false)
+    public function getEndDate( bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
 
@@ -196,7 +196,7 @@ class LearningGroup
         return $latestDate;
     }
 
-    public function getStartDate(bool $nullIfNotExist = false)
+    public function getStartDate(bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
         
