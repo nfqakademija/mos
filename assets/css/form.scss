@@ -25,4 +25,8 @@
     margin-top: 20px;
     @extend .center-element;
   }
+
+  input[type=text]:not(.browser-default).group-form__input--invalid {
+    border-bottom: 1px solid #f44336;
+  }
 }

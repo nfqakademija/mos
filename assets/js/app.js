@@ -24,26 +24,26 @@ function events(collectionHolder, addButton) {
 
   $('.participants').on('click', '.participant__toggle-additional-button', function(e) {
     e.preventDefault();
-    $(this).parent().parent().parent().find('.participant__additional').slideToggle('slow');
+    $(this).parents().eq(2).find('.participant__additional').slideToggle('slow');
 
     if($(this).text() === 'Less') {
       $(this).text('More');
-      $(this).parent().parent().parent().removeClass('participant--active z-depth-5');
+      $(this).parents().eq(2).removeClass('participant--active z-depth-5');
     } else {
       $(this).text('Less');
-      $(this).parent().parent().parent().addClass('participant--active z-depth-5');
+      $(this).parents().eq(2).addClass('participant--active z-depth-5');
       M.AutoInit();
     }
   });
 
   $('.participants').on('click', '.participant__username-generate-button', function(e) {
     e.preventDefault();
-    $(this).parent().parent().find('.participant__username').val(randomString());
+    $(this).parents().eq(1).find('.participant__username').val(randomString());
   });
 
   $('.participants').on('click', '.participant__password-generate-button', function(e) {
     e.preventDefault();
-    $(this).parent().parent().find('.participant__password').val(randomString());
+    $(this).parents().eq(1).find('.participant__password').val(randomString());
   });
 
   $('.group-form__add-button').on('click', function(e) {
@@ -62,10 +62,19 @@ function events(collectionHolder, addButton) {
     });
   });
 
-  $('.participants').on('keydown', '.participant__surname', function(e) {
+  $('.participants').on('keydown', '.participant__name', function(e) {
     const keyCode = e.keyCode || e.which;
 
     if(keyCode === 13) {
+      e.preventDefault();
+      $(this).parents().eq(1).find('.participant__surname').focus();
+    }
+  });
+
+  $('.participants').on('keydown', '.participant__surname', function(e) {
+    const keyCode = e.keyCode || e.which;
+
+    if(keyCode === 13 || keyCode === 9) {
       e.preventDefault();
     }
 
@@ -73,6 +82,9 @@ function events(collectionHolder, addButton) {
       addTagForm(collectionHolder, addButton);
       $(this).parent().prev().find('.participant__username').val(randomString());
       $(this).parent().prev().find('.participant__password').val(randomString());
+      $(this).parents().eq(2).next('.participant').find('.participant__name').focus();
+    } else if (keyCode === 9 || keyCode === 13) {
+      $(this).parents().eq(2).next('.participant').find('.participant__name').focus();
     }
   });
 }
