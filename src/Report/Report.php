@@ -21,9 +21,8 @@ class Report
 
         $groups = $gr->findAll();
         foreach ($groups as $group) {
-            $timeSlots = $group->getTimeSlots();
-            $latestTimeslot = $this->getLatestTimeslot($timeSlots);
-            if (($latestTimeslot >= $dateFrom) and ($latestTimeslot <= $dateTo)) {
+            $endDate = $group->getEndDate(false);
+            if (($endDate >= $dateFrom) and ($endDate <= $dateTo)) {
                 $groupsInPeriod[] = $group;
             }
         }
@@ -47,8 +46,8 @@ class Report
                     'phone' => $participant->getPhone(),
                     'email' => $participant->getEmail(),
                     'gender' => $participant->getGender(),
-                    'startDate' => $this->getEarliestTimeslot($group->getTimeSlots(), true),
-                    'endDate' => $this->getLatestTimeslot($group->getTimeSlots(), true),
+                    'startDate' => $group->getStartDate(),
+                    'endDate' => $group->getEndDate(),
                     'groupId' => $group->getId(),
                 ];
             }
