@@ -11,22 +11,22 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Address</th>
+            <th scope="col">{% trans %}Address{% endtrans %}</th>
         </tr>
         </thead>
         <tr>
             <td>{{ group.address }}</td>
         </tr>
     </table>
-    <h4>Participants</h4>
+    <h4>{% trans %}Participants{% endtrans %}</h4>
     <table class="table">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Username</th>
-            <th scope="col">Birth date</th>
+            <th scope="col">{% trans %}Name{% endtrans %}</th>
+            <th scope="col">{% trans %}Surname{% endtrans %}</th>
+            <th scope="col">{% trans %}Username{% endtrans %}</th>
+            <th scope="col">{% trans %}Birth date{% endtrans %}</th>
         </tr>
         </thead>
         {% for participant in group.participants %}
