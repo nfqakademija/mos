@@ -23,17 +23,34 @@ function events(collectionHolder, addButton) {
 
   $('.participants').on('change', '.participant__name', function() {
     const oldValues = $(this).parents().eq(2).find('.participant__username').val().split('.');
-    const surname = oldValues[1] === undefined || oldValues[1] === '' ? '' : `.${oldValues[1]}`;
+    let surname;
+    let isEmpty = false;
+
+    if(oldValues.length === 3) {
+      surname = this.value !== '' ? `.${oldValues[1]}` : oldValues[1];
+    } else if (oldValues.length === 2 && this.value !== '') {
+      surname = `.${oldValues[0]}`;
+    } else if(oldValues.length === 2 && this.value === '') {
+      isEmpty = true;
+    } else {
+      surname = '';
+    }
 
     $(this).parents().eq(2).find('.participant__username')
-      .val(`${this.value}${surname}.${randomString({length: 3})}`);
+      .val(!isEmpty ? `${this.value}${surname}.${randomString({length: 3})}` : '');
   });
 
   $('.participants').on('change', '.participant__surname', function() {
     const oldValues = $(this).parents().eq(2).find('.participant__username').val().split('.');
+    const isNameEmpty = oldValues[0] === undefined || oldValues[0] === '' ? true : false;
+    let isEmpty = false;
+
+    if(oldValues.length === 2 && this.value === '') {
+      isEmpty = true;
+    }
 
     $(this).parents().eq(2).find('.participant__username')
-      .val(`${oldValues[0]}${this.value !== '' ? '.' : ''}${this.value}.${randomString({length: 3})}`);
+      .val(!isEmpty ? `${oldValues[0]}${this.value !== '' && !isNameEmpty ? '.' : ''}${this.value}.${randomString({length: 3})}` : '');
   });
 
   $('.participants').on('click', '.participant__toggle-additional-button', function(e) {
@@ -59,12 +76,6 @@ function events(collectionHolder, addButton) {
         $(this).data('count', ++count);
       }
     }
-  });
-
-  $('.participants').on('click', '.participant__username-generate-button', function(e) {
-    e.preventDefault();
-
-    $(this).parents().eq(1).find('.participant__username').val(randomString());
   });
 
   $('.participants').on('click', '.participant__password-generate-button', function(e) {
