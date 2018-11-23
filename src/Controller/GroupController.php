@@ -8,7 +8,6 @@ use App\Form\GroupType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +20,9 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/view/{group}", name="group.view")
+     * @param \App\Entity\LearningGroup $group
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function view(LearningGroup $group)
     {
@@ -32,6 +34,9 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/viewlist", name="group.viewlist")
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function groupViewList(EntityManagerInterface $em)
     {
@@ -45,6 +50,9 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/create", name="group.create")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createGroup(Request $request)
     {
