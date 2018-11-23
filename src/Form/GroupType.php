@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\LearningGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -31,8 +30,7 @@ class GroupType extends AbstractType
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Submit'
-            ))
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
