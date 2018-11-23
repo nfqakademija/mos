@@ -99,7 +99,7 @@ class AppFixtures extends Fixture
               ->setName('Participantname' . $i)
               ->setSurname('Participantsurname' . $i)
               ->setRegion($regionJonavosR)
-              ->setBirthDate(new \DateTime('1961-04-24'))
+              ->setBirthDate('1961-04-24')
               ->setRoles([User::ROLE_PARTICIPANT])
               ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
               ->setGender($genres[array_rand($genres, 1)]);
