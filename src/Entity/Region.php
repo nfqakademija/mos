@@ -72,5 +72,4 @@ class Region
 
         return $this;
     }
-
 }

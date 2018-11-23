@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Report\Report;
-use App\Repository\LearningGroupRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

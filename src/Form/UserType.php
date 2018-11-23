@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mantas
- * Date: 18.11.15
- * Time: 11.40
- */
 
 namespace App\Form;
-
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -32,10 +25,10 @@ class UserType extends AbstractType
             ->add('address', TextType::class, array(
                 'required' => false
             ))
-            ->add('phone',TextType::class, array(
+            ->add('phone', TextType::class, array(
                 'required' => false
             ))
-            ->add('email',EmailType::class, array(
+            ->add('email', EmailType::class, array(
                 'required' => false
             ))
             ->add('gender', ChoiceType::class, array(

@@ -94,7 +94,7 @@ class AppFixtures extends Fixture
             $userParticipant[$i] = new User();
             $userParticipant[$i]
               ->setUsername('participant' . $i)
-              ->setPassword($this->encoder->encodePassword($userParticipant[$i],  rand(1000, 1100)))
+              ->setPassword($this->encoder->encodePassword($userParticipant[$i], rand(1000, 1100)))
               ->setEmail('participant' . $i .'@email.com')
               ->setName('Participantname' . $i)
               ->setSurname('Participantsurname' . $i)
@@ -163,15 +163,14 @@ class AppFixtures extends Fixture
         for ($i=0; $i<=100; $i++) {
             //generate TimeSlot
             $timeSlot[$i] = new TimeSlot();
-            $startTime = new \DateTime("2018-" . rand(11, 12) . '-' . rand(1,
-                29));
+            $startTime = new \DateTime("2018-" . rand(11, 12) . '-' . rand(1, 29));
             $timeSlot[$i]->setStartTime($startTime);
             $timeSlot[$i]->setDurationMinutes(90);
             $manager->persist($timeSlot[$i]);
         }
         
         //creates groups
-        for($i=0; $i<=100; $i++) {
+        for ($i=0; $i<=100; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
