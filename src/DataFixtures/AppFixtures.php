@@ -21,6 +21,9 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $userParticipant = [];
+        $timeSlot = [];
+        
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
         
@@ -54,7 +57,7 @@ class AppFixtures extends Fixture
           ->setIsProblematic('true');
         $manager->persist($regionJonavosR);
 
-        //generate Users///////////////////////////////////////////
+        //generate admin///////////////////////////////////////////
 
         $userAdmin = new User();
         $userAdmin
@@ -71,7 +74,7 @@ class AppFixtures extends Fixture
         /**
          * @var $userTeacher User[]
          */
-        for ($i=1; $i<=3; $i++) {
+        for ($i=0; $i<=3; $i++) {
             $userTeacher[$i] = new User();
             $userTeacher[$i]
               ->setUsername('teacher' . $i)
@@ -83,15 +86,15 @@ class AppFixtures extends Fixture
             $manager->persist($userTeacher[$i]);
         }
 
-        //participants
+        //creates 111 participants
         /**
          * @var $userParticipant User[]
          */
-        for ($i=1; $i<=110; $i++) {
+        for ($i=0; $i<=110; $i++) {
             $userParticipant[$i] = new User();
             $userParticipant[$i]
               ->setUsername('participant' . $i)
-              ->setPassword($this->encoder->encodePassword($userParticipant[$i], 'participant' . $i))
+              ->setPassword($this->encoder->encodePassword($userParticipant[$i],  rand(1000, 1100)))
               ->setEmail('participant' . $i .'@email.com')
               ->setName('Participantname' . $i)
               ->setSurname('Participantsurname' . $i)
@@ -102,7 +105,6 @@ class AppFixtures extends Fixture
               ->setGender($genres[array_rand($genres, 1)]);
             $manager->persist($userParticipant[$i]);
         }
-
 
         //demo group
         //generate TimeSlot
@@ -157,22 +159,32 @@ class AppFixtures extends Fixture
         $manager->persist($group2);
 
 
-        for ($i=1; $i<=100; $i++) {
+        //creates 101 timeslots
+        for ($i=0; $i<=100; $i++) {
             //generate TimeSlot
             $timeSlot[$i] = new TimeSlot();
-            $timeSlot[$i]->setStartTime(new \DateTime("2018-". rand(11, 12). '-' . rand(1, 29)));
+            $startTime = new \DateTime("2018-" . rand(11, 12) . '-' . rand(1,
+                29));
+            $timeSlot[$i]->setStartTime($startTime);
             $timeSlot[$i]->setDurationMinutes(90);
             $manager->persist($timeSlot[$i]);
-
+        }
+        
+        //creates groups
+        for($i=0; $i<=100; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
-            $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas')
-              ->setTeacher($userTeacher[2])
-              ->addParticipant($userParticipant[$i])
-              ->addParticipant($userParticipant[$i+1])
-              ->addParticipant($userParticipant[$i+2])
-              ->addParticipant($userParticipant[$i+3])
-              ->addTimeSlot($timeSlot[$i]);
+            $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
+            $group[$i]->setTeacher($userTeacher[2]);
+            $participantsCount = rand(7, 14);
+            for ($j = 0; $j < $participantsCount; $j++) {
+                $group[$i]->addParticipant($userParticipant[rand(0, 99)]);
+            }
+            $timeSlotsCount = rand(3, 4);
+            for ($k = 0; $k < $timeSlotsCount; $k++) {
+                $group[$i]->addTimeSlot($timeSlot[rand(0, 99)]);
+            }
+
             $manager->persist($group[$i]);
         }
         

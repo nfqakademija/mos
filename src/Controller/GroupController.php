@@ -35,8 +35,9 @@ class GroupController extends AbstractController
      */
     public function groupViewList(EntityManagerInterface $em)
     {
+        /** @var LearningGroup $groups */
         $groups = $em->getRepository(LearningGroup::class)->findAll();
-
+        
         return $this->render('group/viewlist.html.twig', [
           'groups' => $groups,
         ]);
@@ -73,7 +74,7 @@ class GroupController extends AbstractController
         }
 
         return $this->render('group/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -107,7 +108,7 @@ class GroupController extends AbstractController
 
         return $this->render('group/edit.html.twig', [
             'form' => $form->createView(),
-            'id' => $group->getId()
+            'id' => $group->getId(),
         ]);
     }
 }

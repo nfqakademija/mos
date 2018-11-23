@@ -22,4 +22,5 @@ class LearningGroupRepository extends ServiceEntityRepository
     {
         return $this->findBy(array(), array('id' => 'DESC'));
     }
+    
 }
