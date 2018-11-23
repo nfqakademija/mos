@@ -168,7 +168,7 @@ class AppFixtures extends Fixture
             $timeSlot[$i]->setDurationMinutes(90);
             $manager->persist($timeSlot[$i]);
         }
-        
+
         //creates groups
         for ($i=0; $i<=100; $i++) {
             //generate Group

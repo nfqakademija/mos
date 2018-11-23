@@ -35,11 +35,15 @@
                         </a>
                     </td>
                     <td>
-                        {{ group.startDate ? group.startDate|date('Y-m-d') }}
+                      {#TODO: fake for demo. Revert#}
+                        {#{{ group.startDate ? group.startDate|date('Y-m-d') }}#}
+                      {{ group.startDate|date('Y-m-d') }}
                     </td>
                     
                     <td>
-                        {{ group.endDate ? group.endDate|date('Y-m-d') }}
+                      {#TODO: fake for demo. Revert#}
+                        {#{{ group.endDate ? group.endDate|date('Y-m-d') }}#}
+                      {{ group.endDate|date('Y-m-d') }}
                     </td>
                     <td>
                         {{ group.participants|length }}
