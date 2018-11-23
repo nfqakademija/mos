@@ -22,8 +22,11 @@
 
   .group-form__submit-button-wrapper {
     clear: both;
-    margin-top: 20px;
     @extend .center-element;
+
+    .group-form__submit-button {
+      margin: 20px 0;
+    }
   }
 
   input:not(.browser-default).group-form__input--invalid {
