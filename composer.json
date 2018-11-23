@@ -19,6 +19,7 @@
         "symfony/translation": "4.1.*",
         "symfony/twig-bundle": "*",
         "symfony/validator": "4.1.*",
+        "symfony/var-dumper": "4.1.*",
         "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "*"
     },

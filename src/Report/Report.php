@@ -43,13 +43,6 @@ email,living_area_type AS livingAreaType, gender, starttime AS startDate, endtim
     }
 
 
-    public function participantsReportDql(\DateTime $dateFrom, \DateTime $dateTo,  EntityManagerInterface $em)
-    {
-      
-        $ur = new UserRepository()
-        
-        return $result;
-    }
     
     
     /**

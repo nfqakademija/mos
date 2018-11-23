@@ -1,0 +1,25 @@
+.add-button {
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+  width: 75px;
+  height: 75px;
+  border-radius: 100%;
+  text-align: center;
+
+  .add-button__icon {
+    color: #FFF;
+    font-size: 34px;
+    line-height: 75px;
+  }
+}
+
+.back-button {
+  margin-top: 30px;
+
+  .back-button__text {
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: top;
+  }
+}
