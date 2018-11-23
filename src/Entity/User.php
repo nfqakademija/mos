@@ -230,8 +230,7 @@ class User implements UserInterface
     {
         try {
             $this->birthDate = new \DateTime($birthDate);
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             //Do Nothing
         }
 
