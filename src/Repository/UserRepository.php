@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class UserRepository extends ServiceEntityRepository
 {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
@@ -22,14 +23,16 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return User[] Returns an array of User objects
      */
-    
+
     public function findByRole($role)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.roles LIKE :val')
-            ->setParameter('val', '%"'.$role.'"%')
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+          ->andWhere('u.roles LIKE :val')
+          ->setParameter('val', '%"' . $role . '"%')
+          ->orderBy('u.id', 'ASC')
+          ->getQuery()
+          ->getResult();
     }
+
+ 
 }

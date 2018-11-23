@@ -24,7 +24,7 @@ class ReportController extends AbstractController
      * @Route("/report/participants", name="report.participants",)
      * @return
      */
-    public function participants(Request $request, LearningGroupRepository $groupRepo, Report $report)
+    public function participants(Request $request, EntityManagerInterface $em, Report $report)
     {
         $defaultData = [];
         $results = [];
@@ -34,9 +34,9 @@ class ReportController extends AbstractController
 
         if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
             $data = $reportFilterForm->getData();
-
+            
             $range = $report->getRangeFromFormData($data);
-            $results = $report->getParticipantsReport($groupRepo, $range['dateFrom'], $range['dateTo']);
+            $results = $report->participantsReport($range['dateFrom'], $range['dateTo'], $em);
         }
            
         return $this->render('report/participants.html.twig', [
