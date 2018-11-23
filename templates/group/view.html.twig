@@ -3,7 +3,7 @@
 {% block title %}Group{% endblock %}
 
 {% block body %}
-    <h2 class="center-align">Group</h2>
+    <h2 class="center-align">{% trans %}Group{% endtrans %}</h2>
     <a class="btn blue darken-3" href="{{ path('group.edit', {'group': group.id}) }}">
         Edit
     </a>
