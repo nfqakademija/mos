@@ -6,11 +6,20 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class Report
 {
+    /** @var EntityManagerInterface */
+    private $em;
 
-
-    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo, EntityManagerInterface $em)
+    /**
+     * Report constructor.
+     */
+    public function __construct(EntityManagerInterface $em)
     {
-        $conn = $em->getConnection();
+        $this->em = $em;
+    }
+
+    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo)
+    {
+        $conn = $this->em->getConnection();
         $sql = "SELECT `user`.learning_group_id AS groupId, name, surname, 
        region_id AS region, birth_date AS birthDate, address, phone,
        email,living_area_type AS livingAreaType, gender, starttime AS startDate,endtime AS endDate FROM `user`
