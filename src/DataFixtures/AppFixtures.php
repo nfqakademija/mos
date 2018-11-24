@@ -21,10 +21,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        
-        $userParticipant = [];
-        $timeSlot = [];
-        
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
         
@@ -130,15 +126,12 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-
-    /*
- * Create a random string
- * @param $length the length of the string to create
- * @return $str the string
- */
+     /**
+     * Create a random string
+     */
     private function randomString($length = 6) {
         $str = "";
-        $characters = array_merge(range('a','z'));
+        $characters = range('a','z');
         $max = count($characters) - 1;
         for ($i = 0; $i < $length; $i++) {
             $rand = mt_rand(0, $max);
