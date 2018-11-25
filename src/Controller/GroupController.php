@@ -41,7 +41,7 @@ class GroupController extends AbstractController
     public function groupViewList(EntityManagerInterface $em)
     {
         /** @var LearningGroup $groups */
-        $groups = $em->getRepository(LearningGroup::class)->findAll();
+        $groups = $em->getRepository(LearningGroup::class)->findBy([], ['id' => 'DESC']);
         
         return $this->render('group/viewlist.html.twig', [
           'groups' => $groups,

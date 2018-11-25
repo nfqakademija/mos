@@ -94,11 +94,6 @@ class User implements UserInterface
     private $lastAccessDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\LearningGroup", mappedBy="participants")
-     */
-    private $learningGroups;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="participants")
      */
     private $learningGroup;
