@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Report\Report;
+use App\Repository\LearningGroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +18,25 @@ use App\Form\ReportFilterType;
  */
 class ReportController extends AbstractController
 {
-    
+
+    /**
+     * @Route("/report/test", name="report.test")
+     */
+    public function reportTest(LearningGroupRepository $lgr)
+    {
+        $lgr->participantsReportDql(new \DateTime('now'), new \DateTime('now'));
+
+        return ;
+    }
+
     /**
      * @Route("/report/participants", name="report.participants",)
      * @return
      */
     public function participants(Request $request, Report $report)
     {
-        $defaultData = [];
         $results = [];
-        $reportFilterForm = $this->createForm(ReportFilterType::class, $defaultData);
+        $reportFilterForm = $this->createForm(ReportFilterType::class);
 
         $reportFilterForm->handleRequest($request);
 
