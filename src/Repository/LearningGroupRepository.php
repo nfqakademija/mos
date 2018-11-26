@@ -51,12 +51,6 @@ class LearningGroupRepository extends ServiceEntityRepository
     {
         //get participants of groups which timeslot.startDate is in period
 
-        //test get groups in period
-//        $resultGroups = $this->createQueryBuilder('gr')
-//          ->andWhere('timeSlot.id >= 1')
-//          ->getQuery()
-//          ->getResult()
-//        ;
 
 //        $result = $this->createQueryBuilder('gr')
 //          ->innerJoin('gr.timeSlots', 'ts', 'WITH',
@@ -66,12 +60,12 @@ class LearningGroupRepository extends ServiceEntityRepository
 //
         $result = $this->createQueryBuilder('gr')
           ->leftJoin('gr.timeSlots', 'ts')
-          ->addGroupBy('gr')
           ->addSelect('MIN(ts.startTime) AS minStartTime')
           ->addSelect('MAX(ts.startTime) AS maxStartTime')
+          ->addGroupBy('gr')
 //          ->andWhere('minStartTime >= \'2018-01-01\'')
 //          ->andWhere('maxStartTime <= \'2019-01-01\'')
-          ->addSelect('ts')
+          ->addSelect('ts.startTime')
           ->getQuery()
           ->getResult()
           ;
