@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Groups{% endblock %}
+{% block title %}{% trans %}Groups{% endtrans %} {% endblock %}
 
 {% block body %}
         {% for message in app.flashes('notice') %}
@@ -9,7 +9,7 @@
             </div>
         {% endfor %}
         <h2 class="center-align">
-            Groups
+            {% trans %}Groups list{% endtrans %}
         </h2>
         <a class="blue darken-3 hoverable add-button pulse" href="{{ path('group.create') }}">
             <i class="add-button__icon material-icons">
@@ -20,16 +20,29 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Address</th>
+                    <th scope="col">{% trans %}Address{% endtrans %}</th>
+                    <th scope="col">{% trans %}Start date{% endtrans %}</th>
+                    <th scope="col">{% trans %}End date{% endtrans %}</th>
+                    <th scope="col">{% trans %}Participants{% endtrans %}</th>
                 </tr>
             </thead>
             {% for group in groups %}
                 <tr>
-                    <th scope="row">{{ group.id }}</th>
+                    <td scope="row">{{ group.id }}</td>
                     <td>
                         <a href="{{ path('group.view', {'group': group.id}) }}">
                             {{ group.address }}
                         </a>
+                    </td>
+                    <td>
+                        {{ group.startDate ? group.startDate|date('Y-m-d') }}
+                    </td>
+                    
+                    <td>
+                        {{ group.endDate ? group.endDate|date('Y-m-d') }}
+                    </td>
+                    <td>
+                        {{ group.participants|length }}
                     </td>
                 </tr>
             {% endfor %}

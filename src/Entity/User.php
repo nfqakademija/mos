@@ -94,11 +94,6 @@ class User implements UserInterface
     private $lastAccessDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\LearningGroup", mappedBy="participants")
-     */
-    private $learningGroups;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="participants")
      */
     private $learningGroup;
@@ -221,14 +216,18 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthDate(): ?string
     {
-        return $this->birthDate;
+        return $this->birthDate != null ? $this->birthDate->format('Y-m-d') : null;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    public function setBirthDate($birthDate): self
     {
-        $this->birthDate = $birthDate;
+        try {
+            $this->birthDate = new \DateTime($birthDate);
+        } catch (\Exception $e) {
+            //Do Nothing
+        }
 
         return $this;
     }

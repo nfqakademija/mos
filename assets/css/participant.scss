@@ -16,15 +16,13 @@
   }
 
   .participant__remove-button,
-  .participant__username-generate-button,
   .participant__password-generate-button {
     font-size: 28px;
     cursor: pointer;
     color: #9e9e9e;
   }
 
-  .row .participant__password-wrapper,
-  .row .participant__username-wrapper {
+  .row .participant__password-wrapper {
     padding: 0;
   }
 }

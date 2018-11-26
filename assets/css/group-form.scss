@@ -1,0 +1,66 @@
+.group-form {
+  padding: 10px 30px;
+
+  .group-form__title {
+    padding: 0 .75rem;
+  }
+
+  .group-form__error-wrapper {
+    margin: 0;
+
+    .group-form__error {
+      color: rgb(244, 67, 54);
+      font-size: 12px;
+    }
+  }
+
+  .group-form__add-button {
+    float: right;
+    line-height: 56px;
+    margin: 20px 0;
+  }
+
+  .group-form__submit-button-wrapper {
+    clear: both;
+    @extend .center-element;
+
+    .group-form__submit-button {
+      margin: 20px 0;
+    }
+  }
+
+  input:not(.browser-default).group-form__input--invalid {
+    border-bottom: 1px solid #f44336;
+  }
+
+  .input-field input[type=text].valid,
+  .input-field input[type=email]:not(.browser-default).valid,
+  .input-field input:focus {
+    border-bottom: 1px solid $primary-color !important;
+    box-shadow: 0 1px 0 0 $primary-color !important;
+  }
+
+  .datepicker-cancel,
+  .datepicker-done,
+  .datepicker-table td.is-today,
+  ul.dropdown-content.select-dropdown li span {
+    color: $primary-color;
+  }
+
+  .datepicker-table td.is-selected,
+  .datepicker-date-display {
+    background: $primary-color;
+  }
+
+  .datepicker-table td.is-today.is-selected {
+    color: #FFF;
+  }
+
+  .datepicker-controls .select-month input {
+    width: 85px;
+  }
+}
+
+.dropdown-content li>span {
+  color: $primary-color;
+}

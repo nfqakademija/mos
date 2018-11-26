@@ -8,7 +8,6 @@ use App\Form\GroupType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +20,9 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/view/{group}", name="group.view")
+     * @param \App\Entity\LearningGroup $group
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function view(LearningGroup $group)
     {
@@ -32,11 +34,15 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/viewlist", name="group.viewlist")
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function groupViewList(EntityManagerInterface $em)
     {
-        $groups = $em->getRepository(LearningGroup::class)->findAll();
-
+        /** @var LearningGroup $groups */
+        $groups = $em->getRepository(LearningGroup::class)->findBy([], ['id' => 'DESC']);
+        
         return $this->render('group/viewlist.html.twig', [
           'groups' => $groups,
         ]);
@@ -44,6 +50,9 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/create", name="group.create")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createGroup(Request $request)
     {
@@ -73,7 +82,7 @@ class GroupController extends AbstractController
         }
 
         return $this->render('group/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -107,7 +116,7 @@ class GroupController extends AbstractController
 
         return $this->render('group/edit.html.twig', [
             'form' => $form->createView(),
-            'id' => $group->getId()
+            'id' => $group->getId(),
         ]);
     }
 }

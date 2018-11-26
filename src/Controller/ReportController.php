@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Report\Report;
-use App\Repository\LearningGroupRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +21,7 @@ class ReportController extends AbstractController
      * @Route("/report/participants", name="report.participants",)
      * @return
      */
-    public function participants(Request $request, EntityManagerInterface $em, Report $report)
+    public function participants(Request $request, Report $report)
     {
         $defaultData = [];
         $results = [];
@@ -36,7 +33,7 @@ class ReportController extends AbstractController
             $data = $reportFilterForm->getData();
             
             $range = $report->getRangeFromFormData($data);
-            $results = $report->participantsReport($range['dateFrom'], $range['dateTo'], $em);
+            $results = $report->participantsReport($range['dateFrom'], $range['dateTo']);
         }
            
         return $this->render('report/participants.html.twig', [

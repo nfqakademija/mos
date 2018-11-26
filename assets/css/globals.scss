@@ -1,9 +1,4 @@
-.input-field input[type=text].valid,
-.input-field input[type=email]:not(.browser-default).valid,
-.input-field input:focus {
-  border-bottom: 1px solid #1565C0 !important;
-  box-shadow: 0 1px 0 0 #1565C0 !important;
-}
+$primary-color: #1565C0;
 
 .row,
 .col .row {

@@ -2,6 +2,7 @@ Name: Vardas
 Surname: Pavardė
 Birth date: Gimimo data
 Region/city: Rajonas/miestas
+Region: Rajonas/miestas
 Living area type: Vietovės tipas
 Address: Adresas
 Phone number: Tel. nr.
@@ -29,3 +30,11 @@ Participants report: Dalyvių ataskaita
 Groups: Grupės
 Users: Naudotojai
 My Profile: Mano profilis
+Teacher in group(s): Mokomos grupės
+Groups list: Grupių sąrašas
+Group: Grupė
+Start date: Pradžia
+End date: Pabaiga
+Participants: Dalyviai
+Group form: Grupės kūrimas/redagavimas
+Back: Atgal

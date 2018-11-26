@@ -3,7 +3,6 @@ const $ = require('jquery');
 const randomString = require('random-string');
 
 $(document).ready(function() {
-
   $('.participant__additional').hide();
 
   const addButton = $('<div class="clearfix"><i class="group-form__add-button btn-floating btn-large blue darken-3 material-icons">add</i></div>');
@@ -22,9 +21,42 @@ function events(collectionHolder, addButton) {
     $(".container .alert").slideUp(500);
   });
 
+  $('.participants').on('change', '.participant__name', function() {
+    const oldValues = $(this).parents().eq(2).find('.participant__username').val().split('.');
+    let surname;
+    let isEmpty = false;
+
+    if(oldValues.length === 3) {
+      surname = this.value !== '' ? `.${oldValues[1]}` : oldValues[1];
+    } else if (oldValues.length === 2 && this.value !== '') {
+      surname = `.${oldValues[0]}`;
+    } else if(oldValues.length === 2 && this.value === '') {
+      isEmpty = true;
+    } else {
+      surname = '';
+    }
+
+    $(this).parents().eq(2).find('.participant__username')
+      .val(!isEmpty ? `${this.value}${surname}.${randomString({length: 3})}` : '');
+  });
+
+  $('.participants').on('change', '.participant__surname', function() {
+    const oldValues = $(this).parents().eq(2).find('.participant__username').val().split('.');
+    const isNameEmpty = oldValues[0] === undefined || oldValues[0] === '' ? true : false;
+    let isEmpty = false;
+
+    if(oldValues.length === 2 && this.value === '') {
+      isEmpty = true;
+    }
+
+    $(this).parents().eq(2).find('.participant__username')
+      .val(!isEmpty ? `${oldValues[0]}${this.value !== '' && !isNameEmpty ? '.' : ''}${this.value}.${randomString({length: 3})}` : '');
+  });
+
   $('.participants').on('click', '.participant__toggle-additional-button', function(e) {
     e.preventDefault();
-    $(this).parents().eq(2).find('.participant__additional').slideToggle('slow');
+
+    $(this).parents().eq(2).find('.participant__additional').slideToggle('fast');
 
     if($(this).text() === 'Less') {
       $(this).text('More');
@@ -32,25 +64,33 @@ function events(collectionHolder, addButton) {
     } else {
       $(this).text('Less');
       $(this).parents().eq(2).addClass('participant--active z-depth-5');
-      M.AutoInit();
-    }
-  });
 
-  $('.participants').on('click', '.participant__username-generate-button', function(e) {
-    e.preventDefault();
-    $(this).parents().eq(1).find('.participant__username').val(randomString());
+      let count = $(this).data('count') || 0;
+
+      if(count === 0)
+      {
+        M.FormSelect.init($(this).parents().eq(2).find('select'));
+        M.Datepicker.init($(this).parents().eq(2).find('.datepicker'), {
+          format: 'yyyy-mm-dd'
+        });
+        $(this).data('count', ++count);
+      }
+    }
   });
 
   $('.participants').on('click', '.participant__password-generate-button', function(e) {
     e.preventDefault();
+
     $(this).parents().eq(1).find('.participant__password').val(randomString());
   });
 
   $('.group-form__add-button').on('click', function(e) {
     e.preventDefault();
+
     addTagForm(collectionHolder, addButton);
-    $(this).parent().prev().find('.participant__username').val(randomString());
+
     $(this).parent().prev().find('.participant__password').val(randomString());
+
     M.updateTextFields();
   });
 
@@ -67,6 +107,7 @@ function events(collectionHolder, addButton) {
 
     if(keyCode === 13) {
       e.preventDefault();
+
       $(this).parents().eq(1).find('.participant__surname').focus();
     }
   });
@@ -78,10 +119,11 @@ function events(collectionHolder, addButton) {
       e.preventDefault();
     }
 
-    if ((keyCode === 9 || keyCode === 13) && !$(this).parent().parent().parent().next().is('.participant')) {
+    if ((keyCode === 9 || keyCode === 13) && !$(this).parents().eq(2).next().is('.participant')) {
       addTagForm(collectionHolder, addButton);
-      $(this).parent().prev().find('.participant__username').val(randomString());
-      $(this).parent().prev().find('.participant__password').val(randomString());
+
+      $(this).parents().eq(2).next('.participant').find('.participant__password').val(randomString());
+
       $(this).parents().eq(2).next('.participant').find('.participant__name').focus();
     } else if (keyCode === 9 || keyCode === 13) {
       $(this).parents().eq(2).next('.participant').find('.participant__name').focus();
