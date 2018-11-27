@@ -3,51 +3,35 @@
 namespace App\Report;
 
 use App\Repository\LearningGroupRepository;
+use App\Repository\UserRepository;
 
 class Report
 {
-    /** @var LearningGroupRepository */
-    private $lgr;
+    /** @var LearningGroupRepository  */
+    private $groupRepository;
+
+    /** @var UserRepository */
+    private $userRepository;
 
     /**
      * Report constructor.
+     *
+     * @param \App\Repository\LearningGroupRepository $groupRepository
+     * @param \App\Repository\UserRepository $userRepository
      */
-    public function __construct(LearningGroupRepository $lgr)
+    public function __construct(LearningGroupRepository $groupRepository, UserRepository $userRepository)
     {
-        $this->lgr = $lgr;
+        $this->groupRepository = $groupRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo) : array
     {
-        $result = [];
+        $participants = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
 
-        $groups = $this->lgr->getGroupsInPeriod($dateFrom, $dateTo);
-
-        dump($groups);
-
-        foreach ($groups as $group) {
-            $participants = $group[0]->getParticipants();
-            /** @var \App\Entity\User $participant */
-            foreach ($participants as $participant) {
-                $result [] = [
-                  'name' => $participant->getSurname(),
-                  'surname' => $participant->getSurname(),
-                  'birthDate' => $participant->getBirthDate(),
-                  'region' => $participant->getRegion()->getTitle(),
-                  'livingAreaType' => $participant->getLivingAreaType(),
-                  'address' => $participant->getAddress(),
-                  'phone' => $participant->getPhone(),
-                  'email' => $participant->getEmail(),
-                  'gender' => $participant->getGender(),
-                  'groupId' => $participant->getId(),
-                  'startDate' => $group['groupStartDate'],
-                  'endDate' => $group['groupEndDate'],
-                ];
-            }
-
-            return $result;
-        }
+        return $participants;
     }
+
 
     /**
      * @param $data

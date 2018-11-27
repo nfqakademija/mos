@@ -33,4 +33,44 @@ class UserRepository extends ServiceEntityRepository
           ->getQuery()
           ->getResult();
     }
+
+    /**
+     * Gets all participants participanting in groups which ends in the period
+     * plus extra starDate, endDate, groupId
+     */
+    public function getParticipantsByGroupPeriod(\DateTime $dateFrom, \DateTime $dateTo)
+    {
+        $query = $this->getParticipantsByGroupPeriodQuery($dateFrom, $dateTo);
+
+        $result = $query->execute();
+
+        return $result;
+    }
+
+
+    public function getParticipantsByGroupPeriodQuery(\DateTime $dateFrom, \DateTime $dateTo)
+    {
+        $query = $this->createQueryBuilder('pr')
+          ->innerJoin('pr.learningGroup', 'gr')
+
+          ->addGroupBy('gr')
+          ->innerJoin('gr.timeSlots', 'ts')
+          ->having('MAX(ts.startTime) >= :dateFrom')
+          ->andHaving('MAX(ts.startTime) <= :dateTo')
+
+
+          ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
+          ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+
+
+          ->addGroupBy('pr')
+          ->addSelect('MIN(ts.startTime) AS startDate')
+          ->addSelect('MAX(ts.startTime) AS endDate')
+          ->addSelect('gr.id AS groupId')
+
+          ->getQuery()
+        ;
+
+        return $query;
+    }
 }
