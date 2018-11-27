@@ -47,31 +47,29 @@ class LearningGroupRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function participantsReportDql(\DateTime $dateFrom, \DateTime $dateTo)
+    public function getParticipantsReport()
     {
         //get participants of groups which timeslot.startDate is in period
 
 
-//        $result = $this->createQueryBuilder('gr')
-//          ->innerJoin('gr.timeSlots', 'ts', 'WITH',
-//            'ts.startTime <= \'2019-12-01\'')
-//          ->getQuery()
-//          ->getResult()
-//
+    }
+
+
+    public function getGroupsInPeriod(\DateTime $dateFrom, \DateTime $dateTo)
+    {
         $result = $this->createQueryBuilder('gr')
-          ->leftJoin('gr.timeSlots', 'ts')
-          ->addSelect('MIN(ts.startTime) AS minStartTime')
-          ->addSelect('MAX(ts.startTime) AS maxStartTime')
+          ->innerJoin('gr.timeSlots', 'ts')
           ->addGroupBy('gr')
-//          ->andWhere('minStartTime >= \'2018-01-01\'')
-//          ->andWhere('maxStartTime <= \'2019-01-01\'')
-          ->addSelect('ts.startTime')
+          ->having('MIN(ts.startTime) >= \'2018-11-17\'')
+          ->andHaving('MIN(ts.startTime) <= \'2018-11-17\'')
+
+          ->addSelect('MIN(ts.startTime) AS minTime')
+          ->addSelect('MAX(ts.startTime) AS maxTime')
+
           ->getQuery()
           ->getResult()
           ;
 
-        dump($result); die;
-
-        return '';
+        return $result;
     }
 }
