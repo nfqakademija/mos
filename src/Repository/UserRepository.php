@@ -51,8 +51,8 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
-     * @param string ? $orderBy
-     * @param string ? $orderType
+     * @param string $orderBy
+     * @param string $orderType
      *
      * @return \Doctrine\ORM\Query
      */
@@ -73,7 +73,10 @@ class UserRepository extends ServiceEntityRepository
           ->addSelect('MIN(ts.startTime) AS startDate')
           ->addSelect('MAX(ts.startTime) AS endDate')
           ->addSelect('gr.id AS groupId')
-
+          
+          ->setMaxResults(10)
+          ->setFirstResult(20)
+          
           ->addOrderBy($orderBy, $orderType)
 
           ->getQuery();
