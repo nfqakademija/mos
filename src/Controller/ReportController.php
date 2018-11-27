@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Report\Report;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +15,15 @@ use App\Form\ReportFilterType;
  */
 class ReportController extends AbstractController
 {
-    
+
     /**
      * @Route("/report/participants", name="report.participants",)
      * @return
      */
     public function participants(Request $request, Report $report)
     {
-        $defaultData = [];
         $results = [];
-        $reportFilterForm = $this->createForm(ReportFilterType::class, $defaultData);
+        $reportFilterForm = $this->createForm(ReportFilterType::class);
 
         $reportFilterForm->handleRequest($request);
 

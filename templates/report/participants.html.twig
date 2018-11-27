@@ -18,6 +18,10 @@
   <input type="submit" class="btn" value={% trans %}Filter{% endtrans %} />
   {{ form_end(form) }}
 
+  {% if results|length %}
+  <h6>{% trans %}Records{% endtrans %} : {{ results|length }}</h6>
+  {% endif %}
+
   <table>
     <tr>
       <th>{% trans %}Name{% endtrans %}</th>
@@ -36,15 +40,15 @@
 
     {% for result in results %}
       <tr>
-        <td>{{ result.name }}</td>
-        <td>{{ result.surname }}</td>
-        <td>{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
-        <td>{{ result.region }}</td>
-        <td>{{ result.livingAreaType }}</td>
-        <td>{{ result.address }}</td>
-        <td>{{ result.phone }}</td>
-        <td>{{ result.email }}</td>
-        <td>{{ result.gender }}</td>
+        <td>{{ result.0.name }}</td>
+        <td>{{ result.0.surname }}</td>
+        <td>{{ result.0.birthDate ? result.0.birthDate|date('Y-m-d') }}</td>
+        <td>{{ result.0.region ? result.0.region.title }}</td>
+        <td>{{ result.0.livingAreaType }}</td>
+        <td>{{ result.0.address }}</td>
+        <td>{{ result.0.phone }}</td>
+        <td>{{ result.0.email }}</td>
+        <td>{{ result.0.gender }}</td>
         <td>{{ result.startDate ? result.startDate|date('Y-m-d') }}</td>
         <td>{{ result.endDate ? result.endDate|date('Y-m-d') }}</td>
         <td>{{ result.groupId }}</td>
