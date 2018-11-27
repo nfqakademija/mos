@@ -20,16 +20,6 @@ class ReportController extends AbstractController
 {
 
     /**
-     * @Route("/report/test", name="report.test")
-     */
-    public function reportTest(LearningGroupRepository $lgr)
-    {
-        $lgr->participantsReportDql(new \DateTime('now'), new \DateTime('now'));
-
-        return ;
-    }
-
-    /**
      * @Route("/report/participants", name="report.participants",)
      * @return
      */

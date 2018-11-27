@@ -17,12 +17,36 @@ class Report
         $this->lgr = $lgr;
     }
 
-    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo)
+    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo) : array
     {
+        $result = [];
 
-        $result = $this->lgr->participantsReport($dateFrom, $dateTo);
+        $groups = $this->lgr->getGroupsInPeriod($dateFrom, $dateTo);
 
-        return $result;
+        dump($groups);
+
+        foreach ($groups as $group) {
+            $participants = $group[0]->getParticipants();
+            /** @var \App\Entity\User $participant */
+            foreach ($participants as $participant) {
+                $result [] = [
+                  'name' => $participant->getSurname(),
+                  'surname' => $participant->getSurname(),
+                  'birthDate' => $participant->getBirthDate(),
+                  'region' => $participant->getRegion()->getTitle(),
+                  'livingAreaType' => $participant->getLivingAreaType(),
+                  'address' => $participant->getAddress(),
+                  'phone' => $participant->getPhone(),
+                  'email' => $participant->getEmail(),
+                  'gender' => $participant->getGender(),
+                  'groupId' => $participant->getId(),
+                  'startDate' => $group['groupStartDate'],
+                  'endDate' => $group['groupEndDate'],
+                ];
+            }
+
+            return $result;
+        }
     }
 
     /**
