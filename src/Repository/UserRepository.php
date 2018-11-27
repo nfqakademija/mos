@@ -40,7 +40,7 @@ class UserRepository extends ServiceEntityRepository
      */
     public function getParticipantsByGroupPeriod(\DateTime $dateFrom, \DateTime $dateTo)
     {
-        $query = $this->getParticipantsByGroupPeriodQuery($dateFrom, $dateTo);
+        $query = $this->getQueryParticipantsByGroupPeriod($dateFrom, $dateTo);
 
         $result = $query->execute();
 
@@ -48,7 +48,15 @@ class UserRepository extends ServiceEntityRepository
     }
 
 
-    public function getParticipantsByGroupPeriodQuery(\DateTime $dateFrom, \DateTime $dateTo)
+    /**
+     * @param \DateTime $dateFrom
+     * @param \DateTime $dateTo
+     * @param string ? $orderBy
+     * @param string ? $orderType
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getQueryParticipantsByGroupPeriod($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
     {
         $query = $this->createQueryBuilder('pr')
           ->innerJoin('pr.learningGroup', 'gr')
@@ -58,18 +66,19 @@ class UserRepository extends ServiceEntityRepository
           ->having('MAX(ts.startTime) >= :dateFrom')
           ->andHaving('MAX(ts.startTime) <= :dateTo')
 
-
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
-
 
           ->addGroupBy('pr')
           ->addSelect('MIN(ts.startTime) AS startDate')
           ->addSelect('MAX(ts.startTime) AS endDate')
           ->addSelect('gr.id AS groupId')
 
-          ->getQuery()
+          ->addOrderBy($orderBy, $orderType)
+
+          ->getQuery();
         ;
+
 
         return $query;
     }
