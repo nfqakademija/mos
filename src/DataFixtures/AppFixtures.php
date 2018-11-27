@@ -129,9 +129,10 @@ class AppFixtures extends Fixture
      /**
      * Create a random string
      */
-    private function randomString($length = 6) {
+    private function randomString($length = 6)
+    {
         $str = "";
-        $characters = range('a','z');
+        $characters = range('a', 'z');
         $max = count($characters) - 1;
         for ($i = 0; $i < $length; $i++) {
             $rand = mt_rand(0, $max);
