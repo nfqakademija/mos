@@ -43,7 +43,6 @@ class Helper
     }
 
 
-
     /**
      * Gets page number from GET.
      *
@@ -60,6 +59,8 @@ class Helper
             $page = (int) $pageGet;
         }
 
+        dump($request);
+        dump($page);
         return $page;
     }
 }
