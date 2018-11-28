@@ -1,0 +1,5 @@
+knp_paginator:
+  page_range: 10
+  default_options:
+  template:
+    pagination: '@KnpPaginator/Pagination/sliding.html.twig'

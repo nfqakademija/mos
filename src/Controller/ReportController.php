@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Helper\Helper;
 use App\Report\Report;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -48,9 +49,9 @@ class ReportController extends AbstractController
      * @Route("/report/participants", name="report.participants",)
      * @return
      */
-    public function participants(Request $request, PaginatorInterface $paginator, UserRepository $ur)
+    public function participants(Request $request, PaginatorInterface $paginator, UserRepository $ur, Helper $helper)
     {
-        $pagination = [];
+        $page = $helper->getPageFromRequest($request);
 
         try {
             $dateFromString = $request->query->get('dateFrom');
@@ -62,8 +63,8 @@ class ReportController extends AbstractController
             return $this->redirectToRoute("report.participants.filter");
         }
 
-        $queryBuilder = $ur->getQueryBuilderParticipantsByGroupPeriod($dateFrom, $dateTo);
-        $pagination = $paginator->paginate($queryBuilder, $request->getQueryString('page', 1), 13, ['wrap-queries' => true]);
+        $query = $ur->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
+        $pagination = $paginator->paginate($query, $page, 15, ['wrap-queries' => true]);
 
         return $this->render('report/participants.html.twig', [
           'results' => $pagination,

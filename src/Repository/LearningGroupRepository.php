@@ -12,11 +12,28 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method LearningGroup[]    findAll()
  * @method LearningGroup[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LearningGroupRepository extends ServiceEntityRepository
+class LearningGroupRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, LearningGroup::class);
+    }
+
+    /**
+     * Gets Doctrine Query Builder to get all records
+     *
+     * @param string $orderBy
+     * @param string $orderType
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryB($orderBy = 'gr.id', $orderType = 'DESC')
+    {
+        $queryBuilder = $this->createQueryBuilder('gr')
+          ->addOrderBy($orderBy, $orderType)
+        ;
+
+        return $queryBuilder;
     }
 
     /**

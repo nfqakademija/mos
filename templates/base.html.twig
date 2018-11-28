@@ -16,6 +16,7 @@
         {% endblock %}
         <div class="container">
             {% block body %}{% endblock %}
+            {% block pager %}{% endblock %}
         </div>
         {% block javascripts %}
             <script src="{{ asset('build/js/app.js') }}"></script>

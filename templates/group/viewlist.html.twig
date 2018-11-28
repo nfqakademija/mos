@@ -48,3 +48,7 @@
             {% endfor %}
         </table>
 {% endblock %}
+
+{% block pager %}
+  {% include 'helper/pager.html.twig' with { 'content': groups } only %}
+{% endblock %}

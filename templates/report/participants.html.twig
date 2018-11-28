@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Report view{% endblock %}
 
+{% block title %}Report view{% endblock %}
 
 {% block body %}
   <h2>{% trans %}Participants report{% endtrans %}</h2>
@@ -47,10 +47,7 @@
 
   </table>
 
-  <div class="navigation">
-    {% if results|length %}
-      {{ knp_pagination_render(results) }}
-    {% endif %}
-  </div>
-
+{% endblock %}
+{% block pager %}
+  {% include 'helper/pager.html.twig' with { 'content': results } only %}
 {% endblock %}

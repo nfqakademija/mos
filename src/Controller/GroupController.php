@@ -5,9 +5,13 @@ namespace App\Controller;
 use App\Entity\LearningGroup;
 use App\Entity\User;
 use App\Form\GroupType;
+use App\Helper\Helper;
+use App\Repository\LearningGroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -36,15 +40,18 @@ class GroupController extends AbstractController
      * @Route("/group/viewlist", name="group.viewlist")
      * @param \Doctrine\ORM\EntityManagerInterface $em
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Controller\Helper $helper
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function groupViewList(EntityManagerInterface $em)
+    public function groupViewList(LearningGroupRepository $groupRepository, Request $request, Helper $helper)
     {
-        /** @var LearningGroup $groups */
-        $groups = $em->getRepository(LearningGroup::class)->findBy([], ['id' => 'DESC']);
-        
+
+        $pagination = $helper->getEntitiesPaginated($groupRepository, $request);
+
         return $this->render('group/viewlist.html.twig', [
-          'groups' => $groups,
+          'groups' => $pagination,
         ]);
     }
 
