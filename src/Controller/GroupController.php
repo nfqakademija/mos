@@ -62,7 +62,7 @@ class GroupController extends AbstractController
      * @Route("/group/create", name="group.create")
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createGroup(Request $request)
     {
