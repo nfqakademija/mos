@@ -51,7 +51,7 @@ class GroupController extends AbstractController
         $pagination = $helper->getEntitiesPaginated($groupRepository, $request);
 
         dump($request);
-        dump($pagination); die;
+        dump($pagination);
 
         return $this->render('group/viewlist.html.twig', [
           'groups' => $pagination,
