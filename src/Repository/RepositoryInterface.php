@@ -8,7 +8,14 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+
 interface RepositoryInterface
 {
-    public function getAllQueryB();
+
+    /**
+     * Entities Doctrine QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryB() : QueryBuilder;
 }

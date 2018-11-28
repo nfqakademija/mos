@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ReportFilterType;
 
-
 /**
  * Class ReportController
  *
@@ -63,7 +62,6 @@ class ReportController extends AbstractController
             $dateFrom = new \DateTime($dateFromString);
             $dateToString = $request->query->get('dateTo');
             $dateTo = new \DateTime($dateToString);
-
         } catch (\Exception $e) {
             return $this->redirectToRoute("report.participants.filter");
         }
