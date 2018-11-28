@@ -47,7 +47,12 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/participants", name="report.participants",)
-     * @return
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator
+     * @param \App\Repository\UserRepository $ur
+     * @param \App\Helper\Helper $helper
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function participants(Request $request, PaginatorInterface $paginator, UserRepository $ur, Helper $helper)
     {
