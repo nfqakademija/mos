@@ -4,6 +4,7 @@ namespace App\Report;
 
 use App\Repository\LearningGroupRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class Report
 {
@@ -40,14 +41,14 @@ class Report
      */
     public function getRangeFromFormData($data)
     {
-        $range = ['dateFrom' => null, 'dateTo' => null];
+        $range = ['dateFrom' => '', 'dateTo' => ''];
 
         if (!empty($data['dateFrom'])) {
-            $range['dateFrom'] = $data['dateFrom'];
+            $range['dateFrom'] = ($data['dateFrom'])->format('Y-m-d');
         }
 
         if (!empty($data['dateTo'])) {
-            $range['dateTo'] = $data['dateTo'];
+            $range['dateTo'] = ($data['dateTo'])->format('Y-m-d');
         }
 
         return $range;

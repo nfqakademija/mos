@@ -40,9 +40,9 @@ class UserRepository extends ServiceEntityRepository
      */
     public function getParticipantsByGroupPeriod(\DateTime $dateFrom, \DateTime $dateTo)
     {
-        $query = $this->getQueryParticipantsByGroupPeriod($dateFrom, $dateTo);
+        $queryBuilder = $this->getQueryBuilderParticipantsByGroupPeriod($dateFrom, $dateTo);
 
-        $result = $query->execute();
+        $result = $queryBuilder->getQuery()->execute();
 
         return $result;
     }
@@ -54,11 +54,11 @@ class UserRepository extends ServiceEntityRepository
      * @param string $orderBy
      * @param string $orderType
      *
-     * @return \Doctrine\ORM\Query
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryParticipantsByGroupPeriod($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
+    public function getQueryBuilderParticipantsByGroupPeriod($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
     {
-        $query = $this->createQueryBuilder('pr')
+        $queryBuilder = $this->createQueryBuilder('pr')
           ->innerJoin('pr.learningGroup', 'gr')
 
           ->addGroupBy('gr')
@@ -74,15 +74,10 @@ class UserRepository extends ServiceEntityRepository
           ->addSelect('MAX(ts.startTime) AS endDate')
           ->addSelect('gr.id AS groupId')
           
-          ->setMaxResults(10)
-          ->setFirstResult(20)
-          
           ->addOrderBy($orderBy, $orderType)
-
-          ->getQuery();
         ;
 
 
-        return $query;
+        return $queryBuilder;
     }
 }
