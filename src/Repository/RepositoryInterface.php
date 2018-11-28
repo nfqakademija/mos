@@ -17,5 +17,5 @@ interface RepositoryInterface
      * Entities Doctrine QueryBuilder
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllQueryB() : QueryBuilder;
+    public function getAllQueryB();
 }
