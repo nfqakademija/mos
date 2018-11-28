@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ReportFilterType;
 
-
 /**
  * Class ReportController
  *
@@ -47,7 +46,12 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/participants", name="report.participants",)
-     * @return
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator
+     * @param \App\Repository\UserRepository $ur
+     * @param \App\Helper\Helper $helper
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function participants(Request $request, PaginatorInterface $paginator, UserRepository $ur, Helper $helper)
     {
@@ -58,7 +62,6 @@ class ReportController extends AbstractController
             $dateFrom = new \DateTime($dateFromString);
             $dateToString = $request->query->get('dateTo');
             $dateTo = new \DateTime($dateToString);
-
         } catch (\Exception $e) {
             return $this->redirectToRoute("report.participants.filter");
         }
