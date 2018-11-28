@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements RepositoryInterface
 {
 
     public function __construct(RegistryInterface $registry)
@@ -35,14 +35,31 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
+     * Gets Doctrine Query Builder to get all records
+     *
+     * @param string $orderBy
+     * @param string $orderType
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryB($orderBy = 'u.id', $orderType = 'DESC')
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+          ->addOrderBy($orderBy, $orderType)
+        ;
+
+        return $queryBuilder;
+    }
+
+    /**
      * Gets all participants participanting in groups which ends in the period
      * plus extra starDate, endDate, groupId
      */
     public function getParticipantsByGroupPeriod(\DateTime $dateFrom, \DateTime $dateTo)
     {
-        $query = $this->getQueryParticipantsByGroupPeriod($dateFrom, $dateTo);
+        $queryBuilder = $this->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
 
-        $result = $query->execute();
+        $result = $queryBuilder->getQuery()->execute();
 
         return $result;
     }
@@ -51,14 +68,14 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
-     * @param string ? $orderBy
-     * @param string ? $orderType
+     * @param string $orderBy
+     * @param string $orderType
      *
-     * @return \Doctrine\ORM\Query
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryParticipantsByGroupPeriod($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
+    public function getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
     {
-        $query = $this->createQueryBuilder('pr')
+        $queryBuilder = $this->createQueryBuilder('pr')
           ->innerJoin('pr.learningGroup', 'gr')
 
           ->addGroupBy('gr')
@@ -73,13 +90,11 @@ class UserRepository extends ServiceEntityRepository
           ->addSelect('MIN(ts.startTime) AS startDate')
           ->addSelect('MAX(ts.startTime) AS endDate')
           ->addSelect('gr.id AS groupId')
-
+          
           ->addOrderBy($orderBy, $orderType)
-
-          ->getQuery();
         ;
 
 
-        return $query;
+        return $queryBuilder;
     }
 }

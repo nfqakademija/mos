@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participants report filter{% endblock %}
+
+
+{% block body %}
+  <h2>{% trans %}Participants report filter{% endtrans %}</h2>
+
+  {{ form_start(form) }}
+  <div class="row">
+    <div class="col-sm-6">
+      {{ form_row(form.dateFrom) }}
+    </div>
+    <div class="col-sm-6">
+      {{ form_row(form.dateTo) }}
+    </div>
+  </div>
+  <input type="submit" class="btn" value={% trans %}Show{% endtrans %} />
+  {{ form_end(form) }}
+
+{% endblock %}
