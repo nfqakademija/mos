@@ -57,9 +57,7 @@ class ProfileController extends AbstractController
      */
     public function profileViewList(Request $request, Helper $helper, UserRepository $userRepository)
     {
-        //$pagination = $helper->getEntitiesPaginated($userRepository, $request);
-
-        $pagination = $userRepository->findAll();
+        $pagination = $helper->getEntitiesPaginated($userRepository, $request);
 
         return $this->render('profile/viewlist.html.twig', [
           'users' => $pagination,

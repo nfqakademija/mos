@@ -28,7 +28,6 @@ class Helper
      * @param \App\Repository\RepositoryInterface $repository
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param bool $wrapQueries
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
