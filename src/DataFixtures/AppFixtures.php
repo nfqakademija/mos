@@ -23,7 +23,14 @@ class AppFixtures extends Fixture
     {
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
-        
+
+
+        $teachersNumber = 3;
+        $groupsNumber = 3;
+        $maxParticipantsInGroup = 3;
+        $maxTimeslotsInGroup = 3;
+
+
         //generate Regions
         $regionKaunas = new Region();
         $regionKaunas
@@ -71,7 +78,7 @@ class AppFixtures extends Fixture
         /**
          * @var $userTeacher User[]
          */
-        for ($i=0; $i<=10; $i++) {
+        for ($i=0; $i<=$teachersNumber; $i++) {
             $userTeacher[$i] = new User();
             $userTeacher[$i]
               ->setUsername('teacher' . $i)
@@ -84,12 +91,12 @@ class AppFixtures extends Fixture
         }
 
         //creates groups
-        for ($i=0; $i<=50; $i++) {
+        for ($i=0; $i<=$groupsNumber; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
-            $group[$i]->setTeacher($userTeacher[rand(0, 9)]);
-            $participantsCount = rand(12, 20);
+            $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
+            $participantsCount = rand(2, $maxParticipantsInGroup);
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
@@ -108,7 +115,7 @@ class AppFixtures extends Fixture
                                 
                 $group[$i]->addParticipant($userParticipant);
             }
-            $timeSlotsCount = rand(4, 6);
+            $timeSlotsCount = rand(1, $maxTimeslotsInGroup);
             $month = rand(11, 12);
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
