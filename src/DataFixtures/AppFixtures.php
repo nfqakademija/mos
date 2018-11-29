@@ -25,10 +25,10 @@ class AppFixtures extends Fixture
         $genres = ['vyras', 'moteris'];
 
 
-        $teachersNumber = 3;
-        $groupsNumber = 3;
-        $maxParticipantsInGroup = 3;
-        $maxTimeslotsInGroup = 3;
+        $teachersNumber = 10;
+        $groupsNumber = 100;
+        $maxParticipantsInGroup = 15;
+        $maxTimeslotsInGroup = 5;
 
 
         //generate Regions
