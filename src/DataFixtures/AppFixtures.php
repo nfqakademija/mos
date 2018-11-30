@@ -78,12 +78,12 @@ class AppFixtures extends Fixture
         /**
          * @var $userTeacher User[]
          */
-        for ($i=0; $i<=$teachersNumber; $i++) {
+        for ($i = 0; $i <= $teachersNumber; $i++) {
             $userTeacher[$i] = new User();
             $userTeacher[$i]
                 ->setUsername('teacher' . $i)
                 ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
-                ->setEmail('teacher' . $i .'@email.com')
+                ->setEmail('teacher' . $i . '@email.com')
                 ->setName('Teachername' . $i)
                 ->setSurname('Teachersurname' . $i)
                 ->setRoles([User::ROLE_TEACHER]);
@@ -91,7 +91,7 @@ class AppFixtures extends Fixture
         }
 
         //creates groups
-        for ($i=0; $i<=$groupsNumber; $i++) {
+        for ($i = 0; $i <= $groupsNumber; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
@@ -103,11 +103,11 @@ class AppFixtures extends Fixture
                 $userParticipant
                     ->setUsername('participant_' . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail('participant' . $unique .'@email.com')
+                    ->setEmail('participant' . $unique . '@email.com')
                     ->setName('Na' . $unique)
                     ->setSurname('Su' . $unique)
                     ->setRegion($regionJonavosR)
-                    ->setBirthDate('19'. rand(45, 75) .'-' . rand(1, 12) . '-' . rand(1, 28))
+                    ->setBirthDate('19' . rand(45, 75) . '-' . rand(1, 12) . '-' . rand(1, 28))
                     ->setRoles([User::ROLE_PARTICIPANT])
                     ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
                     ->setGender($genres[array_rand($genres, 1)]);
