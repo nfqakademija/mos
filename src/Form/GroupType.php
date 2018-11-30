@@ -9,6 +9,8 @@
 namespace App\Form;
 
 use App\Entity\LearningGroup;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,6 +24,10 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('address', TextType::class)
+            ->add('teacher', EntityType::class, array(
+                'class' => User::class,
+                'choice_label' => 'name'
+            ))
             ->add('participants', CollectionType::class, array(
                 'entry_type' => UserType::class,
                 'allow_add' => true,

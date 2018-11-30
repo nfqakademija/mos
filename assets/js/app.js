@@ -6,6 +6,7 @@ const randomString = require('random-string');
 $(document).ready(function () {
 
   M.Sidenav.init($('.sidenav'));
+  M.FormSelect.init($('.group-form__teacher'));
 
   $('.participant__additional').hide();
 

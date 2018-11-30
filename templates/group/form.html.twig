@@ -2,22 +2,29 @@
 {% form_theme form 'group/form_errors.html.twig' %}
 
 <div class="group-form row">
-    {{ form_start(form, {'attr': {'class': 'col s12'}}) }}
+    {{ form_start(form, {'attr': {'class': 'col s12'} }) }}
     <div class="row">
         <div class="input-field col s12">
             {{ form_label(form.address) }}
             {{ validate(form.address, '') }}
             {{ form_errors(form.address) }}
         </div>
+        <div class="input-field col s12">
+            {{ form_widget(form.teacher,  {'attr': {'class': 'group-form__teacher'} }) }}
+            {{ form_label(form.teacher) }}
+            {{ form_errors(form.teacher) }}
+        </div>
     </div>
-    <h5 class="group-form__title">{% trans %}Participants{% endtrans %}</h5>
+    <h5 class="group-form__title">
+        {% trans %}Participants{% endtrans %}
+    </h5>
     <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
         {% for participant in form.participants %}
             {{ printParticipant(participant) }}
         {% endfor %}
     </div>
     <div class="group-form__submit-button-wrapper">
-        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn-large blue darken-3'}}) }}
+        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn-large blue darken-3'} }) }}
     </div>
     {{ form_end(form) }}
 </div>
