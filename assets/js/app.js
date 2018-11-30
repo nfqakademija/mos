@@ -4,6 +4,9 @@ const $ = require('jquery');
 const randomString = require('random-string');
 
 $(document).ready(function () {
+
+  M.Sidenav.init($('.sidenav'));
+
   $('.participant__additional').hide();
 
   const addButton = $('<div class="clearfix"><i class="group-form__add-button btn-floating btn-large blue darken-3 material-icons">add</i></div>');
