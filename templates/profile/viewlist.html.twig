@@ -5,25 +5,29 @@
 {% block body %}
     <h2 class="text-center mt-3">Users</h2>
     <table class="table">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Surname</th>
-        <th scope="col">Username</th>
-      </tr>
-      </thead>
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Username</th>
+        </tr>
+        </thead>
         {% for user in users %}
-          <tr>
-            <th scope="row">{{ user.id }}</th>
-            <td>{{ user.name }}</td>
-            <td>{{ user.surname }}</td>
-            <td>
-              <a href="{{ path('profile.view.user', {'user': user.id}) }}">
-                {{ user.username }}
-              </a>
-            </td>
-          </tr>
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>
+                    <a href="{{ path('profile.view.user', {'user': user.id}) }}">
+                        {{ user.username }}
+                    </a>
+                </td>
+            </tr>
         {% endfor %}
     </table>
+{% endblock %}
+
+{% block pager %}
+  {% include 'helper/pager.html.twig' with { 'content': users } only %}
 {% endblock %}

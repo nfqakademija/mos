@@ -10,7 +10,7 @@
             {{ form_errors(form.address) }}
         </div>
     </div>
-    <h5 class="group-form__title">Participants</h5>
+    <h5 class="group-form__title">{% trans %}Participants{% endtrans %}</h5>
     <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
         {% for participant in form.participants %}
             {{ printParticipant(participant) }}

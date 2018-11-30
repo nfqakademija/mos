@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\LearningGroup;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Helper\Helper;
+use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,15 +49,18 @@ class ProfileController extends AbstractController
      * @Route("/profile/viewlist",
      *   name="profile.viewlist",
      *   methods="GET")
-     * @return
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Helper\Helper $helper
+     * @param \App\Repository\UserRepository $userRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function profileViewList(EntityManagerInterface $em)
+    public function profileViewList(Request $request, Helper $helper, UserRepository $userRepository)
     {
-
-        $users = $em->getRepository(User::class)->findAll();
+        $pagination = $helper->getEntitiesPaginated($userRepository, $request);
 
         return $this->render('profile/viewlist.html.twig', [
-            'users' => $users,
+            'users' => $pagination,
         ]);
     }
 }

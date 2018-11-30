@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends ServiceEntityRepository implements RepositoryInterface
 {
 
     public function __construct(RegistryInterface $registry)
@@ -32,5 +32,69 @@ class UserRepository extends ServiceEntityRepository
           ->orderBy('u.id', 'ASC')
           ->getQuery()
           ->getResult();
+    }
+
+    /**
+     * Gets Doctrine Query Builder to get all records
+     *
+     * @param string $orderBy
+     * @param string $orderType
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryB($orderBy = 'u.id', $orderType = 'DESC')
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+          ->addOrderBy($orderBy, $orderType)
+        ;
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Gets all participants participanting in groups which ends in the period
+     * plus extra starDate, endDate, groupId
+     */
+    public function getParticipantsByGroupPeriod(\DateTime $dateFrom, \DateTime $dateTo)
+    {
+        $queryBuilder = $this->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
+
+        $result = $queryBuilder->getQuery()->execute();
+
+        return $result;
+    }
+
+
+    /**
+     * @param \DateTime $dateFrom
+     * @param \DateTime $dateTo
+     * @param string $orderBy
+     * @param string $orderType
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
+    {
+        $queryBuilder = $this->createQueryBuilder('pr')
+          ->innerJoin('pr.learningGroup', 'gr')
+
+          ->addGroupBy('gr')
+          ->innerJoin('gr.timeSlots', 'ts')
+          ->having('MAX(ts.startTime) >= :dateFrom')
+          ->andHaving('MAX(ts.startTime) <= :dateTo')
+
+          ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
+          ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+
+          ->addGroupBy('pr')
+          ->addSelect('MIN(ts.startTime) AS startDate')
+          ->addSelect('MAX(ts.startTime) AS endDate')
+          ->addSelect('gr.id AS groupId')
+          
+          ->addOrderBy($orderBy, $orderType)
+        ;
+
+
+        return $queryBuilder;
     }
 }

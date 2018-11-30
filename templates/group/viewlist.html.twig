@@ -20,13 +20,13 @@
     </a>
     <table class="table">
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">{% trans %}Address{% endtrans %}</th>
-                <th scope="col">{% trans %}Start date{% endtrans %}</th>
-                <th scope="col">{% trans %}End date{% endtrans %}</th>
-                <th scope="col">{% trans %}Participants{% endtrans %}</th>
-            </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans %}Address{% endtrans %}</th>
+            <th scope="col">{% trans %}Start date{% endtrans %}</th>
+            <th scope="col">{% trans %}End date{% endtrans %}</th>
+            <th scope="col">{% trans %}Participants{% endtrans %}</th>
+        </tr>
         </thead>
         {% for group in groups %}
             <tr>
@@ -49,4 +49,8 @@
             </tr>
         {% endfor %}
     </table>
+{% endblock %}
+
+{% block pager %}
+    {% include 'helper/pager.html.twig' with { 'content': groups } only %}
 {% endblock %}
