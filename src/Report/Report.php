@@ -4,7 +4,8 @@ namespace App\Report;
 
 use App\Repository\LearningGroupRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class Report
 {
@@ -26,11 +27,30 @@ class Report
         $this->userRepository = $userRepository;
     }
 
-    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo) : array
+    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo) : array
     {
         $participants = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
 
-        return $participants;
+
+        $spreadsheet = new Spreadsheet();
+
+        /* @var $sheet \PhpOffice\PhpSpreadsheet\Writer\Xlsx\Worksheet */
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Hello World !');
+        $sheet->setTitle("My First Worksheet");
+
+        // Create your Office 2007 Excel (XLSX Format)
+        $writer = new Xlsx($spreadsheet);
+
+        // Create a Temporary file in the system
+        $fileName = 'participantsReport.xlsx';
+        $temp_file = tempnam(sys_get_temp_dir(), $fileName);
+
+        // Create the excel file in the tmp directory of the system
+        $writer->save($temp_file);
+
+        // Return the excel file as an attachment
+        return ['file' => $temp_file, 'file_name' => $fileName];
     }
 
 
