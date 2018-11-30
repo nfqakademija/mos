@@ -37,7 +37,7 @@ class ReportController extends AbstractController
             $range = $report->getRangeFromFormData($data);
 
            // return $this->redirectToRoute("report.participants", $range);
-            return $this->redirectToRoute("report.participants.export");
+            return $this->redirectToRoute("report.participants.export", $range);
 
         }
 
