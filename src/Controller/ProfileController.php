@@ -25,7 +25,7 @@ class ProfileController extends AbstractController
     {
 
         return $this->render('profile/view.html.twig', [
-          'user' => $user,
+            'user' => $user,
         ]);
     }
 
@@ -41,7 +41,7 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         return $this->render('profile/view.html.twig', [
-          'user' => $user,
+            'user' => $user,
         ]);
     }
 
@@ -60,7 +60,7 @@ class ProfileController extends AbstractController
         $pagination = $helper->getEntitiesPaginated($userRepository, $request);
 
         return $this->render('profile/viewlist.html.twig', [
-          'users' => $pagination,
+            'users' => $pagination,
         ]);
     }
 }

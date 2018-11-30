@@ -22,9 +22,9 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/participants/filter", name="report.participants.filter")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Report\Report $report
+     * @param Request $request
+     * @param Report $report
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function participantsFilterForm(Request $request, Report $report)
     {

@@ -4,50 +4,50 @@
 {% block title %}Report view{% endblock %}
 
 {% block body %}
-  <h2>{% trans %}Participants report{% endtrans %}</h2>
+    <h2>{% trans %}Participants report{% endtrans %}</h2>
 
-  {% if results|length %}
-  <h6>{% trans %}Records{% endtrans %} : {{ results.getTotalItemCount }}</h6>
-  {% endif %}
+    {% if results|length %}
+        <h6>{% trans %}Records{% endtrans %} : {{ results.getTotalItemCount }}</h6>
+    {% endif %}
 
-  <table>
-    <tr>
-      <th>{% trans %}Name{% endtrans %}</th>
-      <th>{% trans %}Surname{% endtrans %}</th>
-      <th>{% trans %}Birth date{% endtrans %}</th>
-      <th>{% trans %}Region/city{% endtrans %}</th>
-      <th>{% trans %}Living area type{% endtrans %}</th>
-      <th>{% trans %}Address{% endtrans %}</th>
-      <th>{% trans %}Phone number{% endtrans %}</th>
-      <th>{% trans %}Email{% endtrans %}</th>
-      <th>{% trans %}Gender{% endtrans %}</th>
-      <th>{% trans %}Course start date{% endtrans %}</th>
-      <th>{% trans %}Course end date{% endtrans %}</th>
-      <th>{% trans %}Group Id{% endtrans %}</th>
-    </tr>
+    <table>
+        <tr>
+            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Surname{% endtrans %}</th>
+            <th>{% trans %}Birth date{% endtrans %}</th>
+            <th>{% trans %}Region/city{% endtrans %}</th>
+            <th>{% trans %}Living area type{% endtrans %}</th>
+            <th>{% trans %}Address{% endtrans %}</th>
+            <th>{% trans %}Phone number{% endtrans %}</th>
+            <th>{% trans %}Email{% endtrans %}</th>
+            <th>{% trans %}Gender{% endtrans %}</th>
+            <th>{% trans %}Course start date{% endtrans %}</th>
+            <th>{% trans %}Course end date{% endtrans %}</th>
+            <th>{% trans %}Group Id{% endtrans %}</th>
+        </tr>
 
-    {% for result in results %}
-      <tr>
-        <td>{{ result.0.name }}</td>
-        <td>{{ result.0.surname }}</td>
-        <td>{{ result.0.birthDate ? result.0.birthDate|date('Y-m-d') }}</td>
-        <td>{{ result.0.region ? result.0.region.title }}</td>
-        <td>{{ result.0.livingAreaType }}</td>
-        <td>{{ result.0.address }}</td>
-        <td>{{ result.0.phone }}</td>
-        <td>{{ result.0.email }}</td>
-        <td>{{ result.0.gender }}</td>
-        <td>{{ result.startDate ? result.startDate|date('Y-m-d') }}</td>
-        <td>{{ result.endDate ? result.endDate|date('Y-m-d') }}</td>
-        <td>{{ result.groupId }}</td>
-        <td></td>
-      </tr>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.0.name }}</td>
+                <td>{{ result.0.surname }}</td>
+                <td>{{ result.0.birthDate ? result.0.birthDate|date('Y-m-d') }}</td>
+                <td>{{ result.0.region ? result.0.region.title }}</td>
+                <td>{{ result.0.livingAreaType }}</td>
+                <td>{{ result.0.address }}</td>
+                <td>{{ result.0.phone }}</td>
+                <td>{{ result.0.email }}</td>
+                <td>{{ result.0.gender }}</td>
+                <td>{{ result.startDate ? result.startDate|date('Y-m-d') }}</td>
+                <td>{{ result.endDate ? result.endDate|date('Y-m-d') }}</td>
+                <td>{{ result.groupId }}</td>
+                <td></td>
+            </tr>
 
-    {% endfor %}
+        {% endfor %}
 
-  </table>
+    </table>
 
 {% endblock %}
 {% block pager %}
-  {% include 'helper/pager.html.twig' with { 'content': results } only %}
+    {% include 'helper/pager.html.twig' with { 'content': results } only %}
 {% endblock %}
