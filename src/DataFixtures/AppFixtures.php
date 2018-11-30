@@ -23,50 +23,50 @@ class AppFixtures extends Fixture
     {
         $userParticipant = [];
         $timeSlot = [];
-        
+
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
-        
+
         //generate Regions
         $regionKaunas = new Region();
         $regionKaunas
-          ->setTitle('Kaunas')
-          ->setIsCity(true)
-          ->setIsProblematic('false');
+            ->setTitle('Kaunas')
+            ->setIsCity(true)
+            ->setIsProblematic('false');
 
         $manager->persist($regionKaunas);
 
         $regionKaunoR = new Region();
         $regionKaunoR
-          ->setTitle('Kauno raj.')
-          ->setIsCity(false)
-          ->setIsProblematic('false');
+            ->setTitle('Kauno raj.')
+            ->setIsCity(false)
+            ->setIsProblematic('false');
         $manager->persist($regionKaunoR);
 
         $regionJonava = new Region();
         $regionJonava
-          ->setTitle('Jonava')
-          ->setIsCity(true)
-          ->setIsProblematic('true');
+            ->setTitle('Jonava')
+            ->setIsCity(true)
+            ->setIsProblematic('true');
         $manager->persist($regionJonava);
 
         $regionJonavosR = new Region();
         $regionJonavosR
-          ->setTitle('Jonavos raj.')
-          ->setIsCity(false)
-          ->setIsProblematic('true');
+            ->setTitle('Jonavos raj.')
+            ->setIsCity(false)
+            ->setIsProblematic('true');
         $manager->persist($regionJonavosR);
 
         //generate admin///////////////////////////////////////////
 
         $userAdmin = new User();
         $userAdmin
-          ->setUsername('admin')
-          ->setPassword($this->encoder->encodePassword($userAdmin, 'admin1'))
-          ->setEmail('admin@email.com')
-          ->setName('Administrator')
-          ->setSurname('Administrator')
-          ->setRoles([User::ROLE_ADMIN]);
+            ->setUsername('admin')
+            ->setPassword($this->encoder->encodePassword($userAdmin, 'admin1'))
+            ->setEmail('admin@email.com')
+            ->setName('Administrator')
+            ->setSurname('Administrator')
+            ->setRoles([User::ROLE_ADMIN]);
         $manager->persist($userAdmin);
 
 
@@ -74,15 +74,15 @@ class AppFixtures extends Fixture
         /**
          * @var $userTeacher User[]
          */
-        for ($i=0; $i<=3; $i++) {
+        for ($i = 0; $i <= 3; $i++) {
             $userTeacher[$i] = new User();
             $userTeacher[$i]
-              ->setUsername('teacher' . $i)
-              ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
-              ->setEmail('teacher' . $i .'@email.com')
-              ->setName('Teachername' . $i)
-              ->setSurname('Teachersurname' . $i)
-              ->setRoles([User::ROLE_TEACHER]);
+                ->setUsername('teacher' . $i)
+                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
+                ->setEmail('teacher' . $i . '@email.com')
+                ->setName('Teachername' . $i)
+                ->setSurname('Teachersurname' . $i)
+                ->setRoles([User::ROLE_TEACHER]);
             $manager->persist($userTeacher[$i]);
         }
 
@@ -90,19 +90,19 @@ class AppFixtures extends Fixture
         /**
          * @var $userParticipant User[]
          */
-        for ($i=0; $i<=110; $i++) {
+        for ($i = 0; $i <= 110; $i++) {
             $userParticipant[$i] = new User();
             $userParticipant[$i]
-              ->setUsername('participant' . $i)
-              ->setPassword($this->encoder->encodePassword($userParticipant[$i], rand(1000, 1100)))
-              ->setEmail('participant' . $i .'@email.com')
-              ->setName('Participantname' . $i)
-              ->setSurname('Participantsurname' . $i)
-              ->setRegion($regionJonavosR)
-              ->setBirthDate(new \DateTime('1961-04-24'))
-              ->setRoles([User::ROLE_PARTICIPANT])
-              ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
-              ->setGender($genres[array_rand($genres, 1)]);
+                ->setUsername('participant' . $i)
+                ->setPassword($this->encoder->encodePassword($userParticipant[$i], rand(1000, 1100)))
+                ->setEmail('participant' . $i . '@email.com')
+                ->setName('Participantname' . $i)
+                ->setSurname('Participantsurname' . $i)
+                ->setRegion($regionJonavosR)
+                ->setBirthDate('1961-04-24')
+                ->setRoles([User::ROLE_PARTICIPANT])
+                ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
+                ->setGender($genres[array_rand($genres, 1)]);
             $manager->persist($userParticipant[$i]);
         }
 
@@ -134,8 +134,8 @@ class AppFixtures extends Fixture
             ->addTimeSlot($timeSlot3);
 
         $manager->persist($group1);
-        
-        
+
+
         //generate TimeSlot
         $timeSlot4 = new TimeSlot();
         $timeSlot4->setStartTime(new \DateTime("2018-12-10"));
@@ -146,21 +146,21 @@ class AppFixtures extends Fixture
         $timeSlot5->setStartTime(new \DateTime("2018-12-15"));
         $timeSlot5->setDurationMinutes(90);
         $manager->persist($timeSlot5);
-        
+
         //generate Group
         $group2 = new LearningGroup();
         $group2->setAddress('Savanorių pr. 254, Kaunas')
-          ->setTeacher($userTeacher[2])
-          ->addParticipant($userParticipant[1])
-          ->addParticipant($userParticipant[2])
-          ->addParticipant($userParticipant[3])
-          ->addTimeSlot($timeSlot4)
-          ->addTimeSlot($timeSlot5);
+            ->setTeacher($userTeacher[2])
+            ->addParticipant($userParticipant[1])
+            ->addParticipant($userParticipant[2])
+            ->addParticipant($userParticipant[3])
+            ->addTimeSlot($timeSlot4)
+            ->addTimeSlot($timeSlot5);
         $manager->persist($group2);
 
 
         //creates 101 timeslots
-        for ($i=0; $i<=100; $i++) {
+        for ($i = 0; $i <= 100; $i++) {
             //generate TimeSlot
             $timeSlot[$i] = new TimeSlot();
             $startTime = new \DateTime("2018-" . rand(11, 12) . '-' . rand(1, 29));
@@ -168,9 +168,9 @@ class AppFixtures extends Fixture
             $timeSlot[$i]->setDurationMinutes(90);
             $manager->persist($timeSlot[$i]);
         }
-        
+
         //creates groups
-        for ($i=0; $i<=100; $i++) {
+        for ($i = 0; $i <= 100; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
@@ -186,7 +186,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($group[$i]);
         }
-        
+
         $manager->flush();
     }
 }

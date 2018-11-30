@@ -94,11 +94,6 @@ class User implements UserInterface
     private $lastAccessDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\LearningGroup", mappedBy="participants")
-     */
-    private $learningGroups;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="participants")
      */
     private $learningGroup;
@@ -120,7 +115,6 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->learningGroups = new ArrayCollection();
         $this->learningGroupsUserTeaches = new ArrayCollection();
     }
 
@@ -230,8 +224,7 @@ class User implements UserInterface
     {
         try {
             $this->birthDate = new \DateTime($birthDate);
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             //Do Nothing
         }
 
@@ -321,17 +314,17 @@ class User implements UserInterface
     public function toArray()
     {
         $arr = [
-          'username' => $this->getUsername(),
-          'name' => $this->getName(),
-          'surname' => $this->getSurname(),
-          'birth_date' => $this->getBirthDate(),
-          'email' => $this->getEmail(),
-          'phone' => $this->getPhone(),
-          'region' => null,
-          'address' => $this->getAddress(),
-          'reg_date' => $this->getRegistrationDate(),
-          'last_access_date' => $this->getLastAccessDate(),
-          'roles' => $this->getRoles(),
+            'username' => $this->getUsername(),
+            'name' => $this->getName(),
+            'surname' => $this->getSurname(),
+            'birth_date' => $this->getBirthDate(),
+            'email' => $this->getEmail(),
+            'phone' => $this->getPhone(),
+            'region' => null,
+            'address' => $this->getAddress(),
+            'reg_date' => $this->getRegistrationDate(),
+            'last_access_date' => $this->getLastAccessDate(),
+            'roles' => $this->getRoles(),
         ];
 
         if (!empty($this->getRegion())) {
