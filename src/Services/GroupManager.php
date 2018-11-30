@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Entity\LearningGroup;
 use App\Entity\User;
