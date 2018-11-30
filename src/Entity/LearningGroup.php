@@ -59,7 +59,7 @@ class LearningGroup
         return $this->address;
     }
 
-    public function setAddress(string $address): self
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
@@ -101,10 +101,10 @@ class LearningGroup
     public function toArray()
     {
         $arr = [
-          'id' => $this->getId(),
-          'timeslots' => [],
-          'address' => $this->getAddress(),
-          'participants' => [],
+            'id' => $this->getId(),
+            'timeslots' => [],
+            'address' => $this->getAddress(),
+            'participants' => [],
         ];
 
         $timeslots = $this->getTimeSlots();
@@ -112,9 +112,9 @@ class LearningGroup
             /** @var \App\Entity\TimeSlot $timeslot */
             foreach ($timeslots as $timeslot) {
                 $arr['timeslots'][] = [
-                  'id' => $timeslot->getId(),
-                  'startTime' => $timeslot->getStartTime(),
-                  'durationMinutes' => $timeslot->getDurationMinutes(),
+                    'id' => $timeslot->getId(),
+                    'startTime' => $timeslot->getStartTime(),
+                    'durationMinutes' => $timeslot->getDurationMinutes(),
                 ];
             }
         }
@@ -199,7 +199,7 @@ class LearningGroup
     public function getStartDate(bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
-        
+
         if (sizeof($timeSlots) === 0) {
             if ($nullIfNotExist) {
                 return null;
