@@ -10,6 +10,7 @@ namespace App\Form;
 
 use App\Entity\LearningGroup;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -26,6 +27,12 @@ class GroupType extends AbstractType
             ->add('address', TextType::class)
             ->add('teacher', EntityType::class, array(
                 'class' => User::class,
+                'query_builder' => function (UserRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->andWhere('u.roles LIKE :val')
+                        ->setParameter('val', '%"ROLE_TEACHER"%')
+                        ->orderBy('u.id', 'ASC');
+                },
                 'choice_label' => 'name'
             ))
             ->add('participants', CollectionType::class, array(
@@ -43,7 +50,7 @@ class GroupType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => LearningGroup::class,
-            'attr'=> array('novalidate' => 'novalidate')
+            'attr' => array('novalidate' => 'novalidate')
         ));
     }
 }
