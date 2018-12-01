@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TimeSlotRepository")
@@ -18,14 +19,22 @@ class TimeSlot
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Enter date")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="time")
+     * @Assert\NotBlank(message="Enter start time")
      */
     private $startTime;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Enter duration")
      */
-    private $durationMinutes;
+    private $duration;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="timeSlots")
@@ -37,9 +46,25 @@ class TimeSlot
         return $this->id;
     }
 
+    public function getDate(): ?string
+    {
+        return $this->date != null ? $this->date->format('Y-m-d') : null;
+    }
+
+    public function setDate($date): self
+    {
+        try {
+            $this->date = new \DateTime($date);
+        } catch (\Exception $e) {
+            //Do Nothing
+        }
+
+        return $this;
+    }
+
     public function getStartTime(): ?string
     {
-        return $this->startTime != null ? $this->startTime->format('Y-m-d H:i:s') : null;
+        return $this->startTime != null ? $this->startTime->format('H:i') : null;
     }
 
     public function setStartTime($startTime): self
@@ -53,14 +78,14 @@ class TimeSlot
         return $this;
     }
 
-    public function getDurationMinutes(): ?int
+    public function getDuration(): ?int
     {
-        return $this->durationMinutes;
+        return $this->duration;
     }
 
-    public function setDurationMinutes(int $durationMinutes): self
+    public function setDuration(int $duration): self
     {
-        $this->durationMinutes = $durationMinutes;
+        $this->duration = $duration;
 
         return $this;
     }

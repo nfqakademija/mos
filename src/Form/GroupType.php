@@ -35,11 +35,19 @@ class GroupType extends AbstractType
                 },
                 'choice_label' => 'name'
             ))
+            ->add('timeSlots', CollectionType::class, array(
+                'entry_type' => TimeSlotType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => false,
+                'by_reference' => false
+            ))
             ->add('participants', CollectionType::class, array(
                 'entry_type' => UserType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label' => false
+                'label' => false,
+                'by_reference' => false
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Submit'

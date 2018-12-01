@@ -2,84 +2,93 @@ import $ from 'jquery';
 import * as M from 'materialize-css';
 import randomString from 'random-string';
 
-const generateUsernameUsingName = function () {
-  let surname;
-  let isEmpty = false;
-  const oldValues = $(this).parents().eq(2).find('.participant__username').val().split('.');
+const getOldValues = that => $(that).parents().eq(2).find('.participant__username').val().split('.');
 
+const displayUsername = (that, username) => $(that).parents().eq(2).find('.participant__username').val(username);
+
+const getUsernameFromName = (that, surname, isEmpty, oldValues) => {
   if (oldValues.length === 3) {
-    surname = this.value !== '' ? `.${oldValues[1]}` : oldValues[1];
-  } else if (oldValues.length === 2 && this.value !== '') {
+    surname = that.value !== '' ? `.${oldValues[1]}` : oldValues[1];
+  } else if (oldValues.length === 2 && that.value !== '') {
     surname = `.${oldValues[0]}`;
-  } else if (oldValues.length === 2 && this.value === '') {
+  } else if (oldValues.length === 2 && that.value === '') {
     isEmpty = true;
-  } else {
-    surname = '';
   }
 
-  $(this).parents().eq(2).find('.participant__username')
-    .val(!isEmpty ? `${this.value}${surname}.${randomString({length: 3})}` : '');
+  return !isEmpty ?
+    `${that.value}${surname}.${randomString({length: 3})}` :
+    '';
 };
 
-const generateUsernameUsingSurname = function () {
+const getUsernameFromSurname = (that, name, isEmpty, oldValues) => {
+  name = oldValues[0] === undefined || oldValues[0] === '' ? name : oldValues[0];
+
+  if (oldValues.length === 2 && that.value === '') {
+    isEmpty = true;
+  }
+
+  return !isEmpty ?
+    `${name}${that.value !== '' && name !== '' ? '.' : ''}${that.value}.${randomString({length: 3})}` :
+    '';
+};
+
+const generateUsername = ({currentTarget}, getUsername) => {
+  let name = '';
   let isEmpty = false;
-  const oldValues = $(this).parents().eq(2).find('.participant__username').val().split('.');
-  const isNameEmpty = oldValues[0] === undefined || oldValues[0] === '';
+  const that = currentTarget;
+  const oldValues = getOldValues(that);
+  const username = getUsername(that, name, isEmpty, oldValues);
 
-  if (oldValues.length === 2 && this.value === '') {
-    isEmpty = true;
-  }
-
-  $(this).parents().eq(2).find('.participant__username')
-    .val(!isEmpty ? `${oldValues[0]}${this.value !== '' && !isNameEmpty ? '.' : ''}${this.value}.${randomString({length: 3})}` : '');
+  displayUsername(that, username);
 };
 
-const toggleAdditionalSection = function (e) {
-  e.preventDefault();
-  $(this).parents().eq(2).find('.participant__additional').slideToggle('fast');
+const toggleAdditionalSection = e => {
+  const that = e.currentTarget;
 
-  if ($(this).text() === 'Less') {
-    $(this).text('More');
-    $(this).parents().eq(2).removeClass('participant--active z-depth-5');
+  e.preventDefault();
+  $(that).parents().eq(2).find('.participant__additional').slideToggle('fast');
+
+  if ($(that).text() === 'Less') {
+    $(that).text('More');
+    $(that).parents().eq(2).removeClass('participant--active z-depth-5');
   } else {
-    $(this).text('Less');
-    $(this).parents().eq(2).addClass('participant--active z-depth-5');
-    let count = $(this).data('count') || 0;
+    let count = $(that).data('count') || 0;
+
+    $(that).text('Less');
+    $(that).parents().eq(2).addClass('participant--active z-depth-5');
 
     if (count === 0) {
-      M.FormSelect.init($(this).parents().eq(2).find('select'));
-      M.Datepicker.init($(this).parents().eq(2).find('.datepicker'), { format: 'yyyy-mm-dd' });
-      $(this).data('count', ++count);
+      M.FormSelect.init($(that).parents().eq(2).find('select'));
+      M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), {format: 'yyyy-mm-dd'});
+
+      $(that).data('count', ++count);
     }
   }
 };
 
-const removeParticipant = function (e) {
+const generatePassword = e => {
+  const that = e.currentTarget;
+
   e.preventDefault();
-  $(this).parent().parent().parent().slideUp('fast', function () {
-    $(this).remove();
-  });
+  $(that).parents().eq(1).find('.participant__password').val(randomString());
 };
 
-const generatePassword = function (e) {
-  e.preventDefault();
-  $(this).parents().eq(1).find('.participant__password').val(randomString());
-};
-
-const jumpFromNameToSurname = function (e) {
+const jumpFromNameToSurname = e => {
   const keyCode = e.keyCode || e.which;
+  const that = e.currentTarget;
 
   if (keyCode === 13) {
     e.preventDefault();
-    $(this).parents().eq(1).find('.participant__surname').focus();
+    $(that).parents().eq(1).find('.participant__surname').focus();
   }
 };
 
 export default () => {
-  $('.participants').on('change', '.participant__name', generateUsernameUsingName);
-  $('.participants').on('change', '.participant__surname', generateUsernameUsingSurname);
-  $('.participants').on('click', '.participant__toggle-additional-button', toggleAdditionalSection);
-  $('.participants').on('click', '.participant__password-generate-button', generatePassword);
-  $('.participants').on('click', '.participant__remove-button', removeParticipant);
-  $('.participants').on('keydown', '.participant__name', jumpFromNameToSurname);
+  const participantsHolder = $('.participants');
+
+  participantsHolder.on('change', '.participant__name', e => generateUsername(e, getUsernameFromName));
+  participantsHolder.on('change', '.participant__surname', e => generateUsername(e, getUsernameFromSurname));
+  participantsHolder.on('click', '.participant__toggle-additional-button', toggleAdditionalSection);
+  participantsHolder.on('click', '.participant__password-generate-button', generatePassword);
+  participantsHolder.on('keydown', '.participant__name', jumpFromNameToSurname);
 };

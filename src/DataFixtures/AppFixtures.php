@@ -119,9 +119,9 @@ class AppFixtures extends Fixture
             $month = rand(11, 12);
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
-                $startTime = new \DateTime("2018-" . $month . '-' . rand(1, 29));
-                $timeSlot->setStartTime($startTime);
-                $timeSlot->setDurationMinutes(90);
+                $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
+                $timeSlot->setStartTime("10:30");
+                $timeSlot->setDuration(90);
 
                 $group[$i]->addTimeSlot($timeSlot);
                 $manager->persist($timeSlot);

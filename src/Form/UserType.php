@@ -32,13 +32,12 @@ class UserType extends AbstractType
                 'required' => false
             ))
             ->add('gender', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     'Vyras' => 'vyras',
                     'Moteris' => 'moteris'
                 ),
                 'data' => 'vyras'
-            ))
-            ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

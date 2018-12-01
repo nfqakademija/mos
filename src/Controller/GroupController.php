@@ -84,7 +84,10 @@ class GroupController extends AbstractController
      */
     public function editGroup(Request $request, GroupManager $groupManager, $group)
     {
-        $group = $groupManager->getGroup($group);
+        if (null === $group = $groupManager->getGroup($group)) {
+            throw $this->createNotFoundException('No group found for id '. $group);
+        }
+
         $form = $this->createForm(GroupType::class, $group);
 
         if ($groupManager->handleEdit($form, $request)) {

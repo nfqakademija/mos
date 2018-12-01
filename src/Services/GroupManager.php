@@ -6,6 +6,7 @@ use App\Entity\LearningGroup;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,7 +18,7 @@ class GroupManager
     private $entityManager;
 
     /**
-     * GroupFormHandler constructor.
+     * GroupManager constructor.
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
@@ -45,20 +46,42 @@ class GroupManager
 
         if ($form->isSubmitted() && $form->isValid()) {
             $group = $form->getData();
+
             $this->entityManager->persist($group);
-
-            foreach ($group->getParticipants() as $participant) {
-                $participant->setLearningGroup($group);
-                $participant->setRoles([User::ROLE_PARTICIPANT]);
-                $this->entityManager->persist($participant);
-            }
-
             $this->entityManager->flush();
 
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param PersistentCollection $items
+     * @return ArrayCollection
+     */
+    private function setOriginals(PersistentCollection $items): ArrayCollection
+    {
+        $originals = new ArrayCollection();
+
+        foreach ($items as $item) {
+            $originals->add($item);
+        }
+
+        return $originals;
+    }
+
+    /**
+     * @param ArrayCollection $originals
+     * @param PersistentCollection $newItems
+     */
+    private function removeDeletedItems(ArrayCollection $originals, PersistentCollection $newItems): void
+    {
+        foreach ($originals as $original) {
+            if (false === $newItems->contains($original)) {
+                $this->entityManager->remove($original);
+            }
+        }
     }
 
     /**
@@ -69,29 +92,19 @@ class GroupManager
     public function handleEdit(FormInterface $form, Request $request): bool
     {
         $group = $form->getData();
-        $oldParticipants = new ArrayCollection();
+        $participants = $group->getParticipants();
+        $timeSlots = $group->getTimeSlots();
 
-        foreach ($group->getParticipants() as $participant) {
-            $oldParticipants->add($participant);
-        }
+        $originalParticipants = $this->setOriginals($participants);
+        $originalTimeSlots = $this->setOriginals($timeSlots);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($oldParticipants as $participant) {
-                if ($group->getParticipants()->contains($participant) === false) {
-                    $this->entityManager->remove($participant);
-                }
-            }
+            $this->removeDeletedItems($originalParticipants, $participants);
+            $this->removeDeletedItems($originalTimeSlots, $timeSlots);
 
-            foreach ($group->getParticipants() as $participant) {
-                if ($oldParticipants->contains($participant) === false) {
-                    $participant->setLearningGroup($group);
-                    $participant->setRoles([User::ROLE_PARTICIPANT]);
-                    $this->entityManager->persist($participant);
-                }
-            }
-
+            $this->entityManager->persist($group);
             $this->entityManager->flush();
 
             return true;

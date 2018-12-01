@@ -87,3 +87,31 @@
         </div>
     </div>
 {% endmacro %}
+
+{% macro printTimeSlot(timeSlot) %}
+    {% from _self import validate %}
+    <div class="time-slot">
+        <div class="row">
+            <div class="input-field col s5">
+                {{ form_label(timeSlot.date) }}
+                {{ validate(timeSlot.date, 'datepicker') }}
+                {{ form_errors(timeSlot.date) }}
+            </div>
+            <div class="input-field col s4">
+                {{ form_label(timeSlot.startTime) }}
+                {{ validate(timeSlot.startTime, 'timepicker') }}
+                {{ form_errors(timeSlot.startTime) }}
+            </div>
+            <div class="input-field col s2">
+                {{ form_label(timeSlot.duration) }}
+                {{ validate(timeSlot.duration, '') }}
+                {{ form_errors(timeSlot.duration) }}
+            </div>
+            <div class="time-slot__remove-button-wrapper col s1">
+                <i class="time-slot__remove-button material-icons">
+                    close
+                </i>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
