@@ -73,16 +73,6 @@ const generatePassword = e => {
   $(that).parents().eq(1).find('.participant__password').val(randomString());
 };
 
-const jumpFromNameToSurname = e => {
-  const keyCode = e.keyCode || e.which;
-  const that = e.currentTarget;
-
-  if (keyCode === 13) {
-    e.preventDefault();
-    $(that).parents().eq(1).find('.participant__surname').focus();
-  }
-};
-
 export default () => {
   const participantsHolder = $('.participants');
 
@@ -90,5 +80,4 @@ export default () => {
   participantsHolder.on('change', '.participant__surname', e => generateUsername(e, getUsernameFromSurname));
   participantsHolder.on('click', '.participant__toggle-additional-button', toggleAdditionalSection);
   participantsHolder.on('click', '.participant__password-generate-button', generatePassword);
-  participantsHolder.on('keydown', '.participant__name', jumpFromNameToSurname);
 };

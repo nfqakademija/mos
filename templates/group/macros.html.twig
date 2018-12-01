@@ -94,17 +94,17 @@
         <div class="row">
             <div class="input-field col s5">
                 {{ form_label(timeSlot.date) }}
-                {{ validate(timeSlot.date, 'datepicker') }}
+                {{ validate(timeSlot.date, 'time-slot__date datepicker') }}
                 {{ form_errors(timeSlot.date) }}
             </div>
             <div class="input-field col s4">
                 {{ form_label(timeSlot.startTime) }}
-                {{ validate(timeSlot.startTime, 'timepicker') }}
+                {{ validate(timeSlot.startTime, 'time-slot__start-time timepicker') }}
                 {{ form_errors(timeSlot.startTime) }}
             </div>
             <div class="input-field col s2">
                 {{ form_label(timeSlot.duration) }}
-                {{ validate(timeSlot.duration, '') }}
+                {{ validate(timeSlot.duration, 'time-slot__duration') }}
                 {{ form_errors(timeSlot.duration) }}
             </div>
             <div class="time-slot__remove-button-wrapper col s1">

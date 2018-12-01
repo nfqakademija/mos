@@ -35,22 +35,6 @@ const addTimeSlotButtonHandler = (e, addTimeSlotButton, timeSlotCollectionHolder
   M.Timepicker.init($(that).parent().prev().find('.timepicker'), {twelveHour: false});
 };
 
-const jumpFromSurnameToNextParticipant = (e, addParticipantButton, participantCollectionHolder) => {
-  const keyCode = e.keyCode || e.which;
-  const that = e.currentTarget;
-
-  if (keyCode === 9 || keyCode === 13) {
-    e.preventDefault();
-
-    if (!$(that).parents().eq(2).next().is('.participant')) {
-      addItem(addParticipantButton, participantCollectionHolder, 'participant');
-      $(that).parents().eq(2).next('.participant').find('.participant__password').val(randomString());
-    }
-
-    $(that).parents().eq(2).next('.participant').find('.participant__name').focus();
-  }
-};
-
 const removeItem = e => {
   const that = e.currentTarget;
 
@@ -58,6 +42,43 @@ const removeItem = e => {
   $(that).parents().eq(2).slideUp('fast', function () {
     $(this).remove();
   });
+};
+
+const jumpToSibling = e => {
+  const keyCode = e.keyCode || e.which;
+  const that = e.currentTarget;
+
+  if (keyCode === 13) {
+    e.preventDefault();
+    $(that).parents().next().find('input').focus();
+  }
+};
+
+const addParticipant = (that, addParticipantButton, participantCollectionHolder) => {
+  if (!$(that).parents().eq(2).next().is('.participant')) {
+    addItem(addParticipantButton, participantCollectionHolder, 'participant');
+    $(that).parents().eq(2).next('.participant').find('.participant__password').val(randomString());
+  }
+};
+
+const addTimeSlot = (that, addTimeSlotButton, timeSlotCollectionHolder) => {
+  if (!$(that).parents().eq(2).next().is('.time-slot')) {
+    addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
+    M.Datepicker.init($(that).parents().eq(2).next().find('.datepicker'), {format: 'yyyy-mm-dd'});
+    M.Timepicker.init($(that).parents().eq(2).next().find('.timepicker'), {twelveHour: false});
+  }
+};
+
+const jumpToNextItem = (e, addButton, collectionHolder, addFunction) => {
+  const keyCode = e.keyCode || e.which;
+  const that = e.currentTarget;
+
+  if (keyCode === 9 || keyCode === 13) {
+    e.preventDefault();
+    addFunction(that, addButton, collectionHolder);
+  }
+
+  $(that).parents().eq(2).next().children().first().children().first().find('input').focus();
 };
 
 export default () => {
@@ -80,7 +101,13 @@ export default () => {
   $('.group-form__add-participant-button').on('click', e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
   $('.group-form__add-time-slot-button').on('click', e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
 
-  participantCollectionHolder.on('keydown', '.participant__surname', e => jumpFromSurnameToNextParticipant(e, addParticipantButton, participantCollectionHolder));
+  participantCollectionHolder.on('keydown', '.participant__surname',
+      e => jumpToNextItem(e, addParticipantButton, participantCollectionHolder, addParticipant));
   participantCollectionHolder.on('click', '.participant__remove-button', removeItem);
+  participantCollectionHolder.on('keydown', '.participant__name', jumpToSibling);
   timeSlotCollectionHolder.on('click', '.time-slot__remove-button', removeItem);
+  timeSlotCollectionHolder.on('keydown', '.time-slot__date', jumpToSibling);
+  timeSlotCollectionHolder.on('keydown', '.time-slot__start-time', jumpToSibling);
+  timeSlotCollectionHolder.on('keydown', '.time-slot__duration',
+      e => jumpToNextItem(e, addTimeSlotButton, timeSlotCollectionHolder, addTimeSlot));
 };
