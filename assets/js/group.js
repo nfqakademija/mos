@@ -81,25 +81,36 @@ const jumpToNextItem = (e, addButton, collectionHolder, addFunction) => {
   $(that).parents().eq(2).next().children().first().children().first().find('input').focus();
 };
 
+const hideTooltip = ({ currentTarget }) => {
+  const instance = M.Tooltip.getInstance($(currentTarget).find('.tooltipped'));
+  instance.close();
+};
+
 export default () => {
-  const addParticipantButton = $('<div class="clearfix"><i class="group-form__add-participant-button btn-floating btn-large blue darken-3 material-icons">add</i></div>');
+  const addParticipantButton = $('<div class="clearfix">' +
+    '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
+    ' data-tooltip="Add participant" data-position="right">add</i></div>');
+  const addTimeSlotButton = $('<div class="clearfix">' +
+    '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue darken-3 material-icons" ' +
+    'data-tooltip="Add timeslot" data-position="right">add</i></div>');
   const participantCollectionHolder = $('div.participants');
-  const addTimeSlotButton = $('<div class="clearfix"><i class="group-form__add-time-slot-button btn-floating btn-large blue darken-3 material-icons">add</i></div>');
   const timeSlotCollectionHolder = $('div.time-slots');
 
   initCollections(participantCollectionHolder, addParticipantButton);
   initCollections(timeSlotCollectionHolder, addTimeSlotButton);
 
+  M.Tooltip.init($('.tooltipped'), {outDuration: 0});
   M.FormSelect.init($('.group-form__teacher'));
   M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {format: 'yyyy-mm-dd'});
   M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {twelveHour: false});
 
   $('.participant__additional').hide();
-  $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
-    $(this).slideUp(500)
-  });
-  $('.group-form__add-participant-button').on('click', e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
-  $('.group-form__add-time-slot-button').on('click', e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
+  $('.container .alert').fadeTo(5000, 500).slideUp(500, function () { $(this).slideUp(500) });
+
+  addParticipantButton.on('click', e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
+  addParticipantButton.on('mousedown', hideTooltip);
+  addTimeSlotButton.on('click', e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
+  addTimeSlotButton.on('mousedown', hideTooltip);
 
   participantCollectionHolder.on('keydown', '.participant__surname',
       e => jumpToNextItem(e, addParticipantButton, participantCollectionHolder, addParticipant));
