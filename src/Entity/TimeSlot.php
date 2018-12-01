@@ -37,14 +37,18 @@ class TimeSlot
         return $this->id;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
+    public function getStartTime(): ?string
     {
-        return $this->startTime;
+        return $this->startTime != null ? $this->startTime->format('Y-m-d H:i:s') : null;
     }
 
-    public function setStartTime(\DateTimeInterface $startTime): self
+    public function setStartTime($startTime): self
     {
-        $this->startTime = $startTime;
+        try {
+            $this->startTime = new \DateTime($startTime);
+        } catch (\Exception $e) {
+            //Do Nothing
+        }
 
         return $this;
     }
