@@ -107,6 +107,7 @@ class LearningGroup
             foreach ($timeslots as $timeslot) {
                 $arr['timeslots'][] = [
                     'id' => $timeslot->getId(),
+                    'date' => $timeslot->getDate(),
                     'startTime' => $timeslot->getStartTime(),
                     'duration' => $timeslot->getDuration(),
                 ];

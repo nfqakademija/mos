@@ -84,7 +84,7 @@ const jumpToNextItem = (e, addButton, collectionHolder, addFunction) => {
   }
 };
 
-const hideTooltip = ({ currentTarget }) => {
+const hideTooltip = ({currentTarget}) => {
   const instance = M.Tooltip.getInstance($(currentTarget).find('.tooltipped'));
   instance.close();
 };
@@ -95,7 +95,7 @@ const importParticipants = (participantCollectionHolder, addParticipantButton) =
   const reader = new FileReader();
   const textType = /text\/plain/;
 
-  if(file.type.match(textType)) {
+  if (file.type.match(textType)) {
     reader.onload = () => {
       const names = reader.result.split('\n');
 
@@ -150,23 +150,25 @@ export default () => {
   M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {twelveHour: false});
 
   $('.participant__additional').hide();
-  $('.container .alert').fadeTo(5000, 500).slideUp(500, function () { $(this).slideUp(500) });
+  $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
+    $(this).slideUp(500)
+  });
   $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
 
   addParticipantButton.on('click', '.group-form__add-participant-button',
-      e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
+    e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
   addParticipantButton.on('mousedown', hideTooltip);
   addTimeSlotButton.on('click', '.group-form__add-time-slot-button',
-      e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
+    e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
   addTimeSlotButton.on('mousedown', hideTooltip);
 
   participantCollectionHolder.on('keydown', '.participant__surname',
-      e => jumpToNextItem(e, addParticipantButton, participantCollectionHolder, addParticipant));
+    e => jumpToNextItem(e, addParticipantButton, participantCollectionHolder, addParticipant));
   participantCollectionHolder.on('click', '.participant__remove-button', removeItem);
   participantCollectionHolder.on('keydown', '.participant__name', jumpToSibling);
   timeSlotCollectionHolder.on('click', '.time-slot__remove-button', removeItem);
   timeSlotCollectionHolder.on('keydown', '.time-slot__date', jumpToSibling);
   timeSlotCollectionHolder.on('keydown', '.time-slot__start-time', jumpToSibling);
   timeSlotCollectionHolder.on('keydown', '.time-slot__duration',
-      e => jumpToNextItem(e, addTimeSlotButton, timeSlotCollectionHolder, addTimeSlot));
+    e => jumpToNextItem(e, addTimeSlotButton, timeSlotCollectionHolder, addTimeSlot));
 };

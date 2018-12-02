@@ -47,3 +47,6 @@ Import participants: Dalyvių importas
 Bad file format: Blogas failo formatas
 There are no participants yet: Dalyvių kol kas dar nėra
 There are no time slots yet: Laikų kol kas dar nėra
+Date: Data
+Start time: Pradžios laikas
+Duration (minutes): Trukmė (minutės)

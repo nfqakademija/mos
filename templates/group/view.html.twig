@@ -23,6 +23,25 @@
             <td>{{ group.address }}</td>
         </tr>
     </table>
+    <h4>{% trans %}Time slots{% endtrans %}</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans %}Date{% endtrans %}</th>
+            <th scope="col">{% trans %}Start time{% endtrans %}</th>
+            <th scope="col">{% trans %}Duration (minutes){% endtrans %}</th>
+        </tr>
+        </thead>
+        {% for timeSlot in group.timeslots %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ timeSlot.date }}</td>
+                <td>{{ timeSlot.startTime }}</td>
+                <td>{{ timeSlot.duration }}</td>
+            </tr>
+        {% endfor %}
+    </table>
     <h4>{% trans %}Participants{% endtrans %}</h4>
     <table class="table">
         <thead>
