@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ReportFilterType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ReportController
@@ -25,7 +27,7 @@ class ReportController extends AbstractController
      * @param Request $request
      * @param Report $report
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function participantsFilterForm(Request $request, Report $report)
     {
@@ -58,8 +60,7 @@ class ReportController extends AbstractController
      * @param \App\Repository\UserRepository $ur
      * @param \App\Helper\Helper $helper
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|
-     * \Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
     public function participantsReport(
         Request $request,
