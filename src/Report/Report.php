@@ -4,7 +4,8 @@ namespace App\Report;
 
 use App\Repository\LearningGroupRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Report
 {
@@ -26,11 +27,70 @@ class Report
         $this->userRepository = $userRepository;
     }
 
-    public function participantsReport(\DateTime $dateFrom, \DateTime $dateTo) : array
+    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo) : array
     {
-        $participants = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
+        $reportTitle = "Mokymų dalyvių ataskaita";
+        $reportHeaderText = "Nulla porttitor accumsan tincidunt. Mauris blandit aliquet elit,eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada.Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus.Donec rutrum congue leo eget malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor accumsan tincidunt.";
 
-        return $participants;
+        //report column name => key in report array
+        $reportValues = [
+            'Vardas' => 'name',
+            'Pavardė' => 'surname',
+            'Gimimo data' => 'birthDate',
+            'Rajonas' => 'regionTitle',
+            'Adresas' => 'address',
+            'Vietovės tipas' => 'livingAreaType',
+            'Tel. nr.' => 'phone',
+            'El. paštas' => 'email',
+            'Vyras / moteris' => 'gender',
+            'Mokymų pradžia' => 'groupStart',
+            'Mokymų pabaiga' => 'groupEnd',
+            'Grupės Nr.' => 'groupId',
+        ];
+
+        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
+
+
+        $spreadsheet = new Spreadsheet();
+
+        /** @var $sheet \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet */
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle( $dateFrom->format('Y-m-d') . '--' . $dateTo->format('Y-m-d'));
+        //set report header
+        $sheet->setCellValue('F1', $reportTitle);
+        $sheet->setCellValue('F2', $reportHeaderText);
+
+        //set report table headers
+        $startCol = 'A';
+        $startRow = 5;
+        foreach ($reportValues as $title => $reportArrayKey) {
+            $sheet->setCellValue($startCol++ . $startRow, $title);
+        }
+        
+        $startRow = 6;
+        foreach ($participantsReport as $participantReport) {
+            $startCol = 'A';
+            
+            foreach ($reportValues as $title => $reportArrayKey) {
+                $sheet->setCellValue($startCol++ . $startRow, $participantReport[$reportArrayKey]);
+            }
+            $startRow++;
+        }
+
+
+
+        // Create your Office 2007 Excel (XLSX Format)
+        $writer = new Xlsx($spreadsheet);
+
+        // Create a Temporary file in the system
+        $fileName = 'participantsReport.xlsx';
+        $temp_file = tempnam(sys_get_temp_dir(), $fileName);
+
+        // Create the excel file in the tmp directory of the system
+        $writer->save($temp_file);
+
+        // Return the excel file as an attachment
+        return ['file' => $temp_file, 'file_name' => $fileName];
     }
 
 
