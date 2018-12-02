@@ -86,11 +86,21 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
 
-          ->leftJoin('pr.region', 'region' )
+          ->leftJoin('pr.region', 'region')
           
           ->addGroupBy('pr')
           
-          ->addSelect('pr.name, pr.surname,pr.birthDate, pr.email, pr.address, pr.livingAreaType, pr.phone, pr.gender, region.title AS regionTitle')
+          ->addSelect(
+              'pr.name,
+              pr.surname,
+              pr.birthDate,
+              pr.email,
+              pr.address,
+              pr.livingAreaType,
+              pr.phone,
+              pr.gender,
+              region.title AS regionTitle'
+          )
           ->addSelect('MIN(ts.startTime) AS groupStart')
           ->addSelect('MAX(ts.startTime) AS groupEnd')
           ->addSelect('gr.id AS groupId')
