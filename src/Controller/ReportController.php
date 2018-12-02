@@ -35,10 +35,13 @@ class ReportController extends AbstractController
             $data = $reportFilterForm->getData();
 
             $range = $report->getRangeFromFormData($data);
-
-           // return $this->redirectToRoute("report.participants", $range);
-            return $this->redirectToRoute("report.participants.export", $range);
-
+            
+            $clickedButtonName = $reportFilterForm->getClickedButton()->getName();
+            if($clickedButtonName === 'export')
+                return $this->redirectToRoute("report.participants.export", $range);
+                else {
+                    return $this->redirectToRoute("report.participants", $range);
+                }
         }
 
         return $this->render('report/participants_filter.html.twig', [
@@ -98,7 +101,7 @@ class ReportController extends AbstractController
 
         $result = $report->participantsReportExportToExcel($dateFrom, $dateTo);
 
-            // Return the excel file as an attachment
+        // Return the excel file as an attachment
         return $this->file($result['file'], $result['file_name'], ResponseHeaderBag::DISPOSITION_INLINE);
     }
 }

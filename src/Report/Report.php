@@ -11,7 +11,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Report
 {
-    /** @var LearningGroupRepository  */
+
+    /** @var LearningGroupRepository */
     private $groupRepository;
 
     /** @var UserRepository */
@@ -23,19 +24,23 @@ class Report
      * @param \App\Repository\LearningGroupRepository $groupRepository
      * @param \App\Repository\UserRepository $userRepository
      */
-    public function __construct(LearningGroupRepository $groupRepository, UserRepository $userRepository)
-    {
+    public function __construct(
+      LearningGroupRepository $groupRepository,
+      UserRepository $userRepository
+    ) {
         $this->groupRepository = $groupRepository;
         $this->userRepository = $userRepository;
     }
 
-    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo) : array
-    {
-        
+    public function participantsReportExportToExcel(
+      \DateTime $dateFrom,
+      \DateTime $dateTo
+    ): array {
+
         $reportKeysMap = $this->getParticipantsReportKeysMap();
 
-        
-        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
+        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom,
+          $dateTo);
 
         $spreadsheet = new Spreadsheet();
 
@@ -43,8 +48,9 @@ class Report
         $sheet = $spreadsheet->getActiveSheet();
         $this->setParticipantsReportHeader($sheet, $dateFrom, $dateTo);
 
-        $this->setParticipantsReportTable($sheet, $participantsReport, $reportKeysMap);
-     
+        $this->setParticipantsReportTable($sheet, $participantsReport,
+          $reportKeysMap);
+
         $fileName = 'ParticipantsReport_' . $dateFrom->format('Y-m-d') . '-' . $dateTo->format('Y-m-d') . '.xlsx';
         $tempFileWithName = $this->writeToTempFile($spreadsheet, $fileName);
 
@@ -53,8 +59,8 @@ class Report
     }
 
     /**
-     * Writes to temp file and returns 
-     * 
+     * Writes to temp file and returns
+     *
      * @param $spreadsheet
      * @param $fileName
      *
@@ -76,12 +82,15 @@ class Report
         return ['file' => $temp_file, 'file_name' => $fileName];
     }
 
-    private function setParticipantsReportTable(Worksheet &$sheet, $participantsReport, $reportKeysMap)
-    {
+    private function setParticipantsReportTable(
+      Worksheet &$sheet,
+      $participantsReport,
+      $reportKeysMap
+    ) {
 
         $tableStyles = $this->getTableStyles();
-        $headerStyles = array_merge($tableStyles, ['font' =>['bold' => true]]);
-        
+        $headerStyles = array_merge($tableStyles, ['font' => ['bold' => true]]);
+
         //set report table headers
         $col = 'A';
         $row = 9;
@@ -101,12 +110,12 @@ class Report
                 $sheet->getStyle($cellAddress)->applyFromArray($tableStyles);
             }
             $row++;
-}
-        
+        }
     }
-    
+
     /**
      * Gets default table style for reports
+     *
      * @return array
      */
     private function getTableStyles()
@@ -125,7 +134,7 @@ class Report
 
     /**
      * Format: report column name => key in report array
-     * 
+     *
      * @return array
      */
     private function getParticipantsReportKeysMap()
@@ -153,12 +162,15 @@ class Report
      *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    private function setParticipantsReportHeader(Worksheet &$sheet, \DateTime $dateFrom, \DateTime $dateTo)
-    {
+    private function setParticipantsReportHeader(
+      Worksheet &$sheet,
+      \DateTime $dateFrom,
+      \DateTime $dateTo
+    ) {
         $reportTitle = "Mokymų dalyvių ataskaita";
         $reportHeaderText = "Nulla porttitor accumsan tincidunt. Mauris blandit aliquet elit,eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada.Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus.Donec rutrum congue leo eget malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor accumsan tincidunt.";
-        
-        $sheet->setTitle( $dateFrom->format('Y-m-d') . '--' . $dateTo->format('Y-m-d'));
+
+        $sheet->setTitle($dateFrom->format('Y-m-d') . '--' . $dateTo->format('Y-m-d'));
         //set report header
         $sheet->setCellValue('F1', $reportTitle);
         $sheet->getStyle('F1')->applyFromArray(['font' => ['bold' => true],]);

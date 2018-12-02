@@ -15,6 +15,15 @@
             {{ form_row(form.dateTo) }}
         </div>
     </div>
-    <input type="submit" class="btn" value={% trans %}Show{% endtrans %} />
+    <div>
+        {{ form_row(form.display) }}
+    </div>
+    <div>
+        {% trans %}or{% endtrans %}
+    </div>
+       
+    <div>
+        {{ form_row(form.export) }}
+    </div>
     {{ form_end(form) }}
 {% endblock %}
