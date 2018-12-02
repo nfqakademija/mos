@@ -25,21 +25,19 @@ class Report
      * @param \App\Repository\UserRepository $userRepository
      */
     public function __construct(
-      LearningGroupRepository $groupRepository,
-      UserRepository $userRepository
+        LearningGroupRepository $groupRepository,
+        UserRepository $userRepository
     ) {
         $this->groupRepository = $groupRepository;
         $this->userRepository = $userRepository;
     }
 
-    public function participantsReportExportToExcel(
-      \DateTime $dateFrom,
-      \DateTime $dateTo
-    ): array {
-
+    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array 
+    {
         $reportKeysMap = $this->getParticipantsReportKeysMap();
 
-        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom,
+        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod(
+          $dateFrom, 
           $dateTo);
 
         $spreadsheet = new Spreadsheet();
@@ -48,14 +46,12 @@ class Report
         $sheet = $spreadsheet->getActiveSheet();
         $this->setParticipantsReportHeader($sheet, $dateFrom, $dateTo);
 
-        $this->setParticipantsReportTable($sheet, $participantsReport,
-          $reportKeysMap);
+        $this->setParticipantsReportTable($sheet, $participantsReport, $reportKeysMap);
 
         $fileName = 'ParticipantsReport_' . $dateFrom->format('Y-m-d') . '-' . $dateTo->format('Y-m-d') . '.xlsx';
         $tempFileWithName = $this->writeToTempFile($spreadsheet, $fileName);
 
         return $tempFileWithName;
-
     }
 
     /**
@@ -83,9 +79,9 @@ class Report
     }
 
     private function setParticipantsReportTable(
-      Worksheet &$sheet,
-      $participantsReport,
-      $reportKeysMap
+        Worksheet &$sheet,
+        $participantsReport,
+        $reportKeysMap
     ) {
 
         $tableStyles = $this->getTableStyles();
@@ -163,12 +159,17 @@ class Report
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     private function setParticipantsReportHeader(
-      Worksheet &$sheet,
-      \DateTime $dateFrom,
-      \DateTime $dateTo
+        Worksheet &$sheet,
+        \DateTime $dateFrom,
+        \DateTime $dateTo
     ) {
         $reportTitle = "Mokymų dalyvių ataskaita";
-        $reportHeaderText = "Nulla porttitor accumsan tincidunt. Mauris blandit aliquet elit,eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada.Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus.Donec rutrum congue leo eget malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor accumsan tincidunt.";
+        $reportHeaderText = "Nulla porttitor accumsan tincidunt. 
+        Mauris blandit aliquet elit,eget tincidunt nibh pulvinar a. 
+        Donec sollicitudin molestie malesuada.Sed porttitor lectus nibh. 
+        Cras ultricies ligula sed magna dictum porta. 
+        Pellentesque in ipsum id orci porta dapibus.Donec rutrum congue leo eget malesuada. 
+        Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla porttitor accumsan tincidunt.";
 
         $sheet->setTitle($dateFrom->format('Y-m-d') . '--' . $dateTo->format('Y-m-d'));
         //set report header

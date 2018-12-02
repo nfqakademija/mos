@@ -24,6 +24,7 @@ class ReportController extends AbstractController
      * @Route("/report/participants/filter", name="report.participants.filter")
      * @param Request $request
      * @param Report $report
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function participantsFilterForm(Request $request, Report $report)
@@ -35,18 +36,19 @@ class ReportController extends AbstractController
             $data = $reportFilterForm->getData();
 
             $range = $report->getRangeFromFormData($data);
-            
+
             $clickedButtonName = $reportFilterForm->getClickedButton()->getName();
-            if($clickedButtonName === 'export')
-                return $this->redirectToRoute("report.participants.export", $range);
-                else {
-                    return $this->redirectToRoute("report.participants", $range);
-                }
+            if ($clickedButtonName === 'export') {
+                return $this->redirectToRoute("report.participants.export",
+                  $range);
+            } else {
+                return $this->redirectToRoute("report.participants", $range);
+            }
         }
 
         return $this->render('report/participants_filter.html.twig', [
           'form' => $reportFilterForm->createView(),
-          ]);
+        ]);
     }
 
 
@@ -57,10 +59,15 @@ class ReportController extends AbstractController
      * @param \App\Repository\UserRepository $ur
      * @param \App\Helper\Helper $helper
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|
+     * \Symfony\Component\HttpFoundation\Response
      */
-    public function participantsReport(Request $request, PaginatorInterface $paginator, UserRepository $ur, Helper $helper)
-    {
+    public function participantsReport(
+      Request $request,
+      PaginatorInterface $paginator,
+      UserRepository $ur,
+      Helper $helper
+    ) {
         $page = $helper->getPageFromRequest($request);
 
         try {
@@ -73,7 +80,8 @@ class ReportController extends AbstractController
         }
 
         $query = $ur->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
-        $pagination = $paginator->paginate($query, $page, 15, ['wrap-queries' => true]);
+        $pagination = $paginator->paginate($query, $page, 15,
+          ['wrap-queries' => true]);
 
         return $this->render('report/participants.html.twig', [
           'results' => $pagination,
@@ -102,6 +110,7 @@ class ReportController extends AbstractController
         $result = $report->participantsReportExportToExcel($dateFrom, $dateTo);
 
         // Return the excel file as an attachment
-        return $this->file($result['file'], $result['file_name'], ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file($result['file'], $result['file_name'],
+          ResponseHeaderBag::DISPOSITION_INLINE);
     }
 }
