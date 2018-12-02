@@ -32,7 +32,7 @@ class Report
         $this->userRepository = $userRepository;
     }
 
-    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array 
+    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
         $reportKeysMap = $this->getParticipantsReportKeysMap();
 
