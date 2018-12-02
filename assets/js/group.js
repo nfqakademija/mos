@@ -31,8 +31,8 @@ const addTimeSlotButtonHandler = (e, addTimeSlotButton, timeSlotCollectionHolder
 
   e.preventDefault();
   addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
-  M.Datepicker.init($(that).parent().prev().find('.datepicker'), {format: 'yyyy-mm-dd'});
-  M.Timepicker.init($(that).parent().prev().find('.timepicker'), {twelveHour: false});
+  M.Datepicker.init($(that).prev().find('.datepicker'), {format: 'yyyy-mm-dd'});
+  M.Timepicker.init($(that).prev().find('.timepicker'), {twelveHour: false});
 };
 
 const removeItem = e => {
