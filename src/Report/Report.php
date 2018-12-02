@@ -34,15 +34,15 @@ class Report
 
         //report column name => key in report array
         $reportValues = [
-            'Vardas' => '[0].name',
-            'Pavardė' => '[0].surname',
-            'Gimimo data' => '[0].birthDate',
-            'Rajonas' => '[0].region',
-            'Adresas' => '[0].address',
-            'Vietovės tipas' => '[0].livingAreaType',
-            'Tel. nr.' => '[0].phone',
-            'El. paštas' => '[0].email',
-            'Vyras / moteris' => '[0].gender',
+            'Vardas' => 'name',
+            'Pavardė' => 'surname',
+            'Gimimo data' => 'birthDate',
+            'Rajonas' => 'regionTitle',
+            'Adresas' => 'address',
+            'Vietovės tipas' => 'livingAreaType',
+            'Tel. nr.' => 'phone',
+            'El. paštas' => 'email',
+            'Vyras / moteris' => 'gender',
             'Mokymų pradžia' => 'groupStart',
             'Mokymų pabaiga' => 'groupEnd',
             'Grupės Nr.' => 'groupId',
@@ -66,12 +66,11 @@ class Report
         foreach ($reportValues as $title => $reportArrayKey) {
             $sheet->setCellValue($startCol++ . $startRow, $title);
         }
-
-
-
+        
         $startRow = 6;
         foreach ($participantsReport as $participantReport) {
             $startCol = 'A';
+            
             foreach ($reportValues as $title => $reportArrayKey) {
                 $sheet->setCellValue($startCol++ . $startRow, $participantReport[$reportArrayKey]);
             }
