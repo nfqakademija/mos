@@ -22,7 +22,7 @@ const addParticipantButtonHandler = (e, addParticipantButton, participantCollect
 
   e.preventDefault();
   addItem(addParticipantButton, participantCollectionHolder, 'participant');
-  $(that).parent().prev().find('.participant__password').val(randomString());
+  $(that).prev().find('.participant__password').val(randomString());
   M.updateTextFields();
 };
 
