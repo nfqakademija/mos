@@ -1,6 +1,19 @@
 .group-form {
   padding: 10px 30px;
 
+  .group-form__section {
+    box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+    padding: 15px;
+  }
+
+  .group-form__import-error {
+    display: none;
+    height: 54px;
+    line-height: 54px;
+    color: rgb(244, 67, 54);
+  }
+
   .group-form__title {
     padding: 0 .75rem;
     margin: 0 0 10px 0;
@@ -24,6 +37,7 @@
 
   .group-form__submit-button-wrapper {
     clear: both;
+    height: 110px;
     @extend .center-element;
 
     .group-form__submit-button {

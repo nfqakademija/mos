@@ -86,6 +86,41 @@ const hideTooltip = ({ currentTarget }) => {
   instance.close();
 };
 
+const importParticipants = (participantCollectionHolder, addParticipantButton) => {
+  const file = $('.group-form__import')[0].files[0];
+  const errorHolder = $('.group-form__import-error');
+  const reader = new FileReader();
+  const textType = /text\/plain/;
+
+  if(file.type.match(textType)) {
+    reader.onload = () => {
+      const names = reader.result.split('\n');
+
+      for (let i = 0; i < names.length - 1; i++) {
+        const name = names[i].split(' ');
+
+        if (name.length === 2) {
+          addItem(addParticipantButton, participantCollectionHolder, 'participant');
+          importParticipant(participantCollectionHolder, name[0], 'participant__name');
+          importParticipant(participantCollectionHolder, name[1], 'participant__surname');
+          participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
+          participantCollectionHolder.find('.participant:last')
+            .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
+        }
+      }
+    };
+    reader.readAsText(file);
+    errorHolder.css('display', 'none');
+  } else {
+    errorHolder.css('display', 'block');
+  }
+};
+
+const importParticipant = (collectionHolder, value, className) => {
+  collectionHolder.find('.participant:last').find(`.${className}`).val(value);
+  collectionHolder.find('.participant:last').find(`.${className}`).prev().addClass('active');
+};
+
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
     '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
@@ -106,6 +141,7 @@ export default () => {
 
   $('.participant__additional').hide();
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () { $(this).slideUp(500) });
+  $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
 
   addParticipantButton.on('click', e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
   addParticipantButton.on('mousedown', hideTooltip);
