@@ -28,6 +28,9 @@
             {% for timeSlot in form.timeSlots %}
                 {{ printTimeSlot(timeSlot) }}
             {% endfor %}
+            <div class="group-form__empty">
+                {% trans %}There are no time slots yet{% endtrans %}
+            </div>
         </div>
     </div>
     <div class="group-form__section">
@@ -47,7 +50,7 @@
                 </div>
             </div>
             <div class="group-form__import-error input-field col s4">
-                Bad file format (*.txt)
+                {% trans %}Bad file format{% endtrans %} (*.txt)
             </div>
         </div>
     </div>
@@ -59,6 +62,9 @@
             {% for participant in form.participants %}
                 {{ printParticipant(participant) }}
             {% endfor %}
+            <div class="group-form__empty">
+                {% trans %}There are no time slots yet{% endtrans %}
+            </div>
         </div>
     </div>
     <div class="group-form__submit-button-wrapper">

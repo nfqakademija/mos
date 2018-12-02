@@ -15,8 +15,17 @@
   }
 
   .group-form__title {
+    margin-bottom: 10px;
+  }
+
+  .group-form__empty {
+    margin-top: 10px;
+    display: none;
+  }
+
+  .group-form__title,
+  .group-form__empty {
     padding: 0 .75rem;
-    margin: 0 0 10px 0;
   }
 
   .group-form__error-wrapper {

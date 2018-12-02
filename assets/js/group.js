@@ -15,6 +15,7 @@ const addItem = (addButton, collectionHolder, itemClass) => {
   collectionHolder.data('index', index + 1);
   addButton.before(newForm);
   collectionHolder.find(`.${itemClass}:last`).hide().slideDown('fast');
+  collectionHolder.find('.group-form__empty').css('display', 'none');
 };
 
 const addParticipantButtonHandler = (e, addParticipantButton, participantCollectionHolder) => {
@@ -22,7 +23,7 @@ const addParticipantButtonHandler = (e, addParticipantButton, participantCollect
 
   e.preventDefault();
   addItem(addParticipantButton, participantCollectionHolder, 'participant');
-  $(that).prev().find('.participant__password').val(randomString());
+  $(that).parent().prev().find('.participant__password').val(randomString());
   M.updateTextFields();
 };
 
@@ -31,8 +32,8 @@ const addTimeSlotButtonHandler = (e, addTimeSlotButton, timeSlotCollectionHolder
 
   e.preventDefault();
   addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
-  M.Datepicker.init($(that).prev().find('.datepicker'), {format: 'yyyy-mm-dd'});
-  M.Timepicker.init($(that).prev().find('.timepicker'), {twelveHour: false});
+  M.Datepicker.init($(that).parent().prev().find('.datepicker'), {format: 'yyyy-mm-dd'});
+  M.Timepicker.init($(that).parent().prev().find('.timepicker'), {twelveHour: false});
 };
 
 const removeItem = e => {
@@ -40,7 +41,10 @@ const removeItem = e => {
 
   e.preventDefault();
   $(that).parents().eq(2).slideUp('fast', function () {
+    const parent = $(this).parent();
+
     $(this).remove();
+    checkIfCollectionIsEmpty(parent);
   });
 };
 
@@ -76,9 +80,8 @@ const jumpToNextItem = (e, addButton, collectionHolder, addFunction) => {
   if (keyCode === 9 || keyCode === 13) {
     e.preventDefault();
     addFunction(that, addButton, collectionHolder);
+    $(that).parents().eq(2).next().children().first().children().first().find('input').focus();
   }
-
-  $(that).parents().eq(2).next().children().first().children().first().find('input').focus();
 };
 
 const hideTooltip = ({ currentTarget }) => {
@@ -121,6 +124,10 @@ const importParticipant = (collectionHolder, value, className) => {
   collectionHolder.find('.participant:last').find(`.${className}`).prev().addClass('active');
 };
 
+const checkIfCollectionIsEmpty = collectionHolder => {
+  collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').css('display', 'block');
+};
+
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
     '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
@@ -134,6 +141,9 @@ export default () => {
   initCollections(participantCollectionHolder, addParticipantButton);
   initCollections(timeSlotCollectionHolder, addTimeSlotButton);
 
+  checkIfCollectionIsEmpty(participantCollectionHolder);
+  checkIfCollectionIsEmpty(timeSlotCollectionHolder);
+
   M.Tooltip.init($('.tooltipped'), {outDuration: 0});
   M.FormSelect.init($('.group-form__teacher'));
   M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {format: 'yyyy-mm-dd'});
@@ -143,9 +153,11 @@ export default () => {
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () { $(this).slideUp(500) });
   $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
 
-  addParticipantButton.on('click', e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
+  addParticipantButton.on('click', '.group-form__add-participant-button',
+      e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));
   addParticipantButton.on('mousedown', hideTooltip);
-  addTimeSlotButton.on('click', e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
+  addTimeSlotButton.on('click', '.group-form__add-time-slot-button',
+      e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
   addTimeSlotButton.on('mousedown', hideTooltip);
 
   participantCollectionHolder.on('keydown', '.participant__surname',
