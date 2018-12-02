@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import * as M from 'materialize-css';
 import randomString from 'random-string';
+import XLSX from 'xlsx';
 
 const initCollections = (collectionHolder, addButton) => {
   collectionHolder.append(addButton);
@@ -89,30 +90,70 @@ const hideTooltip = ({currentTarget}) => {
   instance.close();
 };
 
+const importFromExcel = (participantCollectionHolder, addParticipantButton, file, reader) => {
+  reader.onload = () => {
+    const data = reader.result;
+    const workbook = XLSX.read(data, {type: 'binary'});
+    const sheet_name_list = workbook.SheetNames;
+
+    sheet_name_list.forEach(y => {
+      const worksheet = workbook.Sheets[y];
+      let i = 0;
+      let first = '';
+      for (let z in worksheet) {
+        if(z[0] === '!') continue;
+
+        if(i === 0) {
+          addItem(addParticipantButton, participantCollectionHolder, 'participant');
+          importParticipant(participantCollectionHolder, worksheet[z].v, 'participant__name');
+          first = worksheet[z].v;
+          i++;
+        } else {
+          importParticipant(participantCollectionHolder, worksheet[z].v, 'participant__surname');
+          participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
+          participantCollectionHolder.find('.participant:last')
+            .find('.participant__username').val(`${first}.${worksheet[z].v}.${randomString({length: 3})}`);
+          i = 0;
+        }
+      }
+    });
+  };
+
+  reader.readAsBinaryString(file);
+};
+
+const importFromTextFile = (participantCollectionHolder, addParticipantButton, file, reader) => {
+  reader.onload = () => {
+    const names = reader.result.split('\n');
+
+    for (let i = 0; i < names.length - 1; i++) {
+      const name = names[i].split(' ');
+
+      if (name.length === 2) {
+        addItem(addParticipantButton, participantCollectionHolder, 'participant');
+        importParticipant(participantCollectionHolder, name[0], 'participant__name');
+        importParticipant(participantCollectionHolder, name[1], 'participant__surname');
+        participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
+        participantCollectionHolder.find('.participant:last')
+          .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
+      }
+    }
+  };
+  reader.readAsText(file);
+};
+
 const importParticipants = (participantCollectionHolder, addParticipantButton) => {
   const file = $('.group-form__import')[0].files[0];
   const errorHolder = $('.group-form__import-error');
   const reader = new FileReader();
   const textType = /text\/plain/;
+  const excelTypes = ["xml", "csv", "ods", "xlsx", "xls"];
 
-  if (file.type.match(textType)) {
-    reader.onload = () => {
-      const names = reader.result.split('\n');
-
-      for (let i = 0; i < names.length - 1; i++) {
-        const name = names[i].split(' ');
-
-        if (name.length === 2) {
-          addItem(addParticipantButton, participantCollectionHolder, 'participant');
-          importParticipant(participantCollectionHolder, name[0], 'participant__name');
-          importParticipant(participantCollectionHolder, name[1], 'participant__surname');
-          participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
-          participantCollectionHolder.find('.participant:last')
-            .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
-        }
-      }
-    };
-    reader.readAsText(file);
+  if(excelTypes.includes(file.name.split('.').pop())) {
+    importFromExcel(participantCollectionHolder, addParticipantButton, file, reader);
+    errorHolder.css('display', 'none');
+  } else if (file.type.match(textType)) {
+    importFromTextFile(participantCollectionHolder, addParticipantButton, file, reader);
     errorHolder.css('display', 'none');
   } else {
     errorHolder.css('display', 'block');
