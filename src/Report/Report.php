@@ -36,9 +36,7 @@ class Report
     {
         $reportKeysMap = $this->getParticipantsReportKeysMap();
 
-        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod(
-          $dateFrom, 
-          $dateTo);
+        $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
 
         $spreadsheet = new Spreadsheet();
 
@@ -101,8 +99,10 @@ class Report
             $col = 'A';
             foreach ($reportKeysMap as $title => $reportArrayKey) {
                 $cellAddress = $col++ . $row;
-                $sheet->setCellValue($cellAddress,
-                  $participantReport[$reportArrayKey]);
+                $sheet->setCellValue(
+                    $cellAddress,
+                    $participantReport[$reportArrayKey]
+                );
                 $sheet->getStyle($cellAddress)->applyFromArray($tableStyles);
             }
             $row++;

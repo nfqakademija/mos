@@ -39,8 +39,7 @@ class ReportController extends AbstractController
 
             $clickedButtonName = $reportFilterForm->getClickedButton()->getName();
             if ($clickedButtonName === 'export') {
-                return $this->redirectToRoute("report.participants.export",
-                  $range);
+                return $this->redirectToRoute("report.participants.export", $range);
             } else {
                 return $this->redirectToRoute("report.participants", $range);
             }
@@ -63,11 +62,12 @@ class ReportController extends AbstractController
      * \Symfony\Component\HttpFoundation\Response
      */
     public function participantsReport(
-      Request $request,
-      PaginatorInterface $paginator,
-      UserRepository $ur,
-      Helper $helper
-    ) {
+        Request $request,
+        PaginatorInterface $paginator,
+        UserRepository $ur,
+        Helper $helper
+    ) 
+    {
         $page = $helper->getPageFromRequest($request);
 
         try {
@@ -80,11 +80,10 @@ class ReportController extends AbstractController
         }
 
         $query = $ur->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
-        $pagination = $paginator->paginate($query, $page, 15,
-          ['wrap-queries' => true]);
+        $pagination = $paginator->paginate($query, $page, 15, ['wrap-queries' => true]);
 
         return $this->render('report/participants.html.twig', [
-          'results' => $pagination,
+            'results' => $pagination,
         ]);
     }
 
@@ -110,7 +109,8 @@ class ReportController extends AbstractController
         $result = $report->participantsReportExportToExcel($dateFrom, $dateTo);
 
         // Return the excel file as an attachment
-        return $this->file($result['file'], $result['file_name'],
-          ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file(
+            $result['file'], $result['file_name'], ResponseHeaderBag::DISPOSITION_INLINE
+        );
     }
 }
