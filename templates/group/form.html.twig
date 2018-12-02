@@ -1,23 +1,74 @@
-{% from 'group/macros.html.twig' import printParticipant, validate %}
+{% from 'group/macros.html.twig' import printParticipant, printTimeSlot, validate %}
 {% form_theme form 'group/form_errors.html.twig' %}
 
 <div class="group-form row">
-    {{ form_start(form, {'attr': {'class': 'col s12'}}) }}
-    <div class="row">
-        <div class="input-field col s12">
-            {{ form_label(form.address) }}
-            {{ validate(form.address, '') }}
-            {{ form_errors(form.address) }}
+    {{ form_start(form) }}
+    <div class="group-form__section">
+        <h5 class="group-form__title">
+            {% trans %}Information{% endtrans %}
+        </h5>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_label(form.address) }}
+                {{ validate(form.address, '') }}
+                {{ form_errors(form.address) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_widget(form.teacher,  {'attr': {'class': 'group-form__teacher'} }) }}
+                {{ form_label(form.teacher) }}
+                {{ form_errors(form.teacher) }}
+            </div>
         </div>
     </div>
-    <h5 class="group-form__title">{% trans %}Participants{% endtrans %}</h5>
-    <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
-        {% for participant in form.participants %}
-            {{ printParticipant(participant) }}
-        {% endfor %}
+    <div class="group-form__section">
+        <h5 class="group-form__title">
+            {% trans %}Time slots{% endtrans %}
+        </h5>
+        <div class="time-slots" data-prototype="{{ printTimeSlot(form.timeSlots.vars.prototype)|e('html_attr') }}">
+            {% for timeSlot in form.timeSlots %}
+                {{ printTimeSlot(timeSlot) }}
+            {% endfor %}
+            <div class="group-form__empty">
+                {% trans %}There are no time slots yet{% endtrans %}
+            </div>
+        </div>
+    </div>
+    <div class="group-form__section">
+        <h5 class="group-form__title">
+            {% trans %}Import participants{% endtrans %}
+        </h5>
+        <div class="row">
+            <div class="file-field input-field col s4">
+                <div class="btn tooltipped blue darken-3" data-tooltip="Import participants" data-position="left">
+                    <i class="material-icons">
+                        input
+                    </i>
+                    <input class="group-form__import" type="file">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <div class="group-form__import-error input-field col s4">
+                {% trans %}Bad file format{% endtrans %} (*.txt)
+            </div>
+        </div>
+    </div>
+    <div class="group-form__section">
+        <h5 class="group-form__title">
+            {% trans %}Participants{% endtrans %}
+        </h5>
+        <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
+            {% for participant in form.participants %}
+                {{ printParticipant(participant) }}
+            {% endfor %}
+            <div class="group-form__empty">
+                {% trans %}There are no participants yet{% endtrans %}
+            </div>
+        </div>
     </div>
     <div class="group-form__submit-button-wrapper">
-        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn-large blue darken-3'}}) }}
+        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn-large blue darken-3'} }) }}
     </div>
     {{ form_end(form) }}
 </div>

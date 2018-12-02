@@ -27,13 +27,14 @@ class LearningGroup
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="learningGroup")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="learningGroup", cascade={"persist"})
      * @Assert\Valid
      */
     private $participants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TimeSlot", mappedBy="learningGroup")
+     * @ORM\OneToMany(targetEntity="App\Entity\TimeSlot", mappedBy="learningGroup", cascade={"persist"})
+     * @Assert\Valid
      */
     private $timeSlots;
 
@@ -59,7 +60,7 @@ class LearningGroup
         return $this->address;
     }
 
-    public function setAddress(string $address): self
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
@@ -76,23 +77,16 @@ class LearningGroup
 
     public function addParticipant(User $participant): self
     {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-            $participant->setLearningGroup($this);
-        }
+        $participant->setLearningGroup($this);
+
+        $this->participants->add($participant);
 
         return $this;
     }
 
     public function removeParticipant(User $participant): self
     {
-        if ($this->participants->contains($participant)) {
-            $this->participants->removeElement($participant);
-            // set the owning side to null (unless already changed)
-            if ($participant->getLearningGroup() === $this) {
-                $participant->setLearningGroup(null);
-            }
-        }
+        $this->participants->removeElement($participant);
 
         return $this;
     }
@@ -101,10 +95,10 @@ class LearningGroup
     public function toArray()
     {
         $arr = [
-          'id' => $this->getId(),
-          'timeslots' => [],
-          'address' => $this->getAddress(),
-          'participants' => [],
+            'id' => $this->getId(),
+            'timeslots' => [],
+            'address' => $this->getAddress(),
+            'participants' => [],
         ];
 
         $timeslots = $this->getTimeSlots();
@@ -112,9 +106,10 @@ class LearningGroup
             /** @var \App\Entity\TimeSlot $timeslot */
             foreach ($timeslots as $timeslot) {
                 $arr['timeslots'][] = [
-                  'id' => $timeslot->getId(),
-                  'startTime' => $timeslot->getStartTime(),
-                  'durationMinutes' => $timeslot->getDurationMinutes(),
+                    'id' => $timeslot->getId(),
+                    'date' => $timeslot->getDate(),
+                    'startTime' => $timeslot->getStartTime(),
+                    'duration' => $timeslot->getDuration(),
                 ];
             }
         }
@@ -138,23 +133,16 @@ class LearningGroup
 
     public function addTimeSlot(TimeSlot $timeSlot): self
     {
-        if (!$this->timeSlots->contains($timeSlot)) {
-            $this->timeSlots[] = $timeSlot;
-            $timeSlot->setLearningGroup($this);
-        }
+        $timeSlot->setLearningGroup($this);
+
+        $this->timeSlots->add($timeSlot);
 
         return $this;
     }
 
     public function removeTimeSlot(TimeSlot $timeSlot): self
     {
-        if ($this->timeSlots->contains($timeSlot)) {
-            $this->timeSlots->removeElement($timeSlot);
-            // set the owning side to null (unless already changed)
-            if ($timeSlot->getLearningGroup() === $this) {
-                $timeSlot->setLearningGroup(null);
-            }
-        }
+        $this->timeSlots->removeElement($timeSlot);
 
         return $this;
     }
@@ -199,7 +187,7 @@ class LearningGroup
     public function getStartDate(bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
-        
+
         if (sizeof($timeSlots) === 0) {
             if ($nullIfNotExist) {
                 return null;

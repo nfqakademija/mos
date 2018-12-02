@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TimeSlotRepository")
@@ -18,14 +19,22 @@ class TimeSlot
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Enter date")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="time")
+     * @Assert\NotBlank(message="Enter start time")
      */
     private $startTime;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Enter duration")
      */
-    private $durationMinutes;
+    private $duration;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\LearningGroup", inversedBy="timeSlots")
@@ -37,26 +46,46 @@ class TimeSlot
         return $this->id;
     }
 
-    public function getStartTime(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
-        return $this->startTime;
+        return $this->date != null ? $this->date->format('Y-m-d') : null;
     }
 
-    public function setStartTime(\DateTimeInterface $startTime): self
+    public function setDate($date): self
     {
-        $this->startTime = $startTime;
+        try {
+            $this->date = new \DateTime($date);
+        } catch (\Exception $e) {
+            //Do Nothing
+        }
 
         return $this;
     }
 
-    public function getDurationMinutes(): ?int
+    public function getStartTime(): ?string
     {
-        return $this->durationMinutes;
+        return $this->startTime != null ? $this->startTime->format('H:i') : null;
     }
 
-    public function setDurationMinutes(int $durationMinutes): self
+    public function setStartTime($startTime): self
     {
-        $this->durationMinutes = $durationMinutes;
+        try {
+            $this->startTime = new \DateTime($startTime);
+        } catch (\Exception $e) {
+            //Do Nothing
+        }
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(int $duration): self
+    {
+        $this->duration = $duration;
 
         return $this;
     }

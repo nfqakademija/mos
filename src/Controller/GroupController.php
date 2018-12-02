@@ -5,10 +5,9 @@ namespace App\Controller;
 use App\Entity\LearningGroup;
 use App\Entity\User;
 use App\Form\GroupType;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Services\GroupManager;
 use App\Helper\Helper;
 use App\Repository\LearningGroupRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,28 +52,16 @@ class GroupController extends AbstractController
 
     /**
      * @Route("/group/create", name="group.create")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param GroupManager $groupManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createGroup(Request $request)
+    public function createGroup(Request $request, GroupManager $groupManager)
     {
         $group = new LearningGroup();
         $form = $this->createForm(GroupType::class, $group);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($group);
-
-            foreach ($group->getParticipants() as $participant) {
-                $participant->setLearningGroup($group);
-                $participant->setRoles([User::ROLE_PARTICIPANT]);
-                $entityManager->persist($participant);
-            }
-
-            $entityManager->flush();
-
+        if ($groupManager->handleCreate($form, $request)) {
             $this->addFlash(
                 'create',
                 'Group was successfully created!'
@@ -91,42 +78,19 @@ class GroupController extends AbstractController
     /**
      * @Route("/group/edit/{group}", name="group.edit")
      * @param Request $request
+     * @param GroupManager $groupManager
      * @param $group
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editGroup(Request $request, $group)
+    public function editGroup(Request $request, GroupManager $groupManager, $group)
     {
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $group = $entityManager->getRepository(LearningGroup::class)->find($group);
+        if (null === $group = $groupManager->getGroup($group)) {
+            throw $this->createNotFoundException('No group found for id '. $group);
+        }
 
         $form = $this->createForm(GroupType::class, $group);
 
-        $oldParticipants = new ArrayCollection();
-
-        foreach ($group->getParticipants() as $participant) {
-            $oldParticipants->add($participant);
-        }
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($oldParticipants as $participant) {
-                if ($group->getParticipants()->contains($participant) === false) {
-                    $entityManager->remove($participant);
-                }
-            }
-
-            foreach ($group->getParticipants() as $participant) {
-                if ($oldParticipants->contains($participant) === false) {
-                    $participant->setLearningGroup($group);
-                    $participant->setRoles([User::ROLE_PARTICIPANT]);
-                    $entityManager->persist($participant);
-                }
-            }
-
-            $entityManager->flush();
-
+        if ($groupManager->handleEdit($form, $request)) {
             $this->addFlash(
                 'edit',
                 'Group was successfully updated!'

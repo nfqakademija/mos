@@ -1,7 +1,30 @@
 .group-form {
   padding: 10px 30px;
 
+  .group-form__section {
+    box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+    padding: 15px;
+  }
+
+  .group-form__import-error {
+    display: none;
+    height: 54px;
+    line-height: 54px;
+    color: rgb(244, 67, 54);
+  }
+
   .group-form__title {
+    margin-bottom: 10px;
+  }
+
+  .group-form__empty {
+    margin-top: 10px;
+    display: none;
+  }
+
+  .group-form__title,
+  .group-form__empty {
     padding: 0 .75rem;
   }
 
@@ -14,7 +37,8 @@
     }
   }
 
-  .group-form__add-button {
+  .group-form__add-participant-button,
+  .group-form__add-time-slot-button {
     float: right;
     line-height: 56px;
     margin: 20px 0;
@@ -22,6 +46,7 @@
 
   .group-form__submit-button-wrapper {
     clear: both;
+    height: 110px;
     @extend .center-element;
 
     .group-form__submit-button {
@@ -31,6 +56,7 @@
 
   input:not(.browser-default).group-form__input--invalid {
     border-bottom: 1px solid #f44336;
+    box-shadow: 0 1px 0 0 #F44336;
   }
 
   .input-field input[type=text].valid,
@@ -42,13 +68,15 @@
 
   .datepicker-cancel,
   .datepicker-done,
+  .timepicker-close,
   .datepicker-table td.is-today,
   ul.dropdown-content.select-dropdown li span {
     color: $primary-color;
   }
 
   .datepicker-table td.is-selected,
-  .datepicker-date-display {
+  .datepicker-date-display,
+  .timepicker-digital-display {
     background: $primary-color;
   }
 

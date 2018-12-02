@@ -1,0 +1,11 @@
+.time-slot__remove-button-wrapper {
+  height: 54px;
+  margin: 15px 0;
+  @extend .center-element;
+}
+
+.time-slot__remove-button {
+  font-size: 28px;
+  cursor: pointer;
+  color: #9e9e9e;
+}

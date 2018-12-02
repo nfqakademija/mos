@@ -1,8 +1,9 @@
 .participant {
   &.participant--active {
-    border-radius: 5px;
     margin-bottom: 20px;
     padding: 10px 0;
+    border-left: 2px solid $primary-color;
+    box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
   }
 
   .participant__additional {
