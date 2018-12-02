@@ -66,7 +66,7 @@ class ReportController extends AbstractController
         PaginatorInterface $paginator,
         UserRepository $ur,
         Helper $helper
-    ){
+    ) {
         $page = $helper->getPageFromRequest($request);
 
         try {
@@ -109,7 +109,8 @@ class ReportController extends AbstractController
 
         // Return the excel file as an attachment
         return $this->file(
-            $result['file'], $result['file_name'],
+            $result['file'], 
+            $result['file_name'],
             ResponseHeaderBag::DISPOSITION_INLINE
         );
     }
