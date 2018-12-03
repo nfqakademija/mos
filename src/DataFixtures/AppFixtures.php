@@ -96,12 +96,13 @@ class AppFixtures extends Fixture
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
+                $unidueSurname = $this->randomString(5);
                 $userParticipant
                     ->setUsername('participant_' . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
                     ->setEmail('participant' . $unique . '@email.com')
                     ->setName(ucfirst($unique))
-                    ->setSurname(ucfirst($unique))
+                    ->setSurname(ucfirst($uniqueSurname))
                     ->setRegion($region)
                     ->setBirthDate('19' . rand(45, 75) . '-' . rand(1, 12) . '-' . rand(1, 28))
                     ->setRoles([User::ROLE_PARTICIPANT])
