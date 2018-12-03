@@ -29,6 +29,8 @@ class Report
 
     public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
+        ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+
         $reportKeysMap = $this->getParticipantsReportKeysMap();
 
         $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);

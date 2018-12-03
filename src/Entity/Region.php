@@ -25,11 +25,6 @@ class Region
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isCity;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     private $isProblematic;
 
     public function getId(): ?int
@@ -49,17 +44,6 @@ class Region
         return $this;
     }
 
-    public function getIsCity(): ?bool
-    {
-        return $this->isCity;
-    }
-
-    public function setIsCity(bool $isCity): self
-    {
-        $this->isCity = $isCity;
-
-        return $this;
-    }
 
     public function getIsProblematic(): ?bool
     {

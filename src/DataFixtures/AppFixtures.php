@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 100;
+        $groupsNumber = 50;
         $teachersNumber = 10;
         $maxParticipantsInGroup = 15;
         $maxTimeslotsInGroup = 5;
@@ -31,35 +31,19 @@ class AppFixtures extends Fixture
         $genres = ['vyras', 'moteris'];
         //#### end config ####
 
-        //generate Regions
-        $regionKaunas = new Region();
-        $regionKaunas
-            ->setTitle('Kaunas')
-            ->setIsCity(true)
-            ->setIsProblematic('false');
+        //push all Regions to database
 
-        $manager->persist($regionKaunas);
+        $allRegionsObjects = [];
+        $allRegionsData = $this->getAllRegionsData();
+        foreach ($allRegionsData as $regionTitle => $extraData) {
+            $region = new Region();
+            $region
+                ->setTitle($regionTitle)
+                ->setIsProblematic($extraData['is_problematic']);
+            $allRegionsObjects [] = $region;
 
-        $regionKaunoR = new Region();
-        $regionKaunoR
-            ->setTitle('Kauno raj.')
-            ->setIsCity(false)
-            ->setIsProblematic('false');
-        $manager->persist($regionKaunoR);
-
-        $regionJonava = new Region();
-        $regionJonava
-            ->setTitle('Jonava')
-            ->setIsCity(true)
-            ->setIsProblematic('true');
-        $manager->persist($regionJonava);
-
-        $regionJonavosR = new Region();
-        $regionJonavosR
-            ->setTitle('Jonavos raj.')
-            ->setIsCity(false)
-            ->setIsProblematic('true');
-        $manager->persist($regionJonavosR);
+            $manager->persist($region);
+        }
 
         //generate Manager///////////////////////////////////////////
 
@@ -108,7 +92,7 @@ class AppFixtures extends Fixture
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
             $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
             $participantsCount = rand(2, $maxParticipantsInGroup);
-            $region = $this->randomRegion();
+            $region = $allRegionsObjects[rand(0, 40)];
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
@@ -175,71 +159,72 @@ class AppFixtures extends Fixture
         return $phoneNumber;
     }
 
-    private function randomRegion() : string
+
+    private function getAllRegionsData() : array
     {
         $allRegions = [
-            'Akmenės raj.',
-            'Alytaus m.',
-            'Alytaus raj.',
-            'Anykščių raj.',
-            'Birštono m.',
-            'Biržų raj.',
-            'Druskininkų m.',
-            'Elektrėnų m.',
-            'Ignalinos raj.',
-            'Jonavos raj.',
-            'Joniškio raj.',
-            'Jurbarko raj.',
-            'Kaišiadorių raj.',
-            'Kalvarijos m.',
-            'Kauno raj.',
-            'Kazlų Rūdos m.',
-            'Kėdainių raj.',
-            'Kelmės raj.',
-            'Klaipėdos m.',
-            'Klaipėdos raj.',
-            'Kretingos raj.',
-            'Kupiškio raj.',
-            'Lazdijų raj.',
-            'Marijampolės m.',
-            'Mažeikių raj.',
-            'Molėtų raj.',
-            'Neringos m.',
-            'Pagėgių m.',
-            'Pakruojo raj.',
-            'Palangos m.',
-            'Panevėžio m.',
-            'Panevėžio raj.',
-            'Pasvalio raj.',
-            'Plungės raj.',
-            'Prienų raj.',
-            'Radviliškio raj.',
-            'Raseinių raj.',
-            'Rietavo m.',
-            'Rokiškio raj.',
-            'Skuodo raj.',
-            'Šakių raj.',
-            'Šalčininkų raj.',
-            'Šiaulių m.',
-            'Šiaulių raj.',
-            'Šilalės raj.',
-            'Šilutės raj.',
-            'Širvintų raj.',
-            'Švenčionių raj.',
-            'Tauragės raj.',
-            'Telšių raj.',
-            'Trakų raj.',
-            'Ukmergės raj.',
-            'Utenos raj.',
-            'Varėnos raj.',
-            'Vilkaviškio raj.',
-            'Vilniaus m.',
-            'Vilniaus raj.',
-            'Visagino m.',
-            'Zarasų raj.',
+          'Akmenės raj.' => ['is_problematic' => false],
+          'Alytaus m.' => ['is_problematic' => false],
+          'Alytaus raj.' => ['is_problematic' => true],
+          'Anykščių raj.' => ['is_problematic' => false],
+          'Birštono m.' => ['is_problematic' => false],
+          'Biržų raj.' => ['is_problematic' => false],
+          'Druskininkų m.' => ['is_problematic' => false],
+          'Elektrėnų m.' => ['is_problematic' => false],
+          'Ignalinos raj.' => ['is_problematic' => false],
+          'Jonavos raj.' => ['is_problematic' => false],
+          'Joniškio raj.' => ['is_problematic' => false],
+          'Jurbarko raj.' => ['is_problematic' => false],
+          'Kaišiadorių raj.' => ['is_problematic' => false],
+          'Kalvarijos m.' => ['is_problematic' => false],
+          'Kauno raj.' => ['is_problematic' => false],
+          'Kazlų Rūdos m.' => ['is_problematic' => false],
+          'Kėdainių raj.' => ['is_problematic' => false],
+          'Kelmės raj.' => ['is_problematic' => false],
+          'Klaipėdos m.' => ['is_problematic' => false],
+          'Klaipėdos raj.' => ['is_problematic' => false],
+          'Kretingos raj.' => ['is_problematic' => false],
+          'Kupiškio raj.' => ['is_problematic' => false],
+          'Lazdijų raj.' => ['is_problematic' => false],
+          'Marijampolės m.' => ['is_problematic' => false],
+          'Mažeikių raj.' => ['is_problematic' => false],
+          'Molėtų raj.' => ['is_problematic' => false],
+          'Neringos m.' => ['is_problematic' => false],
+          'Pagėgių m.' => ['is_problematic' => false],
+          'Pakruojo raj.' => ['is_problematic' => false],
+          'Palangos m.' => ['is_problematic' => false],
+          'Panevėžio m.' => ['is_problematic' => false],
+          'Panevėžio raj.' => ['is_problematic' => false],
+          'Pasvalio raj.' => ['is_problematic' => true],
+          'Plungės raj.' => ['is_problematic' => false],
+          'Prienų raj.' => ['is_problematic' => false],
+          'Radviliškio raj.' => ['is_problematic' => false],
+          'Raseinių raj.' => ['is_problematic' => false],
+          'Rietavo m.' => ['is_problematic' => false],
+          'Rokiškio raj.' => ['is_problematic' => false],
+          'Skuodo raj.' => ['is_problematic' => false],
+          'Šakių raj.' => ['is_problematic' => false],
+          'Šalčininkų raj.' => ['is_problematic' => true],
+          'Šiaulių m.' => ['is_problematic' => false],
+          'Šiaulių raj.' => ['is_problematic' => false],
+          'Šilalės raj.' => ['is_problematic' => false],
+          'Šilutės raj.' => ['is_problematic' => false],
+          'Širvintų raj.' => ['is_problematic' => false],
+          'Švenčionių raj.' => ['is_problematic' => false],
+          'Tauragės raj.' => ['is_problematic' => false],
+          'Telšių raj.' => ['is_problematic' => false],
+          'Trakų raj.' => ['is_problematic' => false],
+          'Ukmergės raj.' => ['is_problematic' => false],
+          'Utenos raj.' => ['is_problematic' => true],
+          'Utenos m.' => ['is_problematic' => true],
+          'Varėnos raj.' => ['is_problematic' => false],
+          'Vilkaviškio raj.' => ['is_problematic' => false],
+          'Vilniaus m.' => ['is_problematic' => false],
+          'Vilniaus raj.' => ['is_problematic' => false],
+          'Visagino m.' => ['is_problematic' => false],
+          'Zarasų raj.' => ['is_problematic' => false],
         ];
 
-        return $allRegions[rand(0, count($allRegions)-1)];
-
+        return $allRegions;
     }
 }
