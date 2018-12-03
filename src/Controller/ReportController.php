@@ -115,4 +115,13 @@ class ReportController extends AbstractController
             ResponseHeaderBag::DISPOSITION_INLINE
         );
     }
+
+    /**
+     * @Route("/report/general", name="report.general")
+     */
+    public function statusReport()
+    {
+        return $this->render('report/status.html.twig', [
+          ]);
+    }
 }
