@@ -30,8 +30,8 @@ class Report
         $this->userRepository = $userRepository;
     }
 
-    /** 
-     * Reports current project status. Only finished groups are considered. 
+    /**
+     * Reports current project status. Only finished groups are considered.
      */
     public function getStatusReport(RegionRepository $regionRepository)
     {
