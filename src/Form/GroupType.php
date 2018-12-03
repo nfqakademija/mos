@@ -24,7 +24,11 @@ class GroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address', TextType::class)
+            ->add('address', TextType::class, array(
+                'attr' => array(
+                    'autocomplete' => 'off'
+                )
+            ))
             ->add('teacher', EntityType::class, array(
                 'class' => User::class,
                 'query_builder' => function (UserRepository $er) {

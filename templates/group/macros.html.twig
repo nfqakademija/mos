@@ -57,6 +57,18 @@
             </div>
             <div class="row">
                 <div class="input-field col s6">
+                    {{ form_widget(participant.region) }}
+                    {{ form_label(participant.region) }}
+                    {{ form_errors(participant.region) }}
+                </div>
+                <div class="input-field col s6">
+                    {{ form_widget(participant.livingAreaType) }}
+                    {{ form_label(participant.livingAreaType) }}
+                    {{ form_errors(participant.livingAreaType) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
                     {{ form_label(participant.address) }}
                     {{ form_widget(participant.address, {'attr': {'class': 'validate'}}) }}
                     {{ form_errors(participant.address) }}

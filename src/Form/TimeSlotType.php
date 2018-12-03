@@ -20,9 +20,21 @@ class TimeSlotType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', TextType::class)
-            ->add('startTime', TextType::class)
-            ->add('duration', NumberType::class);
+            ->add('date', TextType::class, array(
+                'attr' => array(
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('startTime', TextType::class, array(
+                'attr' => array(
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('duration', NumberType::class, array(
+                'attr' => array(
+                    'autocomplete' => 'off'
+                )
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
