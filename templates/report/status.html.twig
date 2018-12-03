@@ -7,18 +7,18 @@
   <h2>{% trans %}Project status report{% endtrans %}</h2>
 
   <div>
-      Bendrai apmokyta:		{{ allParticipantsCount }}
+      Bendrai apmokyta:		{{ result.allParticipantsCount }}
 
-      Probleminėse teritorijose:		{{ appParticipantsInProblematicRegions }}
+      Probleminėse teritorijose:		{{ result.appParticipantsInProblematicRegions }}
 
-      {% for region in problematicRegions %}
+      {% for region in result.problematicRegions %}
         {{ region.title }} : {{ region.participantsCount }}
       {% endfor %}
 
-      Vyresni nei 45 m.:		{{ olderThan45 }}
+      Vyresni nei 45 m.:		{{ result.olderThan45 }}
       Iš jų:
-      kaimo vietovėse:	{{ olderThan45InCountrySide }}
-      moterų:	{{ olderThan45Woman }}
+      kaimo vietovėse:	{{ result.olderThan45InCountrySide }}
+      moterų:	{{ result.olderThan45Woman }}
 
   </div>
 

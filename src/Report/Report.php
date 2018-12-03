@@ -30,12 +30,14 @@ class Report
     public function getStatusReport()
     {
         $result = [
-            'allParticipantsCount',
-            'appParticipantsInProblematicRegions' => ['title', 'participantsCount'],
-            'olderThan45',
-            'olderThan45InCountrySide',
-            'olderThan45Woman'
+            'allParticipantsCount' => 0,
+            'appParticipantsInProblematicRegions' => ['title' => '', 'participantsCount' => 0],
+            'olderThan45' => 0,
+            'olderThan45InCountrySide' => 0,
+            'olderThan45Woman' => 0,
           ];
+
+        $result['allParticipantsCount'] = $this->userRepository->getCountAllFinishedParticipants();
 
 
 

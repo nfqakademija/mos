@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -108,7 +109,42 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
           ->addOrderBy($orderBy, $orderType)
         ;
 
-
         return $queryBuilder;
+    }
+
+    /**
+     * Gets count of participants, where group end date is passed
+     */
+    public function getCountAllFinishedParticipants()
+    {
+        $dateNow = new \DateTime('now');
+
+        $rsm = new ResultSetMapping();
+        $sqlQuery = $this->getEntityManager()->createNativeQuery(
+            'SELECT * FROM `user`;',
+            $rsm
+        );
+
+        $query = $sqlQuery->getSQL();
+        $result = $sqlQuery->execute();
+
+//
+//        createQueryBuilder()
+////          ->addSelect('pr')
+//          ->from(User::class, 'pr')
+//          ->innerJoin('pr.learningGroup', 'gr')
+////          ->addGroupBy('gr')
+//          ->innerJoin('gr.timeSlots', 'ts')
+//          ->andWhere('ts.date < :dateNow')
+//
+//         // ->addGroupBy('pr')
+//
+//          ->setParameter(':dateNow', $dateNow->format('Y-m-d'))
+//          ->addSelect('COUNT(pr.id)')
+//          ;
+//        dump($queryBuilder->getQuery()->getSQL());die;
+//        $result = $queryBuilder->getQuery()->execute();
+        //$result = $queryBuilder->getQuery()->getSingleScalarResult();
+        return $result;
     }
 }
