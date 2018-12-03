@@ -96,7 +96,7 @@ class AppFixtures extends Fixture
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
-                $unidueSurname = $this->randomString(5);
+                $uniqueSurname = $this->randomString(5);
                 $userParticipant
                     ->setUsername('participant_' . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
