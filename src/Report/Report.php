@@ -12,8 +12,6 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Report
 {
 
-    /** @var LearningGroupRepository */
-    private $groupRepository;
 
     /** @var UserRepository */
     private $userRepository;
@@ -21,14 +19,11 @@ class Report
     /**
      * Report constructor.
      *
-     * @param \App\Repository\LearningGroupRepository $groupRepository
      * @param \App\Repository\UserRepository $userRepository
      */
     public function __construct(
-        LearningGroupRepository $groupRepository,
         UserRepository $userRepository
     ) {
-        $this->groupRepository = $groupRepository;
         $this->userRepository = $userRepository;
     }
 

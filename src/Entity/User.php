@@ -18,7 +18,7 @@ class User implements UserInterface
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_TEACHER = 'ROLE_TEACHER';
     public const ROLE_PARTICIPANT = 'ROLE_PARTICIPANT';
-    public const ROLE_INSPECTOR = 'ROLE_INSPECTOR';
+    public const ROLE_SUPERVISOR = 'ROLE_SUPERVISOR';
 
     /**
      * @ORM\Id()
