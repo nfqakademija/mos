@@ -27,6 +27,21 @@ class Report
         $this->userRepository = $userRepository;
     }
 
+    public function getStatusReport()
+    {
+        $result = [
+            'allParticipantsCount',
+            'appParticipantsInProblematicRegions' => ['title', 'participantsCount'],
+            'olderThan45',
+            'olderThan45InCountrySide',
+            'olderThan45Woman'
+          ];
+
+
+
+         return $result;
+    }
+
     public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
         ini_set('max_execution_time', 300); //300 seconds = 5 minutes

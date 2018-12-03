@@ -6,6 +6,24 @@
 {% block body %}
   <h2>{% trans %}Project status report{% endtrans %}</h2>
 
+  <div>
+      Bendrai apmokyta:		{{ allParticipantsCount }}
+
+      Probleminėse teritorijose:		{{ appParticipantsInProblematicRegions }}
+
+      {% for region in problematicRegions %}
+        {{ region.title }} : {{ region.participantsCount }}
+      {% endfor %}
+
+      Vyresni nei 45 m.:		{{ olderThan45 }}
+      Iš jų:
+      kaimo vietovėse:	{{ olderThan45InCountrySide }}
+      moterų:	{{ olderThan45Woman }}
+
+  </div>
+
+{% endblock %}
+
 
 
 

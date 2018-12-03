@@ -117,11 +117,16 @@ class ReportController extends AbstractController
     }
 
     /**
-     * @Route("/report/general", name="report.general")
+     * @Route("/report/status", name="report.status")
      */
-    public function statusReport()
+    public function statusReport(Report $report)
     {
+
+
+        $result = $report->getStatusReport();
+
         return $this->render('report/status.html.twig', [
+            'result' => $result,
           ]);
     }
 }
