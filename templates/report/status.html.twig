@@ -6,21 +6,28 @@
 {% block body %}
   <h2>{% trans %}Project status report{% endtrans %}</h2>
 
-  <div>
-      Bendrai apmokyta:		{{ result.allParticipantsCount }}
-
-      Probleminėse teritorijose:		{{ result.appParticipantsInProblematicRegions }}
-
-      {% for region in result.problematicRegions %}
+  <h5>
+      
+      Bendrai apmokyta: {{ result.allParticipantsCount }}
+      <br> 
+      <br> 
+      Probleminėse teritorijose: {{ result.inProblematicRegionsTotal }}
+      <br>
+      {% for region in result.inProblematicRegions %}
         {{ region.title }} : {{ region.participantsCount }}
+          <br>
       {% endfor %}
-
-      Vyresni nei 45 m.:		{{ result.olderThan45 }}
+      <br>
+      Vyresni nei 45 m.: {{ result.olderThan45 }}
+      <br>
+      <br>
       Iš jų:
-      kaimo vietovėse:	{{ result.olderThan45InCountrySide }}
-      moterų:	{{ result.olderThan45Woman }}
+      <br>
+      kaimo vietovėse: {{ result.olderThan45InCountrySide }}
+      <br>
+      moterų: {{ result.olderThan45Woman }}
 
-  </div>
+  </h5>
 
 {% endblock %}
 
