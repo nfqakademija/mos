@@ -122,22 +122,25 @@ const importFromExcel = (participantCollectionHolder, addParticipantButton, file
   reader.readAsBinaryString(file);
 };
 
+const importFromArray = (participantCollectionHolder, addParticipantButton, values, count) => {
+  for (let i = 0; i < count; i++) {
+    const name = values[i].split(' ');
+
+    if (name.length === 2) {
+      addItem(addParticipantButton, participantCollectionHolder, 'participant');
+      importParticipant(participantCollectionHolder, name[0], 'participant__name');
+      importParticipant(participantCollectionHolder, name[1], 'participant__surname');
+      participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
+      participantCollectionHolder.find('.participant:last')
+        .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
+    }
+  }
+};
+
 const importFromTextFile = (participantCollectionHolder, addParticipantButton, file, reader) => {
   reader.onload = () => {
     const names = reader.result.split('\n');
-
-    for (let i = 0; i < names.length - 1; i++) {
-      const name = names[i].split(' ');
-
-      if (name.length === 2) {
-        addItem(addParticipantButton, participantCollectionHolder, 'participant');
-        importParticipant(participantCollectionHolder, name[0], 'participant__name');
-        importParticipant(participantCollectionHolder, name[1], 'participant__surname');
-        participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
-        participantCollectionHolder.find('.participant:last')
-          .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
-      }
-    }
+    importFromArray(participantCollectionHolder, addParticipantButton, names, names.length - 1);
   };
   reader.readAsText(file);
 };
@@ -169,6 +172,17 @@ const checkIfCollectionIsEmpty = collectionHolder => {
   collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').css('display', 'block');
 };
 
+const togglePaste = () => $('.group-form__paste').slideToggle('fast');
+
+const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
+  const names = $('.group-form__paste-text').val().split('\n');
+
+  e.preventDefault();
+  importFromArray(participantCollectionHolder, addParticipantButton, names, names.length);
+  $('.group-form__paste-text').val('');
+  $('.group-form__paste').hide();
+};
+
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
     '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
@@ -195,6 +209,9 @@ export default () => {
     $(this).slideUp(500)
   });
   $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
+  $('.group-form__paste').hide();
+  $('.group-form__paste-toggle').on('click', togglePaste);
+  $('.group-form__paste-submit').on('click', e => addFromPaste(e, participantCollectionHolder, addParticipantButton));
 
   addParticipantButton.on('click', '.group-form__add-participant-button',
     e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));

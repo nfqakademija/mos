@@ -44,9 +44,12 @@ Teacher: Dėstytojas
 Time slots: Laikai
 Information: Informacija
 Import participants: Dalyvių importas
-Bad file format: Blogas failo formatas
+Upload participants: Dalyvių įkėlimas
+Paste participants: Dalyvių įklijavimas
+Acceptable formats: Tinkami failų formatai
 There are no participants yet: Dalyvių kol kas dar nėra
 There are no time slots yet: Laikų kol kas dar nėra
 Date: Data
 Start time: Pradžios laikas
 Duration (minutes): Trukmė (minutės)
+Add: Pridėti

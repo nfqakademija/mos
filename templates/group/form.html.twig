@@ -35,11 +35,13 @@
     </div>
     <div class="group-form__section">
         <h5 class="group-form__title">
-            {% trans %}Import participants{% endtrans %}
+            {% trans %}Upload participants{% endtrans %}
         </h5>
         <div class="row">
-            <div class="file-field input-field col s4">
-                <div class="btn tooltipped blue darken-3" data-tooltip="Import participants" data-position="left">
+            <div class="file-field input-field col s6">
+                <div class="btn tooltipped blue darken-3"
+                     data-tooltip="{% trans %}Import participants{% endtrans %}"
+                     data-position="left">
                     <i class="material-icons">
                         input
                     </i>
@@ -50,7 +52,25 @@
                 </div>
             </div>
             <div class="group-form__import-error input-field col s6">
-                {% trans %}Bad file format{% endtrans %} (xml, csv, txt, ods, xls, xlsx)
+                {% trans %}Acceptable formats{% endtrans %} (xml, csv, txt, ods, xls, xlsx)
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s1">
+                <div class="btn tooltipped blue darken-3 group-form__upload-button group-form__paste-toggle"
+                     data-tooltip="{% trans %}Paste participants{% endtrans %}"
+                     data-position="left"
+                >
+                    <i class="material-icons">
+                        content_paste
+                    </i>
+                </div>
+            </div>
+            <div class="input-field col s10 group-form__paste">
+                <textarea class="group-form__paste-text"></textarea>
+                <div class="group-form__paste-submit btn blue darken-3">
+                    {% trans %}Add{% endtrans %}
+                </div>
             </div>
         </div>
     </div>
