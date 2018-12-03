@@ -33,7 +33,9 @@ class GroupType extends AbstractType
                         ->setParameter('val', '%"ROLE_TEACHER"%')
                         ->orderBy('u.id', 'ASC');
                 },
-                'choice_label' => 'name'
+                'choice_label' => function (User $user) {
+                    return $user->getName() . ' ' . $user->getSurname();
+                },
             ))
             ->add('timeSlots', CollectionType::class, array(
                 'entry_type' => TimeSlotType::class,
