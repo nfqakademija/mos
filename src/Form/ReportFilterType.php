@@ -24,7 +24,10 @@ class ReportFilterType extends AbstractType
                 'label' =>"to:",
                 'required' => true,
                 'data' => new \DateTime('last day of this month')
-                ]);
+                ])
+          ->add('display', SubmitType::class, ['label' => 'Display', 'attr' =>['class' => 'btn']])
+          ->add('export', SubmitType::class, ['label' => 'Export', 'attr' =>['class' => 'btn']])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

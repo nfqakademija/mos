@@ -42,6 +42,6 @@ security:
     # - { path: ^/profile, roles: ROLE_USER }
 
     #Below  allows anonymous to access only login page
-#    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-#    - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-#    - { path: ^/, roles: ROLE_USER }
+    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+    - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+    - { path: ^/, roles: ROLE_USER }

@@ -176,8 +176,8 @@ class LearningGroup
 
         /** @var TimeSlot $timeSlot */
         foreach ($timeSlots as $timeSlot) {
-            if ($timeSlot->getStartTime() > $latestDate) {
-                $latestDate = $timeSlot->getStartTime();
+            if ($timeSlot->getDateObj() > $latestDate) {
+                $latestDate = $timeSlot->getDateObj();
             }
         }
 
@@ -187,7 +187,6 @@ class LearningGroup
     public function getStartDate(bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
-
         if (sizeof($timeSlots) === 0) {
             if ($nullIfNotExist) {
                 return null;
@@ -200,8 +199,8 @@ class LearningGroup
 
         /** @var TimeSlot $timeSlot */
         foreach ($timeSlots as $timeSlot) {
-            if ($timeSlot->getStartTime() < $earliestDate) {
-                $earliestDate = $timeSlot->getStartTime();
+            if ($timeSlot->getDateObj() < $earliestDate) {
+                $earliestDate = $timeSlot->getDateObj();
             }
         }
 
