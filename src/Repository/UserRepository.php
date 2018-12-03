@@ -80,8 +80,8 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
 
           ->addGroupBy('gr')
           ->innerJoin('gr.timeSlots', 'ts')
-          ->having('MAX(ts.startTime) >= :dateFrom')
-          ->andHaving('MAX(ts.startTime) <= :dateTo')
+          ->having('MAX(ts.date) >= :dateFrom')
+          ->andHaving('MAX(ts.date) <= :dateTo')
 
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
@@ -101,8 +101,8 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
               pr.gender,
               region.title AS regionTitle'
           )
-          ->addSelect('MIN(ts.startTime) AS groupStart')
-          ->addSelect('MAX(ts.startTime) AS groupEnd')
+          ->addSelect('MIN(ts.date) AS groupStart')
+          ->addSelect('MAX(ts.date) AS groupEnd')
           ->addSelect('gr.id AS groupId')
           
           ->addOrderBy($orderBy, $orderType)

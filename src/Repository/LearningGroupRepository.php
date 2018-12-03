@@ -49,13 +49,13 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
         $query = $this->createQueryBuilder('gr')
           ->innerJoin('gr.timeSlots', 'ts')
           ->addGroupBy('gr')
-          ->having('MAX(ts.startTime) >= :dateFrom')
-          ->andHaving('MAX(ts.startTime) <= :dateTo')
+          ->having('MAX(ts.date) >= :dateFrom')
+          ->andHaving('MAX(ts.date) <= :dateTo')
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
 
-          ->addSelect('MIN(ts.startTime) AS groupStartDate')
-          ->addSelect('MAX(ts.startTime) AS groupEndDate')
+          ->addSelect('MIN(ts.date) AS groupStartDate')
+          ->addSelect('MAX(ts.date) AS groupEndDate')
 
           ->getQuery()
           ;

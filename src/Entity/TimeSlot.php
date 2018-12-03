@@ -32,7 +32,7 @@ class TimeSlot
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Enter duration")
+     * @Assert\NotBlank(message="Enter duration in minutes")
      */
     private $duration;
 
@@ -49,6 +49,11 @@ class TimeSlot
     public function getDate(): ?string
     {
         return $this->date != null ? $this->date->format('Y-m-d') : null;
+    }
+
+    public function getDateObj(): ?\DateTime
+    {
+        return $this->date;
     }
 
     public function setDate($date): self

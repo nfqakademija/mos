@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
 
 
         $teachersNumber = 10;
-        $groupsNumber = 100;
+        $groupsNumber = 10;
         $maxParticipantsInGroup = 15;
         $maxTimeslotsInGroup = 5;
 
@@ -104,8 +104,8 @@ class AppFixtures extends Fixture
                     ->setUsername('participant_' . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
                     ->setEmail('participant' . $unique . '@email.com')
-                    ->setName('Na' . $unique)
-                    ->setSurname('Su' . $unique)
+                    ->setName(ucfirst($unique))
+                    ->setSurname(ucfirst($unique))
                     ->setRegion($regionJonavosR)
                     ->setBirthDate('19' . rand(45, 75) . '-' . rand(1, 12) . '-' . rand(1, 28))
                     ->setRoles([User::ROLE_PARTICIPANT])
