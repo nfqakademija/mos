@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -63,6 +64,27 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
 
         return $result;
     }
+    
+    /**
+     * Gets all participants participanting in groups which ends in the period using pure SQL query
+     * plus extra starDate, endDate, groupId
+     */
+    public function getParticipantsByGroupPeriodBySql(\DateTime $dateFrom, \DateTime $dateTo)
+    {
+        //TODO: NOT TESTED OR USED. Test it and use it for export to execel if works.
+        $sql = "SELECT * FROM `user` 
+                INNER JOIN learning_group ON `user`.learning_group_id = learning_group.id 
+                INNER JOIN (
+                SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                FROM time_slot GROUP BY time_slot.learning_group_id 
+                ) as ts ON ts.learning_group_id = learning_group.id 
+                WHERE max_ts_date >= " . "'" . $dateFrom->format('Y-m-d') . "'" . "
+                AND max_ts_date <= " . $dateTo->format('Y-m-d') . "'";
+        
+        $result = $this->getEntityManager()->getConnection()->query($sql)->fetchAll();
+
+        return $result;
+    }
 
 
     /**
@@ -108,7 +130,125 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
           ->addOrderBy($orderBy, $orderType)
         ;
 
-
         return $queryBuilder;
+    }
+
+    /**
+     * Gets count of participants, where group end date is passed
+     */
+    public function getCountAllFinishedParticipants()
+    {
+        $dateNow = new \DateTime('now');
+        $dateNowStr = $dateNow->format('Y-m-d');
+
+        $sql = "SELECT COUNT(`user`.id) FROM `user` 
+                INNER JOIN learning_group ON `user`.learning_group_id = learning_group.id 
+                INNER JOIN (
+                SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                FROM time_slot GROUP BY time_slot.learning_group_id 
+                ) as ts ON ts.learning_group_id = learning_group.id 
+                WHERE max_ts_date <= '" . $dateNowStr . "'";
+        
+        $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
+        
+        return $result[0];
+    }
+
+    /**
+     * Gets count of participants older thant $minAge, where group end date is passed
+     */
+    public function getOlderThan(int $minAge = 0)
+    {
+        $dateNow = new \DateTime('now');
+        $dateNowStr = $dateNow->format('Y-m-d');
+        $birthDate = new \DateTime('now - ' . $minAge . ' year');
+        $birthDateStr = $birthDate->format('Y-m-d');
+
+        $sql = "SELECT COUNT(`user`.id) FROM `user`
+                INNER JOIN learning_group 
+                ON `user`.learning_group_id = learning_group.id AND `user`.birth_date < '" . $birthDateStr . "' 
+                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                FROM time_slot 
+                GROUP BY time_slot.learning_group_id ) as ts 
+                ON ts.learning_group_id = learning_group.id 
+                WHERE max_ts_date <= '" . $dateNowStr . "'";
+        
+        $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
+
+        return $result[0];
+    }
+    
+    /**
+     * Gets count of participants older thant $minAge, where group end date is passed
+     */
+    public function getOlderThanAndInAreaType(int $minAge = 0, string $livingAreaType = 'kaimas')
+    {
+        $dateNow = new \DateTime('now');
+        $dateNowStr = $dateNow->format('Y-m-d');
+        $birthDate = new \DateTime('now - ' . $minAge . ' year');
+        $birthDateStr = $birthDate->format('Y-m-d');
+
+        $sql = "SELECT COUNT(`user`.id) FROM `user`
+                INNER JOIN learning_group 
+                ON `user`.learning_group_id = learning_group.id 
+                AND `user`.birth_date < '" . $birthDateStr . "' AND `user`.living_area_type = '" . $livingAreaType . "' 
+                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                FROM time_slot 
+                GROUP BY time_slot.learning_group_id ) as ts 
+                ON ts.learning_group_id = learning_group.id 
+                WHERE max_ts_date <= '" . $dateNowStr . "'";
+        
+        $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
+
+        return $result[0];
+    }
+    
+    /**
+     * Gets count of participants older thant $minAge, where group end date is passed
+     */
+    public function getOlderThanAndIsGender(int $minAge = 0, string $gender = 'moteris')
+    {
+        $dateNow = new \DateTime('now');
+        $dateNowStr = $dateNow->format('Y-m-d');
+        $birthDate = new \DateTime('now - ' . $minAge . ' year');
+        $birthDateStr = $birthDate->format('Y-m-d');
+
+        $sql = "SELECT COUNT(`user`.id) FROM `user`
+                INNER JOIN learning_group 
+                ON `user`.learning_group_id = learning_group.id 
+                AND `user`.birth_date < '" . $birthDateStr . "' AND `user`.gender = '" . $gender . "' 
+                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                FROM time_slot 
+                GROUP BY time_slot.learning_group_id ) as ts 
+                ON ts.learning_group_id = learning_group.id 
+                WHERE max_ts_date <= '" . $dateNowStr . "'";
+        
+        $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
+
+        return $result[0];
+    }
+    
+    
+    /**
+     * Counts participants from finished groups in regions by regionId
+     */
+    public function getParticipantsCountInRegionId(int $regionId)
+    {
+        $dateNow = new \DateTime('now');
+        $dateNowStr = $dateNow->format('Y-m-d');
+
+        $sql = "SELECT COUNT(`user`.id) FROM `user`
+                INNER JOIN learning_group 
+                ON `user`.learning_group_id = learning_group.id 
+                AND `user`.region_id = '" . $regionId . "' 
+                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                FROM time_slot 
+                GROUP BY time_slot.learning_group_id ) as ts 
+                ON ts.learning_group_id = learning_group.id 
+                WHERE max_ts_date <= '" . $dateNowStr . "'";
+        
+        $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
+
+        return $result[0];
     }
 }

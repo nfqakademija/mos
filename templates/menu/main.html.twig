@@ -19,6 +19,11 @@
                     {% trans %}Participants report{% endtrans %}
                 </a>
             </li>
+            <li class="{{ app.request.get('_route') == 'report.status' ? 'active' }}">
+              <a href="{{ path('report.status') }}">
+                {% trans %}Status report{% endtrans %}
+              </a>
+            </li>
         </ul>
     {% endif %}
     <ul class="right hide-on-med-and-down">
@@ -58,6 +63,11 @@
         <li class="{{ app.request.get('_route') == 'report.participants' ? 'active' }}">
             <a href="{{ path('report.participants.filter') }}">
                 {% trans %}Participants report{% endtrans %}
+            </a>
+        </li>
+        <li class="{{ app.request.get('_route') == 'report.status' ? 'active' }}">
+            <a href="{{ path('report.status') }}">
+                {% trans %}Status report{% endtrans %}
             </a>
         </li>
         <li>
