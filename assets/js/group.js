@@ -17,7 +17,7 @@ const addItem = (addButton, collectionHolder, itemClass) => {
   collectionHolder.data('index', index + 1);
   addButton.before(newForm);
   collectionHolder.find(`.${itemClass}:last`).hide().slideDown('fast');
-  collectionHolder.find('.group-form__empty').css('display', 'none');
+  collectionHolder.find('.group-form__empty').hide();
 };
 
 const addParticipantButtonHandler = (e, addParticipantButton, participantCollectionHolder) => {
@@ -158,12 +158,12 @@ const importParticipants = (participantCollectionHolder, addParticipantButton) =
 
   if(excelTypes.includes(file.name.split('.').pop())) {
     importFromExcel(participantCollectionHolder, addParticipantButton, file, reader);
-    errorHolder.css('display', 'none');
+    errorHolder.hide();
   } else if (file.type.match(textType)) {
     importFromTextFile(participantCollectionHolder, addParticipantButton, file, reader);
-    errorHolder.css('display', 'none');
+    errorHolder.hide();
   } else {
-    errorHolder.css('display', 'block');
+    errorHolder.show();
   }
 };
 
@@ -173,7 +173,7 @@ const importParticipant = (collectionHolder, value, className) => {
 };
 
 const checkIfCollectionIsEmpty = collectionHolder => {
-  collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').css('display', 'block');
+  collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').show();
 };
 
 const togglePaste = () => {
@@ -205,10 +205,10 @@ const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
     '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
-    ' data-tooltip="Add participant" data-position="right">add</i></div>');
+    ' data-tooltip="Pridėti dalyvį" data-position="right">add</i></div>');
   const addTimeSlotButton = $('<div class="clearfix">' +
     '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue darken-3 material-icons" ' +
-    'data-tooltip="Add timeslot" data-position="right">add</i></div>');
+    'data-tooltip="Pridėti paskaitos laiką" data-position="right">add</i></div>');
   const participantCollectionHolder = $('div.participants');
   const timeSlotCollectionHolder = $('div.time-slots');
 
@@ -226,12 +226,10 @@ export default () => {
     width: '100%',
     theme: "bootstrap4"
   });
-  $('.participant__additional').hide();
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
     $(this).slideUp(500)
   });
   $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
-  $('.group-form__paste').hide();
   $('.group-form__paste-toggle').on('click', togglePaste);
   $('.group-form__paste-submit').on('click', e => addFromPaste(e, participantCollectionHolder, addParticipantButton));
 

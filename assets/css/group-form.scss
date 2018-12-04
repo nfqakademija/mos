@@ -7,9 +7,14 @@
     padding: 15px;
   }
 
-  .group-form__upload-button {
+  .group-form__paste {
+    display: none;
+  }
+
+  .group-form__paste-toggle {
     height: 50px;
     width: 50px;
+    margin-bottom: 15px;
     @extend .center-element;
   }
 

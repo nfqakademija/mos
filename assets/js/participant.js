@@ -48,19 +48,18 @@ const toggleAdditionalSection = e => {
   e.preventDefault();
   $(that).parents().eq(2).find('.participant__additional').slideToggle('fast');
 
-  if ($(that).text() === 'Less') {
-    $(that).text('More');
+  if ($(that).text() === 'Mažiau') {
+    $(that).text('Daugiau');
     $(that).parents().eq(2).removeClass('participant--active');
   } else {
     let count = $(that).data('count') || 0;
 
-    $(that).text('Less');
+    $(that).text('Mažiau');
     $(that).parents().eq(2).addClass('participant--active');
 
     if (count === 0) {
       M.FormSelect.init($(that).parents().eq(2).find('select'));
       M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), {format: 'yyyy-mm-dd'});
-
       $(that).data('count', ++count);
     }
   }
