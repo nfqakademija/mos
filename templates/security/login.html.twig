@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
 
 {% block body %}
 
 <div class="example-wrapper">
-    <h2 class="center-align">Login</h2>
+    <h2 class="center-align">{% trans %}Login{% endtrans %}</h2>
 
     {% if error %}
       <span class="alert-danger">{{ error.messageKey }}</span>
     {% endif %}
 
     <form action="{{ path('login') }}" method="POST" >
-        <input type="text" name="_username" value="{{ last_username }}" placeholder="Username">
-        <input type="password" name="_password" placeholder="password" >
-        <button class="btn blue darken-3" type="submit">Login</button>
+        <input type="text" name="_username" value="{{ last_username }}" placeholder="{% trans %}Username{% endtrans %}" #}>
+        <input type="password" name="_password" placeholder="{% trans %}password{% endtrans %}"  >
+        <button class="btn blue darken-3" type="submit">{% trans %}Login{% endtrans %}</button>
     </form>
 
 </div>

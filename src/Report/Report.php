@@ -63,6 +63,16 @@ class Report
         return $result;
     }
 
+    /**
+     * Exports participants report to xlsx
+     *
+     * @param \DateTime $dateFrom
+     * @param \DateTime $dateTo
+     *
+     * @return array
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
         ini_set('max_execution_time', 300); //300 seconds = 5 minutes
@@ -211,7 +221,7 @@ class Report
 
         $sheet->setCellValue('A3', $reportHeaderText);
         $sheet->getStyle('A3')->getAlignment()->setWrapText(true);
-        $sheet->getRowDimension(3)->setRowHeight(60);
+        $sheet->getRowDimension(3)->setRowHeight(80);
         $sheet->mergeCells('A3:L3');
 
         $sheet->setCellValue('A5', 'Laikotarpis nuo:');

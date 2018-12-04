@@ -72,14 +72,18 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     public function getParticipantsByGroupPeriodBySql(\DateTime $dateFrom, \DateTime $dateTo)
     {
         //TODO: NOT TESTED OR USED. Test it and use it for export to execel if works.
-        $sql = "SELECT * FROM `user` 
+        $sql = "SELECT `user`.*, region.title as region_title FROM `user` 
                 INNER JOIN learning_group ON `user`.learning_group_id = learning_group.id 
+                LEFT JOIN region ON `user`.region_id = region.id
                 INNER JOIN (
-                SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
+                SELECT time_slot.id, 
+                       time_slot.learning_group_id, 
+                       MIN(time_slot.`date`) as group_start, 
+                       MAX(time_slot.`date`) as group_end 
                 FROM time_slot GROUP BY time_slot.learning_group_id 
                 ) as ts ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date >= '" . $dateFrom->format('Y-m-d') . "'
-                AND max_ts_date <= '" . $dateTo->format('Y-m-d') . "'";
+                WHERE group_end >= '" . $dateFrom->format('Y-m-d') . "'
+                AND group_end <= '" . $dateTo->format('Y-m-d') . "'";
         
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetchAll();
 
