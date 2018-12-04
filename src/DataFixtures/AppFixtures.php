@@ -22,10 +22,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 50;
+        $groupsNumber = 100;
         $teachersNumber = 10;
         $maxParticipantsInGroup = 15;
-        $maxTimeslotsInGroup = 5;
+        $maxTimeslotsInGroup = 8;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
             $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
             $participantsCount = rand(2, $maxParticipantsInGroup);
-            $region = $allRegionsObjects[rand(0, 40)];
+            $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects)-1)];
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
@@ -172,58 +172,58 @@ class AppFixtures extends Fixture
           'Biržų raj.' => ['is_problematic' => false],
           'Druskininkų m.' => ['is_problematic' => false],
           'Elektrėnų m.' => ['is_problematic' => false],
-          'Ignalinos raj.' => ['is_problematic' => false],
-          'Jonavos raj.' => ['is_problematic' => false],
-          'Joniškio raj.' => ['is_problematic' => false],
-          'Jurbarko raj.' => ['is_problematic' => false],
-          'Kaišiadorių raj.' => ['is_problematic' => false],
-          'Kalvarijos m.' => ['is_problematic' => false],
-          'Kauno raj.' => ['is_problematic' => false],
-          'Kazlų Rūdos m.' => ['is_problematic' => false],
-          'Kėdainių raj.' => ['is_problematic' => false],
-          'Kelmės raj.' => ['is_problematic' => false],
-          'Klaipėdos m.' => ['is_problematic' => false],
-          'Klaipėdos raj.' => ['is_problematic' => false],
-          'Kretingos raj.' => ['is_problematic' => false],
-          'Kupiškio raj.' => ['is_problematic' => false],
-          'Lazdijų raj.' => ['is_problematic' => false],
-          'Marijampolės m.' => ['is_problematic' => false],
-          'Mažeikių raj.' => ['is_problematic' => false],
-          'Molėtų raj.' => ['is_problematic' => false],
-          'Neringos m.' => ['is_problematic' => false],
-          'Pagėgių m.' => ['is_problematic' => false],
-          'Pakruojo raj.' => ['is_problematic' => false],
-          'Palangos m.' => ['is_problematic' => false],
-          'Panevėžio m.' => ['is_problematic' => false],
-          'Panevėžio raj.' => ['is_problematic' => false],
-          'Pasvalio raj.' => ['is_problematic' => true],
-          'Plungės raj.' => ['is_problematic' => false],
-          'Prienų raj.' => ['is_problematic' => false],
-          'Radviliškio raj.' => ['is_problematic' => false],
-          'Raseinių raj.' => ['is_problematic' => false],
-          'Rietavo m.' => ['is_problematic' => false],
-          'Rokiškio raj.' => ['is_problematic' => false],
-          'Skuodo raj.' => ['is_problematic' => false],
-          'Šakių raj.' => ['is_problematic' => false],
-          'Šalčininkų raj.' => ['is_problematic' => true],
-          'Šiaulių m.' => ['is_problematic' => false],
-          'Šiaulių raj.' => ['is_problematic' => false],
-          'Šilalės raj.' => ['is_problematic' => false],
-          'Šilutės raj.' => ['is_problematic' => false],
-          'Širvintų raj.' => ['is_problematic' => false],
-          'Švenčionių raj.' => ['is_problematic' => false],
-          'Tauragės raj.' => ['is_problematic' => false],
-          'Telšių raj.' => ['is_problematic' => false],
-          'Trakų raj.' => ['is_problematic' => false],
-          'Ukmergės raj.' => ['is_problematic' => false],
-          'Utenos raj.' => ['is_problematic' => true],
-          'Utenos m.' => ['is_problematic' => true],
-          'Varėnos raj.' => ['is_problematic' => false],
-          'Vilkaviškio raj.' => ['is_problematic' => false],
-          'Vilniaus m.' => ['is_problematic' => false],
-          'Vilniaus raj.' => ['is_problematic' => false],
-          'Visagino m.' => ['is_problematic' => false],
-          'Zarasų raj.' => ['is_problematic' => false],
+//          'Ignalinos raj.' => ['is_problematic' => false],
+//          'Jonavos raj.' => ['is_problematic' => false],
+//          'Joniškio raj.' => ['is_problematic' => false],
+//          'Jurbarko raj.' => ['is_problematic' => false],
+//          'Kaišiadorių raj.' => ['is_problematic' => false],
+//          'Kalvarijos m.' => ['is_problematic' => false],
+//          'Kauno raj.' => ['is_problematic' => false],
+//          'Kazlų Rūdos m.' => ['is_problematic' => false],
+//          'Kėdainių raj.' => ['is_problematic' => false],
+//          'Kelmės raj.' => ['is_problematic' => false],
+//          'Klaipėdos m.' => ['is_problematic' => false],
+//          'Klaipėdos raj.' => ['is_problematic' => false],
+//          'Kretingos raj.' => ['is_problematic' => false],
+//          'Kupiškio raj.' => ['is_problematic' => false],
+//          'Lazdijų raj.' => ['is_problematic' => false],
+//          'Marijampolės m.' => ['is_problematic' => false],
+//          'Mažeikių raj.' => ['is_problematic' => false],
+//          'Molėtų raj.' => ['is_problematic' => false],
+//          'Neringos m.' => ['is_problematic' => false],
+//          'Pagėgių m.' => ['is_problematic' => false],
+//          'Pakruojo raj.' => ['is_problematic' => false],
+//          'Palangos m.' => ['is_problematic' => false],
+//          'Panevėžio m.' => ['is_problematic' => false],
+//          'Panevėžio raj.' => ['is_problematic' => false],
+//          'Pasvalio raj.' => ['is_problematic' => true],
+//          'Plungės raj.' => ['is_problematic' => false],
+//          'Prienų raj.' => ['is_problematic' => false],
+//          'Radviliškio raj.' => ['is_problematic' => false],
+//          'Raseinių raj.' => ['is_problematic' => false],
+//          'Rietavo m.' => ['is_problematic' => false],
+//          'Rokiškio raj.' => ['is_problematic' => false],
+//          'Skuodo raj.' => ['is_problematic' => false],
+//          'Šakių raj.' => ['is_problematic' => false],
+//          'Šalčininkų raj.' => ['is_problematic' => true],
+//          'Šiaulių m.' => ['is_problematic' => false],
+//          'Šiaulių raj.' => ['is_problematic' => false],
+//          'Šilalės raj.' => ['is_problematic' => false],
+//          'Šilutės raj.' => ['is_problematic' => false],
+//          'Širvintų raj.' => ['is_problematic' => false],
+//          'Švenčionių raj.' => ['is_problematic' => false],
+//          'Tauragės raj.' => ['is_problematic' => false],
+//          'Telšių raj.' => ['is_problematic' => false],
+//          'Trakų raj.' => ['is_problematic' => false],
+//          'Ukmergės raj.' => ['is_problematic' => false],
+//          'Utenos raj.' => ['is_problematic' => true],
+//          'Utenos m.' => ['is_problematic' => true],
+//          'Varėnos raj.' => ['is_problematic' => false],
+//          'Vilkaviškio raj.' => ['is_problematic' => false],
+//          'Vilniaus m.' => ['is_problematic' => false],
+//          'Vilniaus raj.' => ['is_problematic' => false],
+//          'Visagino m.' => ['is_problematic' => false],
+//          'Zarasų raj.' => ['is_problematic' => false],
         ];
 
         return $allRegions;
