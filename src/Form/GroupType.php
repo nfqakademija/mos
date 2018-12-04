@@ -40,6 +40,7 @@ class GroupType extends AbstractType
                 'choice_label' => function (User $user) {
                     return $user->getName() . ' ' . $user->getSurname();
                 },
+                'placeholder' => 'Choose a teacher'
             ))
             ->add('timeSlots', CollectionType::class, array(
                 'entry_type' => TimeSlotType::class,

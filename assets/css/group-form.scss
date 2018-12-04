@@ -82,6 +82,10 @@
     box-shadow: 0 1px 0 0 #F44336;
   }
 
+  input[type=email]:not(.browser-default):focus {
+    border: none;
+  }
+
   .input-field input[type=text].valid,
   .input-field input[type=email]:not(.browser-default).valid,
   .input-field input:focus {

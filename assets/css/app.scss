@@ -1,6 +1,8 @@
 // the ~ allows you to reference things in node_modules
 @import "~materialize-css/dist/css/materialize.min.css";
 @import "~material-design-icons/iconfont/material-icons.css";
+@import "~select2/dist/css/select2.min.css";
+@import "~select2-bootstrap4-theme/dist/select2-bootstrap4.min.css";
 @import "globals";
 @import "participant";
 @import "menu";
@@ -9,3 +11,4 @@
 @import "alert";
 @import "pagination";
 @import "time-slot";
+@import "select";

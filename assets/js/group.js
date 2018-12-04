@@ -2,6 +2,7 @@ import $ from 'jquery';
 import * as M from 'materialize-css';
 import randomString from 'random-string';
 import XLSX from 'xlsx';
+import 'select2';
 
 const initCollections = (collectionHolder, addButton) => {
   collectionHolder.append(addButton);
@@ -218,10 +219,13 @@ export default () => {
   checkIfCollectionIsEmpty(timeSlotCollectionHolder);
 
   M.Tooltip.init($('.tooltipped'), {outDuration: 0});
-  M.FormSelect.init($('.group-form__teacher'));
   M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {format: 'yyyy-mm-dd'});
   M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {twelveHour: false});
 
+  $('.group-form__teacher').select2({
+    width: '100%',
+    theme: "bootstrap4"
+  });
   $('.participant__additional').hide();
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
     $(this).slideUp(500)

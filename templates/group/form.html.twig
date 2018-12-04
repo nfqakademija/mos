@@ -8,28 +8,14 @@
             {% trans %}Information{% endtrans %}
         </h5>
         <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6">
                 {{ form_label(form.address) }}
                 {{ validate(form.address, '') }}
                 {{ form_errors(form.address) }}
             </div>
-            <div class="input-field col s12">
-                {{ form_widget(form.teacher,  {'attr': {'class': 'group-form__teacher'} }) }}
-                {{ form_label(form.teacher) }}
+            <div class="input-field col s6">
+                {{ form_widget(form.teacher,  {'attr': {'class': 'group-form__teacher browser-default'} }) }}
                 {{ form_errors(form.teacher) }}
-            </div>
-        </div>
-    </div>
-    <div class="group-form__section">
-        <h5 class="group-form__title">
-            {% trans %}Time slots{% endtrans %}
-        </h5>
-        <div class="time-slots" data-prototype="{{ printTimeSlot(form.timeSlots.vars.prototype)|e('html_attr') }}">
-            {% for timeSlot in form.timeSlots %}
-                {{ printTimeSlot(timeSlot) }}
-            {% endfor %}
-            <div class="group-form__empty">
-                {% trans %}There are no time slots yet{% endtrans %}
             </div>
         </div>
     </div>
@@ -95,6 +81,19 @@
             {% endfor %}
             <div class="group-form__empty">
                 {% trans %}There are no participants yet{% endtrans %}
+            </div>
+        </div>
+    </div>
+    <div class="group-form__section">
+        <h5 class="group-form__title">
+            {% trans %}Time slots{% endtrans %}
+        </h5>
+        <div class="time-slots" data-prototype="{{ printTimeSlot(form.timeSlots.vars.prototype)|e('html_attr') }}">
+            {% for timeSlot in form.timeSlots %}
+                {{ printTimeSlot(timeSlot) }}
+            {% endfor %}
+            <div class="group-form__empty">
+                {% trans %}There are no time slots yet{% endtrans %}
             </div>
         </div>
     </div>
