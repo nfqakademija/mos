@@ -43,6 +43,17 @@ class LearningGroup
      */
     private $teacher;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $startDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $endDate;
+
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -119,7 +130,6 @@ class LearningGroup
                 $arr['participants'][] = $participant->toArray();
             }
         }
-
         return $arr;
     }
 
@@ -160,7 +170,7 @@ class LearningGroup
     }
 
 
-    public function getEndDate(bool $nullIfNotExist = true)
+    public function getEndDateByTimeSlots(bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
 
@@ -184,7 +194,7 @@ class LearningGroup
         return $latestDate;
     }
 
-    public function getStartDate(bool $nullIfNotExist = true)
+    public function getStartDateByTimeSlots(bool $nullIfNotExist = true)
     {
         $timeSlots = $this->timeSlots;
         if (sizeof($timeSlots) === 0) {
@@ -205,5 +215,38 @@ class LearningGroup
         }
 
         return $earliestDate;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): self
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function updateStartEndDates()
+    {
+        $startDate = $this->getStartDateByTimeSlots();
+        $endDate = $this->getEndDateByTimeSlots();
+        
+        $this->setStartDate($startDate);
+        $this->setEndDate($endDate);
     }
 }
