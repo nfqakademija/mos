@@ -78,8 +78,8 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
                 SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
                 FROM time_slot GROUP BY time_slot.learning_group_id 
                 ) as ts ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date >= " . "'" . $dateFrom->format('Y-m-d') . "'" . "
-                AND max_ts_date <= " . $dateTo->format('Y-m-d') . "'";
+                WHERE max_ts_date >= '" . $dateFrom->format('Y-m-d') . "'
+                AND max_ts_date <= '" . $dateTo->format('Y-m-d') . "'";
         
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetchAll();
 
