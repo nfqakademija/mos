@@ -1,0 +1,21 @@
+.datepicker-cancel,
+.datepicker-done,
+.timepicker-close,
+.datepicker-table td.is-today,
+ul.dropdown-content.select-dropdown li span {
+  color: $primary-color;
+}
+
+.datepicker-table td.is-selected,
+.datepicker-date-display,
+.timepicker-digital-display {
+  background: $primary-color;
+}
+
+.datepicker-table td.is-today.is-selected {
+  color: #FFF;
+}
+
+.datepicker-controls .select-month input {
+  width: 85px;
+}

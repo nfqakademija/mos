@@ -233,11 +233,26 @@ class Report
 
     /**
      * @param $data
-     *
-     * @return \DateTime[] $range
+     * @return array
+     * @throws \Exception
+     */
+    private function normalizeData($data): array
+    {
+        $data['dateFrom'] = new \DateTime($data['dateFrom']);
+        $data['dateTo'] = new \DateTime($data['dateTo']);
+
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     * @throws \Exception
      */
     public function getRangeFromFormData($data)
     {
+        $data = $this->normalizeData($data);
+
         $range = ['dateFrom' => '', 'dateTo' => ''];
 
         if (!empty($data['dateFrom'])) {

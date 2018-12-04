@@ -3,7 +3,9 @@
 {% block title %}Users{% endblock %}
 
 {% block body %}
-    <h2 class="text-center mt-3">Users</h2>
+    <h2 class="center-align">
+        {% trans %}Users{% endtrans %}
+    </h2>
     <table class="table">
         <thead>
         <tr>
@@ -29,5 +31,5 @@
 {% endblock %}
 
 {% block pager %}
-  {% include 'helper/pager.html.twig' with { 'content': users } only %}
+    {% include 'helper/pager.html.twig' with { 'content': users } only %}
 {% endblock %}
