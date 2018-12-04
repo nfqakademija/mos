@@ -62,4 +62,6 @@ Duration in minutes: Trukmė minutėmis
 More: Daugiau
 Add a region: Pridėti regioną
 Add an area type: Pridėti vietovės tipą
+Field must not be empty: Laukelis negali būti tuščias
+Bad format, should be 'name surname': Blogas formatas, turi būti 'vardas pavarde'
 

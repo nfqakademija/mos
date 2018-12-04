@@ -67,7 +67,18 @@
                 </div>
             </div>
             <div class="input-field col s10 group-form__paste">
-                <textarea class="group-form__paste-text"></textarea>
+                <textarea
+                        class="group-form__paste-text"
+                        placeholder="Formatas 'vardas pavardė'"
+                ></textarea>
+                <div class="group-form__paste-error">
+                    <div class="group-form__paste-error__empty">
+                        {% trans %}Field must not be empty{% endtrans %}
+                    </div>
+                    <div class="group-form__paste-error__format">
+                        {% trans %}Bad format, should be 'name surname'{% endtrans %}
+                    </div>
+                </div>
                 <div class="group-form__paste-submit btn blue darken-3">
                     {% trans %}Add{% endtrans %}
                 </div>

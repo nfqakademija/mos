@@ -20,6 +20,10 @@
     color: rgb(244, 67, 54);
   }
 
+  .group-form__paste-error {
+    color: rgb(244, 67, 54);
+  }
+
   .group-form__title {
     margin-bottom: 10px;
   }
@@ -64,7 +68,7 @@
     resize: none;
     border-radius: 5px;
     height: 100px;
-    padding: 5px;
+    padding: 10px;
     outline: none;
     margin-bottom: 10px;
   }

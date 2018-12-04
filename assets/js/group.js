@@ -133,8 +133,11 @@ const importFromArray = (participantCollectionHolder, addParticipantButton, valu
       participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
       participantCollectionHolder.find('.participant:last')
         .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
+    } else {
+      return false;
     }
   }
+  return true;
 };
 
 const importFromTextFile = (participantCollectionHolder, addParticipantButton, file, reader) => {
@@ -172,15 +175,30 @@ const checkIfCollectionIsEmpty = collectionHolder => {
   collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').css('display', 'block');
 };
 
-const togglePaste = () => $('.group-form__paste').slideToggle('fast');
+const togglePaste = () => {
+  $('.group-form__paste').slideToggle('fast');
+  $('.group-form__paste-error__format').hide();
+  $('.group-form__paste-error__empty').hide();
+};
 
 const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
-  const names = $('.group-form__paste-text').val().split('\n');
+  const names = $('.group-form__paste-text').val().split('\n').filter(name => name !== '');
 
   e.preventDefault();
-  importFromArray(participantCollectionHolder, addParticipantButton, names, names.length);
-  $('.group-form__paste-text').val('');
-  $('.group-form__paste').hide();
+
+  if(names.length > 0) {
+    if(importFromArray(participantCollectionHolder, addParticipantButton, names, names.length) === false) {
+      $('.group-form__paste-error__format').show();
+      $('.group-form__paste-error__empty').hide();
+    } else {
+      $('.group-form__paste-text').val('');
+      $('.group-form__paste').hide();
+    }
+  } else {
+    $('.group-form__paste-error__empty').show();
+    $('.group-form__paste-error__format').hide();
+  }
+
 };
 
 export default () => {
