@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Helper\Helper;
 use App\Report\Report;
+use App\Repository\RegionRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -114,5 +115,19 @@ class ReportController extends AbstractController
             $result['file_name'],
             ResponseHeaderBag::DISPOSITION_INLINE
         );
+    }
+
+    /**
+     * @Route("/report/status", name="report.status")
+     */
+    public function statusReport(Report $report, RegionRepository $regionRepository)
+    {
+
+
+        $result = $report->getStatusReport($regionRepository);
+
+        return $this->render('report/status.html.twig', [
+            'result' => $result,
+          ]);
     }
 }

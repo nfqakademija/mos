@@ -22,10 +22,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 50;
+        $groupsNumber = 100;
         $teachersNumber = 10;
         $maxParticipantsInGroup = 15;
-        $maxTimeslotsInGroup = 5;
+        $maxTimeslotsInGroup = 8;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
@@ -50,7 +50,7 @@ class AppFixtures extends Fixture
         $userManager = new User();
         $userManager
             ->setUsername('manager')
-            ->setPassword($this->encoder->encodePassword($userManager, 'labasmng123'))
+            ->setPassword($this->encoder->encodePassword($userManager, 'labasmng1'))
             ->setEmail('manager@email.com')
             ->setName('Project')
             ->setSurname('Manager')
@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
         $userSupervisor = new User();
         $userSupervisor
           ->setUsername('supervisor')
-          ->setPassword($this->encoder->encodePassword($userManager, 'labasspv123'))
+          ->setPassword($this->encoder->encodePassword($userManager, 'labasspv1'))
           ->setEmail('supervisor@email.com')
           ->setName('Project')
           ->setSurname('Supervisor')
@@ -92,16 +92,17 @@ class AppFixtures extends Fixture
             $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
             $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
             $participantsCount = rand(2, $maxParticipantsInGroup);
-            $region = $allRegionsObjects[rand(0, 40)];
+            $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects)-1)];
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
+                $uniqueSurname = $this->randomString(5);
                 $userParticipant
                     ->setUsername('participant_' . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
                     ->setEmail('participant' . $unique . '@email.com')
                     ->setName(ucfirst($unique))
-                    ->setSurname(ucfirst($unique))
+                    ->setSurname(ucfirst($uniqueSurname))
                     ->setRegion($region)
                     ->setBirthDate('19' . rand(45, 75) . '-' . rand(1, 12) . '-' . rand(1, 28))
                     ->setRoles([User::ROLE_PARTICIPANT])
