@@ -4302,6 +4302,11 @@ pretty-error@^2.1.1:
     renderkid "^2.0.1"
     utila "~0.4"
 
+print-js@^1.0.54:
+  version "1.0.54"
+  resolved "https://registry.yarnpkg.com/print-js/-/print-js-1.0.54.tgz#f15df027951e9a9165b6d39420d362ba7f0fc130"
+  integrity sha512-tZkwoHJCTS6jqj0UuxhUY9xF8v0rOuAgIZRlfZBOg9D1R4saxznRANkVlAsLW+D4GOOsLq5Zd/OgVk58IfESXA==
+
 printj@~1.1.0, printj@~1.1.2:
   version "1.1.2"
   resolved "http://registry.npmjs.org/printj/-/printj-1.1.2.tgz#d90deb2975a8b9f600fb3a1c94e3f4c53c78a222"

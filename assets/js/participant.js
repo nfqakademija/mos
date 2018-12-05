@@ -16,7 +16,7 @@ const getUsernameFromName = (that, surname, isEmpty, oldValues) => {
   }
 
   return !isEmpty ?
-    `${that.value}${surname}.${randomString({length: 3})}` :
+    `${that.value}${surname}.${randomString({length: 5})}` :
     '';
 };
 
@@ -28,7 +28,7 @@ const getUsernameFromSurname = (that, name, isEmpty, oldValues) => {
   }
 
   return !isEmpty ?
-    `${name}${that.value !== '' && name !== '' ? '.' : ''}${that.value}.${randomString({length: 3})}` :
+    `${name}${that.value !== '' && name !== '' ? '.' : ''}${that.value}.${randomString({length: 5})}` :
     '';
 };
 

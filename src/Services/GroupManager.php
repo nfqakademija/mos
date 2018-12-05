@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class GroupManager
 {
@@ -18,12 +19,19 @@ class GroupManager
     private $entityManager;
 
     /**
+     * @var UserPasswordEncoderInterface $encoder
+     */
+    private $encoder;
+
+    /**
      * GroupManager constructor.
      * @param EntityManagerInterface $entityManager
+     * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
     {
         $this->entityManager = $entityManager;
+        $this->encoder = $encoder;
     }
 
     /**
@@ -38,22 +46,32 @@ class GroupManager
     /**
      * @param FormInterface $form
      * @param Request $request
-     * @return bool
+     * @return ArrayCollection|null
      */
-    public function handleCreate(FormInterface $form, Request $request): bool
+    public function handleCreate(FormInterface $form, Request $request): ?ArrayCollection
     {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $group = $form->getData();
+            $plainParticipants = new ArrayCollection();
+
+            foreach ($group->getParticipants() as $participant) {
+                $plainParticipants->add($participant->getPlainUser());
+            }
+
+            foreach ($group->getParticipants() as $participant) {
+                $participant->setPassword($this->encoder->encodePassword($participant, $participant->getPassword()));
+                $this->entityManager->persist($participant);
+            }
 
             $this->entityManager->persist($group);
             $this->entityManager->flush();
 
-            return true;
+            return $plainParticipants;
         }
 
-        return false;
+        return null;
     }
 
     /**

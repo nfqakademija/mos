@@ -68,16 +68,6 @@
     margin: 20px 0;
   }
 
-  .group-form__submit-button-wrapper {
-    clear: both;
-    height: 110px;
-    @extend .center-element;
-
-    .group-form__submit-button {
-      margin: 20px 0;
-    }
-  }
-
   .group-form__paste-text {
     resize: none;
     border-radius: 5px;
@@ -109,6 +99,17 @@
 
 }
 
-.dropdown-content li > span {
-  color: $primary-color;
+.group-form__print {
+  float: right;
+  cursor: pointer;
+}
+
+.group-form__submit-button-wrapper {
+  clear: both;
+  height: 110px;
+  @extend .center-element;
+
+  .group-form__submit-button {
+    margin: 20px 0;
+  }
 }

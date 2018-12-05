@@ -3,6 +3,7 @@ import * as M from 'materialize-css';
 import randomString from 'random-string';
 import XLSX from 'xlsx';
 import 'select2';
+import printJS from 'print-js';
 
 const initCollections = (collectionHolder, addButton) => {
   collectionHolder.append(addButton);
@@ -113,7 +114,7 @@ const importFromExcel = (participantCollectionHolder, addParticipantButton, file
           importParticipant(participantCollectionHolder, worksheet[z].v, 'participant__surname');
           participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
           participantCollectionHolder.find('.participant:last')
-            .find('.participant__username').val(`${first}.${worksheet[z].v}.${randomString({length: 3})}`);
+            .find('.participant__username').val(`${first}.${worksheet[z].v}.${randomString({length: 5})}`);
           i = 0;
         }
       }
@@ -133,7 +134,7 @@ const importFromArray = (participantCollectionHolder, addParticipantButton, valu
       importParticipant(participantCollectionHolder, name[1], 'participant__surname');
       participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
       participantCollectionHolder.find('.participant:last')
-        .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
+        .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 5})}`);
     } else {
       return false;
     }
@@ -156,10 +157,10 @@ const importParticipants = (participantCollectionHolder, addParticipantButton) =
   const textType = /text\/plain/;
   const excelTypes = ["xml", "csv", "ods", "xlsx", "xls"];
 
-  if(excelTypes.includes(file.name.split('.').pop())) {
+  if(file && excelTypes.includes(file.name.split('.').pop())) {
     importFromExcel(participantCollectionHolder, addParticipantButton, file, reader);
     errorHolder.hide();
-  } else if (file.type.match(textType)) {
+  } else if (file && file.type.match(textType)) {
     importFromTextFile(participantCollectionHolder, addParticipantButton, file, reader);
     errorHolder.hide();
   } else {
@@ -237,6 +238,12 @@ export default () => {
   $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
   $('.group-form__paste-toggle').on('click', togglePaste);
   $('.group-form__paste-submit').on('click', e => addFromPaste(e, participantCollectionHolder, addParticipantButton));
+  $('.group-form__print').on('click', () => printJS({
+    printable: 'group-form__table',
+    type: 'html',
+    header: 'Dalyviai',
+    scanStyles: false
+  }));
 
   addParticipantButton.on('click', '.group-form__add-participant-button',
     e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));

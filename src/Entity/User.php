@@ -311,6 +311,19 @@ class User implements UserInterface
         $this->registrationDate = new \DateTime();
     }
 
+    /**
+     * @return array
+     */
+    public function getPlainUser(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'surname' => $this->getSurname(),
+            'username' => $this->getUsername(),
+            'password' => $this->getPassword()
+        ];
+    }
+
     public function toArray()
     {
         $arr = [

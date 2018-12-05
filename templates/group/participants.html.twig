@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participants{% endblock %}
+
+{% block body %}
+    <h2 class="center-align">
+        {% trans %}Participants{% endtrans %}
+    </h2>
+    <i class="material-icons group-form__print">
+        print
+    </i>
+    <table class="table" id="group-form__table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans %}Name{% endtrans %}</th>
+            <th scope="col">{% trans %}Surname{% endtrans %}</th>
+            <th scope="col">{% trans %}Username{% endtrans %}</th>
+            <th scope="col">{% trans %}Password{% endtrans %}</th>
+        </tr>
+        </thead>
+        {% for participant in participants %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ participant.name }}</td>
+                <td>{{ participant.surname }}</td>
+                <td>{{ participant.username }}</td>
+                <td>{{ participant.password }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="group-form__submit-button-wrapper">
+        <a class="group-form__submit-button btn-large blue darken-3" href="{{ path('group.viewlist') }}">
+            {% trans %}Finish{% endtrans %}
+        </a>
+    </div>
+{% endblock %}
