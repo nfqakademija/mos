@@ -68,9 +68,9 @@ class GroupController extends AbstractController
                 'Group was successfully created!'
             );
 
-            return $this->render('group/participants.html.twig', [
+            return $participants->count() > 0 ? $this->render('group/participants.html.twig', [
                 'participants' => $participants->toArray()
-            ]);
+            ]) : $this->redirectToRoute('group.viewlist');
         }
 
         return $this->render('group/create.html.twig', [
