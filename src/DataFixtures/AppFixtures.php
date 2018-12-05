@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
                 $userParticipant
                     ->setUsername('participant_' . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail('participant' . $unique . '@email.com')
+                    ->setEmail($unique . '@email.com')
                     ->setName(ucfirst($unique))
                     ->setSurname(ucfirst($uniqueSurname))
                     ->setRegion($region)
