@@ -9,9 +9,12 @@
     }
   }
 
-  input[type=search]:not(.browser-default):focus:not([readonly]) {
+  input[type=search]:not(.browser-default) {
     padding: 5px;
     box-sizing: border-box;
+  }
+
+  input[type=search]:not(.browser-default):focus:not([readonly]) {
     border-bottom: 1px solid #ced4da;
     box-shadow: none;
   }

@@ -224,7 +224,12 @@ export default () => {
 
   $('.group-form__teacher').select2({
     width: '100%',
-    theme: "bootstrap4"
+    theme: "bootstrap4",
+    language: {
+      noResults: () => {
+        return "Rezultatų nerasta";
+      }
+    }
   });
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
     $(this).slideUp(500)

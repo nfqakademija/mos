@@ -21,60 +21,68 @@
     </div>
     <div class="group-form__section">
         <h5 class="group-form__title">
-            {% trans %}Upload participants{% endtrans %}
+            {% trans %}Participants{% endtrans %}
         </h5>
         <div class="row">
-            <div class="file-field input-field col s6">
-                <div class="btn tooltipped blue darken-3"
-                     data-tooltip="{% trans %}Import participants{% endtrans %}"
-                     data-position="left">
-                    <i class="material-icons">
-                        input
-                    </i>
-                    <input class="group-form__import" type="file">
+            <div class="col s6">
+                <div class="row group-form__import-row">
+                    <div class="file-field input-field col s11">
+                        <div class="btn tooltipped blue darken-3"
+                             data-tooltip="{% trans %}Import participants{% endtrans %}"
+                             data-position="left">
+                            <i class="material-icons">
+                                input
+                            </i>
+                            <input class="group-form__import" type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="col s1">
+                        <i class="material-icons group-form__import-info tooltipped"
+                           data-tooltip="{% trans %}Acceptable formats{% endtrans %} (xml, csv, txt, ods, xls, xlsx).
+                                            Formatas: 'vardas pavarde'"
+                           data-position="top"
+                        >
+                            info
+                        </i>
+                    </div>
                 </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
+                <div class="group-form__import-error">
+                    {% trans %}Acceptable formats{% endtrans %} (xml, csv, txt, ods, xls, xlsx)
                 </div>
             </div>
-            <div class="group-form__import-error input-field col s6">
-                {% trans %}Acceptable formats{% endtrans %} (xml, csv, txt, ods, xls, xlsx)
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s1">
-                <div class="btn tooltipped blue darken-3 group-form__upload-button group-form__paste-toggle"
-                     data-tooltip="{% trans %}Paste participants{% endtrans %}"
-                     data-position="left"
-                >
-                    <i class="material-icons">
-                        content_paste
-                    </i>
+            <div class="row col s6">
+                <div class="input-field">
+                    <div class="btn tooltipped blue darken-3 group-form__upload-button group-form__paste-toggle"
+                         data-tooltip="{% trans %}Paste participants{% endtrans %}"
+                         data-position="right"
+                    >
+                        <i class="material-icons">
+                            content_paste
+                        </i>
+                    </div>
                 </div>
-            </div>
-            <div class="input-field col s10 group-form__paste">
+                <div class="input-field group-form__paste">
                 <textarea
                         class="group-form__paste-text"
                         placeholder="Formatas 'vardas pavardė'"
                 ></textarea>
-                <div class="group-form__paste-error">
-                    <div class="group-form__paste-error__empty">
-                        {% trans %}Field must not be empty{% endtrans %}
+                    <div class="group-form__paste-error">
+                        <div class="group-form__paste-error__empty">
+                            {% trans %}Field must not be empty{% endtrans %}
+                        </div>
+                        <div class="group-form__paste-error__format">
+                            {% trans %}Bad format, should be 'name surname'{% endtrans %}
+                        </div>
                     </div>
-                    <div class="group-form__paste-error__format">
-                        {% trans %}Bad format, should be 'name surname'{% endtrans %}
+                    <div class="group-form__paste-submit btn blue darken-3">
+                        {% trans %}Add{% endtrans %}
                     </div>
-                </div>
-                <div class="group-form__paste-submit btn blue darken-3">
-                    {% trans %}Add{% endtrans %}
                 </div>
             </div>
         </div>
-    </div>
-    <div class="group-form__section">
-        <h5 class="group-form__title">
-            {% trans %}Participants{% endtrans %}
-        </h5>
         <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
             {% for participant in form.participants %}
                 {{ printParticipant(participant) }}
