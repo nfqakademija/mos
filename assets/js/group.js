@@ -2,6 +2,8 @@ import $ from 'jquery';
 import * as M from 'materialize-css';
 import randomString from 'random-string';
 import XLSX from 'xlsx';
+import 'select2';
+import printJS from 'print-js';
 
 const initCollections = (collectionHolder, addButton) => {
   collectionHolder.append(addButton);
@@ -16,7 +18,7 @@ const addItem = (addButton, collectionHolder, itemClass) => {
   collectionHolder.data('index', index + 1);
   addButton.before(newForm);
   collectionHolder.find(`.${itemClass}:last`).hide().slideDown('fast');
-  collectionHolder.find('.group-form__empty').css('display', 'none');
+  collectionHolder.find('.group-form__empty').hide();
 };
 
 const addParticipantButtonHandler = (e, addParticipantButton, participantCollectionHolder) => {
@@ -112,7 +114,7 @@ const importFromExcel = (participantCollectionHolder, addParticipantButton, file
           importParticipant(participantCollectionHolder, worksheet[z].v, 'participant__surname');
           participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
           participantCollectionHolder.find('.participant:last')
-            .find('.participant__username').val(`${first}.${worksheet[z].v}.${randomString({length: 3})}`);
+            .find('.participant__username').val(`${first}.${worksheet[z].v}.${randomString({length: 5})}`);
           i = 0;
         }
       }
@@ -132,7 +134,7 @@ const importFromArray = (participantCollectionHolder, addParticipantButton, valu
       importParticipant(participantCollectionHolder, name[1], 'participant__surname');
       participantCollectionHolder.find('.participant:last').find('.participant__password').val(randomString());
       participantCollectionHolder.find('.participant:last')
-        .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 3})}`);
+        .find('.participant__username').val(`${name[0]}.${name[1]}.${randomString({length: 5})}`);
     } else {
       return false;
     }
@@ -155,14 +157,14 @@ const importParticipants = (participantCollectionHolder, addParticipantButton) =
   const textType = /text\/plain/;
   const excelTypes = ["xml", "csv", "ods", "xlsx", "xls"];
 
-  if(excelTypes.includes(file.name.split('.').pop())) {
+  if(file && excelTypes.includes(file.name.split('.').pop())) {
     importFromExcel(participantCollectionHolder, addParticipantButton, file, reader);
-    errorHolder.css('display', 'none');
-  } else if (file.type.match(textType)) {
+    errorHolder.hide();
+  } else if (file && file.type.match(textType)) {
     importFromTextFile(participantCollectionHolder, addParticipantButton, file, reader);
-    errorHolder.css('display', 'none');
+    errorHolder.hide();
   } else {
-    errorHolder.css('display', 'block');
+    errorHolder.show();
   }
 };
 
@@ -172,7 +174,7 @@ const importParticipant = (collectionHolder, value, className) => {
 };
 
 const checkIfCollectionIsEmpty = collectionHolder => {
-  collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').css('display', 'block');
+  collectionHolder.find(':input').length / 10 === 0 && collectionHolder.find('.group-form__empty').show();
 };
 
 const togglePaste = () => {
@@ -204,10 +206,10 @@ const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
     '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
-    ' data-tooltip="Add participant" data-position="right">add</i></div>');
+    ' data-tooltip="Pridėti dalyvį" data-position="right">add</i></div>');
   const addTimeSlotButton = $('<div class="clearfix">' +
     '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue darken-3 material-icons" ' +
-    'data-tooltip="Add timeslot" data-position="right">add</i></div>');
+    'data-tooltip="Pridėti paskaitos laiką" data-position="right">add</i></div>');
   const participantCollectionHolder = $('div.participants');
   const timeSlotCollectionHolder = $('div.time-slots');
 
@@ -218,18 +220,30 @@ export default () => {
   checkIfCollectionIsEmpty(timeSlotCollectionHolder);
 
   M.Tooltip.init($('.tooltipped'), {outDuration: 0});
-  M.FormSelect.init($('.group-form__teacher'));
   M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {format: 'yyyy-mm-dd'});
   M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {twelveHour: false});
 
-  $('.participant__additional').hide();
+  $('.group-form__teacher').select2({
+    width: '100%',
+    theme: "bootstrap4",
+    language: {
+      noResults: () => {
+        return "Rezultatų nerasta";
+      }
+    }
+  });
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
     $(this).slideUp(500)
   });
   $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
-  $('.group-form__paste').hide();
   $('.group-form__paste-toggle').on('click', togglePaste);
   $('.group-form__paste-submit').on('click', e => addFromPaste(e, participantCollectionHolder, addParticipantButton));
+  $('.group-form__print').on('click', () => printJS({
+    printable: 'group-form__table',
+    type: 'html',
+    header: 'Dalyviai',
+    scanStyles: false
+  }));
 
   addParticipantButton.on('click', '.group-form__add-participant-button',
     e => addParticipantButtonHandler(e, addParticipantButton, participantCollectionHolder));

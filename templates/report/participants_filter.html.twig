@@ -4,26 +4,27 @@
 
 
 {% block body %}
-    <h2>{% trans %}Participants report filter{% endtrans %}</h2>
-
+    <h2 class="center-align">
+        {% trans %}Participants report filter{% endtrans %}
+    </h2>
     {{ form_start(form) }}
     <div class="row">
-        <div class="col-sm-6">
-            {{ form_row(form.dateFrom) }}
+        <div class="col s4">
+            {{ form_row(form.dateFrom,  {'attr': {'class': 'report__date-from datepicker'} }) }}
         </div>
-        <div class="col-sm-6">
-            {{ form_row(form.dateTo) }}
+        <div class="col s4">
+            {{ form_row(form.dateTo,  {'attr': {'class': 'report__date-to datepicker'} }) }}
         </div>
-    </div>
-    <div>
-        {{ form_row(form.display) }}
-    </div>
-    <div>
-        {% trans %}or{% endtrans %}
-    </div>
-       
-    <div>
-        {{ form_row(form.export) }}
+        <div class="col s2">
+            <div class="report__filter-button">
+                {{ form_widget(form.display,  {'attr': {'class': 'btn blue darken-3'} }) }}
+            </div>
+        </div>
+        <div class="col s2">
+            <div class="report__filter-button">
+                {{ form_widget(form.export,  {'attr': {'class': 'btn blue darken-3'} }) }}
+            </div>
+        </div>
     </div>
     {{ form_end(form) }}
 {% endblock %}

@@ -1,0 +1,21 @@
+.select2-container {
+  margin-bottom: 5px;
+
+  .select2-selection {
+    height: 45px;
+
+    .select2-selection__rendered {
+      line-height: 20px;
+    }
+  }
+
+  input[type=search]:not(.browser-default) {
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  input[type=search]:not(.browser-default):focus:not([readonly]) {
+    border-bottom: 1px solid #ced4da;
+    box-shadow: none;
+  }
+}

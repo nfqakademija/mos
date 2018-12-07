@@ -40,6 +40,7 @@ class LearningGroup
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="learningGroupsUserTeaches")
+     * @Assert\NotBlank(message="Select a teacher")
      */
     private $teacher;
 

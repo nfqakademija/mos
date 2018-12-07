@@ -4,12 +4,12 @@
 {% block title %}Report view{% endblock %}
 
 {% block body %}
-    <h2>{% trans %}Participants report{% endtrans %}</h2>
-
+    <h2 class="center-align">
+        {% trans %}Participants report{% endtrans %}
+    </h2>
     {% if results|length %}
         <h6>{% trans %}Records{% endtrans %} : {{ results.getTotalItemCount }}</h6>
     {% endif %}
-
     <table>
         <tr>
             <th>{% trans %}Name{% endtrans %}</th>
@@ -25,7 +25,6 @@
             <th>{% trans %}Course end date{% endtrans %}</th>
             <th>{% trans %}Group Id{% endtrans %}</th>
         </tr>
-
         {% for result in results %}
             <tr>
                 <td>{{ result.name }}</td>
@@ -42,11 +41,8 @@
                 <td>{{ result.groupId }}</td>
                 <td></td>
             </tr>
-
         {% endfor %}
-
     </table>
-
 {% endblock %}
 {% block pager %}
     {% include 'helper/pager.html.twig' with { 'content': results } only %}

@@ -41,14 +41,14 @@ Create group form: Grupės kūrimas
 Back: Atgal
 Records: Įrašai
 Teacher: Dėstytojas
-Time slots: Laikai
+Time slots: Paskaitų tvarkaraštis
 Information: Informacija
 Import participants: Dalyvių importas
 Upload participants: Dalyvių įkėlimas
 Paste participants: Dalyvių įklijavimas
 Acceptable formats: Tinkami failų formatai
 There are no participants yet: Dalyvių kol kas dar nėra
-There are no time slots yet: Laikų kol kas dar nėra
+There are no time slots yet: Paskaitų laikų kol kas dar nėra
 Date: Data
 Start time: Pradžios laikas
 Duration (minutes): Trukmė (minutės)
@@ -60,11 +60,14 @@ or: arba
 Duration: Trukmė
 Duration in minutes: Trukmė minutėmis
 More: Daugiau
-Add a region: Pridėti regioną
-Add an area type: Pridėti vietovės tipą
+Add a region: Pasirinkti regioną
+Add an area type: Pasirinkti vietovės tipą
 Field must not be empty: Laukelis negali būti tuščias
 Bad format, should be 'name surname': Blogas formatas, turi būti 'vardas pavarde'
 Status report: Rodiklių ataskaita
 password: slaptažodis
 Project status report: Rodiklių ataskaita
+Choose a teacher: Pasirinkite dėstytoją
+Finish: Baigti
+Edit: Redaguoti
 

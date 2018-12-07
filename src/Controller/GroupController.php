@@ -61,13 +61,16 @@ class GroupController extends AbstractController
         $group = new LearningGroup();
         $form = $this->createForm(GroupType::class, $group);
 
-        if ($groupManager->handleCreate($form, $request)) {
+        $participants = $groupManager->handleCreate($form, $request);
+        if ($participants !== null) {
             $this->addFlash(
                 'create',
                 'Group was successfully created!'
             );
 
-            return $this->redirectToRoute('group.viewlist');
+            return $participants->count() > 0 ? $this->render('group/participants.html.twig', [
+                'participants' => $participants->toArray()
+            ]) : $this->redirectToRoute('group.viewlist');
         }
 
         return $this->render('group/create.html.twig', [
@@ -85,7 +88,7 @@ class GroupController extends AbstractController
     public function editGroup(Request $request, GroupManager $groupManager, $group)
     {
         if (null === $group = $groupManager->getGroup($group)) {
-            throw $this->createNotFoundException('No group found for id '. $group);
+            throw $this->createNotFoundException('No group found for id ' . $group);
         }
 
         $form = $this->createForm(GroupType::class, $group);

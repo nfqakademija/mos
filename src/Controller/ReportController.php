@@ -27,8 +27,8 @@ class ReportController extends AbstractController
      * @Route("/report/participants/filter", name="report.participants.filter")
      * @param Request $request
      * @param Report $report
-     *
      * @return RedirectResponse|Response
+     * @throws \Exception
      */
     public function participantsFilterForm(Request $request, Report $report)
     {
@@ -37,6 +37,7 @@ class ReportController extends AbstractController
 
         if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
             $data = $reportFilterForm->getData();
+
 
             $range = $report->getRangeFromFormData($data);
 
@@ -49,7 +50,7 @@ class ReportController extends AbstractController
         }
 
         return $this->render('report/participants_filter.html.twig', [
-          'form' => $reportFilterForm->createView(),
+            'form' => $reportFilterForm->createView(),
         ]);
     }
 
@@ -128,6 +129,6 @@ class ReportController extends AbstractController
 
         return $this->render('report/status.html.twig', [
             'result' => $result,
-          ]);
+        ]);
     }
 }

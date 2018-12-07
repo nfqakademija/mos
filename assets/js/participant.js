@@ -16,7 +16,7 @@ const getUsernameFromName = (that, surname, isEmpty, oldValues) => {
   }
 
   return !isEmpty ?
-    `${that.value}${surname}.${randomString({length: 3})}` :
+    `${that.value}${surname}.${randomString({length: 5})}` :
     '';
 };
 
@@ -28,7 +28,7 @@ const getUsernameFromSurname = (that, name, isEmpty, oldValues) => {
   }
 
   return !isEmpty ?
-    `${name}${that.value !== '' && name !== '' ? '.' : ''}${that.value}.${randomString({length: 3})}` :
+    `${name}${that.value !== '' && name !== '' ? '.' : ''}${that.value}.${randomString({length: 5})}` :
     '';
 };
 
@@ -48,19 +48,18 @@ const toggleAdditionalSection = e => {
   e.preventDefault();
   $(that).parents().eq(2).find('.participant__additional').slideToggle('fast');
 
-  if ($(that).text() === 'Less') {
-    $(that).text('More');
+  if ($(that).text() === 'Mažiau') {
+    $(that).text('Daugiau');
     $(that).parents().eq(2).removeClass('participant--active');
   } else {
     let count = $(that).data('count') || 0;
 
-    $(that).text('Less');
+    $(that).text('Mažiau');
     $(that).parents().eq(2).addClass('participant--active');
 
     if (count === 0) {
       M.FormSelect.init($(that).parents().eq(2).find('select'));
       M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), {format: 'yyyy-mm-dd'});
-
       $(that).data('count', ++count);
     }
   }
