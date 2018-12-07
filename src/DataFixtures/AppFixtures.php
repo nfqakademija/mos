@@ -22,10 +22,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 100;
-        $teachersNumber = 10;
-        $maxParticipantsInGroup = 15;
-        $maxTimeslotsInGroup = 8;
+        $groupsNumber = 1000;
+        $teachersNumber = 100;
+        $maxParticipantsInGroup = 20;
+        $maxTimeslotsInGroup = 12;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
@@ -115,10 +115,10 @@ class AppFixtures extends Fixture
                 $group[$i]->addParticipant($userParticipant);
             }
             $timeSlotsCount = rand(1, $maxTimeslotsInGroup);
-            $month = rand(11, 12);
+            $month = rand(1, 12);
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
-                $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
+                $timeSlot->setDate("2018-" . $month . '-' . rand(1, 28));
                 $timeSlot->setStartTime("10:30");
                 $timeSlot->setDuration(90);
 
