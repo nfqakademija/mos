@@ -22,8 +22,8 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 1000;
-        $teachersNumber = 100;
+        $groupsNumber = 100;
+        $teachersNumber = 20;
         $maxParticipantsInGroup = 20;
         $maxTimeslotsInGroup = 12;
 
