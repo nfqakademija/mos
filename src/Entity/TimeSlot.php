@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Services\GroupManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TimeSlotRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class TimeSlot
 {
@@ -106,17 +107,5 @@ class TimeSlot
         $this->learningGroup = $learningGroup;
 
         return $this;
-    }
-
-    /** @ORM\PostPersist() */
-    public function postPersist()
-    {
-        $this->getLearningGroup()->updateStartEndDates();
-    }
-
-    /** @ORM\PostUpdate() */
-    public function postUpdate()
-    {
-        $this->getLearningGroup()->updateStartEndDates();
     }
 }

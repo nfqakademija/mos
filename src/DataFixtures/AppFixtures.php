@@ -22,10 +22,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 100;
-        $teachersNumber = 10;
-        $maxParticipantsInGroup = 15;
-        $maxTimeslotsInGroup = 8;
+        $groupsNumber = 3;
+        $teachersNumber = 4;
+        $maxParticipantsInGroup = 3;
+        $maxTimeslotsInGroup = 3;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];

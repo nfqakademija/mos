@@ -8,6 +8,7 @@ use App\Form\GroupType;
 use App\Services\GroupManager;
 use App\Helper\Helper;
 use App\Repository\LearningGroupRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

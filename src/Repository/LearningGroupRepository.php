@@ -37,8 +37,8 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     }
 
     /**
-     * Gets groups by period with extra groupStartTime and groupEndTime.
-     *
+     * Gets groups in period 
+     *     
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
      *
@@ -47,16 +47,9 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     public function getGroupsInPeriod(\DateTime $dateFrom, \DateTime $dateTo)
     {
         $query = $this->createQueryBuilder('gr')
-          ->innerJoin('gr.timeSlots', 'ts')
-          ->addGroupBy('gr')
-          ->having('MAX(ts.date) >= :dateFrom')
-          ->andHaving('MAX(ts.date) <= :dateTo')
+          ->Where('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
-
-          ->addSelect('MIN(ts.date) AS groupStartDate')
-          ->addSelect('MAX(ts.date) AS groupEndDate')
-
           ->getQuery()
           ;
         $result = $query->execute();

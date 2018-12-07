@@ -30,15 +30,15 @@
                 <td>{{ result.name }}</td>
                 <td>{{ result.surname }}</td>
                 <td>{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
-                <td>{{ result.regionTitle ? result.regionTitle }}</td>
+                <td>{{ result.region.title ? result.region.title }}</td>
                 <td>{{ result.livingAreaType }}</td>
                 <td>{{ result.address }}</td>
                 <td>{{ result.phone }}</td>
                 <td>{{ result.email }}</td>
                 <td>{{ result.gender }}</td>
-                <td>{{ result.groupStart ? result.groupStart|date('Y-m-d') }}</td>
-                <td>{{ result.groupEnd ? result.groupEnd|date('Y-m-d') }}</td>
-                <td>{{ result.groupId }}</td>
+                <td>{{ result.learningGroup.startDate ? result.learningGroup.startDate|date('Y-m-d') }}</td>
+                <td>{{ result.learningGroup.endDate ? result.learningGroup.endDate|date('Y-m-d') }}</td>
+                <td>{{ result.learningGroup.id }}</td>
                 <td></td>
             </tr>
         {% endfor %}
