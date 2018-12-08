@@ -22,9 +22,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 100;
+        $groupsNumber = 1000;
         $teachersNumber = 20;
-        $maxParticipantsInGroup = 20;
+        $maxParticipantsInGroup = 10;
         $maxTimeslotsInGroup = 12;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
@@ -127,6 +127,7 @@ class AppFixtures extends Fixture
             }
 
             $manager->persist($group[$i]);
+            $manager->flush();
         }
 
         $manager->flush();
