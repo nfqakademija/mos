@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\LearningGroup;
 use App\Entity\TimeSlot;
 use App\Entity\User;
+use App\Repository\RegionRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Region;
@@ -23,16 +24,15 @@ class AppFixtures extends Fixture
     {
         //#### config ####
         $groupsNumber = 50;
-        $teachersNumber = 10;
-        $maxParticipantsInGroup = 15;
-        $maxTimeslotsInGroup = 4;
+        $teachersNumber = 20;
+        $maxParticipantsInGroup = 20;
+        $maxTimeslotsInGroup = 5;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
         //#### end config ####
 
         //push all Regions to database
-
         $allRegionsObjects = [];
         $allRegionsData = $this->getAllRegionsData();
         foreach ($allRegionsData as $regionTitle => $extraData) {
@@ -74,13 +74,14 @@ class AppFixtures extends Fixture
          * @var $userTeacher User[]
          */
         for ($i = 0; $i <= $teachersNumber; $i++) {
+            $unique = $this->randomString(5);
             $userTeacher[$i] = new User();
             $userTeacher[$i]
-                ->setUsername('teacher' . $i)
+                ->setUsername('teacher_' . $unique . '_' . $i)
                 ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
-                ->setEmail('teacher' . $i . '@email.com')
-                ->setName('Teachername' . $i)
-                ->setSurname('Teachersurname' . $i)
+                ->setEmail('teacher' . $unique. $i . '@email.com')
+                ->setName('Tname' . $unique . $i)
+                ->setSurname('Tsurn' . $unique . $i)
                 ->setRoles([User::ROLE_TEACHER]);
             $manager->persist($userTeacher[$i]);
         }
@@ -127,6 +128,7 @@ class AppFixtures extends Fixture
             }
             $group[$i]->updateStartEndDates();
             $manager->persist($group[$i]);
+            $manager->flush();
         }
 
         $manager->flush();
@@ -162,7 +164,7 @@ class AppFixtures extends Fixture
 
 
     private function getAllRegionsData() : array
-    {
+    { 
         $allRegions = [
           'Akmenės raj.' => ['is_problematic' => false],
           'Alytaus m.' => ['is_problematic' => false],
