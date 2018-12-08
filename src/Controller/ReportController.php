@@ -22,39 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ReportController extends AbstractController
 {
-
-    /**
-     * @Route("/report/participants/filter", name="report.participants.filter")
-     * @param Request $request
-     * @param Report $report
-     * @return RedirectResponse|Response
-     * @throws \Exception
-     */
-    public function participantsFilterForm(Request $request, Report $report)
-    {
-        $reportFilterForm = $this->createForm(ReportFilterType::class);
-        $reportFilterForm->handleRequest($request);
-
-        if ($reportFilterForm->isSubmitted() && $reportFilterForm->isValid()) {
-            $data = $reportFilterForm->getData();
-
-
-            $range = $report->getRangeFromFormData($data);
-
-            $clickedButtonName = $reportFilterForm->getClickedButton()->getName();
-            if ($clickedButtonName === 'export') {
-                return $this->redirectToRoute("report.participants.export", $range);
-            } else {
-                return $this->redirectToRoute("report.participants", $range);
-            }
-        }
-
-        return $this->render('report/participants_filter.html.twig', [
-            'form' => $reportFilterForm->createView(),
-        ]);
-    }
-
-
     /**
      * @Route("/report/participants", name="report.participants",)
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -69,23 +36,23 @@ class ReportController extends AbstractController
         PaginatorInterface $paginator,
         UserRepository $ur,
         Helper $helper
-    ) {
-        $page = $helper->getPageFromRequest($request);
-
-        try {
-            $dateFromString = $request->query->get('dateFrom');
-            $dateFrom = new \DateTime($dateFromString);
-            $dateToString = $request->query->get('dateTo');
-            $dateTo = new \DateTime($dateToString);
-        } catch (\Exception $e) {
-            return $this->redirectToRoute("report.participants.filter");
+    ) { 
+        $datesFromTo = $helper->dateFromToFromRequest($request);
+        
+        $submitButton = $request->query->get('submit_button');
+        if ($submitButton === 'export') {
+            return $this->redirectToRoute("report.participants.export", $datesFromTo);
         }
-
-        $query = $ur->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
+        
+        $page = $helper->getPageFromRequest($request);
+        
+        $query = $ur->getParticipantsByGroupPeriodQueryB($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
         $pagination = $paginator->paginate($query, $page, 15);
 
         return $this->render('report/participants.html.twig', [
             'results' => $pagination,
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
         ]);
     }
 
@@ -102,10 +69,15 @@ class ReportController extends AbstractController
         try {
             $dateFromString = $request->query->get('dateFrom');
             $dateFrom = new \DateTime($dateFromString);
+        } catch (\Exception $e) {
+            $dateFrom = new \DateTime('first day of this month');
+        }
+
+        try {
             $dateToString = $request->query->get('dateTo');
             $dateTo = new \DateTime($dateToString);
         } catch (\Exception $e) {
-            return $this->redirectToRoute("report.participants.filter");
+            $dateTo = new \DateTime('last day of this month');
         }
 
         $result = $report->participantsReportExportToExcel($dateFrom, $dateTo);

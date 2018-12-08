@@ -21,7 +21,6 @@ class Helper
         $this->paginator = $paginator;
     }
 
-
     /**
      * Gets simple entities list paginated
      *
@@ -59,5 +58,31 @@ class Helper
         }
 
         return $page;
+    }
+
+    /**
+     * Extracts dateFrom and dateTo from request, checks and returns as array.
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function dateFromToFromRequest(Request $request)
+    {
+        try {
+            $dateFromString = $request->query->get('dateFrom');
+            $dateFrom = new \DateTime($dateFromString);
+        } catch (\Exception $e) {
+            $dateFrom = new \DateTime('first day of this month');
+        }
+
+        try {
+            $dateToString = $request->query->get('dateTo');
+            $dateTo = new \DateTime($dateToString);
+        } catch (\Exception $e) {
+            $dateTo = new \DateTime('last day of this month');
+        }
+        return ['dateFrom' => $dateFrom->format('Y-m-d'), 'dateTo' => $dateTo->format('Y-m-d')];
     }
 }
