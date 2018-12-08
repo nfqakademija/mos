@@ -82,7 +82,7 @@ class ReportController extends AbstractController
         }
 
         $query = $ur->getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo);
-        $pagination = $paginator->paginate($query, $page, 15, ['wrap-queries' => true]);
+        $pagination = $paginator->paginate($query, $page, 15);
 
         return $this->render('report/participants.html.twig', [
             'results' => $pagination,
@@ -123,8 +123,6 @@ class ReportController extends AbstractController
      */
     public function statusReport(Report $report, RegionRepository $regionRepository)
     {
-
-
         $result = $report->getStatusReport($regionRepository);
 
         return $this->render('report/status.html.twig', [

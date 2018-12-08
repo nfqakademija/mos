@@ -18,14 +18,23 @@
             add
         </i>
     </a>
+    
+    {{ dump(groups) }}
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">{% trans %}Address{% endtrans %}</th>
-            <th scope="col">{% trans %}Start date{% endtrans %}</th>
-            <th scope="col">{% trans %}End date{% endtrans %}</th>
+            {#<th scope="col">#</th>#}
+            <th scope="col">#{{ knp_pagination_sortable(groups, '▲▼', 'gr.id') }}</th>
+            {#<th scope="col">{% trans %}Address{% endtrans %}</th>#}
+            {% set address = 'Address' %}
+            
+            <th scope="col">{% trans %}Address{% endtrans %}{{ knp_pagination_sortable(groups, '▲▼', 'gr.id') }}</th>
+            {#<th scope="col">{% trans %}Start date{% endtrans %}</th>#}
+            <th scope="col">{% trans %}Start date{% endtrans %}{{ knp_pagination_sortable(groups, '▲▼', 'gr.startDate') }}</th>
+            {#<th scope="col">{% trans %}End date{% endtrans %}</th>#}
+            <th scope="col">{% trans %}End date{% endtrans %}{{ knp_pagination_sortable(groups, '▲▼', 'gr.endDate') }}</th>
             <th scope="col">{% trans %}Participants{% endtrans %}</th>
+
         </tr>
         </thead>
         {% for group in groups %}
