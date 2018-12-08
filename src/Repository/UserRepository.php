@@ -66,32 +66,6 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     }
     
     /**
-     * Gets all participants participanting in groups which ends in the period using pure SQL query
-     * plus extra starDate, endDate, groupId
-     */
-    public function getParticipantsByGroupPeriodBySql(\DateTime $dateFrom, \DateTime $dateTo)
-    {
-        //TODO: NOT TESTED OR USED. Test it and use it for export to execel if works.
-        $sql = "SELECT `user`.*, region.title as region_title FROM `user` 
-                INNER JOIN learning_group ON `user`.learning_group_id = learning_group.id 
-                LEFT JOIN region ON `user`.region_id = region.id
-                INNER JOIN (
-                SELECT time_slot.id, 
-                       time_slot.learning_group_id, 
-                       MIN(time_slot.`date`) as group_start, 
-                       MAX(time_slot.`date`) as group_end 
-                FROM time_slot GROUP BY time_slot.learning_group_id 
-                ) as ts ON ts.learning_group_id = learning_group.id 
-                WHERE group_end >= '" . $dateFrom->format('Y-m-d') . "'
-                AND group_end <= '" . $dateTo->format('Y-m-d') . "'";
-        
-        $result = $this->getEntityManager()->getConnection()->query($sql)->fetchAll();
-
-        return $result;
-    }
-
-
-    /**
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
      * @param string $orderBy
@@ -103,34 +77,13 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     {
         $queryBuilder = $this->createQueryBuilder('pr')
           ->innerJoin('pr.learningGroup', 'gr')
-
-          ->addGroupBy('gr')
-          ->innerJoin('gr.timeSlots', 'ts')
-          ->having('MAX(ts.date) >= :dateFrom')
-          ->andHaving('MAX(ts.date) <= :dateTo')
+          ->andWhere('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
 
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
 
           ->leftJoin('pr.region', 'region')
-          
-          ->addGroupBy('pr')
-          
-          ->addSelect(
-              'pr.name,
-              pr.surname,
-              pr.birthDate,
-              pr.email,
-              pr.address,
-              pr.livingAreaType,
-              pr.phone,
-              pr.gender,
-              region.title AS regionTitle'
-          )
-          ->addSelect('MIN(ts.date) AS groupStart')
-          ->addSelect('MAX(ts.date) AS groupEnd')
-          ->addSelect('gr.id AS groupId')
-          
+          ->addSelect('gr', 'region')
           ->addOrderBy($orderBy, $orderType)
         ;
 
@@ -147,11 +100,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
 
         $sql = "SELECT COUNT(`user`.id) FROM `user` 
                 INNER JOIN learning_group ON `user`.learning_group_id = learning_group.id 
-                INNER JOIN (
-                SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
-                FROM time_slot GROUP BY time_slot.learning_group_id 
-                ) as ts ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date <= '" . $dateNowStr . "'";
+                AND learning_group.end_date <= '" . $dateNowStr . "'";
         
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
         
@@ -171,11 +120,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
         $sql = "SELECT COUNT(`user`.id) FROM `user`
                 INNER JOIN learning_group 
                 ON `user`.learning_group_id = learning_group.id AND `user`.birth_date < '" . $birthDateStr . "' 
-                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
-                FROM time_slot 
-                GROUP BY time_slot.learning_group_id ) as ts 
-                ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date <= '" . $dateNowStr . "'";
+                AND learning_group.end_date <= '" . $dateNowStr . "'";
         
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
@@ -196,11 +141,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
                 INNER JOIN learning_group 
                 ON `user`.learning_group_id = learning_group.id 
                 AND `user`.birth_date < '" . $birthDateStr . "' AND `user`.living_area_type = '" . $livingAreaType . "' 
-                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
-                FROM time_slot 
-                GROUP BY time_slot.learning_group_id ) as ts 
-                ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date <= '" . $dateNowStr . "'";
+                AND learning_group.end_date <= '" . $dateNowStr . "'";
         
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
@@ -212,6 +153,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
      */
     public function getOlderThanAndIsGender(int $minAge = 0, string $gender = 'moteris')
     {
+        //TODO: fix subselect
         $dateNow = new \DateTime('now');
         $dateNowStr = $dateNow->format('Y-m-d');
         $birthDate = new \DateTime('now - ' . $minAge . ' year');
@@ -238,6 +180,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
      */
     public function getParticipantsCountInRegionId(int $regionId)
     {
+        //TODO: fix subselect
         $dateNow = new \DateTime('now');
         $dateNowStr = $dateNow->format('Y-m-d');
 

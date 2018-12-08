@@ -130,4 +130,11 @@ class GroupManager
 
         return false;
     }
+
+    public function updateStartEndDates(LearningGroup $learningGroup)
+    {
+        $learningGroup->updateStartEndDates();
+        $this->entityManager->persist($learningGroup);
+        $this->entityManager->flush();
+    }
 }

@@ -2,11 +2,9 @@
 
 namespace App\Report;
 
-use App\Entity\Region;
-use App\Repository\LearningGroupRepository;
+use App\Entity\User;
 use App\Repository\RegionRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -75,10 +73,6 @@ class Report
      */
     public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
-        ini_set('max_execution_time', 300); //300 seconds = 5 minutes
-
-        $reportKeysMap = $this->getParticipantsReportKeysMap();
-
         $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
 
         $spreadsheet = new Spreadsheet();
@@ -87,7 +81,7 @@ class Report
         $sheet = $spreadsheet->getActiveSheet();
         $this->setParticipantsReportHeader($sheet, $dateFrom, $dateTo);
 
-        $this->setParticipantsReportTable($sheet, $participantsReport, $reportKeysMap);
+        $this->setParticipantsReportTable($sheet, $participantsReport);
 
         $fileName = 'ParticipantsReport_' . $dateFrom->format('Y-m-d') . '-' . $dateTo->format('Y-m-d') . '.xlsx';
         $tempFileWithName = $this->writeToTempFile($spreadsheet, $fileName);
@@ -121,33 +115,61 @@ class Report
 
     private function setParticipantsReportTable(
         Worksheet &$sheet,
-        $participantsReport,
-        $reportKeysMap
+        $participantsReport
     ) {
 
         $tableStyles = $this->getTableStyles();
         $headerStyles = array_merge($tableStyles, ['font' => ['bold' => true]]);
 
+        $cols = [
+            'A' => 'Vardas',
+            'B' => 'Pavardė',
+            'C' => 'Gimimo data',
+            'D' => 'Rajonas / miestas',
+            'E' => 'Adresas',
+            'F' => 'Vietovės tipas',
+            'G' => 'Tel. nr.',
+            'H' => 'El. paštas',
+            'I' => 'Lytis',
+            'J' => 'Mokymų pradžios data',
+            'K' => 'Mokymų pabaigos data',
+            'L' => 'Grupės Nr.',
+        ];
+        
         //set report table headers
-        $col = 'A';
         $row = 9;
-        foreach ($reportKeysMap as $title => $reportArrayKey) {
-            $cellAddress = $col++ . $row;
-            $sheet->setCellValue($cellAddress, $title);
+        foreach ($cols as $colAddr => $colTitle) {
+            $cellAddress = $colAddr . $row;
+            $sheet->setCellValue($cellAddress, $colTitle);
             $sheet->getStyle($cellAddress)->applyFromArray($headerStyles);
         }
 
         $row = 10;
-        foreach ($participantsReport as $participantReport) {
-            $col = 'A';
-            foreach ($reportKeysMap as $title => $reportArrayKey) {
-                $cellAddress = $col++ . $row;
-                $sheet->setCellValue(
-                    $cellAddress,
-                    $participantReport[$reportArrayKey]
-                );
+        /** @var User $participant */
+        foreach ($participantsReport as $participant) {
+            $sheet->setCellValue('A' . $row, $participant->getName() );
+            $sheet->setCellValue('B' . $row, $participant->getSurname() );
+            $sheet->setCellValue('C' . $row, $participant->getBirthDate() );
+            try {
+                $sheet->setCellValue('D' . $row,
+                  $participant->getRegion()->getTitle());
+            } catch (\Exception $e) {
+                $sheet->setCellValue('D' . $row, '');
+            }
+            $sheet->setCellValue('E' . $row, $participant->getAddress() );
+            $sheet->setCellValue('F' . $row, $participant->getLivingAreaType() );
+            $sheet->setCellValue('G' . $row, $participant->getPhone() );
+            $sheet->setCellValue('H' . $row, $participant->getEmail() );
+            $sheet->setCellValue('I' . $row, $participant->getGender() );
+            $sheet->setCellValue('J' . $row, $participant->getLearningGroup()->getStartDate() );
+            $sheet->setCellValue('K' . $row, $participant->getLearningGroup()->getEndDate() );
+            $sheet->setCellValue('L' . $row, $participant->getLearningGroup()->getId() );
+
+            foreach ($cols as $colAddr => $colTitle) {
+                $cellAddress = $colAddr . $row;
                 $sheet->getStyle($cellAddress)->applyFromArray($tableStyles);
             }
+            
             $row++;
         }
     }
@@ -170,30 +192,7 @@ class Report
           ],
         ];
     }
-
-    /**
-     * Format: report column name => key in report array
-     *
-     * @return array
-     */
-    private function getParticipantsReportKeysMap()
-    {
-        return [
-          'Vardas' => 'name',
-          'Pavardė' => 'surname',
-          'Gimimo data' => 'birthDate',
-          'Rajonas' => 'regionTitle',
-          'Adresas' => 'address',
-          'Vietovės tipas' => 'livingAreaType',
-          'Tel. nr.' => 'phone',
-          'El. paštas' => 'email',
-          'Vyras / moteris' => 'gender',
-          'Mokymų pradžia' => 'groupStart',
-          'Mokymų pabaiga' => 'groupEnd',
-          'Grupės Nr.' => 'groupId',
-        ];
-    }
-
+    
     /**
      * @param \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet
      * @param \DateTime $dateFrom
