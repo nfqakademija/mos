@@ -9,10 +9,10 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">#{{ knp_pagination_sortable(users, '▲▼', 'u.id') }}</th>
-            <th scope="col">{% trans %}Name{% endtrans %}{{ knp_pagination_sortable(users, '▲▼', 'u.name') }}</th>
-            <th scope="col">{% trans %}Surname{% endtrans %}{{ knp_pagination_sortable(users, '▲▼', 'u.surname') }}</th>
-            <th scope="col">{% trans %}Username{% endtrans %}{{ knp_pagination_sortable(users, '▲▼', 'u.username') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(users, '#▲▼', 'u.id') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(users, 'Name'|trans({}, 'messages') ~'▲▼', 'u.name') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(users, 'Surname'|trans({}, 'messages') ~'▲▼', 'u.surname') }}</th>
+            <th scope="col">{{ knp_pagination_sortable(users, 'Username'|trans({}, 'messages') ~'▲▼', 'u.username') }}</th>
         </tr>
         </thead>
         {% for user in users %}

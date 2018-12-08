@@ -12,7 +12,7 @@
     {% endif %}
     <table>
         <tr>
-            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Name{% endtrans %}{{ knp_pagination_sortable(results, '▲▼', 'u.name')}}</th>
             <th>{% trans %}Surname{% endtrans %}</th>
             <th>{% trans %}Birth date{% endtrans %}</th>
             <th>{% trans %}Region/city{% endtrans %}</th>
