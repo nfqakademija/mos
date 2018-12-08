@@ -72,6 +72,8 @@ class Helper
     {
         try {
             $dateFromString = $request->query->get('dateFrom');
+            if ($dateFromString === null)
+                throw new \Exception('dateFrom not specified.');
             $dateFrom = new \DateTime($dateFromString);
         } catch (\Exception $e) {
             $dateFrom = new \DateTime('first day of this month');
@@ -79,10 +81,12 @@ class Helper
 
         try {
             $dateToString = $request->query->get('dateTo');
+            if ($dateFromString === null)
+                throw new \Exception('dateTo not specified.');
             $dateTo = new \DateTime($dateToString);
         } catch (\Exception $e) {
             $dateTo = new \DateTime('last day of this month');
         }
-        return ['dateFrom' => $dateFrom->format('Y-m-d'), 'dateTo' => $dateTo->format('Y-m-d')];
+        return ['dateFrom' => $dateFrom, 'dateTo' => $dateTo];
     }
 }

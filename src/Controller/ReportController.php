@@ -41,7 +41,11 @@ class ReportController extends AbstractController
         
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
-            return $this->redirectToRoute("report.participants.export", $datesFromTo);
+            return $this->redirectToRoute("report.participants.export", [
+              ['dateFrom' => $datesFromTo['dateFrom']->format('Y-m-d'),
+               'dateTo' => $datesFromTo['dateTo']->format('Y-m-d'),
+              ] 
+            ]);
         }
         
         $page = $helper->getPageFromRequest($request);
@@ -51,8 +55,8 @@ class ReportController extends AbstractController
 
         return $this->render('report/participants.html.twig', [
             'results' => $pagination,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
+            'dateFrom' => $datesFromTo['dateFrom'],
+            'dateTo' => $datesFromTo['dateTo'],
         ]);
     }
 
@@ -64,23 +68,11 @@ class ReportController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function participantsReportToExcel(Request $request, Report $report)
+    public function participantsReportToExcel(Request $request, Report $report, Helper $helper)
     {
-        try {
-            $dateFromString = $request->query->get('dateFrom');
-            $dateFrom = new \DateTime($dateFromString);
-        } catch (\Exception $e) {
-            $dateFrom = new \DateTime('first day of this month');
-        }
+        $datesFromTo = $helper->dateFromToFromRequest($request);
 
-        try {
-            $dateToString = $request->query->get('dateTo');
-            $dateTo = new \DateTime($dateToString);
-        } catch (\Exception $e) {
-            $dateTo = new \DateTime('last day of this month');
-        }
-
-        $result = $report->participantsReportExportToExcel($dateFrom, $dateTo);
+        $result = $report->participantsReportExportToExcel($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
 
         // Return the excel file as an attachment
         return $this->file(
