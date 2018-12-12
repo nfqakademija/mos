@@ -10,37 +10,37 @@
     {% from _self import validate %}
     <div class="participant">
         <div class="row">
-            <div class="input-field col s4">
-                {{ form_label(participant.name) }}
-                {{ validate(participant.name, 'participant__name') }}
-                {{ form_errors(participant.name) }}
-            </div>
-            <div class="input-field col s5">
-                {{ form_label(participant.surname) }}
-                {{ validate(participant.surname, 'participant__surname') }}
-                {{ form_errors(participant.surname) }}
-            </div>
-            <div class="participant__button-wrapper col s2">
-                <button class="participant__toggle-additional-button blue darken-3 btn hoverable" type="button">
-                    Daugiau
-                </button>
-            </div>
-            <div class="participant__button-wrapper col s1">
+            <div class="participant__button-wrapper s1 col push-s11">
                 <i class="participant__remove-button material-icons">
                     close
                 </i>
             </div>
+            <div class="input-field col s12 pull-l1 l4">
+                {{ form_label(participant.name) }}
+                {{ validate(participant.name, 'participant__name') }}
+                {{ form_errors(participant.name) }}
+            </div>
+            <div class="input-field col s12 pull-l1 l5">
+                {{ form_label(participant.surname) }}
+                {{ validate(participant.surname, 'participant__surname') }}
+                {{ form_errors(participant.surname) }}
+            </div>
+            <div class="participant__button-wrapper push-s2 pull-l1 s8 col l2">
+                <button class="participant__toggle-additional-button blue darken-3 btn hoverable" type="button">
+                    Daugiau
+                </button>
+            </div>
         </div>
         <div class="participant__additional">
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     <div class="row">
                         {{ form_label(participant.username) }}
                         {{ validate(participant.username, 'participant__username') }}
                         {{ form_errors(participant.username) }}
                     </div>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     <div class="row">
                         <div class="col s10 participant__password-wrapper">
                             {{ form_label(participant.password) }}
@@ -56,41 +56,41 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     {{ form_widget(participant.region) }}
                     {{ form_label(participant.region) }}
                     {{ form_errors(participant.region) }}
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     {{ form_widget(participant.livingAreaType) }}
                     {{ form_label(participant.livingAreaType) }}
                     {{ form_errors(participant.livingAreaType) }}
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     {{ form_label(participant.address) }}
                     {{ form_widget(participant.address, {'attr': {'class': 'validate'}}) }}
                     {{ form_errors(participant.address) }}
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     {{ form_label(participant.email) }}
                     {{ validate(participant.email, '') }}
                     {{ form_errors(participant.email) }}
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s4">
+                <div class="input-field col s12 m4">
                     {{ form_label(participant.birthDate) }}
                     {{ form_widget(participant.birthDate, {'attr': {'class': 'validate datepicker'}}) }}
                     {{ form_errors(participant.birthDate) }}
                 </div>
-                <div class="input-field col s4">
+                <div class="input-field col s12 m4">
                     {{ form_label(participant.phone) }}
                     {{ form_widget(participant.phone, {'attr': {'class': 'validate'}}) }}
                     {{ form_errors(participant.phone) }}
                 </div>
-                <div class="input-field col s4">
+                <div class="input-field col s12 m4">
                     {{ form_widget(participant.gender) }}
                     {{ form_label(participant.gender) }}
                     {{ form_errors(participant.gender) }}
@@ -104,25 +104,25 @@
     {% from _self import validate %}
     <div class="time-slot">
         <div class="row">
-            <div class="input-field col s5">
+            <div class="time-slot__remove-button-wrapper col push-s11 s1">
+                <i class="time-slot__remove-button material-icons">
+                    close
+                </i>
+            </div>
+            <div class="input-field col s12 pull-l1 l5">
                 {{ form_label(timeSlot.date) }}
                 {{ validate(timeSlot.date, 'time-slot__date datepicker') }}
                 {{ form_errors(timeSlot.date) }}
             </div>
-            <div class="input-field col s4">
+            <div class="input-field col s12 pull-l1 l4">
                 {{ form_label(timeSlot.startTime) }}
                 {{ validate(timeSlot.startTime, 'time-slot__start-time timepicker') }}
                 {{ form_errors(timeSlot.startTime) }}
             </div>
-            <div class="input-field col s2">
+            <div class="input-field col s12 pull-l1 l2">
                 {{ form_label(timeSlot.duration) }}
                 {{ validate(timeSlot.duration, 'time-slot__duration') }}
                 {{ form_errors(timeSlot.duration) }}
-            </div>
-            <div class="time-slot__remove-button-wrapper col s1">
-                <i class="time-slot__remove-button material-icons">
-                    close
-                </i>
             </div>
         </div>
     </div>

@@ -14,6 +14,10 @@
     height: 54px;
     margin: 15px 0;
     @extend .center-element;
+
+    @media screen and (max-width: 993px) {
+      margin: 0;
+    }
   }
 
   .participant__remove-button,
