@@ -155,7 +155,7 @@ const importParticipants = (participantCollectionHolder, addParticipantButton) =
   const errorHolder = $('.group-form__import-error');
   const reader = new FileReader();
   const textType = /text\/plain/;
-  const excelTypes = ["xml", "csv", "ods", "xlsx", "xls"];
+  const excelTypes = ["csv", "xlsx", "xls"];
 
   if(file && excelTypes.includes(file.name.split('.').pop())) {
     importFromExcel(participantCollectionHolder, addParticipantButton, file, reader);
