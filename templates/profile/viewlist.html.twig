@@ -13,6 +13,7 @@
             <th scope="col">{{ knp_pagination_sortable(users, 'Name'|trans({}, 'messages') ~'▲▼', 'u.name') }}</th>
             <th scope="col">{{ knp_pagination_sortable(users, 'Surname'|trans({}, 'messages') ~'▲▼', 'u.surname') }}</th>
             <th scope="col">{{ knp_pagination_sortable(users, 'Username'|trans({}, 'messages') ~'▲▼', 'u.username') }}</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         {% for user in users %}
@@ -20,9 +21,10 @@
                 <th scope="row">{{ user.id }}</th>
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
+                <td>{{ user.username }}</td>
                 <td>
                     <a href="{{ path('profile.view.user', {'user': user.id}) }}">
-                        {{ user.username }}
+                        {% trans %}View{% endtrans %}
                     </a>
                 </td>
             </tr>
