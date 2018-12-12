@@ -54,17 +54,15 @@ class Helper
 
         $pageGet = $request->query->get('page');
         if (!empty($pageGet)) {
-            $page = (int) $pageGet;
+            $page = (int)$pageGet;
         }
 
         return $page;
     }
 
     /**
-     * Extracts dateFrom and dateTo from request, checks and returns as array.
-     * 
+     * Extracts dateFrom and dateTo from request, checks and returns as array
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      * @throws \Exception
      */
@@ -72,8 +70,10 @@ class Helper
     {
         try {
             $dateFromString = $request->query->get('dateFrom');
-            if ($dateFromString === null)
+            if ($dateFromString === null) {
                 throw new \Exception('dateFrom not specified.');
+            }
+
             $dateFrom = new \DateTime($dateFromString);
         } catch (\Exception $e) {
             $dateFrom = new \DateTime('first day of this month');
@@ -81,8 +81,9 @@ class Helper
 
         try {
             $dateToString = $request->query->get('dateTo');
-            if ($dateFromString === null)
+            if ($dateFromString === null) {
                 throw new \Exception('dateTo not specified.');
+            }
             $dateTo = new \DateTime($dateToString);
         } catch (\Exception $e) {
             $dateTo = new \DateTime('last day of this month');

@@ -30,28 +30,24 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     public function getAllQueryB($orderBy = 'gr.id', $orderType = 'DESC')
     {
         $queryBuilder = $this->createQueryBuilder('gr')
-          ->addOrderBy($orderBy, $orderType)
-        ;
+            ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
     }
 
     /**
-     * Gets groups in period 
-     *     
+     * Gets groups in period
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
-     *
      * @return mixed
      */
     public function getGroupsInPeriod(\DateTime $dateFrom, \DateTime $dateTo)
     {
         $query = $this->createQueryBuilder('gr')
-          ->Where('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
-          ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
-          ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
-          ->getQuery()
-          ;
+            ->Where('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
+            ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
+            ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+            ->getQuery();
         $result = $query->execute();
 
         return $result;

@@ -34,12 +34,12 @@ class Report
     public function getStatusReport(RegionRepository $regionRepository)
     {
         $result = [
-          'allParticipantsCount' => 0,
-          'inProblematicRegionsTotal' => 0,
-          'inProblematicRegions' => [],
-          'olderThan45' => 0,
-          'olderThan45InCountrySide' => 0,
-          'olderThan45Woman' => 0,
+            'allParticipantsCount' => 0,
+            'inProblematicRegionsTotal' => 0,
+            'inProblematicRegions' => [],
+            'olderThan45' => 0,
+            'olderThan45InCountrySide' => 0,
+            'olderThan45Woman' => 0,
         ];
 
         $result['allParticipantsCount'] = $this->userRepository->getCountAllFinishedParticipants();
@@ -48,8 +48,8 @@ class Report
         foreach ($problematicRegions as $region) {
             $participantsInRegion = $this->userRepository->getParticipantsCountInRegionId($region->getId());
             $result['inProblematicRegions'][] = [
-              'title' => $region->getTitle(),
-              'participantsCount' => $participantsInRegion,
+                'title' => $region->getTitle(),
+                'participantsCount' => $participantsInRegion,
             ];
             $result['inProblematicRegionsTotal'] += $participantsInRegion;
         }
@@ -135,7 +135,7 @@ class Report
             'K' => 'Mokymų pabaigos data',
             'L' => 'Grupės Nr.',
         ];
-        
+
         //set report table headers
         $row = 9;
         foreach ($cols as $colAddr => $colTitle) {
@@ -147,29 +147,28 @@ class Report
         $row = 10;
         /** @var User $participant */
         foreach ($participantsReport as $participant) {
-            $sheet->setCellValue('A' . $row, $participant->getName() );
-            $sheet->setCellValue('B' . $row, $participant->getSurname() );
-            $sheet->setCellValue('C' . $row, $participant->getBirthDate() );
+            $sheet->setCellValue('A' . $row, $participant->getName());
+            $sheet->setCellValue('B' . $row, $participant->getSurname());
+            $sheet->setCellValue('C' . $row, $participant->getBirthDate());
             try {
-                $sheet->setCellValue('D' . $row,
-                  $participant->getRegion()->getTitle());
+                $sheet->setCellValue('D' . $row, $participant->getRegion()->getTitle());
             } catch (\Exception $e) {
                 $sheet->setCellValue('D' . $row, '');
             }
-            $sheet->setCellValue('E' . $row, $participant->getAddress() );
-            $sheet->setCellValue('F' . $row, $participant->getLivingAreaType() );
-            $sheet->setCellValue('G' . $row, $participant->getPhone() );
-            $sheet->setCellValue('H' . $row, $participant->getEmail() );
-            $sheet->setCellValue('I' . $row, $participant->getGender() );
-            $sheet->setCellValue('J' . $row, $participant->getLearningGroup()->getStartDate() );
-            $sheet->setCellValue('K' . $row, $participant->getLearningGroup()->getEndDate() );
-            $sheet->setCellValue('L' . $row, $participant->getLearningGroup()->getId() );
+            $sheet->setCellValue('E' . $row, $participant->getAddress());
+            $sheet->setCellValue('F' . $row, $participant->getLivingAreaType());
+            $sheet->setCellValue('G' . $row, $participant->getPhone());
+            $sheet->setCellValue('H' . $row, $participant->getEmail());
+            $sheet->setCellValue('I' . $row, $participant->getGender());
+            $sheet->setCellValue('J' . $row, $participant->getLearningGroup()->getStartDate());
+            $sheet->setCellValue('K' . $row, $participant->getLearningGroup()->getEndDate());
+            $sheet->setCellValue('L' . $row, $participant->getLearningGroup()->getId());
 
             foreach ($cols as $colAddr => $colTitle) {
                 $cellAddress = $colAddr . $row;
                 $sheet->getStyle($cellAddress)->applyFromArray($tableStyles);
             }
-            
+
             $row++;
         }
     }
@@ -182,17 +181,17 @@ class Report
     private function getTableStyles()
     {
         return [
-          'font' => [
-          ],
-          'borders' => [
-            'left' => ['borderStyle' => Border::BORDER_THIN],
-            'top' => ['borderStyle' => Border::BORDER_THIN],
-            'right' => ['borderStyle' => Border::BORDER_THIN],
-            'bottom' => ['borderStyle' => Border::BORDER_THIN],
-          ],
+            'font' => [
+            ],
+            'borders' => [
+                'left' => ['borderStyle' => Border::BORDER_THIN],
+                'top' => ['borderStyle' => Border::BORDER_THIN],
+                'right' => ['borderStyle' => Border::BORDER_THIN],
+                'bottom' => ['borderStyle' => Border::BORDER_THIN],
+            ],
         ];
     }
-    
+
     /**
      * @param \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet
      * @param \DateTime $dateFrom

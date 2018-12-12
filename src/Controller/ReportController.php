@@ -36,20 +36,21 @@ class ReportController extends AbstractController
         PaginatorInterface $paginator,
         UserRepository $ur,
         Helper $helper
-    ) { 
+    ) {
         $datesFromTo = $helper->dateFromToFromRequest($request);
-        
+
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
             return $this->redirectToRoute("report.participants.export", [
-              ['dateFrom' => $datesFromTo['dateFrom']->format('Y-m-d'),
-               'dateTo' => $datesFromTo['dateTo']->format('Y-m-d'),
-              ] 
+                [
+                    'dateFrom' => $datesFromTo['dateFrom']->format('Y-m-d'),
+                    'dateTo' => $datesFromTo['dateTo']->format('Y-m-d'),
+                ]
             ]);
         }
-        
+
         $page = $helper->getPageFromRequest($request);
-        
+
         $query = $ur->getParticipantsByGroupPeriodQueryB($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
         $pagination = $paginator->paginate($query, $page, 15);
 
