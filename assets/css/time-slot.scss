@@ -1,11 +1,21 @@
-.time-slot__remove-button-wrapper {
-  height: 54px;
-  margin: 15px 0;
-  @extend .center-element;
-}
+.time-slot {
+  @media screen and (max-width: 993px) {
+    @include border;
+  }
 
-.time-slot__remove-button {
-  font-size: 28px;
-  cursor: pointer;
-  color: #9e9e9e;
+  .time-slot__remove-button-wrapper {
+    height: 54px;
+    margin: 15px 0;
+    @extend .center-element;
+
+    @media screen and (max-width: 993px) {
+      margin: 0;
+    }
+  }
+
+  .time-slot__remove-button {
+    font-size: 28px;
+    cursor: pointer;
+    color: #9e9e9e;
+  }
 }
