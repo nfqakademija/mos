@@ -1,53 +1,54 @@
-<nav class="nav-wrapper blue darken-3">
-    <a href="#" data-target="mobile-nav" class="sidenav-trigger">
-        <i class="material-icons">menu</i>
-    </a>
-    {% if app.user %}
-        <ul class="left hide-on-med-and-down">
-            <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
-                <a href="{{ path('group.viewlist') }}">
-                    {% trans %}Groups{% endtrans %}
-                </a>
-            </li>
-            <li class="{{ app.request.get('_route') == 'profile.viewlist' ? 'active' }}">
-                <a href="{{ path('profile.viewlist') }}">
-                    {% trans %}Users{% endtrans %}
-                </a>
-            </li>
-            <li class="{{ app.request.get('_route') == 'report.participants' ? 'active' }}">
-                <a href="{{ path('report.participants') }}">
-                    {% trans %}Participants report{% endtrans %}
-                </a>
-            </li>
-            <li class="{{ app.request.get('_route') == 'report.status' ? 'active' }}">
-              <a href="{{ path('report.status') }}">
-                {% trans %}Status report{% endtrans %}
-              </a>
-            </li>
-        </ul>
-    {% endif %}
-    <ul class="right hide-on-med-and-down">
+<div class="navbar-fixed">
+    <nav class="nav-wrapper blue darken-3">
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+        </a>
         {% if app.user %}
-            <li>
-                <a href="{{ path('profile.view') }}">
-                    {% trans %}My Profile{% endtrans %}
-                </a>
-            </li>
-            <li>
-                <a href="{{ path('logout') }}">
-                    {% trans %}Logout{% endtrans %}
-                </a>
-            </li>
-        {% else %}
-            <li>
-                <a href="{{ path('login') }}">
-                    {% trans %}Login{% endtrans %}
-                </a>
-            </li>
+            <ul class="left hide-on-med-and-down">
+                <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
+                    <a href="{{ path('group.viewlist') }}">
+                        {% trans %}Groups{% endtrans %}
+                    </a>
+                </li>
+                <li class="{{ app.request.get('_route') == 'profile.viewlist' ? 'active' }}">
+                    <a href="{{ path('profile.viewlist') }}">
+                        {% trans %}Users{% endtrans %}
+                    </a>
+                </li>
+                <li class="{{ app.request.get('_route') == 'report.participants' ? 'active' }}">
+                    <a href="{{ path('report.participants') }}">
+                        {% trans %}Participants report{% endtrans %}
+                    </a>
+                </li>
+                <li class="{{ app.request.get('_route') == 'report.status' ? 'active' }}">
+                  <a href="{{ path('report.status') }}">
+                    {% trans %}Status report{% endtrans %}
+                  </a>
+                </li>
+            </ul>
         {% endif %}
-    </ul>
-</nav>
-
+        <ul class="right hide-on-med-and-down">
+            {% if app.user %}
+                <li>
+                    <a href="{{ path('profile.view') }}">
+                        {% trans %}My Profile{% endtrans %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('logout') }}">
+                        {% trans %}Logout{% endtrans %}
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('login') }}">
+                        {% trans %}Login{% endtrans %}
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 <ul class="sidenav" id="mobile-nav">
     {% if app.user %}
         <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
