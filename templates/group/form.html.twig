@@ -8,12 +8,14 @@
             {% trans %}Information{% endtrans %}
         </h5>
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12">
                 {{ form_label(form.address) }}
                 {{ validate(form.address, '') }}
                 {{ form_errors(form.address) }}
             </div>
-            <div class="input-field col s6">
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
                 {{ form_widget(form.teacher,  {'attr': {'class': 'group-form__teacher browser-default'} }) }}
                 {{ form_errors(form.teacher) }}
             </div>
