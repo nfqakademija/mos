@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('create') %}
-        <div class="alert alert--success">
+    {% for message in app.flashes('create_group') %}
+        <div class="alert">
             {{ message }}
         </div>
     {% endfor %}

@@ -65,7 +65,6 @@ Add an area type: Pasirinkti vietovės tipą
 Field must not be empty: Laukelis negali būti tuščias
 Bad format, should be 'name surname': Blogas formatas, turi būti 'vardas pavarde'
 Status report: Rodiklių ataskaita
-password: slaptažodis
 Project status report: Rodiklių ataskaita
 Choose a teacher: Pasirinkite dėstytoją
 Finish: Baigti

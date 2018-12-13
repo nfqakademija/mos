@@ -9,7 +9,7 @@
 
 {% block body %}
     {% for message in app.flashes('edit_user') %}
-        <div class="alert alert--success">
+        <div class="alert">
             {{ message }}
         </div>
     {% endfor %}

@@ -3,8 +3,8 @@
 {% block title %}Group{% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('edit') %}
-        <div class="alert alert--success">
+    {% for message in app.flashes('edit_group') %}
+        <div class="alert">
             {{ message }}
         </div>
     {% endfor %}

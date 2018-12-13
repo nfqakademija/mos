@@ -14,9 +14,9 @@
     </h2>
     {{ form_start(form) }}
     {{ form_row(form._token) }}
-    <div class="participant">
+    <div class="participant form__section">
         <div class="row">
-            <div class="input-field col s12 ">
+            <div class="input-field col s12">
                 {{ form_label(form.user.name) }}
                 {{ validate(form.user.name, 'participant__name') }}
                 {{ form_errors(form.user.name) }}

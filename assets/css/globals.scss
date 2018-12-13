@@ -1,11 +1,5 @@
 $primary-color: #1565C0;
 
-.container {
-  @media screen and (max-width: 600px) {
-    width: 100%;
-  }
-}
-
 .row,
 .col .row {
   margin: 0;

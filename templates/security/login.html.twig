@@ -3,19 +3,31 @@
 {% block title %}{% trans %}Login{% endtrans %}{% endblock %}
 
 {% block body %}
-
-<div class="example-wrapper">
-    <h2 class="center-align">{% trans %}Login{% endtrans %}</h2>
-
-    {% if error %}
-      <span class="alert-danger">{{ error.messageKey }}</span>
-    {% endif %}
-
-    <form action="{{ path('login') }}" method="POST" >
-        <input type="text" name="_username" value="{{ last_username }}" placeholder="{% trans %}Username{% endtrans %}" #}>
-        <input type="password" name="_password" placeholder="{% trans %}password{% endtrans %}"  >
-        <button class="btn blue darken-3" type="submit">{% trans %}Login{% endtrans %}</button>
-    </form>
-
-</div>
+    <div class="login">
+        <h2 class="center-align">
+            {% trans %}Login{% endtrans %}
+        </h2>
+        <div class="form__section">
+            {% if error %}
+                <div class="alert">{{ error.messageKey }}</div>
+            {% endif %}
+            <form action="{{ path('login') }}" method="POST">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="login__username">{% trans %}Username{% endtrans %}</label>
+                        <input class="validate" id="login__username" type="text" name="_username" value="{{ last_username }}">
+                    </div>
+                    <div class="input-field col s12">
+                        <label>{% trans %}Password{% endtrans %}</label>
+                        <input class="validate" id="login__password" type="password" name="_password">
+                    </div>
+                    <div class="submit-button-wrapper">
+                        <button class="submit-button btn-large blue darken-3" type="submit">
+                            {% trans %}Login{% endtrans %}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
