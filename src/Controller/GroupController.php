@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\LearningGroup;
-use App\Form\GroupType;
+use App\Form\CreateGroupType;
+use App\Form\EditGroupType;
 use App\Services\GroupFormManager;
 use App\Helper\Helper;
 use App\Repository\LearningGroupRepository;
@@ -59,7 +60,7 @@ class GroupController extends AbstractController
     public function createGroup(Request $request, GroupFormManager $groupFormHandler)
     {
         $group = new LearningGroup();
-        $form = $this->createForm(GroupType::class, $group);
+        $form = $this->createForm(CreateGroupType::class, $group);
 
         $participants = $groupFormHandler->handleCreate($form, $request);
         if ($participants !== null) {
@@ -87,7 +88,7 @@ class GroupController extends AbstractController
      */
     public function editGroup(Request $request, GroupFormManager $groupFormHandler, LearningGroup $group)
     {
-        $form = $this->createForm(GroupType::class, $group);
+        $form = $this->createForm(EditGroupType::class, $group);
 
         if ($groupFormHandler->handleEdit($form, $request)) {
             $this->addFlash(

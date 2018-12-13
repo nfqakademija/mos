@@ -43,13 +43,6 @@ class GroupType extends AbstractType
                 'label' => false,
                 'by_reference' => false
             ))
-            ->add('participants', CollectionType::class, array(
-                'entry_type' => RegisterUserType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'label' => false,
-                'by_reference' => false
-            ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Submit'
             ));
@@ -59,6 +52,7 @@ class GroupType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => LearningGroup::class,
+            'inherit_data' => true,
             'attr' => array('novalidate' => 'novalidate')
         ));
     }

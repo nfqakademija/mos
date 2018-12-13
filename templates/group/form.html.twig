@@ -10,15 +10,15 @@
         </h5>
         <div class="row">
             <div class="input-field col s12">
-                {{ form_label(form.address) }}
-                {{ validate(form.address, '') }}
-                {{ form_errors(form.address) }}
+                {{ form_label(form.group.address) }}
+                {{ validate(form.group.address, '') }}
+                {{ form_errors(form.group.address) }}
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                {{ form_widget(form.teacher,  {'attr': {'class': 'group-form__teacher browser-default'} }) }}
-                {{ form_errors(form.teacher) }}
+                {{ form_widget(form.group.teacher,  {'attr': {'class': 'group-form__teacher browser-default'} }) }}
+                {{ form_errors(form.group.teacher) }}
             </div>
         </div>
     </div>
@@ -90,7 +90,11 @@
         </div>
         <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
             {% for participant in form.participants %}
-                {{ printParticipant(participant) }}
+                {% if id is defined %}
+                    {{ printParticipant(participant, id) }}
+                {% else %}
+                    {{ printParticipant(participant) }}
+                {% endif %}
             {% endfor %}
             <div class="group-form__empty">
                 {% trans %}There are no participants yet{% endtrans %}
@@ -101,8 +105,8 @@
         <h5 class="group-form__title">
             {% trans %}Time slots{% endtrans %}
         </h5>
-        <div class="time-slots" data-prototype="{{ printTimeSlot(form.timeSlots.vars.prototype)|e('html_attr') }}">
-            {% for timeSlot in form.timeSlots %}
+        <div class="time-slots" data-prototype="{{ printTimeSlot(form.group.timeSlots.vars.prototype)|e('html_attr') }}">
+            {% for timeSlot in form.group.timeSlots %}
                 {{ printTimeSlot(timeSlot) }}
             {% endfor %}
             <div class="group-form__empty">
@@ -111,7 +115,7 @@
         </div>
     </div>
     <div class="form__submit-button">
-        {{ form_widget(form.save, {'attr': {'class': 'btn-large blue darken-3'} }) }}
+        {{ form_widget(form.group.save, {'attr': {'class': 'btn-large blue darken-3'} }) }}
     </div>
     {{ form_end(form, {'render_rest': false}) }}
 </div>

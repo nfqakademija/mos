@@ -6,7 +6,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro printParticipant(participant) %}
+{% macro printParticipant(participant, id) %}
     {% from _self import validate %}
     <div class="participant">
         <div class="row">
@@ -33,29 +33,37 @@
         </div>
         <div class="participant__additional">
             <div class="row">
-                <div class="input-field col s12 m6">
-                    <div class="row">
-                        {{ form_label(participant.user.username) }}
-                        {{ validate(participant.user.username, 'participant__username') }}
-                        {{ form_errors(participant.user.username) }}
-                    </div>
-                </div>
-                <div class="input-field col s12 m6">
-                    <div class="row">
-                        <div class="col s10 participant__password-wrapper">
-                            {{ form_label(participant.user.password) }}
-                            {{ validate(participant.user.password, 'participant__password') }}
-                            {{ form_errors(participant.user.password) }}
-                        </div>
-                        <div class="col s2 participant__button">
-                            <i class="participant__button--generate-password material-icons">
-                                refresh
-                            </i>
+                {% if id is null %}
+                    <div class="input-field col s12 m6">
+                        <div class="row">
+                            {{ form_label(participant.user.username) }}
+                            {{ validate(participant.user.username, 'participant__username') }}
+                            {{ form_errors(participant.user.username) }}
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
+                    <div class="input-field col s12 m6">
+                        <div class="row">
+                            <div class="col s10 participant__password-wrapper">
+                                {{ form_label(participant.user.password) }}
+                                {{ validate(participant.user.password, 'participant__password') }}
+                                {{ form_errors(participant.user.password) }}
+                            </div>
+                            <div class="col s2 participant__button">
+                                <i class="participant__button--generate-password material-icons">
+                                    refresh
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="input-field col s12">
+                        <div class="row">
+                            {{ form_label(participant.user.username) }}
+                            {{ validate(participant.user.username, 'participant__username') }}
+                            {{ form_errors(participant.user.username) }}
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="input-field col s12 m6">
                     {{ form_widget(participant.user.region) }}
                     {{ form_label(participant.user.region) }}
@@ -66,8 +74,6 @@
                     {{ form_label(participant.user.livingAreaType) }}
                     {{ form_errors(participant.user.livingAreaType) }}
                 </div>
-            </div>
-            <div class="row">
                 <div class="input-field col s12 m6">
                     {{ form_label(participant.user.address) }}
                     {{ form_widget(participant.user.address, {'attr': {'class': 'validate'}}) }}
@@ -78,8 +84,6 @@
                     {{ validate(participant.user.email, '') }}
                     {{ form_errors(participant.user.email) }}
                 </div>
-            </div>
-            <div class="row">
                 <div class="input-field col s12 m4">
                     {{ form_label(participant.user.birthDate) }}
                     {{ form_widget(participant.user.birthDate, {'attr': {'class': 'validate datepicker'}}) }}
