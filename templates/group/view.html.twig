@@ -60,6 +60,7 @@
                 <th scope="col">{% trans %}Surname{% endtrans %}</th>
                 <th scope="col">{% trans %}Username{% endtrans %}</th>
                 <th scope="col">{% trans %}Birth date{% endtrans %}</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             {% for participant in group.participants %}
@@ -69,6 +70,11 @@
                     <td>{{ participant.surname }}</td>
                     <td>{{ participant.username }}</td>
                     <td>{{ participant.birth_date }}</td>
+                    <td>
+                        <a href="{{ path('profile.view.user', {'user': participant.id}) }}">
+                            {% trans %}View{% endtrans %}
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </table>

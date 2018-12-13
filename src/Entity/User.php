@@ -327,6 +327,7 @@ class User implements UserInterface
     public function toArray()
     {
         $arr = [
+            'id' => $this->getId(),
             'username' => $this->getUsername(),
             'name' => $this->getName(),
             'surname' => $this->getSurname(),
