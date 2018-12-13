@@ -4,12 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditUserType;
-use App\Form\RegisterUserType;
-use App\Form\UserRegistrationType;
 use App\Helper\Helper;
 use App\Repository\UserRepository;
 use App\Services\ParticipantFormManager;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +24,6 @@ class ProfileController extends AbstractController
      */
     public function profileView(User $user)
     {
-
         return $this->render('profile/view.html.twig', [
             'user' => $user,
         ]);
@@ -41,7 +37,6 @@ class ProfileController extends AbstractController
      */
     public function profileViewMy()
     {
-
         $user = $this->getUser();
 
         return $this->render('profile/view.html.twig', [

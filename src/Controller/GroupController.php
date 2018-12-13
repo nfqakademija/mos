@@ -28,6 +28,7 @@ class GroupController extends AbstractController
     public function view(LearningGroup $group)
     {
         $groupDataArray = $group->toArray();
+
         return $this->render('group/view.html.twig', [
             'group' => $groupDataArray,
         ]);
