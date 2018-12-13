@@ -50,7 +50,7 @@ class GroupType extends AbstractType
                 'by_reference' => false
             ))
             ->add('participants', CollectionType::class, array(
-                'entry_type' => UserType::class,
+                'entry_type' => RegisterUserType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => false,

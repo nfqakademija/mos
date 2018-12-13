@@ -2,7 +2,7 @@
     {% if name.vars.valid %}
         {{ form_widget(name, {'attr': {'class': 'validate ' ~ class}}) }}
     {% else %}
-        {{ form_widget(name, {'attr': {'class': 'validate group-form__input--invalid ' ~ class}}) }}
+        {{ form_widget(name, {'attr': {'class': 'validate input--invalid ' ~ class}}) }}
     {% endif %}
 {% endmacro %}
 
@@ -16,14 +16,14 @@
                 </i>
             </div>
             <div class="input-field col s12 pull-l1 l4">
-                {{ form_label(participant.name) }}
-                {{ validate(participant.name, 'participant__name') }}
-                {{ form_errors(participant.name) }}
+                {{ form_label(participant.user.name) }}
+                {{ validate(participant.user.name, 'participant__name') }}
+                {{ form_errors(participant.user.name) }}
             </div>
             <div class="input-field col s12 pull-l1 l5">
-                {{ form_label(participant.surname) }}
-                {{ validate(participant.surname, 'participant__surname') }}
-                {{ form_errors(participant.surname) }}
+                {{ form_label(participant.user.surname) }}
+                {{ validate(participant.user.surname, 'participant__surname') }}
+                {{ form_errors(participant.user.surname) }}
             </div>
             <div class="participant__button-wrapper push-s2 pull-l1 s8 col l2">
                 <button class="participant__toggle-additional-button blue darken-3 btn hoverable" type="button">
@@ -35,17 +35,17 @@
             <div class="row">
                 <div class="input-field col s12 m6">
                     <div class="row">
-                        {{ form_label(participant.username) }}
-                        {{ validate(participant.username, 'participant__username') }}
-                        {{ form_errors(participant.username) }}
+                        {{ form_label(participant.user.username) }}
+                        {{ validate(participant.user.username, 'participant__username') }}
+                        {{ form_errors(participant.user.username) }}
                     </div>
                 </div>
                 <div class="input-field col s12 m6">
                     <div class="row">
                         <div class="col s10 participant__password-wrapper">
-                            {{ form_label(participant.password) }}
-                            {{ validate(participant.password, 'participant__password') }}
-                            {{ form_errors(participant.password) }}
+                            {{ form_label(participant.user.password) }}
+                            {{ validate(participant.user.password, 'participant__password') }}
+                            {{ form_errors(participant.user.password) }}
                         </div>
                         <div class="col s2 participant__button-wrapper">
                             <i class="participant__password-generate-button material-icons">
@@ -57,43 +57,43 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {{ form_widget(participant.region) }}
-                    {{ form_label(participant.region) }}
-                    {{ form_errors(participant.region) }}
+                    {{ form_widget(participant.user.region) }}
+                    {{ form_label(participant.user.region) }}
+                    {{ form_errors(participant.user.region) }}
                 </div>
                 <div class="input-field col s12 m6">
-                    {{ form_widget(participant.livingAreaType) }}
-                    {{ form_label(participant.livingAreaType) }}
-                    {{ form_errors(participant.livingAreaType) }}
+                    {{ form_widget(participant.user.livingAreaType) }}
+                    {{ form_label(participant.user.livingAreaType) }}
+                    {{ form_errors(participant.user.livingAreaType) }}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 m6">
-                    {{ form_label(participant.address) }}
-                    {{ form_widget(participant.address, {'attr': {'class': 'validate'}}) }}
-                    {{ form_errors(participant.address) }}
+                    {{ form_label(participant.user.address) }}
+                    {{ form_widget(participant.user.address, {'attr': {'class': 'validate'}}) }}
+                    {{ form_errors(participant.user.address) }}
                 </div>
                 <div class="input-field col s12 m6">
-                    {{ form_label(participant.email) }}
-                    {{ validate(participant.email, '') }}
-                    {{ form_errors(participant.email) }}
+                    {{ form_label(participant.user.email) }}
+                    {{ validate(participant.user.email, '') }}
+                    {{ form_errors(participant.user.email) }}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 m4">
-                    {{ form_label(participant.birthDate) }}
-                    {{ form_widget(participant.birthDate, {'attr': {'class': 'validate datepicker'}}) }}
-                    {{ form_errors(participant.birthDate) }}
+                    {{ form_label(participant.user.birthDate) }}
+                    {{ form_widget(participant.user.birthDate, {'attr': {'class': 'validate datepicker'}}) }}
+                    {{ form_errors(participant.user.birthDate) }}
                 </div>
                 <div class="input-field col s12 m4">
-                    {{ form_label(participant.phone) }}
-                    {{ form_widget(participant.phone, {'attr': {'class': 'validate'}}) }}
-                    {{ form_errors(participant.phone) }}
+                    {{ form_label(participant.user.phone) }}
+                    {{ form_widget(participant.user.phone, {'attr': {'class': 'validate'}}) }}
+                    {{ form_errors(participant.user.phone) }}
                 </div>
                 <div class="input-field col s12 m4">
-                    {{ form_widget(participant.gender) }}
-                    {{ form_label(participant.gender) }}
-                    {{ form_errors(participant.gender) }}
+                    {{ form_widget(participant.user.gender) }}
+                    {{ form_label(participant.user.gender) }}
+                    {{ form_errors(participant.user.gender) }}
                 </div>
             </div>
         </div>

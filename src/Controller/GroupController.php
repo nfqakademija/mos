@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\LearningGroup;
-use App\Entity\User;
 use App\Form\GroupType;
-use App\Services\GroupManager;
+use App\Services\GroupFormManager;
 use App\Helper\Helper;
 use App\Repository\LearningGroupRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,18 +52,18 @@ class GroupController extends AbstractController
     /**
      * @Route("/group/create", name="group.create")
      * @param Request $request
-     * @param GroupManager $groupManager
+     * @param GroupFormManager $groupFormHandler
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createGroup(Request $request, GroupManager $groupManager)
+    public function createGroup(Request $request, GroupFormManager $groupFormHandler)
     {
         $group = new LearningGroup();
         $form = $this->createForm(GroupType::class, $group);
 
-        $participants = $groupManager->handleCreate($form, $request);
+        $participants = $groupFormHandler->handleCreate($form, $request);
         if ($participants !== null) {
             $this->addFlash(
-                'create',
+                'create_group',
                 'Group was successfully created!'
             );
 
@@ -82,21 +80,17 @@ class GroupController extends AbstractController
     /**
      * @Route("/group/edit/{group}", name="group.edit")
      * @param Request $request
-     * @param GroupManager $groupManager
+     * @param GroupFormManager $groupFormHandler
      * @param $group
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editGroup(Request $request, GroupManager $groupManager, $group)
+    public function editGroup(Request $request, GroupFormManager $groupFormHandler, LearningGroup $group)
     {
-        if (null === $group = $groupManager->getGroup($group)) {
-            throw $this->createNotFoundException('No group found for id ' . $group);
-        }
-
         $form = $this->createForm(GroupType::class, $group);
 
-        if ($groupManager->handleEdit($form, $request)) {
+        if ($groupFormHandler->handleEdit($form, $request)) {
             $this->addFlash(
-                'edit',
+                'edit_group',
                 'Group was successfully updated!'
             );
 

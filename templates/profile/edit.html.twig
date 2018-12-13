@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% from 'group/macros.html.twig' import validate %}
+{% form_theme form 'group/form_errors.html.twig' %}
+
+{% block title %}
+    {% trans %}
+        Profile
+    {% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h2 class="center-align">
+        {% trans %}Participant form{% endtrans %}
+    </h2>
+    {{ form_start(form) }}
+    {{ form_row(form._token) }}
+    <div class="participant">
+        <div class="row">
+            <div class="input-field col s12 ">
+                {{ form_label(form.user.name) }}
+                {{ validate(form.user.name, 'participant__name') }}
+                {{ form_errors(form.user.name) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_label(form.user.surname) }}
+                {{ validate(form.user.surname, 'participant__surname') }}
+                {{ form_errors(form.user.surname) }}
+            </div>
+            <div class="input-field col s12">
+                <div class="row">
+                    {{ form_label(form.user.username) }}
+                    {{ validate(form.user.username, 'participant__username') }}
+                    {{ form_errors(form.user.username) }}
+                </div>
+            </div>
+            <div class="input-field col s12">
+                {{ form_widget(form.user.region) }}
+                {{ form_label(form.user.region) }}
+                {{ form_errors(form.user.region) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_widget(form.user.livingAreaType) }}
+                {{ form_label(form.user.livingAreaType) }}
+                {{ form_errors(form.user.livingAreaType) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_label(form.user.address) }}
+                {{ form_widget(form.user.address, {'attr': {'class': 'validate'}}) }}
+                {{ form_errors(form.user.address) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_label(form.user.email) }}
+                {{ validate(form.user.email, '') }}
+                {{ form_errors(form.user.email) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_label(form.user.birthDate) }}
+                {{ form_widget(form.user.birthDate, {'attr': {'class': 'validate datepicker'}}) }}
+                {{ form_errors(form.user.birthDate) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_label(form.user.phone) }}
+                {{ form_widget(form.user.phone, {'attr': {'class': 'validate'}}) }}
+                {{ form_errors(form.user.phone) }}
+            </div>
+            <div class="input-field col s12">
+                {{ form_widget(form.user.gender) }}
+                {{ form_label(form.user.gender) }}
+                {{ form_errors(form.user.gender) }}
+            </div>
+        </div>
+    </div>
+    <div class="submit-button-wrapper">
+        {{ form_widget(form.user.save, {'attr': {'class': 'submit-button btn-large blue darken-3'} }) }}
+    </div>
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

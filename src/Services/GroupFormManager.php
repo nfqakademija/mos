@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class GroupManager
+class GroupFormManager
 {
     /**
      * @var EntityManagerInterface $entityManager
@@ -32,15 +32,6 @@ class GroupManager
     {
         $this->entityManager = $entityManager;
         $this->encoder = $encoder;
-    }
-
-    /**
-     * @param string $group
-     * @return LearningGroup|null
-     */
-    public function getGroup(string $group): ?LearningGroup
-    {
-        return $this->entityManager->getRepository(LearningGroup::class)->find($group);
     }
 
     /**
@@ -131,6 +122,9 @@ class GroupManager
         return false;
     }
 
+    /**
+     * @param LearningGroup $learningGroup
+     */
     public function updateStartEndDates(LearningGroup $learningGroup)
     {
         $learningGroup->updateStartEndDates();

@@ -1,0 +1,34 @@
+.submit-button-wrapper {
+  clear: both;
+  height: 110px;
+  @extend .center-element;
+
+  .submit-button {
+    margin: 20px 0;
+  }
+}
+
+input:not(.browser-default).input--invalid {
+  border-bottom: 1px solid #f44336;
+  box-shadow: 0 1px 0 0 #F44336;
+}
+
+input[type=email]:not(.browser-default):focus {
+  border: none;
+}
+
+.input-field input[type=text].valid,
+.input-field input[type=email]:not(.browser-default).valid,
+.input-field input:focus {
+  border-bottom: 1px solid $primary-color !important;
+  box-shadow: 0 1px 0 0 $primary-color !important;
+}
+
+.error-wrapper {
+  margin: 0;
+
+  .error {
+    color: rgb(244, 67, 54);
+    font-size: 12px;
+  }
+}

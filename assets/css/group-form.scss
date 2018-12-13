@@ -52,15 +52,6 @@
     padding: 0 .75rem;
   }
 
-  .group-form__error-wrapper {
-    margin: 0;
-
-    .group-form__error {
-      color: rgb(244, 67, 54);
-      font-size: 12px;
-    }
-  }
-
   .group-form__add-participant-button,
   .group-form__add-time-slot-button {
     float: right;
@@ -80,38 +71,11 @@
   .group-form__paste-submit {
     float: right;
   }
-
-  input:not(.browser-default).group-form__input--invalid {
-    border-bottom: 1px solid #f44336;
-    box-shadow: 0 1px 0 0 #F44336;
-  }
-
-  input[type=email]:not(.browser-default):focus {
-    border: none;
-  }
-
-  .input-field input[type=text].valid,
-  .input-field input[type=email]:not(.browser-default).valid,
-  .input-field input:focus {
-    border-bottom: 1px solid $primary-color !important;
-    box-shadow: 0 1px 0 0 $primary-color !important;
-  }
-
 }
 
 .group-form__print {
   float: right;
   cursor: pointer;
-}
-
-.group-form__submit-button-wrapper {
-  clear: both;
-  height: 110px;
-  @extend .center-element;
-
-  .group-form__submit-button {
-    margin: 20px 0;
-  }
 }
 
 .group-form__import-info__photo {

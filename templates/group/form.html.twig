@@ -3,6 +3,7 @@
 
 <div class="group-form row">
     {{ form_start(form) }}
+    {{ form_row(form._token) }}
     <div class="group-form__section">
         <h5 class="group-form__title">
             {% trans %}Information{% endtrans %}
@@ -109,8 +110,8 @@
             </div>
         </div>
     </div>
-    <div class="group-form__submit-button-wrapper">
-        {{ form_widget(form.save, {'attr': {'class': 'group-form__submit-button btn-large blue darken-3'} }) }}
+    <div class="submit-button-wrapper">
+        {{ form_widget(form.save, {'attr': {'class': 'submit-button btn-large blue darken-3'} }) }}
     </div>
-    {{ form_end(form) }}
+    {{ form_end(form, {'render_rest': false}) }}
 </div>

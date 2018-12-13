@@ -29,7 +29,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank(message="Enter username")
+     * @Assert\NotBlank(message="Įveskite vartotojo vardą")
      */
     private $username;
 
@@ -41,19 +41,19 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Enter password")
+     * @Assert\NotBlank(message="Įveskite slaptažodį")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=190, nullable=true)
-     * @Assert\NotBlank(message="Enter name")
+     * @Assert\NotBlank(message="Įveskite vardą")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=190, nullable=true)
-     * @Assert\NotBlank(message="Enter surname")
+     * @Assert\NotBlank(message="Įveskite pavardę")
      */
     private $surname;
 
@@ -74,7 +74,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Assert\Email(message="Wrong email format")
+     * @Assert\Email(message="Blogas el.pašto formatas")
      */
     private $email;
 

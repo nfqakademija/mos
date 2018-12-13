@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Services\GroupManager;
+use App\Services\GroupFormManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,19 +22,19 @@ class TimeSlot
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotBlank(message="Enter date")
+     * @Assert\NotBlank(message="Įveskite datą")
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
-     * @Assert\NotBlank(message="Enter start time")
+     * @Assert\NotBlank(message="Įveskite pradžios laiką")
      */
     private $startTime;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Enter duration in minutes")
+     * @Assert\NotBlank(message="Įveskite laiką minutėmis")
      */
     private $duration;
 

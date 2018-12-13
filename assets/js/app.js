@@ -7,6 +7,8 @@ import reports from './report';
 
 $(document).ready(function () {
   M.Sidenav.init($('.sidenav'));
+  M.FormSelect.init($('select'));
+  M.Datepicker.init($('.datepicker'));
   initGroupForm();
   groupParticipants();
   reports();

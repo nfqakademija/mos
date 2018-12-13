@@ -1,78 +1,94 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Profile{% endtrans %}{% endblock %}
+{% block title %}
+    {% trans %}
+        Profile
+    {% endtrans %}
+{% endblock %}
 
 
 {% block body %}
-    <h2 class="center-align">Profile</h2>
+    {% for message in app.flashes('edit_user') %}
+        <div class="alert alert--success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h2 class="center-align">
+        {% trans %}Profile{% endtrans %}
+    </h2>
+    <a class="btn blue darken-3" href="{{ path('profile.edit', {'user': user.id}) }}">
+        {% trans %}Edit{% endtrans %}
+    </a>
     <table class="table">
-      <thead>
-      <tr>
-        <th scope="col">Label</th>
-        <th scope="col">Data</th>
-      </tr>
-      </thead>
-      <tr>
-        <td>{% trans %}Username{% endtrans %}</td>
-        <td>{{ user.username}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Email{% endtrans %}</td>
-        <td>{{ user.email}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Name{% endtrans %}</td>
-        <td>{{ user.name}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Surname{% endtrans %}</td>
-        <td>{{ user.surname}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Birth date{% endtrans %}</td>
-        <td>{{ user.birthdate|date('Y-m-d')}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Region{% endtrans %}</td>
-        <td>
-            {% if user.region is not null %}
-                {{ user.region.title}}
+        <thead>
+        <tr>
+            <th scope="col">Label</th>
+            <th scope="col">Data</th>
+        </tr>
+        </thead>
+        <tr>
+            <td>{% trans %}Username{% endtrans %}</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Email{% endtrans %}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Name{% endtrans %}</td>
+            <td>{{ user.name }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Surname{% endtrans %}</td>
+            <td>{{ user.surname }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Birth date{% endtrans %}</td>
+            <td>{{ user.birthdate|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Region{% endtrans %}</td>
+            <td>
+                {% if user.region is not null %}
+                    {{ user.region.title }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans %}Address{% endtrans %}</td>
+            <td>{{ user.address }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Phone number{% endtrans %}</td>
+            <td>{{ user.phone }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Roles{% endtrans %}</td>
+            <td>{{ user.roles|join(', ') }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Registration date{% endtrans %}</td>
+            <td>{{ user.registrationDate|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <td>{% trans %}Last access date{% endtrans %}</td>
+            <td>{{ user.lastAccessDate|date('Y-m-d h:m') }}</td>
+        </tr>
+        <tr>
+            {% if user.learningGroupsUserTeaches is not empty %}
+                <td>{% trans %}Teacher in group(s){% endtrans %}:</td>
+                {% for group in user.learningGroupsUserTeaches %}
+                    <td><a href="{{ path('group.view', {'group': group.id }) }}"> Id:{{ group.id }}
+                            Address: {{ group.address }} </a></td>
+                {% endfor %}
             {% endif %}
-        </td>
-      </tr>
-      <tr>
-        <td>{% trans %}Address{% endtrans %}</td>
-        <td>{{ user.address}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Phone number{% endtrans %}</td>
-        <td>{{ user.phone}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Roles{% endtrans %}</td>
-        <td>{{ user.roles|join(', ')}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Registration date{% endtrans %}</td>
-        <td>{{ user.registrationDate|date('Y-m-d')}}</td>
-      </tr>
-      <tr>
-        <td>{% trans %}Last access date{% endtrans %}</td>
-        <td>{{ user.lastAccessDate|date('Y-m-d h:m')}}</td>
-      </tr>
-      <tr>
-          {% if user.learningGroupsUserTeaches is not empty  %}
-            <td>{% trans %}Teacher in group(s){% endtrans %}:</td>
-              {% for group in user.learningGroupsUserTeaches %}
-                <td><a href="{{ path('group.view', {'group': group.id }) }}"> Id:{{ group.id }}  Address: {{ group.address }} </a></td>
-              {% endfor %}
-          {% endif %}
-      </tr>
-      <tr>
-          {% if user.learningGroup is not empty  %}
-            <td>{% trans %}Studying in group{% endtrans %}:</td>
-            <td>{% trans %}Id{% endtrans %}:{{ user.learningGroup.id }}  {% trans %}Address{% endtrans %}: {{ user.learningGroup.address }}</td>
-          {% endif %}
-      </tr>
+        </tr>
+        <tr>
+            {% if user.learningGroup is not empty %}
+                <td>{% trans %}Studying in group{% endtrans %}:</td>
+                <td>{% trans %}Id{% endtrans %}:{{ user.learningGroup.id }}  {% trans %}Address{% endtrans %}
+                    : {{ user.learningGroup.address }}</td>
+            {% endif %}
+        </tr>
     </table>
 {% endblock %}
