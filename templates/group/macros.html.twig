@@ -6,7 +6,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro printParticipant(participant, id) %}
+{% macro printParticipant(participant, display) %}
     {% from _self import validate %}
     <div class="participant">
         <div class="row">
@@ -33,7 +33,7 @@
         </div>
         <div class="participant__additional">
             <div class="row">
-                {% if id is not defined %}
+                {% if display == true %}
                     <div class="input-field col s12 m6">
                         <div class="row">
                             {{ form_label(participant.user.username) }}
@@ -64,6 +64,8 @@
                         </div>
                     </div>
                 {% endif %}
+            </div>
+            <div class="row">
                 <div class="input-field col s12 m6">
                     {{ form_widget(participant.user.region) }}
                     {{ form_label(participant.user.region) }}

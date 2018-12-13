@@ -43,6 +43,8 @@ class GroupFormManager
     {
         $form->handleRequest($request);
 
+        $plainParticipants = null;
+
         if ($form->isSubmitted() && $form->isValid()) {
             $group = $form->getData();
             $plainParticipants = new ArrayCollection();
@@ -58,11 +60,9 @@ class GroupFormManager
 
             $this->entityManager->persist($group);
             $this->entityManager->flush();
-
-            return $plainParticipants;
         }
 
-        return null;
+        return $plainParticipants;
     }
 
     /**

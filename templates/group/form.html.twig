@@ -88,12 +88,12 @@
                 </div>
             </div>
         </div>
-        <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype)|e('html_attr') }}">
+        <div class="participants" data-prototype="{{ printParticipant(form.participants.vars.prototype, true)|e('html_attr') }}">
             {% for participant in form.participants %}
                 {% if id is defined %}
-                    {{ printParticipant(participant, id) }}
+                    {{ printParticipant(participant, false) }}
                 {% else %}
-                    {{ printParticipant(participant) }}
+                    {{ printParticipant(participant, true) }}
                 {% endif %}
             {% endfor %}
             <div class="group-form__empty">
