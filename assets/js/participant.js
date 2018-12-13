@@ -77,6 +77,6 @@ export default () => {
 
   participantsHolder.on('change', '.participant__name', e => generateUsername(e, getUsernameFromName));
   participantsHolder.on('change', '.participant__surname', e => generateUsername(e, getUsernameFromSurname));
-  participantsHolder.on('click', '.participant__toggle-additional-button', toggleAdditionalSection);
-  participantsHolder.on('click', '.participant__password-generate-button', generatePassword);
+  participantsHolder.on('click', '.participant__button--toggle-additional', toggleAdditionalSection);
+  participantsHolder.on('click', '.participant__button--generate-password', generatePassword);
 };

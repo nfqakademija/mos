@@ -1,19 +1,14 @@
 $primary-color: #1565C0;
 
-.row,
-.col .row {
-  margin: 0;
-  padding: 0;
-}
-
-.dropdown-content li > span {
-  color: $primary-color;
-}
-
 @mixin border {
   margin-bottom: 20px;
   border-left: 2px solid $primary-color;
   box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.row, .col .row {
+  margin: 0;
+  padding: 0;
 }
 
 .center-element {
@@ -31,4 +26,34 @@ $primary-color: #1565C0;
   content: "";
   clear: both;
   display: table;
+}
+
+.add-button {
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+  width: 75px;
+  height: 75px;
+  border-radius: 100%;
+  text-align: center;
+
+  .add-button__icon {
+    color: #FFF;
+    font-size: 34px;
+    line-height: 75px;
+  }
+}
+
+.back-button {
+  margin-top: 30px;
+
+  @media screen and (max-width: 600px) {
+    margin-left: 30px;
+  }
+
+  .back-button__text {
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: top;
+  }
 }

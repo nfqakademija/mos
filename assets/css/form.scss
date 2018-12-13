@@ -1,41 +1,31 @@
-.submit-button-wrapper {
-  clear: both;
-  height: 110px;
-  @extend .center-element;
-
-  .submit-button {
-    margin: 20px 0;
+.form {
+  .form__section {
+    box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+    padding: 15px;
   }
-}
 
-input:not(.browser-default).input--invalid {
-  border-bottom: 1px solid #f44336;
-  box-shadow: 0 1px 0 0 #F44336;
-}
-
-input[type=email]:not(.browser-default):focus {
-  border: none;
-}
-
-.input-field input[type=text].valid,
-.input-field input[type=email]:not(.browser-default).valid,
-.input-field input[type=password]:not(.browser-default).valid,
-.input-field input:focus {
-  border-bottom: 1px solid $primary-color !important;
-  box-shadow: 0 1px 0 0 $primary-color !important;
-}
-
-.error-wrapper {
-  margin: 0;
-
-  .error {
-    color: rgb(244, 67, 54);
-    font-size: 12px;
+  .form__print {
+    float: right;
+    cursor: pointer;
   }
-}
 
-.form__section {
-  box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.3);
-  margin-bottom: 15px;
-  padding: 15px;
+  .form__submit-button {
+    clear: both;
+    height: 110px;
+    @extend .center-element;
+
+    & > * {
+      margin: 20px 0;
+    }
+  }
+
+  .form__errors {
+    margin: 0;
+
+    .form__errors__error {
+      color: rgb(244, 67, 54);
+      font-size: 12px;
+    }
+  }
 }

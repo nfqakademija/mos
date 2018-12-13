@@ -3,16 +3,24 @@
 {% block title %}Users{% endblock %}
 
 {% block body %}
-    <h2 class="center-align">
+    <h2 class="page-title center-align">
         {% trans %}Users{% endtrans %}
     </h2>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">{{ knp_pagination_sortable(users, '#▲▼', 'u.id') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(users, 'Name'|trans({}, 'messages') ~'▲▼', 'u.name') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(users, 'Surname'|trans({}, 'messages') ~'▲▼', 'u.surname') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(users, 'Username'|trans({}, 'messages') ~'▲▼', 'u.username') }}</th>
+            <th scope="col">
+                {{ knp_pagination_sortable(users, '#▲▼', 'u.id') }}
+            </th>
+            <th scope="col">
+                {{ knp_pagination_sortable(users, 'Name'|trans({}, 'messages') ~'▲▼', 'u.name') }}
+            </th>
+            <th scope="col">
+                {{ knp_pagination_sortable(users, 'Surname'|trans({}, 'messages') ~'▲▼', 'u.surname') }}
+            </th>
+            <th scope="col">
+                {{ knp_pagination_sortable(users, 'Username'|trans({}, 'messages') ~'▲▼', 'u.username') }}
+            </th>
             <th scope="col"></th>
         </tr>
         </thead>

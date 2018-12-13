@@ -76,14 +76,14 @@ const addTimeSlot = (that, addTimeSlotButton, timeSlotCollectionHolder) => {
   }
 };
 
-const jumpToNextItem = (e, addButton, collectionHolder, addFunction) => {
+const jumpToNextItem = (e, addButton, collectionHolder, addFunction, itemClass) => {
   const keyCode = e.keyCode || e.which;
   const that = e.currentTarget;
 
   if (keyCode === 9 || keyCode === 13) {
     e.preventDefault();
     addFunction(that, addButton, collectionHolder);
-    $(that).parents().eq(2).next().children().first().children().first().find('input').focus();
+    $(that).parents().eq(2).next().children().first().children().find(`.${itemClass}`).focus();
   }
 };
 
@@ -151,8 +151,8 @@ const importFromTextFile = (participantCollectionHolder, addParticipantButton, f
 };
 
 const importParticipants = (participantCollectionHolder, addParticipantButton) => {
-  const file = $('.group-form__import')[0].files[0];
-  const errorHolder = $('.group-form__import-error');
+  const file = $('.group-form__import__input')[0].files[0];
+  const errorHolder = $('.group-form__import__error');
   const reader = new FileReader();
   const textType = /text\/plain/;
   const excelTypes = ["csv", "xlsx", "xls"];
@@ -178,27 +178,27 @@ const checkIfCollectionIsEmpty = collectionHolder => {
 };
 
 const togglePaste = () => {
-  $('.group-form__paste').slideToggle('fast');
-  $('.group-form__paste-error__format').hide();
-  $('.group-form__paste-error__empty').hide();
+  $('.group-form__paste__section').slideToggle('fast');
+  $('.group-form__paste__error--format').hide();
+  $('.group-form__paste__error--empty').hide();
 };
 
 const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
-  const names = $('.group-form__paste-text').val().split('\n').filter(name => name !== '');
+  const names = $('.group-form__paste__text').val().split('\n').filter(name => name !== '');
 
   e.preventDefault();
 
   if(names.length > 0) {
     if(importFromArray(participantCollectionHolder, addParticipantButton, names, names.length) === false) {
-      $('.group-form__paste-error__format').show();
-      $('.group-form__paste-error__empty').hide();
+      $('.group-form__paste__error--format').show();
+      $('.group-form__paste__error--empty').hide();
     } else {
-      $('.group-form__paste-text').val('');
-      $('.group-form__paste').hide();
+      $('.group-form__paste__text').val('');
+      $('.group-form__paste__section').hide();
     }
   } else {
-    $('.group-form__paste-error__empty').show();
-    $('.group-form__paste-error__format').hide();
+    $('.group-form__paste__error--empty').show();
+    $('.group-form__paste__error--format').hide();
   }
 
 };
@@ -235,11 +235,11 @@ export default () => {
   $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
     $(this).slideUp(500)
   });
-  $('.group-form__import').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
-  $('.group-form__paste-toggle').on('click', togglePaste);
-  $('.group-form__paste-submit').on('click', e => addFromPaste(e, participantCollectionHolder, addParticipantButton));
-  $('.group-form__print').on('click', () => printJS({
-    printable: 'group-form__table',
+  $('.group-form__import__input').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));
+  $('.group-form__paste__toggle-button').on('click', togglePaste);
+  $('.group-form__paste__submit-button').on('click', e => addFromPaste(e, participantCollectionHolder, addParticipantButton));
+  $('.form__print').on('click', () => printJS({
+    printable: 'form__table',
     type: 'html',
     header: 'Dalyviai',
     scanStyles: false
@@ -252,13 +252,13 @@ export default () => {
     e => addTimeSlotButtonHandler(e, addTimeSlotButton, timeSlotCollectionHolder));
   addTimeSlotButton.on('mousedown', hideTooltip);
 
-  participantCollectionHolder.on('keydown', '.participant__surname',
-    e => jumpToNextItem(e, addParticipantButton, participantCollectionHolder, addParticipant));
-  participantCollectionHolder.on('click', '.participant__remove-button', removeItem);
+  participantCollectionHolder.on('keydown', '.participant__surname', e =>
+    jumpToNextItem(e, addParticipantButton, participantCollectionHolder, addParticipant, 'participant__name'));
+  participantCollectionHolder.on('click', '.participant__button--remove', removeItem);
   participantCollectionHolder.on('keydown', '.participant__name', jumpToSibling);
-  timeSlotCollectionHolder.on('click', '.time-slot__remove-button', removeItem);
+  timeSlotCollectionHolder.on('click', '.time-slot__button--remove', removeItem);
   timeSlotCollectionHolder.on('keydown', '.time-slot__date', jumpToSibling);
   timeSlotCollectionHolder.on('keydown', '.time-slot__start-time', jumpToSibling);
   timeSlotCollectionHolder.on('keydown', '.time-slot__duration',
-    e => jumpToNextItem(e, addTimeSlotButton, timeSlotCollectionHolder, addTimeSlot));
+    e => jumpToNextItem(e, addTimeSlotButton, timeSlotCollectionHolder, addTimeSlot, 'time-slot__date'));
 };

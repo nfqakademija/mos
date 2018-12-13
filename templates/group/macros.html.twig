@@ -10,8 +10,8 @@
     {% from _self import validate %}
     <div class="participant">
         <div class="row">
-            <div class="participant__button-wrapper s2 m1 col push-s10 push-m11">
-                <i class="participant__remove-button material-icons">
+            <div class="participant__button s2 m1 col push-s10 push-m11">
+                <i class="participant__button--remove material-icons">
                     close
                 </i>
             </div>
@@ -25,8 +25,8 @@
                 {{ validate(participant.user.surname, 'participant__surname') }}
                 {{ form_errors(participant.user.surname) }}
             </div>
-            <div class="participant__button-wrapper push-s2 pull-l1 s8 col l2">
-                <button class="participant__toggle-additional-button blue darken-3 btn hoverable" type="button">
+            <div class="participant__button push-s2 pull-l1 s8 col l2">
+                <button class="participant__button--toggle-additional blue darken-3 btn hoverable" type="button">
                     Daugiau
                 </button>
             </div>
@@ -47,8 +47,8 @@
                             {{ validate(participant.user.password, 'participant__password') }}
                             {{ form_errors(participant.user.password) }}
                         </div>
-                        <div class="col s2 participant__button-wrapper">
-                            <i class="participant__password-generate-button material-icons">
+                        <div class="col s2 participant__button">
+                            <i class="participant__button--generate-password material-icons">
                                 refresh
                             </i>
                         </div>
@@ -104,8 +104,8 @@
     {% from _self import validate %}
     <div class="time-slot">
         <div class="row">
-            <div class="time-slot__remove-button-wrapper col push-s11 s1">
-                <i class="time-slot__remove-button material-icons">
+            <div class="time-slot__button col push-s11 s1">
+                <i class="time-slot__button--remove material-icons">
                     close
                 </i>
             </div>

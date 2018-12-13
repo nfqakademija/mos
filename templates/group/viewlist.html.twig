@@ -10,7 +10,7 @@
             {{ message }}
         </div>
     {% endfor %}
-    <h2 class="center-align">
+    <h2 class="page-title center-align">
         {% trans %}Groups list{% endtrans %}
     </h2>
     <a class="blue darken-3 hoverable add-button pulse" href="{{ path('group.create') }}">
@@ -18,7 +18,6 @@
             add
         </i>
     </a>
-    
     <table class="table">
         <thead>
         <tr>
@@ -27,7 +26,6 @@
             <th scope="col">{{ knp_pagination_sortable(groups, 'Start date'|trans({}, 'messages') ~'▲▼', 'gr.startDate') }}</th>
             <th scope="col">{{ knp_pagination_sortable(groups, 'End date'|trans({}, 'messages') ~'▲▼', 'gr.endDate') }}</th>
             <th scope="col">{% trans %}Participants{% endtrans %}</th>
-
         </tr>
         </thead>
         {% for group in groups %}
@@ -41,7 +39,6 @@
                 <td>
                     {{ group.startDate ? group.startDate|date('Y-m-d') }}
                 </td>
-
                 <td>
                     {{ group.endDate ? group.endDate|date('Y-m-d') }}
                 </td>

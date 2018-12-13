@@ -6,32 +6,34 @@
     <h2 class="center-align">
         {% trans %}Participants{% endtrans %}
     </h2>
-    <i class="material-icons group-form__print">
-        print
-    </i>
-    <table class="table" id="group-form__table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">{% trans %}Name{% endtrans %}</th>
-            <th scope="col">{% trans %}Surname{% endtrans %}</th>
-            <th scope="col">{% trans %}Username{% endtrans %}</th>
-            <th scope="col">{% trans %}Password{% endtrans %}</th>
-        </tr>
-        </thead>
-        {% for participant in participants %}
+    <div class="form">
+        <i class="material-icons form__print">
+            print
+        </i>
+        <table class="table" id="form__table">
+            <thead>
             <tr>
-                <th scope="row">{{ loop.index }}</th>
-                <td>{{ participant.name }}</td>
-                <td>{{ participant.surname }}</td>
-                <td>{{ participant.username }}</td>
-                <td>{{ participant.password }}</td>
+                <th scope="col">#</th>
+                <th scope="col">{% trans %}Name{% endtrans %}</th>
+                <th scope="col">{% trans %}Surname{% endtrans %}</th>
+                <th scope="col">{% trans %}Username{% endtrans %}</th>
+                <th scope="col">{% trans %}Password{% endtrans %}</th>
             </tr>
-        {% endfor %}
-    </table>
-    <div class="submit-button-wrapper">
-        <a class="submit-button btn-large blue darken-3" href="{{ path('group.viewlist') }}">
-            {% trans %}Finish{% endtrans %}
-        </a>
+            </thead>
+            {% for participant in participants %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ participant.name }}</td>
+                    <td>{{ participant.surname }}</td>
+                    <td>{{ participant.username }}</td>
+                    <td>{{ participant.password }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="form__submit-button">
+            <a class="btn-large blue darken-3" href="{{ path('group.viewlist') }}">
+                {% trans %}Finish{% endtrans %}
+            </a>
+        </div>
     </div>
 {% endblock %}

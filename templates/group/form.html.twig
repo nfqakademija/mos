@@ -1,7 +1,7 @@
 {% from 'group/macros.html.twig' import printParticipant, printTimeSlot, validate %}
 {% form_theme form 'group/form_errors.html.twig' %}
 
-<div class="group-form row">
+<div class="group-form form">
     {{ form_start(form) }}
     {{ form_row(form._token) }}
     <div class="form__section">
@@ -27,8 +27,8 @@
             {% trans %}Participants{% endtrans %}
         </h5>
         <div class="row">
-            <div class="col s12 l6">
-                <div class="row group-form__import-row">
+            <div class="col s12 l6 group-form__import">
+                <div class="row">
                     <div class="file-field input-field col m11 s10">
                         <div class="btn tooltipped blue darken-3"
                              data-tooltip="{% trans %}Import participants{% endtrans %}"
@@ -36,31 +36,31 @@
                             <i class="material-icons">
                                 input
                             </i>
-                            <input class="group-form__import" type="file">
+                            <input class="group-form__import__input" type="file">
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text">
                         </div>
                     </div>
                     <div class="col m1 s2">
-                        <i class="material-icons group-form__import-info tooltipped"
+                        <i class="material-icons group-form__import__info tooltipped"
                            data-tooltip="{% trans %}Acceptable formats{% endtrans %} (csv, txt, xls, xlsx). Formatas:
-                                <div class='group-form__import-info__photo'>
-                                    <img src='{{ asset('build/images/upload_info.6ef945e2.png') }}' alt='Uh oh!' />
-                                </div>"
+                            <div class='group-form__import__info__photo'>
+                                <img src='{{ asset('build/images/upload_info.6ef945e2.png') }}' alt='Uh oh!' />
+                            </div>"
                            data-position="top"
                         >
                             info
                         </i>
                     </div>
                 </div>
-                <div class="group-form__import-error">
+                <div class="group-form__import__error">
                     {% trans %}Acceptable formats{% endtrans %} (csv, txt, xls, xlsx)
                 </div>
             </div>
-            <div class="row col s12 l6">
+            <div class="row col s12 l6 group-form__paste">
                 <div class="input-field">
-                    <div class="btn tooltipped blue darken-3 group-form__upload-button group-form__paste-toggle"
+                    <div class="btn tooltipped blue darken-3 group-form__paste__toggle-button"
                          data-tooltip="{% trans %}Paste participants{% endtrans %}"
                          data-position="right"
                     >
@@ -69,20 +69,20 @@
                         </i>
                     </div>
                 </div>
-                <div class="input-field group-form__paste clearfix">
-                <textarea
-                        class="group-form__paste-text"
-                        placeholder="Formatas 'vardas pavardė'"
-                ></textarea>
-                    <div class="group-form__paste-error">
-                        <div class="group-form__paste-error__empty">
+                <div class="input-field clearfix group-form__paste__section">
+                    <textarea
+                            class="group-form__paste__text"
+                            placeholder="Formatas 'vardas pavardė'"
+                    ></textarea>
+                    <div class="group-form__paste__error">
+                        <div class="group-form__paste__error--empty">
                             {% trans %}Field must not be empty{% endtrans %}
                         </div>
-                        <div class="group-form__paste-error__format">
+                        <div class="group-form__paste__error--format">
                             {% trans %}Bad format, should be 'name surname'{% endtrans %}
                         </div>
                     </div>
-                    <div class="group-form__paste-submit btn blue darken-3">
+                    <div class="group-form__paste__submit-button btn blue darken-3">
                         {% trans %}Add{% endtrans %}
                     </div>
                 </div>
@@ -110,8 +110,8 @@
             </div>
         </div>
     </div>
-    <div class="submit-button-wrapper">
-        {{ form_widget(form.save, {'attr': {'class': 'submit-button btn-large blue darken-3'} }) }}
+    <div class="form__submit-button">
+        {{ form_widget(form.save, {'attr': {'class': 'btn-large blue darken-3'} }) }}
     </div>
     {{ form_end(form, {'render_rest': false}) }}
 </div>

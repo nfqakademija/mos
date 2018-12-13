@@ -4,27 +4,35 @@
 
 {% block body %}
     <div class="login">
-        <h2 class="center-align">
+        <h2 class="page-title center-align">
             {% trans %}Login{% endtrans %}
         </h2>
-        <div class="form__section">
+        <div class="form">
             {% if error %}
-                <div class="alert">{{ error.messageKey }}</div>
+                <div class="alert">
+                    {{ error.messageKey }}
+                </div>
             {% endif %}
             <form action="{{ path('login') }}" method="POST">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="login__username">{% trans %}Username{% endtrans %}</label>
-                        <input class="validate" id="login__username" type="text" name="_username" value="{{ last_username }}">
-                    </div>
-                    <div class="input-field col s12">
-                        <label>{% trans %}Password{% endtrans %}</label>
-                        <input class="validate" id="login__password" type="password" name="_password">
-                    </div>
-                    <div class="submit-button-wrapper">
-                        <button class="submit-button btn-large blue darken-3" type="submit">
-                            {% trans %}Login{% endtrans %}
-                        </button>
+                <div class="form__section">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="login__username">
+                                {% trans %}Username{% endtrans %}
+                            </label>
+                            <input class="validate" id="login__username" type="text" name="_username" value="{{ last_username }}">
+                        </div>
+                        <div class="input-field col s12">
+                            <label for="login__password">
+                                {% trans %}Password{% endtrans %}
+                            </label>
+                            <input class="validate" id="login__password" type="password" name="_password">
+                        </div>
+                        <div class="form__submit-button">
+                            <button class="btn-large blue darken-3" type="submit">
+                                {% trans %}Login{% endtrans %}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

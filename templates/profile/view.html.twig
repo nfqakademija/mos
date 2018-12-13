@@ -6,14 +6,13 @@
     {% endtrans %}
 {% endblock %}
 
-
 {% block body %}
     {% for message in app.flashes('edit_user') %}
         <div class="alert">
             {{ message }}
         </div>
     {% endfor %}
-    <h2 class="center-align">
+    <h2 class="page-title center-align">
         {% trans %}Profile{% endtrans %}
     </h2>
     <a class="btn blue darken-3" href="{{ path('profile.edit', {'user': user.id}) }}">
@@ -22,8 +21,12 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Label</th>
-            <th scope="col">Data</th>
+            <th scope="col">
+                {% trans %}Label{% endtrans %}
+            </th>
+            <th scope="col">
+                {% trans %}Data{% endtrans %}
+            </th>
         </tr>
         </thead>
         <tr>

@@ -22,7 +22,7 @@ class LearningGroup
 
     /**
      * @ORM\Column(type="string", length=190)
-     * @Assert\NotBlank(message="Enter address")
+     * @Assert\NotBlank(message="Įveskite adresą")
      */
     private $address;
 
@@ -40,7 +40,7 @@ class LearningGroup
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="learningGroupsUserTeaches")
-     * @Assert\NotBlank(message="Select a teacher")
+     * @Assert\NotBlank(message="Pasirinkite mokytoją")
      */
     private $teacher;
 

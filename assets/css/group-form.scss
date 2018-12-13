@@ -1,35 +1,52 @@
 .group-form {
   padding: 10px 30px;
 
-  .group-form__import-info {
-    cursor: default;
-  }
+  .group-form__import {
+    .group-form__import__info {
+      cursor: default;
+    }
 
-  .group-form__import-row .file-field.input-field.col {
-    margin-left: 0;
-    left: 0;
-    padding-left: 0;
+    .file-field.input-field.col {
+      margin-left: 0;
+      left: 0;
+      padding-left: 0;
+    }
+
+    .group-form__import__error {
+      display: none;
+      margin-bottom: 20px;
+      color: rgb(244, 67, 54);
+    }
   }
 
   .group-form__paste {
-    display: none;
-  }
+    .group-form__paste__toggle-button {
+      height: 50px;
+      width: 50px;
+      margin-bottom: 15px;
+      @extend .center-element;
+    }
 
-  .group-form__paste-toggle {
-    height: 50px;
-    width: 50px;
-    margin-bottom: 15px;
-    @extend .center-element;
-  }
+    .group-form__paste__section {
+      display: none;
 
-  .group-form__import-error {
-    display: none;
-    margin-bottom: 20px;
-    color: rgb(244, 67, 54);
-  }
+      .group-form__paste__error {
+        color: rgb(244, 67, 54);
+      }
 
-  .group-form__paste-error {
-    color: rgb(244, 67, 54);
+      .group-form__paste__text {
+        resize: none;
+        border-radius: 5px;
+        height: 100px;
+        padding: 10px;
+        outline: none;
+        margin-bottom: 10px;
+      }
+
+      .group-form__paste__submit-button {
+        float: right;
+      }
+    }
   }
 
   .group-form__title {
@@ -52,26 +69,9 @@
     line-height: 56px;
     margin: 20px 0;
   }
-
-  .group-form__paste-text {
-    resize: none;
-    border-radius: 5px;
-    height: 100px;
-    padding: 10px;
-    outline: none;
-    margin-bottom: 10px;
-  }
-
-  .group-form__paste-submit {
-    float: right;
-  }
 }
 
-.group-form__print {
-  float: right;
-  cursor: pointer;
-}
-
-.group-form__import-info__photo {
+.group-form__import__info__photo {
   margin-top: 5px;
 }
+

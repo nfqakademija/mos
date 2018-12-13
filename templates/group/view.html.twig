@@ -8,7 +8,9 @@
             {{ message }}
         </div>
     {% endfor %}
-    <h2 class="center-align">{% trans %}Group{% endtrans %}</h2>
+    <h2 class="page-title center-align">
+        {% trans %}Group{% endtrans %}
+    </h2>
     <a class="btn blue darken-3" href="{{ path('group.edit', {'group': group.id}) }}">
         {% trans %}Edit{% endtrans %}
     </a>

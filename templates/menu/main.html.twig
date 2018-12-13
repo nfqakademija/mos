@@ -21,9 +21,9 @@
                     </a>
                 </li>
                 <li class="{{ app.request.get('_route') == 'report.status' ? 'active' }}">
-                  <a href="{{ path('report.status') }}">
-                    {% trans %}Status report{% endtrans %}
-                  </a>
+                    <a href="{{ path('report.status') }}">
+                        {% trans %}Status report{% endtrans %}
+                    </a>
                 </li>
             </ul>
         {% endif %}
