@@ -31,8 +31,7 @@ const createGraph = (ctx, type, labels, data, label, options) => {
   });
 };
 
-const displayGraphs = () => {
-  const data = $('.status').data('status');
+const displayGraphs = data => {
   const regionChart = $('.status__region-chart');
   const areaChart = $('.status__area-chart');
   const ageChart = $('.status__age-chart');
@@ -97,5 +96,6 @@ export default () => {
   M.Datepicker.init($('.report__date-from'), initialOptions);
   M.Datepicker.init($('.report__date-to'), initialOptions);
 
-  displayGraphs();
+  const data = $('.status').data('status');
+  data && displayGraphs(data);
 };

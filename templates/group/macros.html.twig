@@ -8,7 +8,7 @@
 
 {% macro printParticipant(participant, display) %}
     {% from _self import validate %}
-    <div class="participant">
+    <div class="participant participant--with-border">
         <div class="row">
             <div class="participant__button s2 m1 col push-s10 push-m11">
                 <i class="participant__button--remove material-icons">
@@ -110,7 +110,7 @@
     {% from _self import validate %}
     <div class="time-slot">
         <div class="row">
-            <div class="time-slot__button col push-s11 s1">
+            <div class="time-slot__button col push-s10 s2 m1 push-m11">
                 <i class="time-slot__button--remove material-icons">
                     close
                 </i>

@@ -18,3 +18,9 @@ input[type=email]:not(.browser-default):focus {
 .dropdown-content li > span {
   color: $primary-color;
 }
+
+.material-tooltip {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}

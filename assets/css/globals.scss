@@ -11,6 +11,12 @@ $primary-color: #1565C0;
   padding: 0;
 }
 
+.s-hide {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
 .center-element {
   position: relative;
 

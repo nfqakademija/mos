@@ -13,7 +13,7 @@
     <h2 class="page-title center-align">
         {% trans %}Groups list{% endtrans %}
     </h2>
-    <a class="blue darken-3 hoverable add-button pulse" href="{{ path('group.create') }}">
+    <a class="blue darken-3 hoverable add-button" href="{{ path('group.create') }}">
         <i class="add-button__icon material-icons">
             add
         </i>
@@ -21,11 +21,21 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">{{ knp_pagination_sortable(groups, '#▲▼', 'gr.id') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(groups, 'Address'|trans({}, 'messages') ~'▲▼', 'gr.id') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(groups, 'Start date'|trans({}, 'messages') ~'▲▼', 'gr.startDate') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(groups, 'End date'|trans({}, 'messages') ~'▲▼', 'gr.endDate') }}</th>
-            <th scope="col">{% trans %}Participants{% endtrans %}</th>
+            <th scope="col">
+                {{ knp_pagination_sortable(groups, '#▲▼', 'gr.id') }}
+            </th>
+            <th scope="col">
+                {{ knp_pagination_sortable(groups, 'Address'|trans({}, 'messages') ~'▲▼', 'gr.id') }}
+            </th>
+            <th scope="col" class="s-hide">
+                {{ knp_pagination_sortable(groups, 'Start date'|trans({}, 'messages') ~'▲▼', 'gr.startDate') }}
+            </th>
+            <th scope="col" class="s-hide">
+                {{ knp_pagination_sortable(groups, 'End date'|trans({}, 'messages') ~'▲▼', 'gr.endDate') }}
+            </th>
+            <th scope="col">
+                {% trans %}Participants{% endtrans %}
+            </th>
         </tr>
         </thead>
         {% for group in groups %}
@@ -36,10 +46,10 @@
                         {{ group.address }}
                     </a>
                 </td>
-                <td>
+                <td class="s-hide">
                     {{ group.startDate ? group.startDate|date('Y-m-d') }}
                 </td>
-                <td>
+                <td class="s-hide">
                     {{ group.endDate ? group.endDate|date('Y-m-d') }}
                 </td>
                 <td>

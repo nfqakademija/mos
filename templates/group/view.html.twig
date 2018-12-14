@@ -15,7 +15,7 @@
         {% trans %}Edit{% endtrans %}
     </a>
     <h4>{% trans %}Information{% endtrans %}</h4>
-    <table class="table">
+    <table class="table highlight">
         <thead>
         <tr>
             <th scope="col">{% trans %}Address{% endtrans %}</th>
@@ -29,7 +29,7 @@
     {% if group.timeslots|length == 0 %}
         <p>{% trans %}There are no time slots yet{% endtrans %}</p>
     {% else %}
-        <table class="table">
+        <table class="responsive-table highlight">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -40,7 +40,7 @@
             </thead>
             {% for timeSlot in group.timeslots %}
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
+                    <td scope="row">{{ loop.index }}</td>
                     <td>{{ timeSlot.date }}</td>
                     <td>{{ timeSlot.startTime }}</td>
                     <td>{{ timeSlot.duration }}</td>
@@ -52,7 +52,7 @@
     {% if group.participants|length == 0 %}
         <p>{% trans %}There are no participants yet{% endtrans %}</p>
     {% else %}
-        <table class="table">
+        <table class="responsive-table highlight">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -65,7 +65,7 @@
             </thead>
             {% for participant in group.participants %}
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
+                    <td scope="row">{{ loop.index }}</td>
                     <td>{{ participant.name }}</td>
                     <td>{{ participant.surname }}</td>
                     <td>{{ participant.username }}</td>
