@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Report view{% endblock %}
+
+{% block body %}
+    <h2 class="center-align">
+        {% trans %}Schedule report{% endtrans %}
+    </h2>
+
+    <form action={{ path('report.participants') }}>
+        <input type="date" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }} >
+        <input type="date" name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }} >
+
+        <button type="submit" name="submit_button" value="display">{% trans %}Display{% endtrans %}</button>
+        <button type="submit" name="submit_button" value="export">{% trans %}Export{% endtrans %} </button>
+    </form>
+    
+    
+    {% if results|length %}
+        <h6>{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h6>
+        {% else %}
+        <h6>{% trans %}Sorry, nothing found. Try to change a period.{% endtrans %}</h6>
+    {% endif %}
+   
+    <table>
+        <tr>
+            <th>{% trans %}Region/city{% endtrans %}</th>
+            <th>{% trans %}Address{% endtrans %}</th>
+            <th>{% trans %}Start{% endtrans %}</th>
+            <th>{% trans %}End{% endtrans %}</th>
+            <th>{% trans %}Participants count{% endtrans %}</th>
+            <th>{% trans %}Group Id{% endtrans %}</th>
+        </tr>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.region.title ? result.region.title }}</td>
+                <td>{{ result.address }}</td>
+                <td>{{ result.timesSlot.date ? result.timeSlot.date|date('Y-m-d') }}</td>
+                <td>{{ result.timesSlot.time ? result.timeSlot.time }}</td>
+                <td>{{ result.participantsCount }}</td>
+                <td>{{ result.learningGroup.id }}</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block pager %}
+    {% include 'helper/pager.html.twig' with { 'content': results } only %}
+{% endblock %}
