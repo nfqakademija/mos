@@ -160,6 +160,5 @@ class ProfileController extends AbstractController
         return $this->render('profile/add_teacher.html.twig', [
             'form' => $form->createView()
         ]);
-
     }
 }
