@@ -6,7 +6,7 @@ use App\Entity\LearningGroup;
 use App\Form\CreateGroupType;
 use App\Form\EditGroupType;
 use App\Services\GroupFormManager;
-use App\Helper\Helper;
+use App\Services\Helper;
 use App\Repository\LearningGroupRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Helper\Helper;
-use App\Report\Report;
+use App\Services\Helper;
+use App\Services\ReportManager;
 use App\Repository\RegionRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -27,7 +27,7 @@ class ReportController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Knp\Component\Pager\PaginatorInterface $paginator
      * @param \App\Repository\UserRepository $ur
-     * @param \App\Helper\Helper $helper
+     * @param \App\Services\Helper $helper
      *
      * @return RedirectResponse|Response
      */
@@ -65,11 +65,11 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/participants/export", name="report.participants.export",)
      *
-     * @param Report $report
+     * @param ReportManager $report
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function participantsReportToExcel(Request $request, Report $report, Helper $helper)
+    public function participantsReportToExcel(Request $request, ReportManager $report, Helper $helper)
     {
         $datesFromTo = $helper->dateFromToFromRequest($request);
 
@@ -86,7 +86,7 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/status", name="report.status")
      */
-    public function statusReport(Report $report, RegionRepository $regionRepository)
+    public function statusReport(ReportManager $report, RegionRepository $regionRepository)
     {
         $result = $report->getStatusReport($regionRepository);
 

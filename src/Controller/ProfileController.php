@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditUserType;
-use App\Helper\Helper;
+use App\Services\Helper;
 use App\Repository\UserRepository;
 use App\Services\ParticipantFormManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,7 +49,7 @@ class ProfileController extends AbstractController
      *   name="profile.viewlist",
      *   methods="GET")
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Helper\Helper $helper
+     * @param \App\Services\Helper $helper
      * @param \App\Repository\UserRepository $userRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
