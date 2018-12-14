@@ -66,7 +66,7 @@ class GroupController extends AbstractController
         if ($participants !== null) {
             $this->addFlash(
                 'create_group',
-                'Group was successfully created!'
+                'Grupė buvo sėkmingai sukurta!'
             );
 
             return $participants->count() > 0 ? $this->render('group/participants.html.twig', [
@@ -93,7 +93,7 @@ class GroupController extends AbstractController
         if ($groupFormHandler->handleEdit($form, $request)) {
             $this->addFlash(
                 'edit_group',
-                'Group was successfully updated!'
+                'Grupė buvo sėkmingai atnaujinta!'
             );
 
             return $this->redirectToRoute('group.view', array('group' => $group->getId()));

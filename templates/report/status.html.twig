@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Project status{% endblock %}
+{% block title %}
+    {% trans %}
+        Project status report
+    {% endtrans %}
+{% endblock %}
 
 {% block body %}
     <h2 class="page-title center-align">
