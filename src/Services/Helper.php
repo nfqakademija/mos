@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helper;
+namespace App\Services;
 
 use App\Repository\RepositoryInterface;
 use Knp\Component\Pager\PaginatorInterface;

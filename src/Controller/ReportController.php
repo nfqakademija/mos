@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Helper\Helper;
+use App\Services\Helper;
 use App\Services\ReportManager;
 use App\Repository\RegionRepository;
 use App\Repository\UserRepository;

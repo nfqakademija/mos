@@ -18,7 +18,7 @@ class ReportManager
     private $userRepository;
 
     /**
-     * Report constructor.
+     * ReportManager constructor.
      *
      * @param \App\Repository\UserRepository $userRepository
      */
