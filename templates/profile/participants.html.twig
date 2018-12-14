@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Participants{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h2 class="page-title center-align">
+        {% trans %}Participants{% endtrans %}
+    </h2>
+    {% include 'profile/list.html.twig' %}
+{% endblock %}
+

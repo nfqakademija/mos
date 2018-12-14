@@ -55,6 +55,7 @@ class GroupFormManager
 
             foreach ($group->getParticipants() as $participant) {
                 $participant->setPassword($this->encoder->encodePassword($participant, $participant->getPassword()));
+                $participant->setRoles([User::ROLE_PARTICIPANT]);
                 $this->entityManager->persist($participant);
             }
 

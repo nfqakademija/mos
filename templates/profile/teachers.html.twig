@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Teachers{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('add_teacher') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h2 class="page-title center-align">
+        {% trans %}Teachers{% endtrans %}
+    </h2>
+    <a class="btn blue darken-3" href="{{ path('profile.add_teacher') }}">
+        {% trans %}Add teacher{% endtrans %}
+    </a>
+    {% include 'profile/list.html.twig' %}
+{% endblock %}
+

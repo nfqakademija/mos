@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% from 'profile/form.html.twig' import userForm %}
+
+{% block title %}
+    {% trans %}
+        Teacher form
+    {% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h2 class="page-title center-align">
+        {% trans %}Teacher form{% endtrans %}
+    </h2>
+    {{ userForm(form, true) }}
+{% endblock %}
