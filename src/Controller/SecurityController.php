@@ -12,11 +12,10 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login", name="login")
-     * @param Request $request
      * @param AuthenticationUtils $utils
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function login(Request $request, AuthenticationUtils $utils)
+    public function login(AuthenticationUtils $utils)
     {
         $error = $utils->getLastAuthenticationError();
         $lastUsername = $utils->getLastUsername();

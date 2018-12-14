@@ -9,12 +9,12 @@
         <h2 class="page-title center-align">
             {% trans %}Login{% endtrans %}
         </h2>
-        <div class="form">
-            {% if error %}
-                <div class="alert">
-                    {{ error.messageKey }}
-                </div>
-            {% endif %}
+        {% if error %}
+            <div class="alert">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+        <div class="form login__form">
             <form action="{{ path('login') }}" method="POST">
                 <div class="form__section">
                     <div class="row">
