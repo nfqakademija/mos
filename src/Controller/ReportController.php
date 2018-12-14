@@ -94,4 +94,16 @@ class ReportController extends AbstractController
             'result' => $result,
         ]);
     }
+
+    /**
+     * @Route("/report/schedule", name="report.schedule")
+     */
+    public function scheduleReport(ReportManager $report)
+    {
+        $result = $report->getScheduleReport();
+
+        return $this->render('report/schedule.html.twig', [
+          'result' => $result,
+        ]);
+    }
 }

@@ -263,4 +263,11 @@ class ReportManager
 
         return $range;
     }
+
+
+    public function getScheduleReport()
+    {
+
+        return [];
+    }
 }
