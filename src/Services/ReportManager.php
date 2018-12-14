@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Report;
+namespace App\Services;
 
 use App\Entity\User;
 use App\Repository\RegionRepository;
@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Report
+class ReportManager
 {
 
 
@@ -22,9 +22,7 @@ class Report
      *
      * @param \App\Repository\UserRepository $userRepository
      */
-    public function __construct(
-        UserRepository $userRepository
-    ) {
+    public function __construct(UserRepository $userRepository) {
         $this->userRepository = $userRepository;
     }
 

@@ -129,7 +129,6 @@ align-text@^0.1.1, align-text@^0.1.3:
 almond@~0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/almond/-/almond-0.3.3.tgz#a0e7c95ac7624d6417b4494b1e68bff693168a20"
-  integrity sha1-oOfJWsdiTWQXtElLHmi/9pMWiiA=
 
 alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
@@ -1185,6 +1184,26 @@ chalk@^2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
+chart.js@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.7.3.tgz#cdb61618830bf216dc887e2f7b1b3c228b73c57e"
+  dependencies:
+    chartjs-color "^2.1.0"
+    moment "^2.10.2"
+
+chartjs-color-string@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/chartjs-color-string/-/chartjs-color-string-0.5.0.tgz#8d3752d8581d86687c35bfe2cb80ac5213ceb8c1"
+  dependencies:
+    color-name "^1.0.0"
+
+chartjs-color@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/chartjs-color/-/chartjs-color-2.2.0.tgz#84a2fb755787ed85c39dd6dd8c7b1d88429baeae"
+  dependencies:
+    chartjs-color-string "^0.5.0"
+    color-convert "^0.5.3"
+
 chokidar@^2.0.0, chokidar@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.0.4.tgz#356ff4e2b0e8e43e322d18a372460bbcf3accd26"
@@ -1282,7 +1301,6 @@ code-point-at@^1.0.0:
 codepage@~1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/codepage/-/codepage-1.14.0.tgz#8cbe25481323559d7d307571b0fff91e7a1d2f99"
-  integrity sha1-jL4lSBMjVZ19MHVxsP/5HnodL5k=
   dependencies:
     commander "~2.14.1"
     exit-on-epipe "~1.0.1"
@@ -1301,6 +1319,10 @@ collection-visit@^1.0.0:
   dependencies:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
+
+color-convert@^0.5.3:
+  version "0.5.3"
+  resolved "http://registry.npmjs.org/color-convert/-/color-convert-0.5.3.tgz#bdb6c69ce660fadffe0b0007cc447e1b9f7282bd"
 
 color-convert@^1.3.0, color-convert@^1.9.0:
   version "1.9.3"
@@ -1359,12 +1381,10 @@ commander@, commander@^2.16.0:
 commander@~2.14.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
-  integrity sha512-+YR16o3rK53SmWHU3rEM3tPAh2rwb1yPcQX5irVn7mb0gXbwuCCrnkbV5+PBfETdfg1vui07nM6PCG1zndcjQw==
 
 commander@~2.17.1:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
-  integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -2307,7 +2327,6 @@ frac@0.3.1:
 frac@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/frac/-/frac-1.1.2.tgz#3d74f7f6478c88a1b5020306d747dc6313c74d0b"
-  integrity sha512-w/XBfkibaTl3YDqASwfDUqkna4Z2p9cFSr1aHDt0WoMTECnRfBOv2WArlZILlqgWlmdIlALXGpM2AOhEk5W3IA==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -3016,7 +3035,6 @@ isstream@~0.1.2:
 jquery-mousewheel@~3.1.13:
   version "3.1.13"
   resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
-  integrity sha1-BvAzXxbjU6aV5yBr9QUDy1I6buU=
 
 jquery@^3.3.1:
   version "3.3.1"
@@ -3517,6 +3535,10 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkd
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.10.2:
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.23.0.tgz#759ea491ac97d54bac5ad776996e2a58cc1bc225"
 
 ms@2.0.0:
   version "2.0.0"
@@ -4305,7 +4327,6 @@ pretty-error@^2.1.1:
 print-js@^1.0.54:
   version "1.0.54"
   resolved "https://registry.yarnpkg.com/print-js/-/print-js-1.0.54.tgz#f15df027951e9a9165b6d39420d362ba7f0fc130"
-  integrity sha512-tZkwoHJCTS6jqj0UuxhUY9xF8v0rOuAgIZRlfZBOg9D1R4saxznRANkVlAsLW+D4GOOsLq5Zd/OgVk58IfESXA==
 
 printj@~1.1.0, printj@~1.1.2:
   version "1.1.2"
@@ -4822,12 +4843,10 @@ select-hose@^2.0.0:
 select2-bootstrap4-theme@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/select2-bootstrap4-theme/-/select2-bootstrap4-theme-1.0.0.tgz#d637ff18e7fdade8d723ad4c567ef2ba48b73094"
-  integrity sha512-H5v9fd5JWqYKZZ0T8jB5cIrAhWdAIbr3K0pkfuUebcEZqFXlPtZSKoANzJc/qbDzj0/Sle1h/4APpVPveiR/VA==
 
 select2@^4.0.6-rc.1:
   version "4.0.6-rc.1"
   resolved "https://registry.yarnpkg.com/select2/-/select2-4.0.6-rc.1.tgz#aa6c3038a7f0f2e91ffade38f0a21c15e1813276"
-  integrity sha1-qmwwOKfw8ukf+t448KIcFeGBMnY=
   dependencies:
     almond "~0.3.1"
     jquery-mousewheel "~3.1.13"
@@ -5103,7 +5122,6 @@ sprintf-js@~1.0.2:
 ssf@~0.10.2:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/ssf/-/ssf-0.10.2.tgz#65b2b4fcdfd967bc8e8383a41349009893115976"
-  integrity sha512-rDhAPm9WyIsY8eZEKyE8Qsotb3j/wBdvMWBUsOhJdfhKGLfQidRjiBUV0y/MkyCLiXQ38FG6LWW/VYUtqlIDZQ==
   dependencies:
     frac "~1.1.2"
 
@@ -5737,7 +5755,6 @@ xlsx-style@^0.8.13:
 xlsx@^0.14.1:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.14.1.tgz#ecedf536bd1e94055486ff484f5888dcaa89bd3d"
-  integrity sha512-7hjB5YuyJo1fuuzXQjwuxD8LSUzE4Rxu5ToC3fB5JSunZxGjLcgKg69bEFG9GYoxeVDx5GL0k1dUodlvaQNRQw==
   dependencies:
     adler-32 "~1.2.0"
     cfb "^1.1.0"

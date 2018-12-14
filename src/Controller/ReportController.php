@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Helper\Helper;
-use App\Report\Report;
+use App\Services\ReportManager;
 use App\Repository\RegionRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\ReportFilterType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,12 +23,12 @@ class ReportController extends AbstractController
 {
     /**
      * @Route("/report/participants", name="report.participants",)
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator
-     * @param \App\Repository\UserRepository $ur
-     * @param \App\Helper\Helper $helper
-     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param UserRepository $ur
+     * @param Helper $helper
      * @return RedirectResponse|Response
+     * @throws \Exception
      */
     public function participantsReport(
         Request $request,
@@ -64,12 +63,14 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/participants/export", name="report.participants.export",)
-     *
-     * @param Report $report
-     *
+     * @param Request $request
+     * @param ReportManager $report
+     * @param Helper $helper
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function participantsReportToExcel(Request $request, Report $report, Helper $helper)
+    public function participantsReportToExcel(Request $request, ReportManager $report, Helper $helper)
     {
         $datesFromTo = $helper->dateFromToFromRequest($request);
 
@@ -85,13 +86,16 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/status", name="report.status")
+     * @param ReportManager $report
+     * @param RegionRepository $regionRepository
+     * @return Response
      */
-    public function statusReport(Report $report, RegionRepository $regionRepository)
+    public function statusReport(ReportManager $report, RegionRepository $regionRepository)
     {
-        $result = $report->getStatusReport($regionRepository);
+        $status = $report->getStatusReport($regionRepository);
 
         return $this->render('report/status.html.twig', [
-            'result' => $result,
+            'status' => $status,
         ]);
     }
 }
