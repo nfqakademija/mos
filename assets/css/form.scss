@@ -20,12 +20,8 @@
     }
   }
 
-  .form__errors {
-    margin: 0;
-
-    .form__errors__error {
-      color: rgb(244, 67, 54);
-      font-size: 12px;
-    }
+  .form__error {
+    color: rgb(244, 67, 54);
+    font-size: 12px;
   }
 }

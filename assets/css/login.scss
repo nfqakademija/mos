@@ -1,10 +1,5 @@
 .login {
-  width: 70%;
-  margin: 0 auto;
-
-  @media only screen and (max-width: 601px) {
-    width: 100%;
-  }
+  @extend .small-container;
 
   .row {
     margin-top: 20px;

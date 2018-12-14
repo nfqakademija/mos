@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\EditUserType;
 use App\Services\Helper;
 use App\Repository\UserRepository;
 use App\Services\ParticipantFormManager;
+use App\Services\PasswordFormManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -84,6 +86,32 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/profile/change-password", name="profile.change_password")
+     * @param Request $request
+     * @param PasswordFormManager $passwordFormManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function changePassword(Request $request, PasswordFormManager $passwordFormManager)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(ChangePasswordType::class);
+
+        if ($passwordFormManager->handleChange($form, $request, $user)) {
+            $this->addFlash(
+                'edit_user',
+                'Slaptažodis buvo sėkmingai pakeistas!'
+            );
+
+            return $this->redirectToRoute('profile.view');
+        }
+
+        return $this->render('profile/change_password.html.twig', [
             'form' => $form->createView()
         ]);
     }
