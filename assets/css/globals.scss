@@ -20,8 +20,22 @@ $primary-color: #1565C0;
   padding: 0;
 }
 
+.page-title {
+  margin-bottom: 50px;
+}
+
+.btn--action {
+  margin-bottom: 15px;
+}
+
 .s-hide {
   @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.m-hide {
+  @media screen and (max-width: 993px) {
     display: none;
   }
 }

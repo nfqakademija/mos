@@ -57,14 +57,14 @@
     {% if group.participants|length == 0 %}
         <p>{% trans %}There are no participants yet{% endtrans %}</p>
     {% else %}
-        <table class="responsive-table highlight">
+        <table class="table highlight">
             <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">{% trans %}Name{% endtrans %}</th>
                 <th scope="col">{% trans %}Surname{% endtrans %}</th>
-                <th scope="col">{% trans %}Username{% endtrans %}</th>
-                <th scope="col">{% trans %}Birth date{% endtrans %}</th>
+                <th scope="col" class="m-hide">{% trans %}Username{% endtrans %}</th>
+                <th scope="col" class="m-hide">{% trans %}Birth date{% endtrans %}</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -73,8 +73,8 @@
                     <td scope="row">{{ loop.index }}</td>
                     <td>{{ participant.name }}</td>
                     <td>{{ participant.surname }}</td>
-                    <td>{{ participant.username }}</td>
-                    <td>{{ participant.birth_date }}</td>
+                    <td class="m-hide">{{ participant.username }}</td>
+                    <td class="m-hide">{{ participant.birth_date }}</td>
                     <td>
                         <a href="{{ path('profile.view.user', {'user': participant.id}) }}">
                             {% trans %}View{% endtrans %}
