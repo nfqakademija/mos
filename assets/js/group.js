@@ -205,11 +205,11 @@ const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
 
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
-    '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
-    ' data-tooltip="Pridėti dalyvį" data-position="right">add</i></div>');
+    '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue lighten-1 ' +
+    'material-icons" data-tooltip="Pridėti dalyvį" data-position="right">add</i></div>');
   const addTimeSlotButton = $('<div class="clearfix">' +
-    '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue darken-3 material-icons" ' +
-    'data-tooltip="Pridėti paskaitos laiką" data-position="right">add</i></div>');
+    '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue lighten-1 material-icons ' +
+    '" data-tooltip="Pridėti paskaitos laiką" data-position="right">add</i></div>');
   const participantCollectionHolder = $('div.participants');
   const timeSlotCollectionHolder = $('div.time-slots');
 

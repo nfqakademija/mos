@@ -24,3 +24,11 @@ input[type=email]:not(.browser-default):focus {
     display: none;
   }
 }
+
+i.left {
+  margin-right: 5px;
+}
+
+i.right {
+  margin-left: 10px;
+}

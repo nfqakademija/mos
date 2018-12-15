@@ -17,10 +17,16 @@
     </h2>
     <a class="btn blue darken-3" href="{{ path('profile.edit', {'user': user.id}) }}">
         {% trans %}Edit{% endtrans %}
+        <i class="material-icons left">
+            edit
+        </i>
     </a>
     {% if app.user is same as(user) %}
         <a class="btn blue darken-3" href="{{ path('profile.change_password') }}">
             {% trans %}Change password{% endtrans %}
+            <i class="material-icons left">
+                vpn_key
+            </i>
         </a>
     {% endif %}
     <table class="table">
