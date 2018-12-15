@@ -35,3 +35,12 @@ i.left {
 i.right {
   margin-left: 10px;
 }
+
+.row .col.search-input,
+.row .col.filter-input {
+  padding-left: 0;
+}
+
+.input-field .prefix ~ label {
+  margin-left: 2.25rem;
+}

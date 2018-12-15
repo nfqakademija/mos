@@ -18,20 +18,35 @@
             add
         </i>
     </a>
+    <form method="get">
+        <div class="input-field col s12 filter-input">
+            <i class="material-icons prefix">
+                filter_list
+            </i>
+            <select>
+                <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
+                {{ knp_pagination_sortable(groups, 'By ID descending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(groups, 'By ID ascending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(groups, 'By start date descending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(groups, 'By start date ascending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(groups, 'By end date descending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(groups, 'By end date ascending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'asc'}) }}
+            </select>
+            <label>{% trans %}Sort by{% endtrans %}</label>
+        </div>
+    </form>
     <table class="table highlight">
         <thead>
         <tr>
+            <th scope="col">#</th>
             <th scope="col">
-                {{ knp_pagination_sortable(groups, '#▲▼', 'gr.id') }}
-            </th>
-            <th scope="col">
-                {{ knp_pagination_sortable(groups, 'Address'|trans({}, 'messages') ~'▲▼', 'gr.id') }}
+                {% trans %}Address{% endtrans %}
             </th>
             <th scope="col" class="s-hide">
-                {{ knp_pagination_sortable(groups, 'Start date'|trans({}, 'messages') ~'▲▼', 'gr.startDate') }}
+                {% trans %}Start date{% endtrans %}
             </th>
             <th scope="col" class="s-hide">
-                {{ knp_pagination_sortable(groups, 'End date'|trans({}, 'messages') ~'▲▼', 'gr.endDate') }}
+                {% trans %}End date{% endtrans %}
             </th>
             <th scope="col">
                 {% trans %}Participants{% endtrans %}

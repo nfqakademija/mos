@@ -12,6 +12,10 @@ $(document).ready(function () {
   initGroupForm();
   groupParticipants();
   reports();
+
+  $('.filter-input select').on('change', () => {
+    window.location = $(this).find(":selected").val();
+  })
 });
 
 

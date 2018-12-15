@@ -1,17 +1,15 @@
 <table class="table highlight">
     <thead>
     <tr>
+        <th scope="col">#</th>
         <th scope="col">
-            {{ knp_pagination_sortable(users, '#▲▼', 'u.id') }}
+            {% trans %}Name{% endtrans %}
         </th>
         <th scope="col">
-            {{ knp_pagination_sortable(users, 'Name'|trans({}, 'messages') ~'▲▼', 'u.name') }}
-        </th>
-        <th scope="col">
-            {{ knp_pagination_sortable(users, 'Surname'|trans({}, 'messages') ~'▲▼', 'u.surname') }}
+            {% trans %}Surname{% endtrans %}
         </th>
         <th scope="col" class="s-hide">
-            {{ knp_pagination_sortable(users, 'Username'|trans({}, 'messages') ~'▲▼', 'u.username') }}
+            {% trans %}Username{% endtrans %}
         </th>
         <th scope="col"></th>
     </tr>

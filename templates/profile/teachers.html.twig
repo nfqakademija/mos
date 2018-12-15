@@ -19,6 +19,11 @@
             add
         </i>
     </a>
-    {% include 'profile/list.html.twig' %}
+    {% include 'profile/filters.html.twig' with {'search_path': 'profile.teachers.search'} %}
+    {% if users|length > 0 %}
+        {% include 'profile/list.html.twig' %}
+    {% else %}
+        <p>{% trans %}No participants found{% endtrans %}</p>
+    {% endif %}
 {% endblock %}
 
