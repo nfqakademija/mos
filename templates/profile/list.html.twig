@@ -1,7 +1,7 @@
 <table class="table highlight">
     <thead>
     <tr>
-        <th scope="col">#</th>
+        <th scope="col" class="s-hide">#</th>
         <th scope="col">
             {% trans %}Name{% endtrans %}
         </th>
@@ -16,7 +16,7 @@
     </thead>
     {% for user in users %}
         <tr>
-            <th scope="row">{{ user.id }}</th>
+            <th scope="row" class="s-hide">{{ user.id }}</th>
             <td>{{ user.name }}</td>
             <td>{{ user.surname }}</td>
             <td class="s-hide">{{ user.username }}</td>
