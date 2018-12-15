@@ -16,7 +16,11 @@
         {% trans %}Profile{% endtrans %}
     </h2>
     <div class="row">
-        <a class="btn--action btn blue darken-3" href="{{ path('profile.edit', {'user': user.id}) }}">
+        {% if app.user is same as(user) %}
+            <a class="btn--action btn blue darken-3" href="{{ path('profile.edit') }}">
+        {% else %}
+            <a class="btn--action btn blue darken-3" href="{{ path('profile.edit', {'user': user.id}) }}">
+        {% endif %}
             {% trans %}Edit{% endtrans %}
             <i class="material-icons left">
                 edit
@@ -33,7 +37,7 @@
             </a>
         </div>
     {% endif %}
-    <table class="table">
+    <table class="table highlight">
         <thead>
         <tr>
             <th scope="col">

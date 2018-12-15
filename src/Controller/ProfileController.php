@@ -87,7 +87,32 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/edit/{user}", name="profile.edit")
+     * @Route("/profile/edit", name="profile.edit")
+     * @param Request $request
+     * @param UserFormManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editCurrentUser(Request $request, UserFormManager $manager)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditUserType::class, $user);
+
+        if ($manager->handleEdit($form, $request)) {
+            $this->addFlash(
+                'edit_user',
+                'Vartotojas buvo sėkmingai atnaujintas!'
+            );
+
+            return $this->redirectToRoute('profile.view');
+        }
+
+        return $this->render('profile/edit_user.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/profile/edit/{user}", name="profile.edit.user")
      * @param Request $request
      * @param User $user
      * @param UserFormManager $manager
@@ -100,7 +125,7 @@ class ProfileController extends AbstractController
         if ($manager->handleEdit($form, $request)) {
             $this->addFlash(
                 'edit_user',
-                'Dalyvis buvo sėkmingai atnaujintas!'
+                'Vartotojas buvo sėkmingai atnaujintas!'
             );
 
             return $this->redirectToRoute('profile.view.user', array('user' => $user->getId()));
