@@ -78,13 +78,13 @@ class ProfileController extends AbstractController
     {
         $searchPhrase = $request->query->get('key');
         $pagination = $helper->getEntitiesPaginated(
-            $userRepository->findBySearchAndRoleB(USER::ROLE_PARTICIPANT, $searchPhrase), $request
+            $userRepository->findBySearchAndRoleB(USER::ROLE_PARTICIPANT, $searchPhrase),
+            $request
         );
 
         return $this->render('profile/participants.html.twig', [
             'users' => $pagination,
         ]);
-
     }
 
     /**
