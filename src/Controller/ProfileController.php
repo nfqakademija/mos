@@ -68,6 +68,26 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/profile/participants/search", name="profile.participants.search", methods="GET")
+     * @param Request $request
+     * @param Helper $helper
+     * @param UserRepository $userRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function participantSearch(Request $request, Helper $helper, UserRepository $userRepository)
+    {
+        $searchPhrase = $request->query->get('key');
+        $pagination = $helper->getEntitiesPaginated(
+            $userRepository->findBySearchAndRoleB(USER::ROLE_PARTICIPANT, $searchPhrase), $request
+        );
+
+        return $this->render('profile/participants.html.twig', [
+            'users' => $pagination,
+        ]);
+
+    }
+
+    /**
      * @Route("/profile/teachers",
      *   name="profile.teachers",
      *   methods="GET")

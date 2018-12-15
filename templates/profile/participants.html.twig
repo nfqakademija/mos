@@ -8,6 +8,23 @@
     <h2 class="page-title center-align">
         {% trans %}Participants{% endtrans %}
     </h2>
-    {% include 'profile/list.html.twig' %}
+    <div class="form">
+        <form name="form" action="{{ path('profile.participants.search') }}" method="GET">
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">search</i>
+                    <label for="search">
+                        {% trans %}Search{% endtrans %}
+                    </label>
+                    <input class="validate" id="search" type="search" name="key">
+                </div>
+            </div>
+        </form>
+    </div>
+    {% if users|length > 0 %}
+        {% include 'profile/list.html.twig' %}
+    {% else %}
+        <p>{% trans %}No participants found{% endtrans %}</p>
+    {% endif %}
 {% endblock %}
 

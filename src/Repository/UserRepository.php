@@ -37,6 +37,22 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
 
     /**
      * @param $role
+     * @param $search
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findBySearchAndRoleB($role, $search)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.name LIKE :search')
+            ->orWhere('u.surname LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%"' . $role . '"%')
+            ->orderBy('u.id', 'DESC');
+    }
+
+    /**
+     * @param $role
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getByRoleB($role)
