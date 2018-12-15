@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TimeSlotRepository;
 use App\Services\Helper;
 use App\Services\ReportManager;
 use App\Repository\RegionRepository;
@@ -88,22 +89,45 @@ class ReportController extends AbstractController
      */
     public function statusReport(ReportManager $report, RegionRepository $regionRepository)
     {
-        $result = $report->getStatusReport($regionRepository);
+        $results = $report->getStatusReport($regionRepository);
 
         return $this->render('report/status.html.twig', [
-            'result' => $result,
+            'results' => $results,
         ]);
     }
 
     /**
      * @Route("/report/schedule", name="report.schedule")
      */
-    public function scheduleReport(ReportManager $report)
+    public function scheduleReport(
+      Request $request,
+      PaginatorInterface $paginator,
+      TimeSlotRepository $ts,
+      Helper $helper
+    )
     {
-        $result = $report->getScheduleReport();
+        $datesFromTo = $helper->dateFromToFromRequest($request);
+
+//        $submitButton = $request->query->get('submit_button');
+//        if ($submitButton === 'export') {
+//            return $this->redirectToRoute("report.participants.export", [
+//              [
+//                'dateFrom' => $datesFromTo['dateFrom']->format('Y-m-d'),
+//                'dateTo' => $datesFromTo['dateTo']->format('Y-m-d'),
+//              ]
+//            ]);
+//        }
+
+        $page = $helper->getPageFromRequest($request);
+
+        $query = $ts->getTimeSlotsInPeriod($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
+        $pagination = $paginator->paginate($query, $page, 15);
 
         return $this->render('report/schedule.html.twig', [
-          'result' => $result,
+          'results' => $pagination,
+          'dateFrom' => $datesFromTo['dateFrom'],
+          'dateTo' => $datesFromTo['dateTo'],
         ]);
+    
     }
 }

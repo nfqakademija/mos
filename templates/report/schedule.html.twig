@@ -8,7 +8,7 @@
         {% trans %}Schedule report{% endtrans %}
     </h2>
 
-    <form action={{ path('report.participants') }}>
+    <form action={{ path('report.schedule') }}>
         <input type="date" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }} >
         <input type="date" name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }} >
 
@@ -25,7 +25,6 @@
    
     <table>
         <tr>
-            <th>{% trans %}Region/city{% endtrans %}</th>
             <th>{% trans %}Address{% endtrans %}</th>
             <th>{% trans %}Start{% endtrans %}</th>
             <th>{% trans %}End{% endtrans %}</th>
@@ -34,11 +33,10 @@
         </tr>
         {% for result in results %}
             <tr>
-                <td>{{ result.region.title ? result.region.title }}</td>
-                <td>{{ result.address }}</td>
-                <td>{{ result.timesSlot.date ? result.timeSlot.date|date('Y-m-d') }}</td>
-                <td>{{ result.timesSlot.time ? result.timeSlot.time }}</td>
-                <td>{{ result.participantsCount }}</td>
+                <td>{{ result.learningGroup.address }}</td>
+                <td>{{ result.date ? result.date|date('Y-m-d') }}</td>
+                <td>{{ result.startTime ? result.startTime }}</td>
+                <td>{{ result.learningGroup.participants|length }}</td>
                 <td>{{ result.learningGroup.id }}</td>
                 <td></td>
             </tr>
