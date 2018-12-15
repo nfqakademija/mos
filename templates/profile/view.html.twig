@@ -26,17 +26,23 @@
                 edit
             </i>
         </a>
-    </div>
-    {% if app.user is same as(user) %}
-        <div class="row">
-            <a class="btn--action btn blue darken-3" href="{{ path('profile.change_password') }}">
-                {% trans %}Change password{% endtrans %}
-                <i class="material-icons left">
-                    vpn_key
+        {% if is_granted('ROLE_ADMIN') and app.user is not same as(user) %}
+            <a class="btn--action btn right red darken-3" href="{{ path('profile.remove', {'user': user.id}) }}">
+                <i class="material-icons right">
+                    delete
                 </i>
+                {% trans %}Remove{% endtrans %}
             </a>
-        </div>
-    {% endif %}
+        {% endif %}
+        {% if app.user is same as(user) %}
+                <a class="btn--action btn blue darken-3 right" href="{{ path('profile.change_password') }}">
+                    {% trans %}Change password{% endtrans %}
+                    <i class="material-icons left">
+                        vpn_key
+                    </i>
+                </a>
+        {% endif %}
+    </div>
     <table class="table highlight">
         <thead>
         <tr>

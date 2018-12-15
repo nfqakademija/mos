@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use App\Services\GroupFormManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

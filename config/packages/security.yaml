@@ -47,6 +47,7 @@ security:
     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/profile/teachers, roles: ROLE_ADMIN }
     - { path: ^/profile/add_teacher, roles: ROLE_ADMIN }
+    - { path: ^/profile/remove/, roles: ROLE_ADMIN }
     - { path: ^/profile/participants, roles: ROLE_TEACHER }
     - { path: ^/report, roles: ROLE_TEACHER}
     - { path: ^/group, roles: ROLE_TEACHER }

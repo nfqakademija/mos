@@ -8,12 +8,11 @@ use App\Form\EditUserType;
 use App\Form\RegisterUserType;
 use App\Services\Helper;
 use App\Repository\UserRepository;
-use App\Services\UserFormManager;
-use App\Services\PasswordFormManager;
+use App\Services\UserManager;
+use App\Services\PasswordManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfileController extends AbstractController
 {
@@ -46,6 +45,26 @@ class ProfileController extends AbstractController
         return $this->render('profile/view.html.twig', [
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @Route("/profile/remove/{user}", name="profile.remove")
+     * @param User $user
+     * @param UserManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeProfile(User $user, UserManager $manager)
+    {
+        $manager->removeUser($user);
+
+        $this->addFlash(
+            'remove_user',
+            'Vartotojas buvo sėkmingai pašalintas!'
+        );
+
+        return in_array(USER::ROLE_TEACHER, $user->getRoles())
+            ? $this->redirectToRoute('profile.teachers')
+            : $this->redirectToRoute('profile.participants');
     }
 
     /**
@@ -129,10 +148,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/edit", name="profile.edit")
      * @param Request $request
-     * @param UserFormManager $manager
+     * @param UserManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editCurrentUser(Request $request, UserFormManager $manager)
+    public function editCurrentUser(Request $request, UserManager $manager)
     {
         $user = $this->getUser();
         $form = $this->createForm(EditUserType::class, $user);
@@ -155,10 +174,10 @@ class ProfileController extends AbstractController
      * @Route("/profile/edit/{user}", name="profile.edit.user")
      * @param Request $request
      * @param User $user
-     * @param UserFormManager $manager
+     * @param UserManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editUser(Request $request, User $user, UserFormManager $manager)
+    public function editUser(Request $request, User $user, UserManager $manager)
     {
         $form = $this->createForm(EditUserType::class, $user);
 
@@ -179,10 +198,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/change_password", name="profile.change_password")
      * @param Request $request
-     * @param PasswordFormManager $manager
+     * @param PasswordManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function changePassword(Request $request, PasswordFormManager $manager)
+    public function changePassword(Request $request, PasswordManager $manager)
     {
         $user = $this->getUser();
 
@@ -205,10 +224,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/add_teacher", name="profile.add_teacher")
      * @param Request $request
-     * @param UserFormManager $manager
+     * @param UserManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addTeacher(Request $request, UserFormManager $manager)
+    public function addTeacher(Request $request, UserManager $manager)
     {
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);

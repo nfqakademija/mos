@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordFormManager
+class PasswordManager
 {
     /**
      * @var EntityManagerInterface $entityManager

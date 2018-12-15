@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class GroupFormManager
+class GroupManager
 {
     /**
      * @var EntityManagerInterface $entityManager

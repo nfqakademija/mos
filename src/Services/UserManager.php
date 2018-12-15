@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFormManager
+class UserManager
 {
     /**
      * @var EntityManagerInterface $entityManager
@@ -73,5 +73,14 @@ class UserFormManager
         }
 
         return false;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function removeUser(User $user): void
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
     }
 }
