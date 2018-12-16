@@ -22,15 +22,21 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 20;
-        $teachersNumber = 20;
-        $maxParticipantsInGroup = 20;
+        $groupsNumber = 50;
+        $teachersNumber = 10;
+        $maxParticipantsInGroup = 12;
         $maxTimeslotsInGroup = 5;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
         //#### end config ####
 
+        $maleNames = $this->getMaleNames();
+        $maleSurnames = $this->getMaleSurnames();
+        $femaleNames = $this->getFemaleNames();
+        $femaleSurnames = $this->getFemaleSurnames();
+        $streets = $this->getStreetNames();
+        
         //push all Regions to database
         $allRegionsObjects = [];
         $allRegionsData = $this->getAllRegionsData();
@@ -73,14 +79,22 @@ class AppFixtures extends Fixture
          * @var $userTeacher User[]
          */
         for ($i = 0; $i <= $teachersNumber; $i++) {
-            $unique = $this->randomString(5);
+            $gender = $genres[array_rand($genres, 1)];
+            if ($gender === 'vyras'){
+                $name = $maleNames[rand(0, sizeof($maleNames) - 1)];
+                $surname = $maleSurnames[rand(0, sizeof($maleSurnames) - 1)];
+            } else {
+                $name = $femaleNames[rand(0, sizeof($femaleNames) - 1)];
+                $surname = $femaleSurnames[rand(0, sizeof($femaleSurnames) - 1)];
+            }
+            
             $userTeacher[$i] = new User();
             $userTeacher[$i]
-                ->setUsername('teacher_' . $unique . '_' . $i)
+                ->setUsername($name . $surname. '_' . $i)
                 ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
-                ->setEmail('teacher' . $unique . $i . '@email.com')
-                ->setName('Tname' . $unique . $i)
-                ->setSurname('Tsurn' . $unique . $i)
+                ->setEmail($name . $surname. $i . '@email.com')
+                ->setName($name)
+                ->setSurname($surname)
                 ->setRoles([User::ROLE_TEACHER]);
             $manager->persist($userTeacher[$i]);
         }
@@ -89,28 +103,44 @@ class AppFixtures extends Fixture
         for ($i = 0; $i <= $groupsNumber; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
-            $group[$i]->setAddress('Savanorių pr. ' . $i );
+            $groupStreet = $streets[rand(0, sizeof($streets) - 1)];
+            $group[$i]->setAddress($groupStreet . $i );
             $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
             $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects) - 1)];
             $group[$i]->setRegion($region);
-            $participantsCount = rand(2, $maxParticipantsInGroup);
+            $participantsCount = rand(5, $maxParticipantsInGroup);
             for ($j = 0; $j < $participantsCount; $j++) {
+                $participantGender = $genres[array_rand($genres, 1)];
+                if ($participantGender === 'vyras'){
+                    $participantName = $maleNames[rand(0, sizeof($maleNames) - 1)];
+                    $participantSurname = $maleSurnames[rand(0, sizeof($maleSurnames) - 1)];
+                } else {
+                    $participantName = $femaleNames[rand(0, sizeof($femaleNames) - 1)];
+                    $participantSurname = $femaleSurnames[rand(0, sizeof($femaleSurnames) - 1)];
+                }
+                $participantStreet = $streets[rand(0, sizeof($streets) - 1)];
+                if (strpos($region->getTitle(), '.m')) 
+                {
+                    $livingAreaType = 'miestas';
+                }
+                else {
+                    $livingAreaType = 'kaimas';
+                }
                 $userParticipant = new User();
-                $unique = $this->randomString(8);
-                $uniqueSurname = $this->randomString(5);
+                $unique = $this->randomString(3);
                 $userParticipant
-                    ->setUsername('participant_' . $unique . '_' . $i)
+                    ->setUsername($participantName . '.' . $participantSurname . $unique . '_' . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail($unique . '@email.com')
-                    ->setName(ucfirst($unique))
-                    ->setSurname(ucfirst($uniqueSurname))
+                    ->setEmail($participantName . '.' . $unique . '_' . $i . '@email.com')
+                    ->setName($participantName)
+                    ->setSurname($participantSurname)
                     ->setRegion($region)
                     ->setBirthDate('19' . rand(45, 75) . '-' . rand(1, 12) . '-' . rand(1, 28))
                     ->setRoles([User::ROLE_PARTICIPANT])
-                    ->setLivingAreaType($livingAreaTypes[array_rand($livingAreaTypes, 1)])
-                    ->setGender($genres[array_rand($genres, 1)])
+                    ->setLivingAreaType($livingAreaType)
+                    ->setGender($participantGender)
                     ->setPhone($this->randomPhoneNumber())
-                    ->setAddress('Liepų g. ' . $i);
+                    ->setAddress($participantStreet . $i);
                 $manager->persist($userParticipant);
 
                 $group[$i]->addParticipant($userParticipant);
@@ -120,7 +150,7 @@ class AppFixtures extends Fixture
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
                 $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
-                $timeSlot->setStartTime("10:30");
+                $timeSlot->setStartTime(rand(9, 15) . ':' . "00");
                 $timeSlot->setDuration(90);
 
                 $group[$i]->addTimeSlot($timeSlot);
@@ -282,6 +312,14 @@ class AppFixtures extends Fixture
     {
         return [
           'Ada', 'Adelė', 'Adelija', 'Adelina', 'Adolfa', 'Adolfina', 'Adriana', 'Adrija', 'Adrijana', 'Agata',  'Agnė', 'Agnetė', 'Agnieška', 'Agnietė', 'Agnija', 'Agota', 'Agripina', 'Aida',  'Aidė', 'Aimana', 'Aimantė', 'Aina', 'Ainė', 'Airė', 'Airida',  'Aistė', 'Aistra', 'Aitra', 'Aivara',  'Akvilė', 'Akvilina', 'Alana',  'Alanta', 'Alberta', 'Albertina', 'Albina',  'Alda', 'Aldona', 'Alė', 'Aleksandra', 'Aleksandrina', 'Aleksė', 'Aleta', 'Alfonsė', 'Alfonsa', 'Alfreda',  'Algė', 'Algimanta', 'Algimantė', 'Algina', 'Algirdė', 'Algutė', 'Alicija', 'Alina', 'Aliodija', 'Aliona', 'Alisa', 'Alma', 'Aloyza', 'Alona',  'Alva', 'Alvyda',  'Alvydė', 'Alvita', 'Amalija', 'Amanda',  'Ana', 'Anastasija', 'Anastazija', 'Andrė', 'Andrėja', 'Andžela', 'Anė', 'Anelė', 'Aneta', 'Anetė', 'Angelė', 'Angelina', 'Aniceta', 'Antanina', 'Antonida', 'Antonija', 'Antonina', 'Anzelma', 'Apolinarija', 'Apolonija', 'Ara', 'Ariadnė', 'Arija',  'Arimantė', 'Arina', 'Aristida',  'Armina', 'Arminta', 'Arnė', 'Arnolda',  'Arūnė', 'Arvydė', 'Asta', 'Astija', 'Astra', 'Astrida',  'Ašara', 'Atėnė',  'Audra', 'Audrė', 'Audronė', 'Augustė', 'Augustina',  'Augutė', 'Auksė', 'Auksuolė', 'Aura', 'Aurėja', 'Aurelija', 'Aurora',  'Austė', 'Austėja', 'Austra', 'Aušra', 'Aušrinė',  'Banga', 'Banguolė', 'Barbara', 'Barbora',  'Bargailė', 'Bartė', 'Basia',  'Beata', 'Beatričė', 'BenediktaBenė', '',  'Benigna', 'Benita', 'Benjamina', 'Bernadeta', 'Bernarda', 'Bernardina', 'Berta', 'Beta',  'Biruta',  'Birutė', 'Bytautė', 'Bitė', 'Boleslava', 'Boleslova',  'Brigita', 'Bronė', 'Bronislava', 'Bronislova',  'Božena',  'Cecilė', 'Cecilija', 'Celestina', 'Celina', 'Cezarija', 'Cilė', 'Cintija',  'Dagmara', 'Dagna', 'Dagnė',  'Daina', 'Dainė', 'Dainora', 'Daiva', 'Daivita', 'Daivutė', 'Dalė', 'Dalia', 'Dalija',  'Dalytė', 'Dana',  'Danė', 'Dangė', 'Dangerutė', 'Dangira', 'Daniela', 'Danielė',  'Danguolė', 'Danuta', 'Danutė', 'Darata', 'Daria', 'Darija', 'Darja',  'Daugailė', 'Daumantė', 'Debora', 'Deima', 'Deimantė',  'Deivė', 'Deivilė', 'Demetra', 'Diana', 'Dijana', 'Dina', 'Dinara', 'Dita', 'Ditė', 'Doloresa', 'Doma',  'Domantė', 'Domicelė', 'Dominika', 'Dominyka', 'Dona', 'Donalda', 'Donata', 'Dora', 'Dorota', 'Dorotė', 'Dorotėja',  'Dovilė', 'Džeinė', 'Džeralda', 'Džesika', 'Džilda', 'Džina',  'Džiugė', 'Džiuginta', 'Džiulija', 'Džiuljeta', 'Džordana', 'Džulija',  'Edita',  'Eglė', 'Egida', 'Egidija',  'Eidvilė', 'Eimantė', 'Einara', 'Eiva', 'Ela', 'Elada', 'Elė', 'Elegija', 'Elena', 'Eleonora', 'Elfrida', 'Elija', 'Elytė', 'Eliza', 'Elma', 'Elona', 'Elvira', 'Elvyra', 'Elza',  'Elzė', 'Elžbieta', 'Ema', 'Emanuelė', 'Emilė', 'Emilija', 'Enrika',  'Erdvilė', 'Erika', 'Ermina', 'Erna', 'Ernesta', 'Ernestina', 'Ervina', 'Esmeralda', 'Estela', 'Estera', 'Eufrozina',  'Eugenija',  'Eulalija', 'Eva', 'Evalda', 'Evelina',  'Fabija', 'Faina', 'Faustina', 'Felicija', 'Felicita', 'Feliksa', 'Fernanda', 'Filomena', 'Freda', 'Frida',  'Gabeta',  'Gabija', 'Gabriela', 'Gabrielė',  'Gailė', 'Gailiūtė', 'Gailutė', 'Gaiva', 'Gaivilė', 'Gaja', 'Galia', 'Galina', 'Gaudencija',  'Gaudrė', 'Geda', 'Gedimina', 'Gediminė', 'Gedmantė', 'Gedmintė', 'Gedvyda', 'Geida', 'Geismantė', 'Geistė', 'Gelena',  'Gėlė', 'Gelmė', 'Gema', 'Gena', 'Genadija',  'Gendrė', 'Genė',  'Genovaitė', 'Genovefa', 'Genutė', 'Georgina', 'Gerarda', 'Gerda',  'Germantė', 'Gerta', 'Gertė', 'Gertruda', 'Gertrūda',  'Geta', 'Giedra', 'Giedrė', 'Gilda', 'Gilė', 'Gilija', 'Gilma', 'Gina', 'Gintara', 'Gintarė', 'Gintautė', 'Gintė', 'Girstautė', 'Girstė', 'Gita', 'Gitana', 'Gitė',  'Gytė', 'Gizela', 'Glorija',  'Gluosnė', 'Goda', 'Gotautė', 'Gotė', 'Gracija', 'Grasilda',  'Gražina', 'Gražyna', 'Gražvyda', 'Greta', 'Grėtė',  'Grita', 'Grytė', 'Gunda',  'Guoda', 'Gustė', 'Gustina',  'Halina', 'Hana', 'Helena', 'Henrika', 'Helga', 'Henrieta', 'Henrietė', 'Herma', 'Hiacinta', 'Hilda', 'Honorata', 'Hortenzija',  'Ida',  'Idalija', 'Ieva', 'Ievutė', 'Ignė', 'Ignota',  'Ilma', 'Ilmena', 'Ilona', 'Ilzė',  'Imantė', 'Ina',  'Indra', 'Indraja', 'Indrė', 'Inesa', 'Ineta', 'Inga', 'Ingita', 'Ingė', 'Ingeborga', 'Ingrida', 'Ira', 'Irena', 'Irida', 'Iridė', 'Irina',  'Irma', 'Irmanta', 'Irmantė', 'Irmina', 'Irmutė', 'Irta', 'Irtautė', 'Irutė', 'Isabela', 'Iva', 'Ivana', 'Ivona', 'Iveta', 'Iza', 'Izabela', 'Izabelė', 'Izidė', 'Izidora', 'Izolda',  'Jadzė', 'Jadviga', 'Jadvyga', 'Jana', 'Janė', 'Janina', 'Januarija',  'Jaunė', 'Jaunutė', 'Jekaterina', 'Jelena', 'Jelizaveta', 'Jeronima', 'Jevdokija', 'Jieva', 'Joana',  'Jogailė', 'Jogilė', 'Jogintė', 'Jola', 'Jolanta', 'Joleta', 'Jolita',  'Jomantė', 'Jomilė', 'Jonė',  'Jorė', 'Jorigė', 'Jorūnė', 'Jotvingė', 'Jovilė', 'Jovita', 'Judita',  'Judra', 'Judrė', 'Julė', 'Juliana', 'Julija', 'Julijana', 'Julijona', 'Julita', 'Julytė', 'Juozapina', 'Juozapota', 'Juozė', 'Jura',  'Jūra', 'Jūrė', 'Jūratė', 'Jurga', 'Jurgė', 'Jurgina', 'Jurgita', 'Justė', 'Justina',  'Juta', 'Juventa', 'Juzefa',  'Kaja', 'Kamila', 'Kamilė', 'Karina', 'Karla', 'Karmela', 'Karolė', 'Karolina', 'Kasia',  'Kastė', 'Kastytė', 'Katarina', 'Katažina', 'Katažyna', 'Katerina', 'Katia', 'Katrė', 'Kazė', 'Kazimiera', 'Kazimira', 'Kazytė',  'Kęstė', 'Kira', 'Klara', 'Klarisa', 'Klaudija', 'Klema', 'Klementina', 'Kleopa', 'Kleopatra', 'Klotilda', 'Konstancija', 'Konstantina', 'Kornelija', 'Kostė', 'Kotryna', 'Krista', 'Kristė', 'Kristijona', 'Kristina', 'Krystyna', 'Ksavera', 'Ksaverija', 'Ksenija', 'Kunigunda',  'Lada',  'Laima', 'Laimė', 'Laimona', 'Laimutė', 'Laisvė', 'Laisvyda', 'Laisvydė', 'Laisvūnė', 'Lana', 'Lara', 'Larisa', 'Lauma',  'Laura', 'Laurena', 'Laurentina', 'Lauryna', 'Leandra', 'Leda', 'Leila', 'Lėja',  'Lelija', 'Lena', 'Leokadija', 'Leona', 'Leonarda', 'Leonė', 'Leonida', 'Leonija', 'Leonila', 'Leonilė', 'Leonora', 'Leontina', 'Leopolda', 'Leta',  'Lėta', 'Leticija', 'Leva', 'Levutė', 'Liana',  'Liauda', 'Liberta', 'Lida', 'Lidija',  'Liepa', 'Lijana', 'Lilė', 'Liliana', 'Lilija', 'Lilijana',  'Lina', 'Linda',  'Lingailė', 'Linė', 'Lionė', 'Liongina', 'Liuba',  'Liubarta', 'Liubovė', 'Liucė', 'Liucilė', 'Liucina', 'Liucija', 'Liuda', 'Liudmila', 'Liudvika', 'Liūnė',  'Liutaura', 'Liva', 'Liveta', 'Livija', 'Liza', 'Lizaveta', 'Lola', 'Lolita', 'Longina', 'Lora',  'Lorena', 'Loreta', 'Lorija', 'Lucyna', 'Luisa', 'Luiza',  'Luknė', 'Lukrecija',  'Magda',  'Magdalena', 'Magdė', 'Maja',  'Malda', 'Malgožata',  'Malvina', 'Mamerta', 'Mamertina',  'Mantautė', 'Mantė', 'MantvydėManuela', '',  'Mara', 'Marcė', 'Marcelė', 'Marcelija', 'Marcelina', 'Marcijona', 'Marė', 'Marilė', 'Margita', 'Margarita', 'Mariana', 'Marija', 'Marijona',  'Marina', 'Marita', 'Marytė', 'Marta', 'Martina', 'Martyna',  'Matilda', 'Matriona',  'Mažvydė', 'Mečislava', 'Mečislova',  'Meda', 'Medeina', 'Medėja', 'Megana', 'Megė',  'Meilė', 'Meilutė', 'Melanija',  'Melda', 'Melisa',  'Mėnulė', 'Mėta', 'Michalina',  'Miglė', 'Mika', 'Mikalina', 'Mykolė', 'Mila',  'Milda', 'Mildutė', 'Milena',  'Milvydė', 'Mindaugė', 'Mingailė', 'Minija', 'Mintara', 'Mintarė', 'Mintautė', 'Mintė', 'Mira',  'Mirga', 'Modesta', 'Mona', 'Monika', 'Morta',  'Nadė', 'Nadia', 'Nadežda', 'Nadiežda',  'Naktis', 'Narciza', 'Nastasija', 'Nastazija', 'Nastė', 'Nastia', 'Natalija', 'Nata', 'Neda',  'Neimantė', 'Nela', 'Nelė', 'Nemira',  'Nemunė', 'Nendrė', 'Neringa', 'Nerita',  'Nida', 'Nijolė', 'Nika', 'Nikė', 'Nila', 'Nilė', 'Nina', 'Ninelė', 'Noja',  'Nomeda', 'Nona', 'Nora', 'Norberta', 'Norma',  'Norgailė', 'Normantė', 'Nortė', 'Norvyda', 'Norvilė',  'Odeta', 'Ofelija', 'Oksana', 'Oktavija', 'Oktiabrina', 'Olga', 'Olimpiada', 'Olimpija', 'Oliva', 'Olivija', 'Ona', 'Onė', 'Onorata', 'Onutė', 'Oresta',  'Orinta', 'Otilija', 'Ovidija',  'Palma', 'Palmira', 'Palmyra', 'Pamela',  'Pasaka', 'Patricija', 'Paula', 'Paulė', 'Paulina', 'Pelagėja', 'Pelagija', 'Petra', 'Petrė', 'Petronė', 'Petronėlė', 'Petrutė', 'Pija', 'Polė', 'Polina', 'Povilė', 'Pranciška', 'Pranė', 'Praskovja', 'Prima', 'Pulcherija',  'Rachilė', 'Rada',  'Radmila', 'Radvyda', 'Radvilė', 'Rafaela', 'Rafaelė', 'Raimonda', 'Raimunda',  'Raistė', 'Rakelė',  'Ramybė', 'Raminta', 'Ramona',  'Ramunė', 'Ramūnė', 'Ramutė', 'Rasa', 'Raselė', 'Rasė',  'Rasytė', 'Rasuolė', 'Rasvita', 'Rebeka', 'Reda', 'Rėda', 'Rega',  'Regimanta', 'Regimantė', 'Regina', 'Rema', 'Remigija', 'Rena', 'Renalda', 'Renata', 'Renatė', 'Renė', 'Ričarda', 'Rikarda',  'Rima', 'Rimanta',  'Rimantė', 'Rimgailė', 'Rimgaudė', 'Rimtautė', 'Rimtė', 'Rimutė', 'Rimvyda', 'Rimvydė', 'Rimvilė', 'Rina',  'Ringa', 'Ringailė', 'Rita',  'Ryta', 'Ritė',  'Rytė', 'Roberta', 'Robertina', 'Rolanda', 'Roma', 'Romana', 'Romė', 'Romina', 'Romualda', 'Rosita', 'Roza', 'Rozalija',  'Rožė', 'Rufina',  'Rugilė', 'Ruslana',  'Rusnė', 'Rūstė', 'Ruta',  'Rūta', 'Rūtelė', 'Rūtenė', 'Rūtilė',  'Sabina', 'Sabrina', 'Salė', 'Salomėja', 'Salvė', 'Salvija', 'Salvinija', 'Samanta', 'Sandra',  'Santara', 'Sauga', 'Saulė', 'Saulena', 'Saulenė', 'Saulytė', 'Saulutė', 'Selena', 'Selma', 'Serafina', 'Serafima', 'Serena', 'Severija', 'Severina', 'Sibilė',  'Siga', 'Sigita', 'Sigrida',  'Sigutė', 'Silva', 'Silverija', 'Silvestra',  'Silvija', 'Sima',  'Simona', 'Sintė', 'Sintija', 'Siuzana',  'Skaidra', 'Skaidrė', 'Skaiste', 'Skaiva',  'Skalvė', 'Skirgailė', 'Skirma', 'Skirmanta', 'Skirmantė', 'Skolastika',  'Smilga', 'Smiltė', 'Snaigė', 'Snežana',  'Sniegė', 'Sniegena', 'Snieguolė', 'Sofa', 'Sofija', 'Solveiga', 'Sonata', 'Soneta', 'Sonia', 'Sotera', 'Stanislava', 'Stanislova', 'Staselė', 'Stasė', 'Stefa',  'Stefanija', 'Stela', 'Stepė', 'Sulamita',  'Svaja', 'Svajonė', 'Sveta', 'Svetlana',  'Šalna', 'Šalnė', 'Šarlota',  'Šarūnė', 'Šatrija', 'Šilė', 'Šviesa', 'Šviesė', 'Švitrigailė',  'Taika', 'Taisa', 'Taisija', 'Tamara', 'Tania', 'Tatjana',  'Taura', 'Tautė', 'Tautvydė', 'Teklė', 'Teodora', 'Teofilė', 'Tera',  'Teresė', 'Tereza', 'Terezija', 'Tesa', 'Tilija', 'Tina', 'Toma',  'Ugnė', 'Ula', 'Ulė', 'Ulijona', 'Uljana', 'Ulrika', 'Una', 'Undinė', 'Unė',  'Uoginta', 'Ursula', 'Uršula', 'Uršulė', 'Urtė',  'Ūla', 'Upė',  'Vacė', 'Vaclava', 'Vaclova',  'Vaida', 'Vaidota', 'Vaidotė', 'Vaidilutė', 'Vaiga', 'Vaigalė', 'Vainora', 'Vaiva', 'Vakarė', 'Valda', 'Valdemara', 'Valdė',  'Valdonė', 'Valentina', 'Valeriana', 'Valerija', 'Valerijona', 'Valia', 'Valė', 'Vanda', 'Varvara', 'Vasa',  'Vasara', 'Vasarė', 'Vasilisa',  'Vėja', 'Vėjūnė', 'Venanta', 'Vena', 'Venera',  'Venta', 'Vera', 'Verena', 'Vergilija', 'Verutė', 'Veronika', 'Vesta',  'Vėtra', 'Vida', 'Vyda', 'Vidmanta', 'Vidmantė', 'Vydmantė', 'Vidimanta', 'Vigilija',  'Vygantė', 'Vygintė', 'Vija',  'Vijolė', 'Vika',  'Vykintė', 'Vikta', 'Viktė',  'Viktorija', 'Viktorina', 'Vilena',  'Vilė', 'Vylė', 'Vilhelma', 'Vilhelmina',  'Vilija', 'Vilma', 'Vilmanta', 'Vilmantė', 'Vilnė', 'Viltara', 'Viltautė', 'Viltė', 'Viltenė', 'Vilūnė', 'Vincė', 'Vincenta', 'Vincentė', 'Viola', 'Violeta', 'Violina', 'Virdžinija', 'Virga', 'Virginija',  'Virmantė', 'Vismantė', 'Vita',  'Vyta', 'Vitalė', 'Vitalija',  'Vytautė', 'Vitė', 'Vytė', 'Vytenė', 'Vlada', 'Vladė', 'Vladislava', 'Vladislova', 'Vladlena',  'Vilita',  'Zabelė', 'Zanė', 'Zelma', 'Zenė', 'Zigfrida', 'Zigmantė',  'Zylė', 'Zina', 'Zinaida', 'Zita', 'Zofija', 'Zoja', 'Zosė', 'Zuzana',  'Žana', 'Žaneta',  'Žara', 'Žeimantė', 'Žemyna', 'Žibuoklė', 'Žibutė', 'Žiedė', 'Živilė', 'Žydrė', 'Žydronė', 'Žydrūnė', 'Žygimantė', 'Žyginta', 'Žilvinė', 'Žymantė', 'Žoržeta',
+        ];
+    }
+
+    public function getStreetNames()
+    {
+        return [
+          'Sodų g.', 'Vytauto g.', 'Taikos g.', 'Liepų g.', 'Vilniaus g.', 'Žemaitės g.' , 'Aušros g.', 'Birutės g.', 
+          'Gėlių g.', 'Statybininkų g.', 'Pievų g.', 'S.Nėries g.', 'Žalioji g.', 'Laisvės g.', 'Naujoji g.', 'Alyvų g.'
         ];
     }
 }
