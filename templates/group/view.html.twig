@@ -13,12 +13,22 @@
     <h2 class="page-title center-align">
         {% trans %}Group{% endtrans %}
     </h2>
-    <a class="btn blue darken-3" href="{{ path('group.edit', {'group': group.id}) }}">
-        {% trans %}Edit{% endtrans %}
-        <i class="material-icons left">
-            edit
-        </i>
-    </a>
+    <div class="row">
+        <a class="btn blue darken-3" href="{{ path('group.edit', {'group': group.id}) }}">
+            {% trans %}Edit{% endtrans %}
+            <i class="material-icons left">
+                edit
+            </i>
+        </a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn--action btn right red darken-3" href="{{ path('group.remove', {'group': group.id}) }}">
+                <i class="material-icons right">
+                    delete
+                </i>
+                {% trans %}Remove{% endtrans %}
+            </a>
+        {% endif %}
+    </div>
     <h4>{% trans %}Information{% endtrans %}</h4>
     <table class="table highlight">
         <thead>

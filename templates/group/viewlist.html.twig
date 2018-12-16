@@ -10,6 +10,11 @@
             {{ message }}
         </div>
     {% endfor %}
+    {% for message in app.flashes('remove_group') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h2 class="page-title center-align">
         {% trans %}Groups list{% endtrans %}
     </h2>

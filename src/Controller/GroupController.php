@@ -52,6 +52,24 @@ class GroupController extends AbstractController
     }
 
     /**
+     * @Route("/group/remove/{group}", name="group.remove")
+     * @param LearningGroup $group
+     * @param GroupManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeGroup(LearningGroup $group, GroupManager $manager)
+    {
+        $manager->removeGroup($group);
+
+        $this->addFlash(
+            'remove_group',
+            'Grupė buvo sėkmingai pašalinta!'
+        );
+
+        return $this->redirectToRoute('group.viewlist');
+    }
+
+    /**
      * @Route("/group/create", name="group.create")
      * @param Request $request
      * @param GroupManager $groupFormHandler
