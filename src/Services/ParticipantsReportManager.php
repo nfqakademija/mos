@@ -145,6 +145,4 @@ class ParticipantsReportManager extends ReportManager
         $sheet->setCellValue('A7', 'iki:');
         $sheet->setCellValue('B7', $dateTo->format('Y-m-d'));
     }
-
-
 }
