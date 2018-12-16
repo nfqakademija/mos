@@ -14,14 +14,14 @@
         {% trans %}Group{% endtrans %}
     </h2>
     <div class="row">
-        <a class="btn blue darken-3" href="{{ path('group.edit', {'group': group.id}) }}">
+        <a class="btn blue darken-3" href="{{ path('group.edit', {'group': gr.id}) }}">
             {% trans %}Edit{% endtrans %}
             <i class="material-icons left">
                 edit
             </i>
         </a>
         {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn--action btn right red darken-3" href="{{ path('group.remove', {'group': group.id}) }}">
+            <a class="btn--action btn right red darken-3" href="{{ path('group.remove', {'group': gr.id}) }}">
                 <i class="material-icons right">
                     delete
                 </i>
@@ -37,11 +37,11 @@
         </tr>
         </thead>
         <tr>
-            <td>{{ group.address }}</td>
+            <td>{{ gr.address }}, {{ gr.region.title }}</td>
         </tr>
     </table>
     <h4>{% trans %}Time slots{% endtrans %}</h4>
-    {% if group.timeslots|length == 0 %}
+    {% if gr.timeslots|length == 0 %}
         <p>{% trans %}There are no time slots yet{% endtrans %}</p>
     {% else %}
         <table class="responsive-table highlight">
@@ -53,7 +53,7 @@
                 <th scope="col">{% trans %}Duration (minutes){% endtrans %}</th>
             </tr>
             </thead>
-            {% for timeSlot in group.timeslots %}
+            {% for timeSlot in gr.timeslots %}
                 <tr>
                     <td scope="row">{{ loop.index }}</td>
                     <td>{{ timeSlot.date }}</td>
@@ -64,7 +64,7 @@
         </table>
     {% endif %}
     <h4>{% trans %}Participants{% endtrans %}</h4>
-    {% if group.participants|length == 0 %}
+    {% if gr.participants|length == 0 %}
         <p>{% trans %}There are no participants yet{% endtrans %}</p>
     {% else %}
         <table class="table highlight">
@@ -78,13 +78,13 @@
                 <th scope="col"></th>
             </tr>
             </thead>
-            {% for participant in group.participants %}
+            {% for participant in gr.participants %}
                 <tr>
                     <td scope="row" class="s-hide">{{ loop.index }}</td>
                     <td>{{ participant.name }}</td>
                     <td>{{ participant.surname }}</td>
                     <td class="m-hide">{{ participant.username }}</td>
-                    <td class="m-hide">{{ participant.birth_date }}</td>
+                    <td class="m-hide">{{ participant.birthDate }}</td>
                     <td>
                         <a href="{{ path('profile.view.user', {'user': participant.id}) }}">
                             {% trans %}View{% endtrans %}

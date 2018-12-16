@@ -67,14 +67,22 @@ class Helper
      * @return array
      * @throws \Exception
      */
-    public function datesFromRequest(Request $request)
+    public function dataFromRequest(Request $request)
     {
+        try {
+            $regionId = (int) $request->query->get('regionId');
+            if ($regionId === null) {
+                throw new \Exception('regionTitle is not specified.');
+            }
+        } catch (\Exception $e) {
+            $regionId = 0;
+        }
+        
         try {
             $dateFromString = $request->query->get('dateFrom');
             if ($dateFromString === null) {
                 throw new \Exception('dateFrom not specified.');
             }
-
             $dateFrom = new \DateTime($dateFromString);
         } catch (\Exception $e) {
             $dateFrom = new \DateTime('first day of this month');
@@ -89,6 +97,8 @@ class Helper
         } catch (\Exception $e) {
             $dateTo = new \DateTime('last day of this month');
         }
-        return ['dateFrom' => $dateFrom, 'dateTo' => $dateTo];
+        
+        
+        return ['regionId' => $regionId, 'dateFrom' => $dateFrom, 'dateTo' => $dateTo];
     }
 }

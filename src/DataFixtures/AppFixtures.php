@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\LearningGroup;
 use App\Entity\TimeSlot;
 use App\Entity\User;
-use App\Repository\RegionRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Region;
@@ -23,7 +22,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //#### config ####
-        $groupsNumber = 50;
+        $groupsNumber = 20;
         $teachersNumber = 20;
         $maxParticipantsInGroup = 20;
         $maxTimeslotsInGroup = 5;
@@ -90,10 +89,11 @@ class AppFixtures extends Fixture
         for ($i = 0; $i <= $groupsNumber; $i++) {
             //generate Group
             $group[$i] = new LearningGroup();
-            $group[$i]->setAddress('Savanorių pr. ' . $i . ', Kaunas');
+            $group[$i]->setAddress('Savanorių pr. ' . $i );
             $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
-            $participantsCount = rand(2, $maxParticipantsInGroup);
             $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects) - 1)];
+            $group[$i]->setRegion($region);
+            $participantsCount = rand(2, $maxParticipantsInGroup);
             for ($j = 0; $j < $participantsCount; $j++) {
                 $userParticipant = new User();
                 $unique = $this->randomString(8);
@@ -116,7 +116,7 @@ class AppFixtures extends Fixture
                 $group[$i]->addParticipant($userParticipant);
             }
             $timeSlotsCount = rand(1, $maxTimeslotsInGroup);
-            $month = rand(1, 12);
+            $month = rand(11, 12);
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
                 $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
@@ -181,6 +181,7 @@ class AppFixtures extends Fixture
             'Kaišiadorių raj.' => ['is_problematic' => false],
             'Kalvarijos m.' => ['is_problematic' => false],
             'Kauno raj.' => ['is_problematic' => false],
+            'Kauno m.' => ['is_problematic' => false],
             'Kazlų Rūdos m.' => ['is_problematic' => false],
             'Kėdainių raj.' => ['is_problematic' => false],
             'Kelmės raj.' => ['is_problematic' => false],

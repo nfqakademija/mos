@@ -18,4 +18,16 @@ class RegionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Region::class);
     }
+
+    public function getAllRegionsUsedInGroups()
+    {
+        $query = $this->createQueryBuilder('region')
+          ->innerJoin('region.learningGroups', 'gr')
+          ->addOrderBy('region.title', 'ASC')
+          ->getQuery();
+
+        $result = $query->execute();
+
+        return $result;
+    }
 }

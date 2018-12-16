@@ -54,6 +54,12 @@ class LearningGroup
      */
     private $endDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="learningGroups")
+     * @Assert\NotBlank(message="Nurodykite rajoną / miestą")
+     */
+    private $region;
+
 
     public function __construct()
     {
@@ -249,5 +255,17 @@ class LearningGroup
         
         $this->setStartDate($startDate);
         $this->setEndDate($endDate);
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
+
+        return $this;
     }
 }

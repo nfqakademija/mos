@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\LearningGroup;
+use App\Entity\Region;
 use App\Entity\User;
+use App\Repository\RegionRepository;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -25,6 +27,16 @@ class GroupType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
+          ->add('region', EntityType::class, array(
+            'class' => Region::class,
+            'query_builder' => function (RegionRepository $er) {
+                return $er->createQueryBuilder('r');
+            },
+            'choice_label' => function (Region $region) {
+                return $region->getTitle();
+            },
+            'placeholder' => 'Choose a region'
+          ))
             ->add('teacher', EntityType::class, array(
                 'class' => User::class,
                 'query_builder' => function (UserRepository $er) {

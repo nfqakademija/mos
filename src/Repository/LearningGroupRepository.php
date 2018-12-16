@@ -18,7 +18,7 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     {
         parent::__construct($registry, LearningGroup::class);
     }
-
+    
     /**
      * Gets Doctrine Query Builder to get all records
      *

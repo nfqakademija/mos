@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\LearningGroup;
+use App\Repository\LearningGroupRepository;
 use App\Repository\TimeSlotRepository;
 use App\Services\Helper;
 use App\Services\ParticipantsReportManager;
@@ -40,7 +42,7 @@ class ReportController extends AbstractController
         UserRepository $ur,
         Helper $helper
     ) {
-        $datesFromTo = $helper->datesFromRequest($request);
+        $datesFromTo = $helper->dataFromRequest($request);
 
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
@@ -76,7 +78,7 @@ class ReportController extends AbstractController
      */
     public function participantsReportToExcel(Request $request, ParticipantsReportManager $report, Helper $helper)
     {
-        $datesFromTo = $helper->datesFromRequest($request);
+        $datesFromTo = $helper->dataFromRequest($request);
 
         $result = $report->reportToExcel($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
 
@@ -116,25 +118,29 @@ class ReportController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         TimeSlotRepository $ts,
+        RegionRepository $regionRepository,
         Helper $helper
     ) {
-        $datesFromTo = $helper->datesFromRequest($request);
+        $regions = $regionRepository->getAllRegionsUsedInGroups();
+        $dataFromRequest = $helper->dataFromRequest($request);
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
             $response = $this->forward('App\Controller\ReportController::scheduleReportToExcel', [
-                'dateFrom' => $datesFromTo['dateFrom'],
-                'dateTo' => $datesFromTo['dateTo'],
+                'dateFrom' => $dataFromRequest['dateFrom'],
+                'dateTo' => $dataFromRequest['dateTo'],
+                'regionId' => $dataFromRequest['regionId'],
             ]);
         } else {
             $page = $helper->getPageFromRequest($request);
 
-            $query = $ts->getTimeSlotsInPeriod($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
-            $pagination = $paginator->paginate($query, $page, 15);
+            $query = $ts->getTimeSlotsInPeriod($dataFromRequest['dateFrom'], $dataFromRequest['dateTo'], $dataFromRequest['regionId']);
+            $pagination = $paginator->paginate($query, $page, 20);
 
             $response = $this->render('report/schedule.html.twig', [
                 'results' => $pagination,
-                'dateFrom' => $datesFromTo['dateFrom'],
-                'dateTo' => $datesFromTo['dateTo'],
+                'regions' => $regions,
+                'dateFrom' => $dataFromRequest['dateFrom'],
+                'dateTo' => $dataFromRequest['dateTo'],
             ]);
         }
 
@@ -150,9 +156,9 @@ class ReportController extends AbstractController
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function scheduleReportToExcel($dateFrom, $dateTo, ScheduleReportManager $scheduleReportManager)
+    public function scheduleReportToExcel($dateFrom, $dateTo, $regionId, ScheduleReportManager $scheduleReportManager)
     {
-        $result = $scheduleReportManager->reportToExcel($dateFrom, $dateTo);
+        $result = $scheduleReportManager->reportToExcel($dateFrom, $dateTo, $regionId);
 
         // Return the excel file as an attachment
         return $this->file(

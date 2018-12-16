@@ -39,9 +39,9 @@ class TimeSlotRepository extends ServiceEntityRepository implements RepositoryIn
     /**
      * Gets times slots in period plus extra data required by schedule report.
      */
-    public function getTimeSlotsInPeriod(\DateTime $dateFrom, \DateTime $dateTo)
+    public function getTimeSlotsInPeriod(\DateTime $dateFrom, \DateTime $dateTo, $regionId = 0)
     {
-        $queryBuilder = $this->getTimeSlotsInPeriodQueryB($dateFrom, $dateTo);
+        $queryBuilder = $this->getTimeSlotsInPeriodQueryB($dateFrom, $dateTo, $regionId);
         $result = $queryBuilder->getQuery()->execute();
 
         return $result;
@@ -55,12 +55,17 @@ class TimeSlotRepository extends ServiceEntityRepository implements RepositoryIn
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getTimeSlotsInPeriodQueryB($dateFrom, $dateTo, $orderBy = 'ts.id', $orderType = 'ASC')
+    public function getTimeSlotsInPeriodQueryB($dateFrom, $dateTo, $regionId, $orderBy = 'ts.id', $orderType = 'ASC')
     {
         $queryBuilder = $this->createQueryBuilder('ts')
-            ->where('ts.date >= :dateFrom AND ts.date <= :dateTo')
+            ->andWhere('ts.date >= :dateFrom AND ts.date <= :dateTo')
+            ->leftJoin('ts.learningGroup', 'gr')
+            ->leftJoin('gr.region', 'region')
+            ->andWhere('region.id = :regionId')
+
             ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
             ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+            ->setParameter(':regionId', $regionId)
             ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;

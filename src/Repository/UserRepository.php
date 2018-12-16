@@ -177,7 +177,6 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
      */
     public function getOlderThanAndIsGender(int $minAge = 0, string $gender = 'moteris')
     {
-        //TODO: fix subselect using group starDate endDate
         $dateNow = new \DateTime('now');
         $dateNowStr = $dateNow->format('Y-m-d');
         $birthDate = new \DateTime('now - ' . $minAge . ' year');
@@ -186,12 +185,8 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
         $sql = "SELECT COUNT(`user`.id) FROM `user`
                 INNER JOIN learning_group 
                 ON `user`.learning_group_id = learning_group.id 
-                AND `user`.birth_date < '" . $birthDateStr . "' AND `user`.gender = '" . $gender . "' 
-                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
-                FROM time_slot 
-                GROUP BY time_slot.learning_group_id ) as ts 
-                ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date <= '" . $dateNowStr . "'";
+                WHERE `user`.birth_date < '" . $birthDateStr . "' AND `user`.gender = '" . $gender . "'
+                AND learning_group.end_date <= '" . $dateNowStr . "'";
 
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
@@ -204,19 +199,14 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
      */
     public function getParticipantsCountInRegionId(int $regionId)
     {
-        //TODO: fix subselect using group starDate endDate
         $dateNow = new \DateTime('now');
         $dateNowStr = $dateNow->format('Y-m-d');
 
         $sql = "SELECT COUNT(`user`.id) FROM `user`
                 INNER JOIN learning_group 
                 ON `user`.learning_group_id = learning_group.id 
-                AND `user`.region_id = '" . $regionId . "' 
-                INNER JOIN (SELECT time_slot.id, time_slot.learning_group_id, MAX(time_slot.`date`) as max_ts_date 
-                FROM time_slot 
-                GROUP BY time_slot.learning_group_id ) as ts 
-                ON ts.learning_group_id = learning_group.id 
-                WHERE max_ts_date <= '" . $dateNowStr . "'";
+                WHERE `user`.region_id = '" . $regionId . "'
+                AND learning_group.end_date <= '" . $dateNowStr . "'";
 
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
