@@ -100,7 +100,7 @@ class GroupManager
     private function addNewParticipants(ArrayCollection $originals, PersistentCollection $newItems): void
     {
         foreach ($newItems as $newItem) {
-            if(false === $originals->contains($newItem)) {
+            if (false === $originals->contains($newItem)) {
                 $newItem->setPassword($this->encoder->encodePassword($newItem, $newItem->getPassword()));
                 $newItem->setRoles([User::ROLE_PARTICIPANT]);
             }
