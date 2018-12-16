@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "axios": "^0.18.0",
+        "chart.js": "^2.7.3",
         "print-js": "^1.0.54",
         "random-string": "^0.2.0",
         "react": "^16.6.0",

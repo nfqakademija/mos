@@ -1,26 +1,89 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Project status{% endblock %}
+{% block title %}
+    {% trans %}
+        Project status report
+    {% endtrans %}
+{% endblock %}
 
 {% block body %}
-  <h2>{% trans %}Project status report{% endtrans %}</h2>
-
-    <pre>
-    <h5>
-  Bendrai apmokyta: {{ result.allParticipantsCount }}
-  Probleminėse teritorijose: {{ result.inProblematicRegionsTotal }}
-      {% for region in result.inProblematicRegions %}
-        {{ region.title }} : {{ region.participantsCount }}
-      {% endfor %}
-
-  Vyresni nei 45: {{ result.olderThan45 }}
-  Kaimo vietovėse: {{ result.olderThan45InCountrySide }}
-  Moterų: {{ result.olderThan45Woman }}
-    </h5>
-    </pre>
-  </div>
-
+    <h2 class="page-title center-align">
+        {% trans %}
+            Project status report
+        {% endtrans %}
+    </h2>
+    <div class="status" data-status="{{ status|json_encode }}">
+        <div class="status__section row">
+            <div class="col s12">
+                <h6 class="status__section__title">{% trans %}General report{% endtrans %}</h6>
+            </div>
+            <div class="col s12 l6">
+                <table class="responsive-table highlight status__general-data">
+                    <thead>
+                    <tr>
+                        <th scope="col">{% trans %}Indicator{% endtrans %}</th>
+                        <th scope="col">{% trans %}Count{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>{% trans %}Participant count{% endtrans %}</td>
+                        <td>{{ status.allParticipantsCount }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans %}In problematic regions{% endtrans %}</td>
+                        <td>{{ status.inProblematicRegionsTotal }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans %}Older than 45{% endtrans %}</td>
+                        <td>{{ status.olderThan45 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans %}Older than 45 in countryside{% endtrans %}</td>
+                        <td>{{ status.olderThan45InCountrySide }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans %}Women older than 45{% endtrans %}</td>
+                        <td>{{ status.olderThan45Woman }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col s12 l6">
+                <div class="row">
+                    <div class="col s12 m6 l12">
+                        <canvas class="status__area-chart"></canvas>
+                    </div>
+                    <div class="col s12 m6 l12">
+                        <canvas class="status__age-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="status__section row">
+            <div class="col s12">
+                <h6 class="status__section__title">{% trans %}Problematic region report{% endtrans %}</h6>
+            </div>
+            <div class="col s12 l6">
+                <table class="responsive-table highlight status__region-data">
+                    <thead>
+                    <tr>
+                        <th scope="col">{% trans %}Region{% endtrans %}</th>
+                        <th scope="col">{% trans %}Participant count{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    {% for region in status.inProblematicRegions %}
+                        <tr>
+                            <td>{{ region.title }}</td>
+                            <td>{{ region.participantsCount }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col s12 l6">
+                <canvas class="status__region-chart"></canvas>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

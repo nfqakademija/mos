@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{{ "My project" }}{% endblock %}</title>
+        <title>{% block title %}MOS{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         {% endblock %}
@@ -11,13 +11,18 @@
         {% block canonical_meta %}{% endblock %}
     </head>
     <body>
-        {% block menu %}
-          {% include 'menu/main.html.twig'%}
-        {% endblock %}
-        <div class="container">
-            {% block body %}{% endblock %}
-            {% block pager %}{% endblock %}
-        </div>
+        <header>
+            {% include 'main/menu.html.twig'%}
+        </header>
+        <main>
+            <div class="container">
+                {% block body %}{% endblock %}
+                {% block pager %}{% endblock %}
+            </div>
+        </main>
+        <footer>
+            {% include 'main/footer.html.twig' %}
+        </footer>
         {% block javascripts %}
             <script src="{{ asset('build/js/app.js') }}"></script>
         {% endblock %}

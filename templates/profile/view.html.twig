@@ -15,10 +15,35 @@
     <h2 class="page-title center-align">
         {% trans %}Profile{% endtrans %}
     </h2>
-    <a class="btn blue darken-3" href="{{ path('profile.edit', {'user': user.id}) }}">
-        {% trans %}Edit{% endtrans %}
-    </a>
-    <table class="table">
+    <div class="row">
+        {% if app.user is same as(user) %}
+            <a class="btn--action btn blue darken-3" href="{{ path('profile.edit') }}">
+        {% else %}
+            <a class="btn--action btn blue darken-3" href="{{ path('profile.edit.user', {'user': user.id}) }}">
+        {% endif %}
+            {% trans %}Edit{% endtrans %}
+            <i class="material-icons left">
+                edit
+            </i>
+        </a>
+        {% if is_granted('ROLE_ADMIN') and app.user is not same as(user) %}
+            <a class="btn--action btn right red darken-3" href="{{ path('profile.remove', {'user': user.id}) }}">
+                <i class="material-icons right">
+                    delete
+                </i>
+                {% trans %}Remove{% endtrans %}
+            </a>
+        {% endif %}
+        {% if app.user is same as(user) %}
+                <a class="btn--action btn blue darken-3 right" href="{{ path('profile.change_password') }}">
+                    {% trans %}Change password{% endtrans %}
+                    <i class="material-icons left">
+                        vpn_key
+                    </i>
+                </a>
+        {% endif %}
+    </div>
+    <table class="table highlight">
         <thead>
         <tr>
             <th scope="col">
@@ -80,17 +105,25 @@
         <tr>
             {% if user.learningGroupsUserTeaches is not empty %}
                 <td>{% trans %}Teacher in group(s){% endtrans %}:</td>
-                {% for group in user.learningGroupsUserTeaches %}
-                    <td><a href="{{ path('group.view', {'group': group.id }) }}"> Id:{{ group.id }}
-                            Address: {{ group.address }} </a></td>
-                {% endfor %}
+                <td>
+                    {% for group in user.learningGroupsUserTeaches %}
+                        <div>
+                            <a href="{{ path('group.view', {'group': group.id }) }}">
+                                Id: {{ group.id }}
+                                {% trans %}Address{% endtrans %}: {{ group.address }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </td>
             {% endif %}
         </tr>
         <tr>
             {% if user.learningGroup is not empty %}
                 <td>{% trans %}Studying in group{% endtrans %}:</td>
-                <td>{% trans %}Id{% endtrans %}:{{ user.learningGroup.id }}  {% trans %}Address{% endtrans %}
-                    : {{ user.learningGroup.address }}</td>
+                <td>
+                    {% trans %}Id{% endtrans %}: {{ user.learningGroup.id }}
+                    {% trans %}Address{% endtrans %}: {{ user.learningGroup.address }}
+                </td>
             {% endif %}
         </tr>
     </table>

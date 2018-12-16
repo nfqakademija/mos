@@ -27,12 +27,12 @@ class ReportController extends AbstractController
 {
     /**
      * @Route("/report/participants", name="report.participants",)
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator
-     * @param \App\Repository\UserRepository $ur
-     * @param \App\Services\Helper $helper
-     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param UserRepository $ur
+     * @param Helper $helper
      * @return RedirectResponse|Response
+     * @throws \Exception
      */
     public function participantsReport(
         Request $request,
@@ -67,10 +67,12 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/participants/export", name="report.participants.export",)
-     *
+     * @param Request $request
      * @param ReportManager $report
-     *
+     * @param Helper $helper
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function participantsReportToExcel(Request $request, ParticipantsReportManager $report, Helper $helper)
     {
@@ -88,13 +90,16 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/status", name="report.status")
+     * @param ReportManager $report
+     * @param RegionRepository $regionRepository
+     * @return Response
      */
     public function statusReport(StatusReportManager $report, RegionRepository $regionRepository)
     {
-        $results = $report->getStatusReport($regionRepository);
+        $status = $report->getStatusReport($regionRepository);
 
         return $this->render('report/status.html.twig', [
-            'results' => $results,
+            'status' => $status,
         ]);
     }
 

@@ -8,7 +8,7 @@
 
 {% macro printParticipant(participant, display) %}
     {% from _self import validate %}
-    <div class="participant">
+    <div class="participant participant--with-border">
         <div class="row">
             <div class="participant__button s2 m1 col push-s10 push-m11">
                 <i class="participant__button--remove material-icons">
@@ -26,14 +26,14 @@
                 {{ form_errors(participant.user.surname) }}
             </div>
             <div class="participant__button push-s2 pull-l1 s8 col l2">
-                <button class="participant__button--toggle-additional blue darken-3 btn hoverable" type="button">
+                <button class="participant__button--toggle-additional blue lighten-1 btn hoverable" type="button">
                     Daugiau
                 </button>
             </div>
         </div>
         <div class="participant__additional">
             <div class="row">
-                {% if display == true %}
+                {% if display == true or participant.user.password.vars.value == '' %}
                     <div class="input-field col s12 m6">
                         <div class="row">
                             {{ form_label(participant.user.username) }}
@@ -110,7 +110,7 @@
     {% from _self import validate %}
     <div class="time-slot">
         <div class="row">
-            <div class="time-slot__button col push-s11 s1">
+            <div class="time-slot__button col push-s10 s2 m1 push-m11">
                 <i class="time-slot__button--remove material-icons">
                     close
                 </i>

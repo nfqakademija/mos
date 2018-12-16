@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Repository\RepositoryInterface;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,17 +26,16 @@ class Helper
     /**
      * Gets simple entities list paginated
      *
-     * @param \App\Repository\RepositoryInterface $repository
+     * @param QueryBuilder $query
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function getEntitiesPaginated(RepositoryInterface $repository, Request $request)
+    public function getEntitiesPaginated(QueryBuilder $query, Request $request)
     {
         $page = $this->getPageFromRequest($request);
 
-        $query = $repository->getAllQueryB();
         $pagination = $this->paginator->paginate($query, $page, 15);
 
         return $pagination;

@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\LearningGroup;
 use App\Form\CreateGroupType;
 use App\Form\EditGroupType;
-use App\Services\GroupFormManager;
+use App\Services\GroupManager;
 use App\Services\Helper;
 use App\Repository\LearningGroupRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +44,7 @@ class GroupController extends AbstractController
      */
     public function groupViewList(LearningGroupRepository $groupRepository, Request $request, Helper $helper)
     {
-        $pagination = $helper->getEntitiesPaginated($groupRepository, $request);
+        $pagination = $helper->getEntitiesPaginated($groupRepository->getAllQueryB(), $request);
 
         return $this->render('group/viewlist.html.twig', [
             'groups' => $pagination,
@@ -52,12 +52,30 @@ class GroupController extends AbstractController
     }
 
     /**
+     * @Route("/group/remove/{group}", name="group.remove")
+     * @param LearningGroup $group
+     * @param GroupManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeGroup(LearningGroup $group, GroupManager $manager)
+    {
+        $manager->removeGroup($group);
+
+        $this->addFlash(
+            'remove_group',
+            'Grupė buvo sėkmingai pašalinta!'
+        );
+
+        return $this->redirectToRoute('group.viewlist');
+    }
+
+    /**
      * @Route("/group/create", name="group.create")
      * @param Request $request
-     * @param GroupFormManager $groupFormHandler
+     * @param GroupManager $groupFormHandler
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function createGroup(Request $request, GroupFormManager $groupFormHandler)
+    public function createGroup(Request $request, GroupManager $groupFormHandler)
     {
         $group = new LearningGroup();
         $form = $this->createForm(CreateGroupType::class, $group);
@@ -66,7 +84,7 @@ class GroupController extends AbstractController
         if ($participants !== null) {
             $this->addFlash(
                 'create_group',
-                'Group was successfully created!'
+                'Grupė buvo sėkmingai sukurta!'
             );
 
             return $participants->count() > 0 ? $this->render('group/participants.html.twig', [
@@ -82,18 +100,18 @@ class GroupController extends AbstractController
     /**
      * @Route("/group/edit/{group}", name="group.edit")
      * @param Request $request
-     * @param GroupFormManager $groupFormHandler
+     * @param GroupManager $groupFormHandler
      * @param $group
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editGroup(Request $request, GroupFormManager $groupFormHandler, LearningGroup $group)
+    public function editGroup(Request $request, GroupManager $groupFormHandler, LearningGroup $group)
     {
         $form = $this->createForm(EditGroupType::class, $group);
 
         if ($groupFormHandler->handleEdit($form, $request)) {
             $this->addFlash(
                 'edit_group',
-                'Group was successfully updated!'
+                'Grupė buvo sėkmingai atnaujinta!'
             );
 
             return $this->redirectToRoute('group.view', array('group' => $group->getId()));

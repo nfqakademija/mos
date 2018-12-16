@@ -10,22 +10,52 @@
             {{ message }}
         </div>
     {% endfor %}
+    {% for message in app.flashes('remove_group') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h2 class="page-title center-align">
         {% trans %}Groups list{% endtrans %}
     </h2>
-    <a class="blue darken-3 hoverable add-button pulse" href="{{ path('group.create') }}">
+    <a class="blue darken-3 hoverable add-button waves-effect waves-light" href="{{ path('group.create') }}">
         <i class="add-button__icon material-icons">
             add
         </i>
     </a>
-    <table class="table">
+    <form method="get">
+        <div class="input-field col s12 filter-input">
+            <i class="material-icons prefix">
+                filter_list
+            </i>
+            <select>
+                <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
+                {{ knp_pagination_sortable(groups, 'By ID descending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(groups, 'By ID ascending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(groups, 'By start date descending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(groups, 'By start date ascending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(groups, 'By end date descending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(groups, 'By end date ascending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'asc'}) }}
+            </select>
+            <label>{% trans %}Sort by{% endtrans %}</label>
+        </div>
+    </form>
+    <table class="table highlight">
         <thead>
         <tr>
-            <th scope="col">{{ knp_pagination_sortable(groups, '#▲▼', 'gr.id') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(groups, 'Address'|trans({}, 'messages') ~'▲▼', 'gr.id') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(groups, 'Start date'|trans({}, 'messages') ~'▲▼', 'gr.startDate') }}</th>
-            <th scope="col">{{ knp_pagination_sortable(groups, 'End date'|trans({}, 'messages') ~'▲▼', 'gr.endDate') }}</th>
-            <th scope="col">{% trans %}Participants{% endtrans %}</th>
+            <th scope="col">#</th>
+            <th scope="col">
+                {% trans %}Address{% endtrans %}
+            </th>
+            <th scope="col" class="s-hide">
+                {% trans %}Start date{% endtrans %}
+            </th>
+            <th scope="col" class="s-hide">
+                {% trans %}End date{% endtrans %}
+            </th>
+            <th scope="col">
+                {% trans %}Participants{% endtrans %}
+            </th>
         </tr>
         </thead>
         {% for group in groups %}
@@ -36,10 +66,10 @@
                         {{ group.address }}
                     </a>
                 </td>
-                <td>
+                <td class="s-hide">
                     {{ group.startDate ? group.startDate|date('Y-m-d') }}
                 </td>
-                <td>
+                <td class="s-hide">
                     {{ group.endDate ? group.endDate|date('Y-m-d') }}
                 </td>
                 <td>

@@ -74,6 +74,38 @@ Participant form: Dalyvio forma
 Label: Laukelis
 Data: Reikšmė
 Studying in group: Mokymosi grupė
+General report: Bendra ataskaita
+Indicator: Rodiklis
+Count: Kiekis
+Participant count: Dalyvių kiekis
+In problematic regions: Probleminėse teritorijose
+Older than 45: Vyresni nei 45
+Older than 45 in countryside: Vyresni nei 45 kaimo vietovėse
+Women older than 45: Moterys vyresnės nei 45
+Problematic region report: Probleminių regionų ataskaita
+Change password: Slaptažodžio keitimas
+Old password: Senas slaptažodis
+Repeat Password: Slaptažodžio pakartojimas
+Teachers: Dėstytojai
+Add teacher: Pridėti dėstytoją
+Teacher form: Dėstytojo forma
+No participants found: Dalyvių nerasta
+Search by name and surname: Paieška pagal vardą ir pavardę
+Sort by: Rikiuoti pagal
+Choose filter: Pasirinkite filtrą
+By ID descending: Pagal ID mažėjimo tvarka
+By ID ascending: Pagal ID didėjimo tvarka
+By name descending: Pagal vardą mažėjimo tvarka
+By name ascending: Pagal vardą didėjimo tvarka
+By surname descending: Pagal pavardę mažėjimo tvarka
+By surname ascending: Pagal pavardę didėjimo tvarka
+By username descending: Pagal naudotojo vardą  mažėjimo tvarka
+By username ascending: Pagal naudotojo vardą didėjimo tvarka
+By start date descending: Pagal pradžios datą mažėjimo tvarka
+By start date ascending: Pagal pradžios datą didėjimo tvarka
+By end date descending: Pagal pabaigos datą mažėjimo tvarka
+By end date ascending: Pagal pradžios datą didėjimo tvarka
+Remove: Pašalinti
 Start: Pradžia
 Participants count: Dalyvių skaičius
 Schedule report: Tvarkaraščio ataskaita

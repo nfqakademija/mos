@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ParticipantFormManager
+class UserManager
 {
     /**
      * @var EntityManagerInterface $entityManager
@@ -33,6 +34,29 @@ class ParticipantFormManager
     /**
      * @param FormInterface $form
      * @param Request $request
+     * @return bool
+     */
+    public function handleAddTeacher(FormInterface $form, Request $request): bool
+    {
+        $user = $form->getData();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
+            $user->setRoles([User::ROLE_TEACHER]);
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param Request $request
      * @return bool|null
      */
     public function handleEdit(FormInterface $form, Request $request): bool
@@ -49,5 +73,14 @@ class ParticipantFormManager
         }
 
         return false;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function removeUser(User $user): void
+    {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
     }
 }

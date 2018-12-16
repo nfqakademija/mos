@@ -4,6 +4,7 @@ import randomString from 'random-string';
 import XLSX from 'xlsx';
 import 'select2';
 import printJS from 'print-js';
+import pickerOptions from './pickerOptions';
 
 const initCollections = (collectionHolder, addButton) => {
   collectionHolder.append(addButton);
@@ -35,8 +36,14 @@ const addTimeSlotButtonHandler = (e, addTimeSlotButton, timeSlotCollectionHolder
 
   e.preventDefault();
   addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
-  M.Datepicker.init($(that).parent().prev().find('.datepicker'), {format: 'yyyy-mm-dd'});
-  M.Timepicker.init($(that).parent().prev().find('.timepicker'), {twelveHour: false});
+  M.Datepicker.init($(that).parent().prev().find('.datepicker'), {
+    format: 'yyyy-mm-dd',
+    ...pickerOptions
+  });
+  M.Timepicker.init($(that).parent().prev().find('.timepicker'), {
+    twelveHour: false,
+    ...pickerOptions
+  });
 };
 
 const removeItem = e => {
@@ -71,8 +78,14 @@ const addParticipant = (that, addParticipantButton, participantCollectionHolder)
 const addTimeSlot = (that, addTimeSlotButton, timeSlotCollectionHolder) => {
   if (!$(that).parents().eq(2).next().is('.time-slot')) {
     addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
-    M.Datepicker.init($(that).parents().eq(2).next().find('.datepicker'), {format: 'yyyy-mm-dd'});
-    M.Timepicker.init($(that).parents().eq(2).next().find('.timepicker'), {twelveHour: false});
+    M.Datepicker.init($(that).parents().eq(2).next().find('.datepicker'), {
+      format: 'yyyy-mm-dd',
+      ...pickerOptions
+    });
+    M.Timepicker.init($(that).parents().eq(2).next().find('.timepicker'), {
+      twelveHour: false,
+      ...pickerOptions
+    });
   }
 };
 
@@ -205,11 +218,11 @@ const addFromPaste = (e, participantCollectionHolder, addParticipantButton) => {
 
 export default () => {
   const addParticipantButton = $('<div class="clearfix">' +
-    '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue darken-3 material-icons"' +
-    ' data-tooltip="Pridėti dalyvį" data-position="right">add</i></div>');
+    '<i class="group-form__add-participant-button tooltipped btn-floating btn-large blue lighten-1 ' +
+    'material-icons" data-tooltip="Pridėti dalyvį" data-position="right">add</i></div>');
   const addTimeSlotButton = $('<div class="clearfix">' +
-    '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue darken-3 material-icons" ' +
-    'data-tooltip="Pridėti paskaitos laiką" data-position="right">add</i></div>');
+    '<i class="group-form__add-time-slot-button tooltipped btn-floating btn-large blue lighten-1 material-icons ' +
+    '" data-tooltip="Pridėti paskaitos laiką" data-position="right">add</i></div>');
   const participantCollectionHolder = $('div.participants');
   const timeSlotCollectionHolder = $('div.time-slots');
 
@@ -220,8 +233,14 @@ export default () => {
   checkIfCollectionIsEmpty(timeSlotCollectionHolder);
 
   M.Tooltip.init($('.tooltipped'), {outDuration: 0});
-  M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {format: 'yyyy-mm-dd'});
-  M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {twelveHour: false});
+  M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {
+    format: 'yyyy-mm-dd',
+    ...pickerOptions
+  });
+  M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {
+    twelveHour: false,
+    ...pickerOptions
+  });
 
   $('.group-form__teacher').select2({
     width: '100%',

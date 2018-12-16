@@ -1,6 +1,8 @@
 .time-slot {
   @media screen and (max-width: 993px) {
     @include border;
+    margin-top: 10px;
+    padding-bottom: 15px;
   }
 
   .time-slot__button {

@@ -4,8 +4,11 @@
     padding: 10px 0;
   }
 
-  @media screen and (max-width: 993px) {
-    @include border;
+  &.participant--with-border {
+    @media screen and (max-width: 993px) {
+      @include border;
+      padding: 10px 0 25px 0;
+    }
   }
 
   .participant__additional {
@@ -33,5 +36,3 @@
     padding: 0;
   }
 }
-
-

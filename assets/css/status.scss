@@ -1,0 +1,15 @@
+.status {
+  .status__section {
+    @include border;
+    padding: 10px;
+
+    .status__section__title {
+      font-weight: 600;
+      margin-left: 5px;
+    }
+  }
+
+  .status__region-chart {
+    height: 400px !important;
+  }
+}

@@ -1,0 +1,34 @@
+<table class="table highlight">
+    <thead>
+    <tr>
+        <th scope="col" class="s-hide">#</th>
+        <th scope="col">
+            {% trans %}Name{% endtrans %}
+        </th>
+        <th scope="col">
+            {% trans %}Surname{% endtrans %}
+        </th>
+        <th scope="col" class="s-hide">
+            {% trans %}Username{% endtrans %}
+        </th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    {% for user in users %}
+        <tr>
+            <th scope="row" class="s-hide">{{ user.id }}</th>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td class="s-hide">{{ user.username }}</td>
+            <td>
+                <a href="{{ path('profile.view.user', {'user': user.id}) }}">
+                    {% trans %}View{% endtrans %}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% block pager %}
+    {% include 'helper/pager.html.twig' with { 'content': users } only %}
+{% endblock %}

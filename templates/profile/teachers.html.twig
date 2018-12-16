@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Teachers{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('add_teacher') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('remove_user') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h2 class="page-title center-align">
+        {% trans %}Teachers{% endtrans %}
+    </h2>
+    <a class="btn--action btn blue darken-3" href="{{ path('profile.add_teacher') }}">
+        {% trans %}Add teacher{% endtrans %}
+        <i class="material-icons left">
+            add
+        </i>
+    </a>
+    {% include 'profile/filters.html.twig' with {'search_path': 'profile.teachers.search'} %}
+    {% if users|length > 0 %}
+        {% include 'profile/list.html.twig' %}
+    {% else %}
+        <p>{% trans %}No participants found{% endtrans %}</p>
+    {% endif %}
+{% endblock %}
+

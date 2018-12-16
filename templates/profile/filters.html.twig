@@ -1,0 +1,30 @@
+<div class="row">
+    <form name="form" action="{{ path(search_path) }}" method="GET">
+        <div class="input-field search-input col m6 s12">
+            <i class="material-icons prefix">search</i>
+            <label for="search">
+                {% trans %}Search by name and surname{% endtrans %}
+            </label>
+            <input class="validate" id="search" type="search" name="key" autocomplete="off">
+        </div>
+    </form>
+    <form method="get">
+        <div class="input-field col m6 s12 filter-input">
+            <i class="material-icons prefix">
+                filter_list
+            </i>
+            <select>
+                <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
+                {{ knp_pagination_sortable(users, 'By ID descending'|trans({}, 'messages'), 'u.id', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(users, 'By ID ascending'|trans({}, 'messages'), 'u.id', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(users, 'By name descending'|trans({}, 'messages'), 'u.name', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(users, 'By name ascending'|trans({}, 'messages'), 'u.name', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(users, 'By surname descending'|trans({}, 'messages'), 'u.surname', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(users, 'By surname ascending'|trans({}, 'messages'), 'u.surname', {}, {'direction': 'asc'}) }}
+                {{ knp_pagination_sortable(users, 'By username descending'|trans({}, 'messages'), 'u.username', {}, {'direction': 'desc'}) }}
+                {{ knp_pagination_sortable(users, 'By username ascending'|trans({}, 'messages'), 'u.username', {}, {'direction': 'asc'}) }}
+            </select>
+            <label>{% trans %}Sort by{% endtrans %}</label>
+        </div>
+    </form>
+</div>

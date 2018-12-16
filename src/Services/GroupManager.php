@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class GroupFormManager
+class GroupManager
 {
     /**
      * @var EntityManagerInterface $entityManager
@@ -55,7 +55,7 @@ class GroupFormManager
 
             foreach ($group->getParticipants() as $participant) {
                 $participant->setPassword($this->encoder->encodePassword($participant, $participant->getPassword()));
-                $this->entityManager->persist($participant);
+                $participant->setRoles([User::ROLE_PARTICIPANT]);
             }
 
             $this->entityManager->persist($group);
@@ -94,6 +94,38 @@ class GroupFormManager
     }
 
     /**
+     * @param ArrayCollection $originals
+     * @param PersistentCollection $newItems
+     */
+    private function addNewParticipants(ArrayCollection $originals, PersistentCollection $newItems): void
+    {
+        foreach ($newItems as $newItem) {
+            if (false === $originals->contains($newItem)) {
+                $newItem->setPassword($this->encoder->encodePassword($newItem, $newItem->getPassword()));
+                $newItem->setRoles([User::ROLE_PARTICIPANT]);
+            }
+        }
+    }
+
+    /**
+     * @param LearningGroup $group
+     */
+    public function removeGroup(LearningGroup $group): void
+    {
+        foreach ($group->getParticipants() as $participant) {
+            $this->entityManager->remove($participant);
+        }
+
+        foreach ($group->getTimeSlots() as $timeSlot) {
+            $this->entityManager->remove($timeSlot);
+        }
+        $this->entityManager->flush();
+
+        $this->entityManager->remove($group);
+        $this->entityManager->flush();
+    }
+
+    /**
      * @param FormInterface $form
      * @param Request $request
      * @return bool
@@ -112,6 +144,8 @@ class GroupFormManager
         if ($form->isSubmitted() && $form->isValid()) {
             $this->removeDeletedItems($originalParticipants, $participants);
             $this->removeDeletedItems($originalTimeSlots, $timeSlots);
+
+            $this->addNewParticipants($originalParticipants, $participants);
 
             $this->entityManager->persist($group);
             $this->entityManager->flush();

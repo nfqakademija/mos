@@ -20,9 +20,12 @@ class EditUserType extends AbstractType
             ))
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $user = $event->getData();
-                $password = $event->getForm()->getData()->getPassword();
-                $user['user']['password'] = $password;
-                $event->setData($user);
+
+                if (!isset($user['user']['password']) && $event->getForm()->getData()->getPassword() != null) {
+                    $password = $event->getForm()->getData()->getPassword();
+                    $user['user']['password'] = $password;
+                    $event->setData($user);
+                }
             });
     }
 

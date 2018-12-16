@@ -22,17 +22,45 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     }
 
     /**
-     * @return User[] Returns an array of User objects
+     * @param $role
+     * @return mixed
      */
-
     public function findByRole($role)
     {
         return $this->createQueryBuilder('u')
-          ->andWhere('u.roles LIKE :val')
-          ->setParameter('val', '%"' . $role . '"%')
-          ->orderBy('u.id', 'ASC')
-          ->getQuery()
-          ->getResult();
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%"' . $role . '"%')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $role
+     * @param $search
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findBySearchAndRoleB($role, $search)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.name LIKE :search')
+            ->orWhere('u.surname LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%"' . $role . '"%')
+            ->orderBy('u.id', 'DESC');
+    }
+
+    /**
+     * @param $role
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getByRoleB($role)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%"' . $role . '"%')
+            ->orderBy('u.id', 'DESC');
     }
 
     /**
@@ -46,8 +74,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     public function getAllQueryB($orderBy = 'u.id', $orderType = 'DESC')
     {
         $queryBuilder = $this->createQueryBuilder('u')
-          ->addOrderBy($orderBy, $orderType)
-        ;
+            ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
     }
@@ -64,7 +91,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
 
         return $result;
     }
-    
+
     /**
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
@@ -76,16 +103,13 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     public function getParticipantsByGroupPeriodQueryB($dateFrom, $dateTo, $orderBy = 'gr.id', $orderType = 'ASC')
     {
         $queryBuilder = $this->createQueryBuilder('pr')
-          ->innerJoin('pr.learningGroup', 'gr')
-          ->andWhere('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
-
-          ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
-          ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
-
-          ->leftJoin('pr.region', 'region')
-          ->addSelect('gr', 'region')
-          ->addOrderBy($orderBy, $orderType)
-        ;
+            ->innerJoin('pr.learningGroup', 'gr')
+            ->andWhere('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
+            ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
+            ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+            ->leftJoin('pr.region', 'region')
+            ->addSelect('gr', 'region')
+            ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
     }
@@ -101,9 +125,9 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
         $sql = "SELECT COUNT(`user`.id) FROM `user` 
                 INNER JOIN learning_group ON `user`.learning_group_id = learning_group.id 
                 AND learning_group.end_date <= '" . $dateNowStr . "'";
-        
+
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
-        
+
         return $result[0];
     }
 
@@ -121,12 +145,12 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
                 INNER JOIN learning_group 
                 ON `user`.learning_group_id = learning_group.id AND `user`.birth_date < '" . $birthDateStr . "' 
                 AND learning_group.end_date <= '" . $dateNowStr . "'";
-        
+
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
         return $result[0];
     }
-    
+
     /**
      * Gets count of participants older thant $minAge, where group end date is passed
      */
@@ -142,12 +166,12 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
                 ON `user`.learning_group_id = learning_group.id 
                 AND `user`.birth_date < '" . $birthDateStr . "' AND `user`.living_area_type = '" . $livingAreaType . "' 
                 AND learning_group.end_date <= '" . $dateNowStr . "'";
-        
+
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
         return $result[0];
     }
-    
+
     /**
      * Gets count of participants older thant $minAge, where group end date is passed
      */
@@ -168,13 +192,13 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
                 GROUP BY time_slot.learning_group_id ) as ts 
                 ON ts.learning_group_id = learning_group.id 
                 WHERE max_ts_date <= '" . $dateNowStr . "'";
-        
+
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
         return $result[0];
     }
-    
-    
+
+
     /**
      * Counts participants from finished groups in regions by regionId
      */
@@ -193,7 +217,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
                 GROUP BY time_slot.learning_group_id ) as ts 
                 ON ts.learning_group_id = learning_group.id 
                 WHERE max_ts_date <= '" . $dateNowStr . "'";
-        
+
         $result = $this->getEntityManager()->getConnection()->query($sql)->fetch(\Doctrine\DBAL\FetchMode::NUMERIC);
 
         return $result[0];

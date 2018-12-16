@@ -1,28 +1,26 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Report view{% endblock %}
+{% block title %}
+    {% trans %}Participants report{% endtrans %}
+{% endblock %}
 
 {% block body %}
     <h2 class="center-align">
         {% trans %}Participants report{% endtrans %}
     </h2>
-
     <form action={{ path('report.participants') }}>
-        <input type="date" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }} >
-        <input type="date" name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }} >
+        <input type="date" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }}>
+        <input type="date" name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }}>
 
         <button type="submit" name="submit_button" value="display">{% trans %}Display{% endtrans %}</button>
         <button type="submit" name="submit_button" value="export">{% trans %}Export{% endtrans %} </button>
     </form>
-    
-    
     {% if results|length %}
         <h6>{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h6>
-        {% else %}
+    {% else %}
         <h6>{% trans %}Sorry, nothing found. Try to change a period. Take into account only ending in the period groups are shown.{% endtrans %}</h6>
     {% endif %}
-   
     <table>
         <tr>
             <th>{% trans %}Name{% endtrans %}</th>

@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Participants{% endblock %}
+{% block title %}
+    {% trans %}Participants{% endtrans %}
+{% endblock %}
 
 {% block body %}
     <h2 class="center-align">
@@ -10,7 +12,7 @@
         <i class="material-icons form__print">
             print
         </i>
-        <table class="table" id="form__table">
+        <table class="responsive-table" id="form__table">
             <thead>
             <tr>
                 <th scope="col">#</th>
