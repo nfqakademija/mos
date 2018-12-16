@@ -67,7 +67,7 @@ class Helper
      * @return array
      * @throws \Exception
      */
-    public function dateFromToFromRequest(Request $request)
+    public function datesFromRequest(Request $request)
     {
         try {
             $dateFromString = $request->query->get('dateFrom');
