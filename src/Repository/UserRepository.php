@@ -177,7 +177,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
      */
     public function getOlderThanAndIsGender(int $minAge = 0, string $gender = 'moteris')
     {
-        //TODO: fix subselect
+        //TODO: fix subselect using group starDate endDate
         $dateNow = new \DateTime('now');
         $dateNowStr = $dateNow->format('Y-m-d');
         $birthDate = new \DateTime('now - ' . $minAge . ' year');
@@ -204,7 +204,7 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
      */
     public function getParticipantsCountInRegionId(int $regionId)
     {
-        //TODO: fix subselect
+        //TODO: fix subselect using group starDate endDate
         $dateNow = new \DateTime('now');
         $dateNowStr = $dateNow->format('Y-m-d');
 

@@ -22,6 +22,11 @@
                         </a>
                     </li>
                 {% endif %}
+                <li class="{{ app.request.get('_route') == 'report.schedule' ? 'active' }}">
+                    <a href="{{ path('report.schedule') }}">
+                        {% trans %}Schedule report{% endtrans %}
+                    </a>
+                </li>
                 <li class="{{ app.request.get('_route') == 'report.participants' ? 'active' }}">
                     <a href="{{ path('report.participants') }}">
                         {% trans %}Participants report{% endtrans %}
@@ -75,6 +80,11 @@
                 </a>
             </li>
         {% endif %}
+        <li class="{{ app.request.get('_route') == 'report.schedule' ? 'active' }}">
+            <a href="{{ path('report.schedule') }}">
+                {% trans %}Schedule report{% endtrans %}
+            </a>
+        </li>
         <li class="{{ app.request.get('_route') == 'report.participants' ? 'active' }}">
             <a href="{{ path('report.participants') }}">
                 {% trans %}Participants report{% endtrans %}
