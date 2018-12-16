@@ -63,7 +63,7 @@
                 <td scope="row">{{ group.id }}</td>
                 <td>
                     <a href="{{ path('group.view', {'group': group.id}) }}">
-                        {{ group.address }}
+                        {{ group.address }}, {{ group.region.title }}
                     </a>
                 </td>
                 <td class="s-hide">
