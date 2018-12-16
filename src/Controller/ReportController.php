@@ -4,15 +4,17 @@ namespace App\Controller;
 
 use App\Repository\TimeSlotRepository;
 use App\Services\Helper;
+use App\Services\ParticipantsReportManager;
 use App\Services\ReportManager;
 use App\Repository\RegionRepository;
 use App\Repository\UserRepository;
+use App\Services\ScheduleReportManager;
+use App\Services\StatusReportManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\ReportFilterType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,7 +40,7 @@ class ReportController extends AbstractController
         UserRepository $ur,
         Helper $helper
     ) {
-        $datesFromTo = $helper->dateFromToFromRequest($request);
+        $datesFromTo = $helper->datesFromRequest($request);
 
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
@@ -70,11 +72,11 @@ class ReportController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function participantsReportToExcel(Request $request, ReportManager $report, Helper $helper)
+    public function participantsReportToExcel(Request $request, ParticipantsReportManager $report, Helper $helper)
     {
-        $datesFromTo = $helper->dateFromToFromRequest($request);
+        $datesFromTo = $helper->datesFromRequest($request);
 
-        $result = $report->participantsReportExportToExcel($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
+        $result = $report->reportToExcel($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
 
         // Return the excel file as an attachment
         return $this->file(
@@ -87,7 +89,7 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/status", name="report.status")
      */
-    public function statusReport(ReportManager $report, RegionRepository $regionRepository)
+    public function statusReport(StatusReportManager $report, RegionRepository $regionRepository)
     {
         $results = $report->getStatusReport($regionRepository);
 
@@ -106,28 +108,45 @@ class ReportController extends AbstractController
       Helper $helper
     )
     {
-        $datesFromTo = $helper->dateFromToFromRequest($request);
+        $datesFromTo = $helper->datesFromRequest($request);
+        $submitButton = $request->query->get('submit_button');
+        if ($submitButton === 'export') {
+            $response = $this->forward('App\Controller\ReportController::scheduleReportToExcel', [
+                'dateFrom' => $datesFromTo['dateFrom'],
+                'dateTo' => $datesFromTo['dateTo'],
+            ]);
+        } else {
+            $page = $helper->getPageFromRequest($request);
 
-//        $submitButton = $request->query->get('submit_button');
-//        if ($submitButton === 'export') {
-//            return $this->redirectToRoute("report.participants.export", [
-//              [
-//                'dateFrom' => $datesFromTo['dateFrom']->format('Y-m-d'),
-//                'dateTo' => $datesFromTo['dateTo']->format('Y-m-d'),
-//              ]
-//            ]);
-//        }
+            $query = $ts->getTimeSlotsInPeriod($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
+            $pagination = $paginator->paginate($query, $page, 15);
 
-        $page = $helper->getPageFromRequest($request);
-
-        $query = $ts->getTimeSlotsInPeriod($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
-        $pagination = $paginator->paginate($query, $page, 15);
-
-        return $this->render('report/schedule.html.twig', [
-          'results' => $pagination,
-          'dateFrom' => $datesFromTo['dateFrom'],
-          'dateTo' => $datesFromTo['dateTo'],
-        ]);
+            $response = $this->render('report/schedule.html.twig', [
+              'results' => $pagination,
+              'dateFrom' => $datesFromTo['dateFrom'],
+              'dateTo' => $datesFromTo['dateTo'],
+            ]);
+        }
+        
+       return $response;
+    }
     
+    /**
+     * @Route("/report/schedule/export", name="report.schedule.export",)
+     *
+     * @param ReportManager $report
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function scheduleReportToExcel($dateFrom, $dateTo, ScheduleReportManager $scheduleReportManager)
+    {
+        $result = $scheduleReportManager->reportToExcel($dateFrom, $dateTo);
+
+        // Return the excel file as an attachment
+        return $this->file(
+          $result['file'],
+          $result['file_name'],
+          ResponseHeaderBag::DISPOSITION_INLINE
+        );
     }
 }

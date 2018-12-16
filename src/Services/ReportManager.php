@@ -2,13 +2,7 @@
 
 namespace App\Services;
 
-use App\Entity\User;
-use App\Repository\RegionRepository;
-use App\Repository\TimeSlotRepository;
-use App\Repository\UserRepository;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ReportManager

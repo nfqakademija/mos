@@ -16,7 +16,6 @@
         <button type="submit" name="submit_button" value="export">{% trans %}Export{% endtrans %} </button>
     </form>
     
-    
     {% if results|length %}
         <h6>{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h6>
         {% else %}
@@ -27,7 +26,7 @@
         <tr>
             <th>{% trans %}Address{% endtrans %}</th>
             <th>{% trans %}Start{% endtrans %}</th>
-            <th>{% trans %}End{% endtrans %}</th>
+            <th>{% trans %}Duration{% endtrans %}</th>
             <th>{% trans %}Participants count{% endtrans %}</th>
             <th>{% trans %}Group Id{% endtrans %}</th>
         </tr>

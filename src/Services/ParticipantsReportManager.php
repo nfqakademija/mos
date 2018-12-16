@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repository\UserRepository;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ParticipantsReportManager extends ReportManager
 {
@@ -30,7 +31,7 @@ class ParticipantsReportManager extends ReportManager
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function participantsReportExportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
+    public function reportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
         $participantsReport = $this->userRepository->getParticipantsByGroupPeriod($dateFrom, $dateTo);
 
@@ -66,11 +67,11 @@ class ParticipantsReportManager extends ReportManager
           'G' => 'Tel. nr.',
           'H' => 'El. paštas',
           'I' => 'Lytis',
-          'J' => 'Mokymų pradžios data',
-          'K' => 'Mokymų pabaigos data',
+          'J' => 'Mokymų pradžia',
+          'K' => 'Pabaiga',
           'L' => 'Grupės Nr.',
         ];
-
+       
         //set report table headers
         $row = 9;
         foreach ($cols as $colAddr => $colTitle) {
@@ -95,8 +96,8 @@ class ParticipantsReportManager extends ReportManager
             $sheet->setCellValue('G' . $row, $participant->getPhone());
             $sheet->setCellValue('H' . $row, $participant->getEmail());
             $sheet->setCellValue('I' . $row, $participant->getGender());
-            $sheet->setCellValue('J' . $row, $participant->getLearningGroup()->getStartDate());
-            $sheet->setCellValue('K' . $row, $participant->getLearningGroup()->getEndDate());
+            $sheet->setCellValue('J' . $row, $participant->getLearningGroup()->getStartDate()->format('Y-m-d'));
+            $sheet->setCellValue('K' . $row, $participant->getLearningGroup()->getEndDate()->format('Y-m-d'));
             $sheet->setCellValue('L' . $row, $participant->getLearningGroup()->getId());
 
             foreach ($cols as $colAddr => $colTitle) {
@@ -105,6 +106,11 @@ class ParticipantsReportManager extends ReportManager
             }
 
             $row++;
+        }
+        
+        foreach ($cols as $colAddr => $colTitle) { 
+            $sheet->getColumnDimension($colAddr)
+              ->setAutoSize(true);
         }
     }
 
@@ -121,24 +127,28 @@ class ParticipantsReportManager extends ReportManager
       \DateTime $dateTo
     ) {
         $reportTitle = "Mokymų dalyvių ataskaita";
-        $reportHeaderText = "Projekto vykdytojo pavadinimas: VŠĮ Žinios visiems
-        Projekto kodas: 125:2019:98356";
+        $reportHeaderTextOrganizer = "VŠĮ Žinios visiems";
+        $reportHeaderTextProjectCode = "125:2019:98356";
 
         $sheet->setTitle($dateFrom->format('Y-m-d') . '--' . $dateTo->format('Y-m-d'));
         //set report header
-        $sheet->setCellValue('F1', $reportTitle);
-        $sheet->getStyle('F1')->applyFromArray(['font' => ['bold' => true],]);
+        $sheet->setCellValue('A1', $reportTitle);
+        $sheet->getStyle('A1')->applyFromArray(['font' => ['bold' => true, 'size' => 24]]);
+        $sheet->getRowDimension(1)->setRowHeight(30);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal('center');
+        $sheet->mergeCells('A1:L1');
 
-        $sheet->setCellValue('A3', $reportHeaderText);
-        $sheet->getStyle('A3')->getAlignment()->setWrapText(true);
-        $sheet->getRowDimension(3)->setRowHeight(30);
-        $sheet->mergeCells('A3:L3');
+        $sheet->setCellValue('A3', 'Projekto vykdytojas:');
+        $sheet->setCellValue('B3', $reportHeaderTextOrganizer);
+        $sheet->getStyle('B3')->applyFromArray(['font' => ['bold' => true],]);
+        $sheet->setCellValue('A4', 'Projekto kodas:');
+        $sheet->setCellValue('B4', $reportHeaderTextProjectCode);
+        $sheet->getStyle('B4')->applyFromArray(['font' => ['bold' => true],]);
 
-        $sheet->setCellValue('A5', 'Laikotarpis nuo:');
-        $sheet->setCellValue('B5', $dateFrom->format('Y-m-d'));
-        $sheet->setCellValue('A6', 'iki:');
-        $sheet->setCellValue('B6', $dateTo->format('Y-m-d'));
-        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->setCellValue('A6', 'Laikotarpis nuo:');
+        $sheet->setCellValue('B6', $dateFrom->format('Y-m-d'));
+        $sheet->setCellValue('A7', 'iki:');
+        $sheet->setCellValue('B7', $dateTo->format('Y-m-d'));
     }
 
 
