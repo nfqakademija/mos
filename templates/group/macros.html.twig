@@ -33,7 +33,7 @@
         </div>
         <div class="participant__additional">
             <div class="row">
-                {% if display == true %}
+                {% if display == true or participant.user.password.vars.value == '' %}
                     <div class="input-field col s12 m6">
                         <div class="row">
                             {{ form_label(participant.user.username) }}

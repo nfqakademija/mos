@@ -49,6 +49,7 @@ security:
     - { path: ^/profile/add_teacher, roles: ROLE_ADMIN }
     - { path: ^/profile/remove/, roles: ROLE_ADMIN }
     - { path: ^/profile/participants, roles: ROLE_TEACHER }
+    - { path: ^/group/remove/, roles: ROLE_ADMIN }
     - { path: ^/report, roles: ROLE_TEACHER}
     - { path: ^/group, roles: ROLE_TEACHER }
     - { path: ^/profile/view/, roles: ROLE_TEACHER }

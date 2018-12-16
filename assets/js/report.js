@@ -1,6 +1,7 @@
 import * as M from 'materialize-css';
 import $ from 'jquery';
 import Chart from 'chart.js';
+import pickerOptions from "./pickerOptions";
 
 const createGraph = (ctx, type, labels, data, label, options) => {
   return new Chart(ctx, {
@@ -90,7 +91,8 @@ export default () => {
   const initialOptions = {
     format: 'yyyy-mm-dd',
     defaultDate: new Date(),
-    setDefaultDate: true
+    setDefaultDate: true,
+    ...pickerOptions
   };
 
   M.Datepicker.init($('.report__date-from'), initialOptions);

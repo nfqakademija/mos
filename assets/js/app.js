@@ -4,11 +4,13 @@ import '../img/upload_info.png';
 import initGroupForm  from './group';
 import groupParticipants from './participant';
 import reports from './report';
+import pickerOptions from './pickerOptions';
 
 $(document).ready(function () {
   M.Sidenav.init($('.sidenav'));
   M.FormSelect.init($('select'));
-  M.Datepicker.init($('.datepicker'));
+  M.Datepicker.init($('.datepicker'), pickerOptions);
+
   initGroupForm();
   groupParticipants();
   reports();

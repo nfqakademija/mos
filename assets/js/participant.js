@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import * as M from 'materialize-css';
 import randomString from 'random-string';
+import pickerOptions from "./pickerOptions";
 
 const getOldValues = that => $(that).parents().eq(2).find('.participant__username').val().split('.');
 
@@ -59,7 +60,10 @@ const toggleAdditionalSection = e => {
 
     if (count === 0) {
       M.FormSelect.init($(that).parents().eq(2).find('select'));
-      M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), {format: 'yyyy-mm-dd'});
+      M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), {
+        format: 'yyyy-mm-dd',
+        ...pickerOptions
+      });
       $(that).data('count', ++count);
     }
   }
