@@ -30,14 +30,14 @@ class TimeSlotRepository extends ServiceEntityRepository implements RepositoryIn
     public function getAllQueryB($orderBy = 'ts.id', $orderType = 'DESC')
     {
         $queryBuilder = $this->createQueryBuilder('ts')
-          ->addOrderBy($orderBy, $orderType);
+            ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
     }
 
 
-    /** 
-     * Gets times slots in period plus extra data required by schedule report. 
+    /**
+     * Gets times slots in period plus extra data required by schedule report.
      */
     public function getTimeSlotsInPeriod(\DateTime $dateFrom, \DateTime $dateTo)
     {
@@ -55,18 +55,13 @@ class TimeSlotRepository extends ServiceEntityRepository implements RepositoryIn
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getTimeSlotsInPeriodQueryB(
-      $dateFrom,
-      $dateTo,
-      $orderBy = 'ts.id',
-      $orderType = 'ASC'
-    ) {
+    public function getTimeSlotsInPeriodQueryB($dateFrom, $dateTo, $orderBy = 'ts.id', $orderType = 'ASC')
+    {
         $queryBuilder = $this->createQueryBuilder('ts')
-          ->where('ts.date >= :dateFrom AND ts.date <= :dateTo')
-          ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
-          ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
-          
-          ->addOrderBy($orderBy, $orderType);
+            ->where('ts.date >= :dateFrom AND ts.date <= :dateTo')
+            ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
+            ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+            ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
     }

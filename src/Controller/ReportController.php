@@ -68,7 +68,7 @@ class ReportController extends AbstractController
     /**
      * @Route("/report/participants/export", name="report.participants.export",)
      * @param Request $request
-     * @param ReportManager $report
+     * @param ParticipantsReportManager $report
      * @param Helper $helper
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -90,7 +90,7 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/status", name="report.status")
-     * @param ReportManager $report
+     * @param StatusReportManager $report
      * @param RegionRepository $regionRepository
      * @return Response
      */
@@ -105,14 +105,19 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report/schedule", name="report.schedule")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param TimeSlotRepository $ts
+     * @param Helper $helper
+     * @return Response
+     * @throws \Exception
      */
     public function scheduleReport(
-      Request $request,
-      PaginatorInterface $paginator,
-      TimeSlotRepository $ts,
-      Helper $helper
-    )
-    {
+        Request $request,
+        PaginatorInterface $paginator,
+        TimeSlotRepository $ts,
+        Helper $helper
+    ) {
         $datesFromTo = $helper->datesFromRequest($request);
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
@@ -127,21 +132,23 @@ class ReportController extends AbstractController
             $pagination = $paginator->paginate($query, $page, 15);
 
             $response = $this->render('report/schedule.html.twig', [
-              'results' => $pagination,
-              'dateFrom' => $datesFromTo['dateFrom'],
-              'dateTo' => $datesFromTo['dateTo'],
+                'results' => $pagination,
+                'dateFrom' => $datesFromTo['dateFrom'],
+                'dateTo' => $datesFromTo['dateTo'],
             ]);
         }
-        
-       return $response;
+
+        return $response;
     }
-    
+
     /**
      * @Route("/report/schedule/export", name="report.schedule.export",)
-     *
-     * @param ReportManager $report
-     *
+     * @param $dateFrom
+     * @param $dateTo
+     * @param ScheduleReportManager $scheduleReportManager
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function scheduleReportToExcel($dateFrom, $dateTo, ScheduleReportManager $scheduleReportManager)
     {
@@ -149,9 +156,9 @@ class ReportController extends AbstractController
 
         // Return the excel file as an attachment
         return $this->file(
-          $result['file'],
-          $result['file_name'],
-          ResponseHeaderBag::DISPOSITION_INLINE
+            $result['file'],
+            $result['file_name'],
+            ResponseHeaderBag::DISPOSITION_INLINE
         );
     }
 }

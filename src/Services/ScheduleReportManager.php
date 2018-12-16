@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vaidas
- * Date: 18.12.15
- * Time: 13.42
- */
 
 namespace App\Services;
-
 
 use App\Repository\TimeSlotRepository;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -24,11 +17,11 @@ class ScheduleReportManager extends ReportManager
 
 
     /**
-     * Schedule report.
      * @param \DateTime $dateFrom
      * @param \DateTime $dateTo
-     *
      * @return array
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function reportToExcel(\DateTime $dateFrom, \DateTime $dateTo): array
     {
@@ -48,20 +41,17 @@ class ScheduleReportManager extends ReportManager
         return $tempFileWithName;
     }
 
-    private function setReportTable(
-      Worksheet &$sheet,
-      $scheduleReport
-    ) {
-
+    private function setReportTable(Worksheet &$sheet, $scheduleReport)
+    {
         $tableStyles = $this->getTableStyles();
         $headerStyles = array_merge($tableStyles, ['font' => ['bold' => true]]);
 
         $cols = [
-          'A' => 'Adresas',
-          'B' => 'Pradžia',
-          'C' => 'Trukmė',
-          'D' => 'Dalyvių sk.',
-          'E' => 'Grupės Nr.',
+            'A' => 'Adresas',
+            'B' => 'Pradžia',
+            'C' => 'Trukmė',
+            'D' => 'Dalyvių sk.',
+            'E' => 'Grupės Nr.',
         ];
 
         //set report table headers
@@ -78,7 +68,7 @@ class ScheduleReportManager extends ReportManager
             $sheet->setCellValue('A' . $row, $schedule->getLearningGroup()->getAddress());
             $sheet->setCellValue('B' . $row, $schedule->getDate() . ' ' . $schedule->getStartTime());
             $sheet->setCellValue('C' . $row, $schedule->getDuration() . 'min.');
-            $sheet->setCellValue('D' . $row, sizeof ($schedule->getLearningGroup()->getParticipants()));
+            $sheet->setCellValue('D' . $row, sizeof($schedule->getLearningGroup()->getParticipants()));
             $sheet->setCellValue('E' . $row, $schedule->getLearningGroup()->getId());
 
             foreach ($cols as $colAddr => $colTitle) {
@@ -88,10 +78,10 @@ class ScheduleReportManager extends ReportManager
 
             $row++;
         }
-        
-        foreach($cols as $colAddr => $title) {
+
+        foreach ($cols as $colAddr => $title) {
             $sheet->getColumnDimension($colAddr)
-              ->setAutoSize(true);
+                ->setAutoSize(true);
         }
     }
 
@@ -102,11 +92,8 @@ class ScheduleReportManager extends ReportManager
      *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    private function setReportHeader(
-      Worksheet &$sheet,
-      \DateTime $dateFrom,
-      \DateTime $dateTo
-    ) {
+    private function setReportHeader(Worksheet &$sheet, \DateTime $dateFrom, \DateTime $dateTo)
+    {
         $reportTitle = "Mokymų tvarkaraštis";
         $reportHeaderTextOrganizer = "VŠĮ Žinios visiems";
         $reportHeaderTextProjectCode = "125:2019:98356";

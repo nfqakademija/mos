@@ -49,29 +49,26 @@ class ParticipantsReportManager extends ReportManager
         return $tempFileWithName;
     }
 
-    private function setParticipantsReportTable(
-      Worksheet &$sheet,
-      $participantsReport
-    ) {
-
+    private function setParticipantsReportTable(Worksheet &$sheet, $participantsReport)
+    {
         $tableStyles = $this->getTableStyles();
         $headerStyles = array_merge($tableStyles, ['font' => ['bold' => true]]);
 
         $cols = [
-          'A' => 'Vardas',
-          'B' => 'Pavardė',
-          'C' => 'Gimimo data',
-          'D' => 'Rajonas / miestas',
-          'E' => 'Adresas',
-          'F' => 'Vietovės tipas',
-          'G' => 'Tel. nr.',
-          'H' => 'El. paštas',
-          'I' => 'Lytis',
-          'J' => 'Mokymų pradžia',
-          'K' => 'Pabaiga',
-          'L' => 'Grupės Nr.',
+            'A' => 'Vardas',
+            'B' => 'Pavardė',
+            'C' => 'Gimimo data',
+            'D' => 'Rajonas / miestas',
+            'E' => 'Adresas',
+            'F' => 'Vietovės tipas',
+            'G' => 'Tel. nr.',
+            'H' => 'El. paštas',
+            'I' => 'Lytis',
+            'J' => 'Mokymų pradžia',
+            'K' => 'Pabaiga',
+            'L' => 'Grupės Nr.',
         ];
-       
+
         //set report table headers
         $row = 9;
         foreach ($cols as $colAddr => $colTitle) {
@@ -107,10 +104,11 @@ class ParticipantsReportManager extends ReportManager
 
             $row++;
         }
-        
-        foreach ($cols as $colAddr => $colTitle) { 
-            $sheet->getColumnDimension($colAddr)
-              ->setAutoSize(true);
+
+        foreach ($cols as $colAddr => $colTitle) {
+            $sheet
+                ->getColumnDimension($colAddr)
+                ->setAutoSize(true);
         }
     }
 
@@ -121,11 +119,8 @@ class ParticipantsReportManager extends ReportManager
      *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    private function setParticipantsReportHeader(
-      Worksheet &$sheet,
-      \DateTime $dateFrom,
-      \DateTime $dateTo
-    ) {
+    private function setParticipantsReportHeader(Worksheet &$sheet, \DateTime $dateFrom, \DateTime $dateTo)
+    {
         $reportTitle = "Mokymų dalyvių ataskaita";
         $reportHeaderTextOrganizer = "VŠĮ Žinios visiems";
         $reportHeaderTextProjectCode = "125:2019:98356";
@@ -150,7 +145,6 @@ class ParticipantsReportManager extends ReportManager
         $sheet->setCellValue('A7', 'iki:');
         $sheet->setCellValue('B7', $dateTo->format('Y-m-d'));
     }
-
 
 
 }
