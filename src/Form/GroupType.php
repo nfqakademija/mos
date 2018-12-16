@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupType extends AbstractType
@@ -45,7 +47,18 @@ class GroupType extends AbstractType
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Submit'
-            ));
+            ))
+            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+    }
+
+    public function onPreSubmit(FormEvent $event)
+    {
+        $data = $event->getData();
+
+        if (isset($data['timeSlots'])) {
+            $data['timeSlots'] = array_values($data['timeSlots']);
+            $event->setData($data);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
