@@ -36,6 +36,7 @@ class AppFixtures extends Fixture
         $femaleNames = $this->getFemaleNames();
         $femaleSurnames = $this->getFemaleSurnames();
         $streets = $this->getStreetNames();
+        $villages = $this->getVillages();
         
         //push all Regions to database
         $allRegionsObjects = [];
@@ -91,7 +92,7 @@ class AppFixtures extends Fixture
             $userTeacher[$i] = new User();
             $userTeacher[$i]
                 ->setUsername('teacher' . $i)
-                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'labast1'))
+                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'labast' . $i))
                 ->setEmail($name . $surname. $i . '@email.com')
                 ->setName($name)
                 ->setSurname($surname)
@@ -125,6 +126,7 @@ class AppFixtures extends Fixture
                 }
                 else {
                     $livingAreaType = 'kaimas';
+                    $participantStreet .= ', ' . $villages[rand(0, sizeof($villages) - 1)];
                 }
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
@@ -319,6 +321,50 @@ class AppFixtures extends Fixture
         return [
           'Sodų g.', 'Vytauto g.', 'Taikos g.', 'Liepų g.', 'Vilniaus g.', 'Žemaitės g.' , 'Aušros g.', 'Birutės g.', 
           'Gėlių g.', 'Statybininkų g.', 'Pievų g.', 'S.Nėries g.', 'Žalioji g.', 'Laisvės g.', 'Naujoji g.', 'Alyvų g.'
+        ];
+    }
+    
+    public function getVillages(){
+        return [
+            'Domeikava', 
+            'Skaidiškės',
+            'Raudondvaris',
+            'Rudamina',
+            'Pagiriai',
+            'Neveronys',
+            'Ginkūnai',
+            'Pravieniškės',
+            'Nemėžis',
+            'Dembava',
+            'Butkeliai',
+            'Ringaudai',
+            'Valčiūnai',
+            'Vydmantai',
+            'Kalveliai',
+            'Juodšiliai',
+            'Šlienava',
+            'Didžiasalis',
+            'Avižieniai',
+            'Gudiena',
+            'Ramučiai',
+            'Buivydiškės',
+            'Vilainiai',
+            'Zujūnai',
+            'Kavoliškis',
+            'Velžys',
+            'Vaidotai',
+            'Kūlupėnai',
+            'Mastaičiai',
+            'Matuizos',
+            'Padvariai',
+            'Grigaičiai',
+            'Traksėdžiai',
+            'Varkaliai',
+            'Aukštelkė',
+            'Noriūnai',
+            'Vijoliai', 
+            'Piniava',
+            'Juknaičiai',
         ];
     }
 }

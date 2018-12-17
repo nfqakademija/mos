@@ -100,7 +100,7 @@
         </tr>
         <tr>
             <td>{% trans %}Last access date{% endtrans %}</td>
-            <td>{{ user.lastAccessDate|date('Y-m-d h:m') }}</td>
+            <td>{{ user.lastAccessDate|date('Y-m-d') }}</td>
         </tr>
         <tr>
             {% if user.learningGroupsUserTeaches is not empty %}
@@ -119,10 +119,11 @@
         </tr>
         <tr>
             {% if user.learningGroup is not empty %}
-                <td>{% trans %}Studying in group{% endtrans %}:</td>
+                <td>{% trans %}Studying in group{% endtrans %}</td>
                 <td>
                     {% trans %}Id{% endtrans %}: {{ user.learningGroup.id }}
-                    {% trans %}Address{% endtrans %}: {{ user.learningGroup.address }}
+                    </br>
+                    {% trans %}Address{% endtrans %}: {{ user.learningGroup.address }}, {{ user.learningGroup.region.title }}
                 </td>
             {% endif %}
         </tr>
