@@ -40,8 +40,8 @@
             <tr>
                 <td>{{ result.learningGroup.region.title }}</td>
                 <td>{{ result.learningGroup.address }}</td>
-                <td>{{ result.date ? result.date|date('Y-m-d') }}</td>
-                <td>{{ result.startTime ? result.startTime }}</td>
+                <td>{{ result.date ? result.date|date('Y-m-d') }} {{ result.startTime ? result.startTime }}</td>
+                <td>{{ result.duration }}</td>
                 <td>{{ result.learningGroup.participants|length }}</td>
                 <td>{{ result.learningGroup.id }}</td>
                 <td></td>
