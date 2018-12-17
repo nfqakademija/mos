@@ -23,9 +23,9 @@ class ScheduleReportManager extends ReportManager
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function reportToExcel(\DateTime $dateFrom, \DateTime $dateTo, int $regionId): array
+    public function reportToExcel(\DateTime $dateFrom, \DateTime $dateTo, array $regionIds): array
     {
-        $scheduleReport = $this->timeSlotRepository->getTimeSlotsInPeriod($dateFrom, $dateTo, $regionId);
+        $scheduleReport = $this->timeSlotRepository->getTimeSlotsInPeriod($dateFrom, $dateTo, $regionIds);
 
         $spreadsheet = new Spreadsheet();
 

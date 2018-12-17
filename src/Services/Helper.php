@@ -70,12 +70,12 @@ class Helper
     public function dataFromRequest(Request $request)
     {
         try {
-            $regionId = (int) $request->query->get('regionId');
-            if ($regionId === null) {
+            $regionIds = $request->query->get('regionId');
+            if ($regionIds === null) {
                 throw new \Exception('regionTitle is not specified.');
             }
         } catch (\Exception $e) {
-            $regionId = 0;
+            $regionIds = [];
         }
         
         try {
@@ -99,6 +99,6 @@ class Helper
         }
         
         
-        return ['regionId' => $regionId, 'dateFrom' => $dateFrom, 'dateTo' => $dateTo];
+        return ['regionIds' => $regionIds, 'dateFrom' => $dateFrom, 'dateTo' => $dateTo];
     }
 }

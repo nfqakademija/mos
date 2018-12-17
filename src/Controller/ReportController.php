@@ -128,17 +128,18 @@ class ReportController extends AbstractController
             $response = $this->forward('App\Controller\ReportController::scheduleReportToExcel', [
                 'dateFrom' => $dataFromRequest['dateFrom'],
                 'dateTo' => $dataFromRequest['dateTo'],
-                'regionId' => $dataFromRequest['regionId'],
+                'regionIds' => $dataFromRequest['regionIds'],
             ]);
         } else {
             $page = $helper->getPageFromRequest($request);
 
-            $query = $ts->getTimeSlotsInPeriod($dataFromRequest['dateFrom'], $dataFromRequest['dateTo'], $dataFromRequest['regionId']);
+            $query = $ts->getTimeSlotsInPeriod($dataFromRequest['dateFrom'], $dataFromRequest['dateTo'], $dataFromRequest['regionIds']);
             $pagination = $paginator->paginate($query, $page, 20);
 
             $response = $this->render('report/schedule.html.twig', [
                 'results' => $pagination,
                 'regions' => $regions,
+                'selectedRegions' => $dataFromRequest['regionIds'],
                 'dateFrom' => $dataFromRequest['dateFrom'],
                 'dateTo' => $dataFromRequest['dateTo'],
             ]);
@@ -156,9 +157,9 @@ class ReportController extends AbstractController
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function scheduleReportToExcel($dateFrom, $dateTo, $regionId, ScheduleReportManager $scheduleReportManager)
+    public function scheduleReportToExcel($dateFrom, $dateTo, $regionIds, ScheduleReportManager $scheduleReportManager)
     {
-        $result = $scheduleReportManager->reportToExcel($dateFrom, $dateTo, $regionId);
+        $result = $scheduleReportManager->reportToExcel($dateFrom, $dateTo, $regionIds);
 
         // Return the excel file as an attachment
         return $this->file(

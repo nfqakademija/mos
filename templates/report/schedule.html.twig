@@ -9,9 +9,15 @@
     </h2>
 
     <form action={{ path('report.schedule') }}>
-        <select name="regionId" class="form-control">
+        <select multiple name="regionId[]" class="form-control">
+            <option value="" disabled>{% trans %}Choose a region{% endtrans %}</option>
             {% for region in regions %}
-                <option value='{{ region.id }}'>{{ region.title }}</option>
+                {% if region.id in selectedRegions  %}
+                    <option selected value='{{ region.id }}'>{{ region.title }}</option>
+                {% else %}
+                    <option value='{{ region.id }}'>{{ region.title }}</option>
+                {% endif %}
+                
             {%  endfor %}
         </select>
         <input type="date" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }} >
