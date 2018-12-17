@@ -90,8 +90,8 @@ class AppFixtures extends Fixture
             
             $userTeacher[$i] = new User();
             $userTeacher[$i]
-                ->setUsername($name . $surname. '_' . $i)
-                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
+                ->setUsername('teacher' . $i)
+                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'labast1'))
                 ->setEmail($name . $surname. $i . '@email.com')
                 ->setName($name)
                 ->setSurname($surname)
