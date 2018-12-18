@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Region;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -41,6 +42,7 @@ class AppFixtures extends Fixture
         //push all Regions to database
         $allRegionsObjects = [];
         $allRegionsData = $this->getAllRegionsData();
+        $allRegionsDataWithObjId = [];
         foreach ($allRegionsData as $regionTitle => $extraData) {
             $region = new Region();
             $region
@@ -50,6 +52,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($region);
         }
+        $manager->flush();
 
         //generate Manager///////////////////////////////////////////
 
@@ -105,14 +108,19 @@ class AppFixtures extends Fixture
             //generate Group
             $group[$i] = new LearningGroup();
             $groupStreet = $streets[rand(0, sizeof($streets) - 1)];
-            $group[$i]->setAddress($groupStreet . $i );
-            $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
+            $groupStreet .= ' ' . $i;
             $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects) - 1)];
+            $regionTitle = $region->getTitle();
+            if (strpos($regionTitle, 'raj')) {
+                $groupStreet .= ', ' . $villages[rand(0, sizeof($villages) - 1)];
+            }
+            $group[$i]->setAddress($groupStreet);
+            $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
             $group[$i]->setRegion($region);
             $participantsCount = rand(5, $maxParticipantsInGroup);
             for ($j = 0; $j < $participantsCount; $j++) {
                 $participantGender = $genres[array_rand($genres, 1)];
-                if ($participantGender === 'vyras'){
+                if ($participantGender === 'vyras') {
                     $participantName = $maleNames[rand(0, sizeof($maleNames) - 1)];
                     $participantSurname = $maleSurnames[rand(0, sizeof($maleSurnames) - 1)];
                 } else {
@@ -120,13 +128,12 @@ class AppFixtures extends Fixture
                     $participantSurname = $femaleSurnames[rand(0, sizeof($femaleSurnames) - 1)];
                 }
                 $participantStreet = $streets[rand(0, sizeof($streets) - 1)];
-                if (strpos($region->getTitle(), '.m')) 
-                {
-                    $livingAreaType = 'miestas';
-                }
-                else {
+                $participantStreet .= ' ' . rand(1, 49);
+                if (strpos($region->getTitle(), 'raj')) {
                     $livingAreaType = 'kaimas';
                     $participantStreet .= ', ' . $villages[rand(0, sizeof($villages) - 1)];
+                } else {
+                    $livingAreaType = 'miestas';
                 }
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
@@ -142,7 +149,7 @@ class AppFixtures extends Fixture
                     ->setLivingAreaType($livingAreaType)
                     ->setGender($participantGender)
                     ->setPhone($this->randomPhoneNumber())
-                    ->setAddress($participantStreet . ' ' . rand(1, 49));
+                    ->setAddress($participantStreet);
                 $manager->persist($userParticipant);
 
                 $group[$i]->addParticipant($userParticipant);
@@ -160,7 +167,6 @@ class AppFixtures extends Fixture
             }
             $group[$i]->updateStartEndDates();
             $manager->persist($group[$i]);
-            $manager->flush();
         }
 
         $manager->flush();
