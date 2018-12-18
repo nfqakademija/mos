@@ -32,4 +32,5 @@ export default () => {
 
   filterHolder.submit(handleSubmit);
   $('.filter-toggle-button').on('click', () => filterHolder.slideToggle('fast'));
+  $('.sort').on('change', e => window.location = e.currentTarget.value);
 };

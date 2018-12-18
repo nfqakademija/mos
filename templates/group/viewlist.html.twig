@@ -28,7 +28,7 @@
             <i class="material-icons prefix">
                 filter_list
             </i>
-            <select>
+            <select class="sort">
                 <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
                 {{ knp_pagination_sortable(groups, 'By ID descending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'desc'}) }}
                 {{ knp_pagination_sortable(groups, 'By ID ascending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'asc'}) }}
