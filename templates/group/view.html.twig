@@ -14,7 +14,7 @@
         {% trans %}Group{% endtrans %}
     </h2>
     {% if is_granted('ROLE_TEACHER') %}
-        <div class="row">
+        <div class="row page-actions">
             <a class="btn blue darken-3" href="{{ path('group.edit', {'group': gr.id}) }}">
                 {% trans %}Edit{% endtrans %}
                 <i class="material-icons left">
@@ -81,7 +81,6 @@
                     <th scope="col">{% trans %}Name{% endtrans %}</th>
                     <th scope="col">{% trans %}Surname{% endtrans %}</th>
                     <th scope="col" class="m-hide">{% trans %}Username{% endtrans %}</th>
-                    <th scope="col" class="m-hide">{% trans %}Birth date{% endtrans %}</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -91,7 +90,6 @@
                         <td>{{ participant.name }}</td>
                         <td>{{ participant.surname }}</td>
                         <td class="m-hide">{{ participant.username }}</td>
-                        <td class="m-hide">{{ participant.birthDate }}</td>
                         <td>
                             <a href="{{ path('profile.view.user', {'user': participant.id}) }}">
                                 {% trans %}View{% endtrans %}

@@ -1,23 +1,28 @@
-.time-slot {
+.time-slots {
   @media screen and (max-width: 993px) {
-    @include border;
-    margin-top: 10px;
-    padding-bottom: 15px;
+    margin-top: 15px;
   }
-
-  .time-slot__button {
-    height: 54px;
-    margin: 15px 0;
-    @extend .center-element;
-
+  .time-slot {
     @media screen and (max-width: 993px) {
-      margin: 0;
+      @include border;
+      margin-top: 10px;
+      padding-bottom: 15px;
     }
 
-    .time-slot__button--remove {
-      font-size: 28px;
-      cursor: pointer;
-      color: #9e9e9e;
+    .time-slot__button {
+      height: 54px;
+      margin: 15px 0;
+      @extend .center-element;
+
+      @media screen and (max-width: 993px) {
+        margin: 0;
+      }
+
+      .time-slot__button--remove {
+        font-size: 28px;
+        cursor: pointer;
+        color: #9e9e9e;
+      }
     }
   }
 }
