@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+    {% trans %}
+        Dashboard
+    {% endtrans %}
+{% endblock %}
+
+{% block body %}
+    <h2 class="page-title center-align">
+        {% trans %}
+            Dashboard
+        {% endtrans %}
+    </h2>
+    <div>
+        <h3>My groups</h3>
+        (list of groups where I am a teacher)
+        
+        <h3>Learning groups today</h3>
+        (timeSlots from today)
+
+        <h3>Learning groups tomorrow</h3>
+        (timeSlots from tommorow)
+        
+        <h3>Learning groups this week</h3>
+        
+    </div>
+
+
+{% endblock %}
+
+
+
+
