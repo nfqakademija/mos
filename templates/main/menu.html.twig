@@ -5,6 +5,11 @@
         </a>
         {% if is_granted('ROLE_SUPERVISOR') %}
             <ul class="left hide-on-med-and-down">
+              <li class="{{ app.request.get('_route') == 'dashboard' ? 'active' }}">
+                <a href="{{ path('dashboard') }}">
+                  {% trans %}Dashboard{% endtrans %}
+                </a>
+              </li>
                 <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
                     <a href="{{ path('group.viewlist') }}">
                         {% trans %}Groups{% endtrans %}
@@ -63,6 +68,11 @@
 </div>
 <ul class="sidenav" id="mobile-nav">
     {% if is_granted('ROLE_SUPERVISOR') %}
+        <li class="{{ app.request.get('_route') == 'dashboard' ? 'active' }}">
+            <a href="{{ path('dashboard') }}">
+              {% trans %}Dashboard{% endtrans %}
+            </a>
+        </li>
         <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
             <a href="{{ path('group.viewlist') }}">
                 {% trans %}Groups{% endtrans %}
