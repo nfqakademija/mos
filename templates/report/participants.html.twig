@@ -17,10 +17,10 @@
             <input type="text" class="datepicker" name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }}>
         </div>
         <div class="row">
-            <button class="btn blue darken-3 report__button" type="submit" name="submit_button">
+            <button class="btn blue darken-3 report__button" type="submit" name="submit_button" value="display">
                 {% trans %}Display{% endtrans %}
             </button>
-            <button class="btn blue darken-3 report__button right s-float-none" type="submit" name="submit_button">
+            <button class="btn blue darken-3 report__button right s-float-none" type="submit" name="submit_button" value="export">
                 {% trans %}Export{% endtrans %}
             </button>
         </div>
@@ -61,7 +61,7 @@
                 {% endfor %}
             </table>
         {% else %}
-            <h6>{% trans %}Sorry, nothing found. Try to change a period. Take into account only ending in the period groups are shown.{% endtrans %}</h6>
+            <h6>{% trans %}No participant finishing in this period found{% endtrans %}</h6>
         {% endif %}
     </div>
 {% endblock %}

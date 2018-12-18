@@ -42,28 +42,28 @@ class ReportController extends AbstractController
         UserRepository $ur,
         Helper $helper
     ) {
-        $datesFromTo = $helper->dataFromRequest($request);
+        $dataFromRequest = $helper->dataFromRequest($request);
 
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
-            return $this->redirectToRoute("report.participants.export", [
-                [
-                    'dateFrom' => $datesFromTo['dateFrom']->format('Y-m-d'),
-                    'dateTo' => $datesFromTo['dateTo']->format('Y-m-d'),
-                ]
+            $response = $this->forward('App\Controller\ReportController::participantsReportToExcel', [
+              'dateFrom' => $dataFromRequest['dateFrom'],
+              'dateTo' => $dataFromRequest['dateTo'],
+            ]);
+        } else {
+            $page = $helper->getPageFromRequest($request);
+            $query = $ur->getParticipantsByGroupPeriodQueryB($dataFromRequest['dateFrom'],
+              $dataFromRequest['dateTo']);
+            $pagination = $paginator->paginate($query, $page, 15);
+            
+            $response = $this->render('report/participants.html.twig', [
+              'results' => $pagination,
+              'dateFrom' => $dataFromRequest['dateFrom'],
+              'dateTo' => $dataFromRequest['dateTo'],
             ]);
         }
-
-        $page = $helper->getPageFromRequest($request);
-
-        $query = $ur->getParticipantsByGroupPeriodQueryB($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
-        $pagination = $paginator->paginate($query, $page, 15);
-
-        return $this->render('report/participants.html.twig', [
-            'results' => $pagination,
-            'dateFrom' => $datesFromTo['dateFrom'],
-            'dateTo' => $datesFromTo['dateTo'],
-        ]);
+        
+        return $response;
     }
 
 
@@ -76,11 +76,9 @@ class ReportController extends AbstractController
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function participantsReportToExcel(Request $request, ParticipantsReportManager $report, Helper $helper)
+    public function participantsReportToExcel($dateFrom, $dateTo, ParticipantsReportManager $report)
     {
-        $datesFromTo = $helper->dataFromRequest($request);
-
-        $result = $report->reportToExcel($datesFromTo['dateFrom'], $datesFromTo['dateTo']);
+        $result = $report->reportToExcel($dateFrom, $dateTo);
 
         // Return the excel file as an attachment
         return $this->file(

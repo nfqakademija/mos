@@ -91,6 +91,7 @@ Add staff: Pridėti personalo darbuotoją
 Teacher form: Dėstytojo forma
 No participants found: Dalyvių nerasta
 Search by name or surname: Paieška pagal vardą ar pavardę
+Search by surname: Paieška pagal pavardę
 Sort by: Rikiuoti pagal
 Choose filter: Pasirinkite filtrą
 By ID descending: Pagal ID mažėjimo tvarka
@@ -131,3 +132,4 @@ Alert! Make sure you print or write down users with their passwords because late
 Group participants: Grupės dalyviai
 Print: Spausdinti
 There are errors in this form: Formoje yra klaidų
+No participant finishing in this period found: Dalyvių, baigiančių mokymus šiame periode, nerasta.
