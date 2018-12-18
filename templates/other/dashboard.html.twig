@@ -14,8 +14,45 @@
         {% endtrans %}
     </h2>
     <div>
+        {#only for Teacher#}
         <h3>My groups</h3>
         (list of groups where I am a teacher)
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">
+                {% trans %}Address{% endtrans %}
+            </th>
+            <th scope="col" class="s-hide">
+                {% trans %}Start date{% endtrans %}
+            </th>
+            <th scope="col" class="s-hide">
+                {% trans %}End date{% endtrans %}
+            </th>
+            <th scope="col">
+                {% trans %}Participants{% endtrans %}
+            </th>
+        </tr>
+        </thead>
+        {% for group in groupsUserIsTeacher %}
+            <tr>
+                <td scope="row">{{ group.id }}</td>
+                <td>
+                    <a href="{{ path('group.view', {'group': group.id}) }}">
+                        {{ group.address }}, {{ group.region.title }}
+                    </a>
+                </td>
+                <td class="s-hide">
+                    {{ group.startDate ? group.startDate|date('Y-m-d') }}
+                </td>
+                <td class="s-hide">
+                    {{ group.endDate ? group.endDate|date('Y-m-d') }}
+                </td>
+                <td>
+                    {{ group.participants|length }}
+                </td>
+            </tr>
+        {% endfor %}
         
         <h3>Learning groups today</h3>
         (timeSlots from today)
