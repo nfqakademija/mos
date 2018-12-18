@@ -82,7 +82,6 @@ class UserType extends AbstractType
                     'Vyras' => 'vyras',
                     'Moteris' => 'moteris'
                 ),
-                'data' => 'vyras'
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Submit'
