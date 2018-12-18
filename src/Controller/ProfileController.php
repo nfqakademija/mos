@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\EditUserType;
 use App\Form\RegisterUserType;
+use App\Form\StaffType;
 use App\Services\Helper;
 use App\Repository\UserRepository;
 use App\Services\UserManager;
@@ -62,9 +63,9 @@ class ProfileController extends AbstractController
             'Vartotojas buvo sėkmingai pašalintas!'
         );
 
-        return in_array(USER::ROLE_TEACHER, $user->getRoles())
-            ? $this->redirectToRoute('profile.teachers')
-            : $this->redirectToRoute('profile.participants');
+        return in_array(USER::ROLE_PARTICIPANT, $user->getRoles())
+            ? $this->redirectToRoute('profile.participants')
+            : $this->redirectToRoute('profile.staff');
     }
 
     /**
@@ -107,8 +108,8 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/teachers",
-     *   name="profile.teachers",
+     * @Route("/profile/staff",
+     *   name="profile.staff",
      *   methods="GET")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Services\Helper $helper
@@ -116,31 +117,45 @@ class ProfileController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function teacherViewList(Request $request, Helper $helper, UserRepository $userRepository)
+    public function staffViewList(Request $request, Helper $helper, UserRepository $userRepository)
     {
-        $pagination = $helper->getEntitiesPaginated($userRepository->getByRoleB(user::ROLE_TEACHER), $request);
+        $pagination = $helper->getEntitiesPaginated(
+            $userRepository->getByRolesB(User::ROLE_TEACHER, User::ROLE_SUPERVISOR),
+            $request
+        );
 
-        return $this->render('profile/teachers.html.twig', [
+        return $this->render('profile/staff.html.twig', [
             'users' => $pagination,
         ]);
     }
 
     /**
-     * @Route("/profile/teachers/search", name="profile.teachers.search", methods="GET")
+     * @Route("/profile/staff/search", name="profile.staff.search", methods="GET")
      * @param Request $request
      * @param Helper $helper
      * @param UserRepository $userRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function teacherSearch(Request $request, Helper $helper, UserRepository $userRepository)
+    public function staffSearch(Request $request, Helper $helper, UserRepository $userRepository)
     {
         $searchPhrase = $request->query->get('key');
-        $pagination = $helper->getEntitiesPaginated(
-            $userRepository->findBySearchAndRoleB(USER::ROLE_TEACHER, $searchPhrase),
-            $request
-        );
+        $role = $request->query->get('filterValue');
 
-        return $this->render('profile/teachers.html.twig', [
+        if ($role === '%' . USER::ROLE_TEACHER . '%') {
+            $query = $userRepository->findBySearchAndRoleB(USER::ROLE_TEACHER, $searchPhrase);
+        } else if ($role === '%' . USER::ROLE_SUPERVISOR . '%') {
+            $query = $userRepository->findBySearchAndRoleB(USER::ROLE_SUPERVISOR, $searchPhrase);
+        } else {
+            $query = $userRepository->findBySearchAndRolesB(
+                User::ROLE_TEACHER,
+                User::ROLE_SUPERVISOR,
+                $searchPhrase
+            );
+        }
+
+        $pagination = $helper->getEntitiesPaginated($query, $request);
+
+        return $this->render('profile/staff.html.twig', [
             'users' => $pagination,
         ]);
     }
@@ -222,26 +237,26 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/profile/add_teacher", name="profile.add_teacher")
+     * @Route("/profile/add_staff", name="profile.add_staff")
      * @param Request $request
      * @param UserManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addTeacher(Request $request, UserManager $manager)
+    public function addStaff(Request $request, UserManager $manager)
     {
         $user = new User();
-        $form = $this->createForm(RegisterUserType::class, $user);
+        $form = $this->createForm(StaffType::class, $user);
 
-        if ($manager->handleAddTeacher($form, $request)) {
+        if ($manager->handleAddStaff($form, $request)) {
             $this->addFlash(
-                'add_teacher',
-                'Dėstytojas buvo sėkmingai pridėtas!'
+                'add_staff',
+                'Personalo darbuotojas buvo sėkmingai pridėtas!'
             );
 
-            return $this->redirectToRoute('profile.teachers');
+            return $this->redirectToRoute('profile.staff');
         }
 
-        return $this->render('profile/add_teacher.html.twig', [
+        return $this->render('profile/add_staff.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -17,8 +17,8 @@
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="{{ app.request.get('_route') == 'profile.teachers' ? 'active' }}">
-                        <a href="{{ path('profile.teachers') }}">
-                            {% trans %}Teachers{% endtrans %}
+                        <a href="{{ path('profile.staff') }}">
+                            {% trans %}Staff{% endtrans %}
                         </a>
                     </li>
                 {% endif %}
@@ -75,8 +75,8 @@
         </li>
         {% if is_granted('ROLE_ADMIN') %}
             <li class="{{ app.request.get('_route') == 'profile.teachers' ? 'active' }}">
-                <a href="{{ path('profile.teachers') }}">
-                    {% trans %}Teachers{% endtrans %}
+                <a href="{{ path('profile.staff') }}">
+                    {% trans %}Staff{% endtrans %}
                 </a>
             </li>
         {% endif %}

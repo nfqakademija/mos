@@ -35,7 +35,7 @@
             </a>
         {% endif %}
         {% if app.user is same as(user) %}
-                <a class="btn--action btn blue darken-3 right" href="{{ path('profile.change_password') }}">
+                <a class="btn--action s-float-none btn blue darken-3 right" href="{{ path('profile.change_password') }}">
                     {% trans %}Change password{% endtrans %}
                     <i class="material-icons left">
                         vpn_key
@@ -91,8 +91,8 @@
             <td>{{ user.phone }}</td>
         </tr>
         <tr>
-            <td>{% trans %}Roles{% endtrans %}</td>
-            <td>{{ user.roles|join(', ') }}</td>
+            <td>{% trans %}Role{% endtrans %}</td>
+            <td>{{ user.roles[0]|trans }}</td>
         </tr>
         <tr>
             <td>{% trans %}Registration date{% endtrans %}</td>

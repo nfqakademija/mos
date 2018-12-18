@@ -13,11 +13,14 @@
     <h2 class="page-title center-align">
         {% trans %}Participants{% endtrans %}
     </h2>
+    <a class="btn--action btn blue darken-3 filter-toggle-button">
+        {% trans %}Filter{% endtrans %}
+    </a>
     {% include 'profile/filters.html.twig' with {'search_path': 'profile.participants.search'} %}
     {% if users|length > 0 %}
-        {% include 'profile/list.html.twig' %}
+        {% include 'profile/list.html.twig' with {'role': 'participants'}  %}
     {% else %}
-        <p>{% trans %}No participants found{% endtrans %}</p>
+        <h5>{% trans %}No participants found{% endtrans %}</h5>
     {% endif %}
 {% endblock %}
 

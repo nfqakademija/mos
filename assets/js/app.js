@@ -5,6 +5,7 @@ import initGroupForm  from './group';
 import groupParticipants from './participant';
 import reports from './report';
 import pickerOptions from './pickerOptions';
+import filter from './filter';
 
 $(document).ready(function () {
   M.Sidenav.init($('.sidenav'));
@@ -14,10 +15,7 @@ $(document).ready(function () {
   initGroupForm();
   groupParticipants();
   reports();
-
-  $('.filter-input select').on('change', () => {
-    window.location = $(this).find(":selected").val();
-  })
+  filter();
 });
 
 

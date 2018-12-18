@@ -14,7 +14,7 @@ Group Id: Grupės Nr.
 Successfully finished: Baigė
 'Date from:': 'Data nuo:'
 'to:': 'iki:'
-Filter: Filtruoti
+Filter: Filtras
 Username: Naudotojo vardas
 Password: Slaptažodis
 Phone: Tel. nr.
@@ -87,10 +87,10 @@ Change password: Slaptažodžio keitimas
 Old password: Senas slaptažodis
 Repeat Password: Slaptažodžio pakartojimas
 Teachers: Dėstytojai
-Add teacher: Pridėti dėstytoją
+Add staff: Pridėti personalo darbuotoją
 Teacher form: Dėstytojo forma
 No participants found: Dalyvių nerasta
-Search by name and surname: Paieška pagal vardą ir pavardę
+Search by name or surname: Paieška pagal vardą ar pavardę
 Sort by: Rikiuoti pagal
 Choose filter: Pasirinkite filtrą
 By ID descending: Pagal ID mažėjimo tvarka
@@ -99,8 +99,6 @@ By name descending: Pagal vardą mažėjimo tvarka
 By name ascending: Pagal vardą didėjimo tvarka
 By surname descending: Pagal pavardę mažėjimo tvarka
 By surname ascending: Pagal pavardę didėjimo tvarka
-By username descending: Pagal naudotojo vardą  mažėjimo tvarka
-By username ascending: Pagal naudotojo vardą didėjimo tvarka
 By start date descending: Pagal pradžios datą mažėjimo tvarka
 By start date ascending: Pagal pradžios datą didėjimo tvarka
 By end date descending: Pagal pabaigos datą mažėjimo tvarka
@@ -111,3 +109,14 @@ Participants count: Dalyvių skaičius
 Schedule report: Tvarkaraščių ataskaita
 Choose a region: Parinkite rajoną / miestą
 Sorry, nothing found. Try to change a filter criteria.: Nieko nerasta. Pakeiskite paieškos kriterijus.
+All: Visi
+Supervisors: Tikrintojai
+No staff found: Tokio personalo nerasta
+Staff: Personalas
+Staff form: Personalo forma
+Role: Rolė
+Supervisor: Tikrintojas
+ROLE_TEACHER: Dėstytojas
+ROLE_SUPERVISOR: Tikrintojas
+ROLE_ADMIN: Administratorius
+ROLE_PARTICIPANT: Dalyvis

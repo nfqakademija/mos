@@ -1,0 +1,33 @@
+<label class="filter__role__label">
+    Rolių pasirinkimas
+</label>
+<p class="filter__role__input">
+    <label>
+        <input name="{{ filterValueName }}"
+               value=""
+               type="radio"
+               {{ app.request.query.get('filterValue') == '' ? 'checked' : '' }}
+        />
+        <span class="filter__role__input__title">{% trans %}All{% endtrans %}</span>
+    </label>
+</p>
+<p class="filter__role__input">
+    <label>
+        <input name="{{ filterValueName }}"
+               value="%ROLE_TEACHER%"
+               type="radio"
+               {{ app.request.query.get('filterValue') == '%ROLE_TEACHER%' ? 'checked' : '' }}
+        />
+        <span class="filter__role__input__title">{% trans %}Teachers{% endtrans %}</span>
+    </label>
+</p>
+<p class="filter__role__input">
+    <label>
+        <input name="{{ filterValueName }}"
+               value="%ROLE_SUPERVISOR%"
+               type="radio"
+               {{ app.request.query.get('filterValue') == '%ROLE_SUPERVISOR%' ? 'checked' : '' }}
+        />
+        <span class="filter__role__input__title">{% trans %}Supervisors{% endtrans %}</span>
+    </label>
+</p>

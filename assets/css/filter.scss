@@ -1,0 +1,26 @@
+.filter {
+  @include border;
+  padding: 15px;
+  display: none;
+
+  .filter__search__label {
+    @media screen and (max-width: 600px) {
+      font-size: 12px;
+    }
+  }
+
+  .filter__role__label {
+    display: block;
+    font-size: 12px;
+  }
+
+  .filter__role__input {
+    display: inline-block;
+    margin-right: 10px;
+
+    .filter__role__input__title {
+      font-size: 18px;
+      color: #000;
+    }
+  }
+}

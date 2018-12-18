@@ -1,4 +1,4 @@
-{% macro userForm(form, showPassword) %}
+{% macro userForm(form, create) %}
     {% from 'group/macros.html.twig' import validate %}
     {% form_theme form 'group/form_errors.html.twig' %}
     <div class="form">
@@ -24,12 +24,19 @@
                             {{ form_errors(form.user.username) }}
                         </div>
                     </div>
-                    {% if showPassword == true %}
+                    {% if create == true %}
                         <div class="input-field col s12">
                             <div class="row">
                                 {{ form_label(form.user.password) }}
                                 {{ validate(form.user.password, 'participant__password') }}
                                 {{ form_errors(form.user.password) }}
+                            </div>
+                        </div>
+                        <div class="input-field col s12">
+                            <div class="row">
+                                {{ form_label(form.role) }}
+                                {{ validate(form.role, '') }}
+                                {{ form_errors(form.role) }}
                             </div>
                         </div>
                     {% endif %}

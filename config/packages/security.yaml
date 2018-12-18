@@ -45,8 +45,8 @@ security:
 
     #Below  allows anonymous to access only login page
     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/profile/teachers, roles: ROLE_ADMIN }
-    - { path: ^/profile/add_teacher, roles: ROLE_ADMIN }
+    - { path: ^/profile/staff, roles: ROLE_ADMIN }
+    - { path: ^/profile/add_staff, roles: ROLE_ADMIN }
     - { path: ^/profile/remove/, roles: ROLE_ADMIN }
     - { path: ^/profile/participants, roles: ROLE_TEACHER }
     - { path: ^/group/remove/, roles: ROLE_ADMIN }

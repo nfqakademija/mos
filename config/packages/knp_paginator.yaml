@@ -8,4 +8,4 @@ knp_paginator:
   template:
     pagination: 'helper/pagination.html.twig'
     sortable: 'helper/sortable.html.twig'
-    filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+    filtration: 'helper/filtration.html.twig'

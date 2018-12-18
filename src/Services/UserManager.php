@@ -36,14 +36,13 @@ class UserManager
      * @param Request $request
      * @return bool
      */
-    public function handleAddTeacher(FormInterface $form, Request $request): bool
+    public function handleAddStaff(FormInterface $form, Request $request): bool
     {
         $user = $form->getData();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
-            $user->setRoles([User::ROLE_TEACHER]);
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();

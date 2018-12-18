@@ -34,6 +34,12 @@ $primary-color: #1565C0;
   }
 }
 
+.s-float-none {
+  @media screen and (max-width: 600px) {
+    float: none !important;
+  }
+}
+
 .m-hide {
   @media screen and (max-width: 993px) {
     display: none;

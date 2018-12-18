@@ -52,6 +52,23 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
     }
 
     /**
+     * @param $role1
+     * @param $role2
+     * @param $search
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findBySearchAndRolesB($role1, $role2, $search)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.name LIKE :search OR u.surname LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->andWhere('u.roles LIKE :val1 OR u.roles LIKE :val2')
+            ->setParameter('val1', '%"' . $role1 . '"%')
+            ->setParameter('val2', '%"' . $role2 . '"%')
+            ->orderBy('u.id', 'DESC');
+    }
+
+    /**
      * @param $role
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -60,6 +77,21 @@ class UserRepository extends ServiceEntityRepository implements RepositoryInterf
         return $this->createQueryBuilder('u')
             ->andWhere('u.roles LIKE :val')
             ->setParameter('val', '%"' . $role . '"%')
+            ->orderBy('u.id', 'DESC');
+    }
+
+    /**
+     * @param $role1
+     * @param $role2
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getByRolesB($role1, $role2)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :val1')
+            ->setParameter('val1', '%"' . $role1 . '"%')
+            ->orWhere('u.roles LIKE :val2')
+            ->setParameter('val2', '%"' . $role2 . '"%')
             ->orderBy('u.id', 'DESC');
     }
 

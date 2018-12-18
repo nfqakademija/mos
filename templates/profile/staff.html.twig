@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}Staff{% endtrans %}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('add_staff') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('remove_user') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h2 class="page-title center-align">
+        {% trans %}Staff{% endtrans %}
+    </h2>
+    <div class="clearfix">
+        <a class="btn--action btn blue darken-3 filter-toggle-button">
+            {% trans %}Filter{% endtrans %}
+        </a>
+        <a class="btn--action s-float-none btn right blue darken-3" href="{{ path('profile.add_staff') }}">
+            {% trans %}Add staff{% endtrans %}
+            <i class="material-icons left">
+                add
+            </i>
+        </a>
+    </div>
+    {% include 'profile/filters.html.twig' with {'search_path': 'profile.staff.search'} %}
+    {% if users|length > 0 %}
+        {% include 'profile/list.html.twig' with {'role': 'staff'} %}
+    {% else %}
+        <h5>{% trans %}No staff found{% endtrans %}</h5>
+    {% endif %}
+{% endblock %}
+

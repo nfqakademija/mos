@@ -16,6 +16,14 @@ input[type=email]:not(.browser-default):focus {
   box-shadow: 0 1px 0 0 $primary-color !important;
 }
 
+input[type="radio"]:checked+span:after {
+  background-color: $primary-color;
+}
+
+input[type="radio"]:checked+span:after {
+  border: 2px solid $primary-color;
+}
+
 .dropdown-content li > span,
 .input-field .prefix.active,
 a {
@@ -36,8 +44,8 @@ i.right {
   margin-left: 10px;
 }
 
-.row .col.search-input,
-.row .col.filter-input {
+.row .col.filter__search,
+.row .col.filter__sort {
   padding-left: 0;
 }
 
