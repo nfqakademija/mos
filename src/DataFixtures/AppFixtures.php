@@ -29,6 +29,8 @@ class AppFixtures extends Fixture
         //#### config ####
         $groupsNumber = 10;
         $teachersNumber = 10;
+        $monthFrom = 9;
+        $monthTo = 12;
         $maxParticipantsInGroup = 12;
         $maxTimeslotsInGroup = 5;
 
@@ -159,7 +161,7 @@ class AppFixtures extends Fixture
                 $group[$i]->addParticipant($userParticipant);
             }
             $timeSlotsCount = rand(3, $maxTimeslotsInGroup);
-            $month = rand(11, 12);
+            $month = rand($monthFrom, $monthTo);
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
                 $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
