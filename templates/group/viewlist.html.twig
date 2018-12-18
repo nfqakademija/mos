@@ -25,61 +25,65 @@
             </i>
         </a>
     {% endif %}
-    <form method="get">
-        <div class="input-field col s12 filter-input">
-            <i class="material-icons prefix">
-                filter_list
-            </i>
-            <select class="sort">
-                <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
-                {{ knp_pagination_sortable(groups, 'By ID descending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'desc'}) }}
-                {{ knp_pagination_sortable(groups, 'By ID ascending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'asc'}) }}
-                {{ knp_pagination_sortable(groups, 'By start date descending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'desc'}) }}
-                {{ knp_pagination_sortable(groups, 'By start date ascending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'asc'}) }}
-                {{ knp_pagination_sortable(groups, 'By end date descending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'desc'}) }}
-                {{ knp_pagination_sortable(groups, 'By end date ascending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'asc'}) }}
-            </select>
-            <label>{% trans %}Sort by{% endtrans %}</label>
-        </div>
-    </form>
-    <table class="table highlight">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">
-                {% trans %}Address{% endtrans %}
-            </th>
-            <th scope="col" class="s-hide">
-                {% trans %}Start date{% endtrans %}
-            </th>
-            <th scope="col" class="s-hide">
-                {% trans %}End date{% endtrans %}
-            </th>
-            <th scope="col">
-                {% trans %}Participants{% endtrans %}
-            </th>
-        </tr>
-        </thead>
-        {% for group in groups %}
+    <div class="border-shadow">
+        <form method="get">
+            <div class="input-field col s12 filter-input">
+                <i class="material-icons prefix">
+                    filter_list
+                </i>
+                <select class="sort">
+                    <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
+                    {{ knp_pagination_sortable(groups, 'By ID descending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'desc'}) }}
+                    {{ knp_pagination_sortable(groups, 'By ID ascending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'asc'}) }}
+                    {{ knp_pagination_sortable(groups, 'By start date descending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'desc'}) }}
+                    {{ knp_pagination_sortable(groups, 'By start date ascending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'asc'}) }}
+                    {{ knp_pagination_sortable(groups, 'By end date descending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'desc'}) }}
+                    {{ knp_pagination_sortable(groups, 'By end date ascending'|trans({}, 'messages'), 'gr.endDate', {}, {'direction': 'asc'}) }}
+                </select>
+                <label>{% trans %}Sort by{% endtrans %}</label>
+            </div>
+        </form>
+    </div>
+    <div class="border-shadow">
+        <table class="table highlight">
+            <thead>
             <tr>
-                <td scope="row">{{ group.id }}</td>
-                <td>
-                    <a href="{{ path('group.view', {'group': group.id}) }}">
-                        {{ group.address }}, {{ group.region.title }}
-                    </a>
-                </td>
-                <td class="s-hide">
-                    {{ group.startDate ? group.startDate|date('Y-m-d') }}
-                </td>
-                <td class="s-hide">
-                    {{ group.endDate ? group.endDate|date('Y-m-d') }}
-                </td>
-                <td>
-                    {{ group.participants|length }}
-                </td>
+                <th scope="col">#</th>
+                <th scope="col">
+                    {% trans %}Address{% endtrans %}
+                </th>
+                <th scope="col" class="s-hide">
+                    {% trans %}Start date{% endtrans %}
+                </th>
+                <th scope="col" class="s-hide">
+                    {% trans %}End date{% endtrans %}
+                </th>
+                <th scope="col">
+                    {% trans %}Participants{% endtrans %}
+                </th>
             </tr>
-        {% endfor %}
-    </table>
+            </thead>
+            {% for group in groups %}
+                <tr>
+                    <td scope="row">{{ group.id }}</td>
+                    <td>
+                        <a href="{{ path('group.view', {'group': group.id}) }}">
+                            {{ group.address }}, {{ group.region.title }}
+                        </a>
+                    </td>
+                    <td class="s-hide">
+                        {{ group.startDate ? group.startDate|date('Y-m-d') }}
+                    </td>
+                    <td class="s-hide">
+                        {{ group.endDate ? group.endDate|date('Y-m-d') }}
+                    </td>
+                    <td>
+                        {{ group.participants|length }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
 
 {% block pager %}

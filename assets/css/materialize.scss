@@ -16,6 +16,11 @@ input[type=email]:not(.browser-default):focus {
   box-shadow: 0 1px 0 0 $primary-color !important;
 }
 
+input[type=checkbox]:checked+span:not(.lever):before {
+  border-right: 2px solid $primary-color;
+  border-bottom: 2px solid $primary-color;
+}
+
 input[type="radio"]:checked+span:after {
   background-color: $primary-color;
 }
@@ -24,6 +29,9 @@ input[type="radio"]:checked+span:after {
   border: 2px solid $primary-color;
 }
 
+.dropdown-content.select-dropdown {
+  max-height: 400px !important;
+}
 .dropdown-content li > span,
 .input-field .prefix.active,
 a {
@@ -51,4 +59,8 @@ i.right {
 
 .input-field .prefix ~ label {
   margin-left: 2.25rem;
+}
+
+button:focus {
+  background-color: $primary-color;
 }
