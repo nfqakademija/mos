@@ -18,14 +18,19 @@
     <div class="row">
         {% if app.user is same as(user) %}
             <a class="btn--action btn blue darken-3" href="{{ path('profile.edit') }}">
-        {% else %}
+                {% trans %}Edit{% endtrans %}
+                <i class="material-icons left">
+                    edit
+                </i>
+            </a>
+        {% elseif is_granted('ROLE_TEACHER') %}
             <a class="btn--action btn blue darken-3" href="{{ path('profile.edit.user', {'user': user.id}) }}">
+                {% trans %}Edit{% endtrans %}
+                <i class="material-icons left">
+                    edit
+                </i>
+            </a>
         {% endif %}
-            {% trans %}Edit{% endtrans %}
-            <i class="material-icons left">
-                edit
-            </i>
-        </a>
         {% if is_granted('ROLE_ADMIN') and app.user is not same as(user) %}
             <a class="btn--action btn right red darken-3" href="{{ path('profile.remove', {'user': user.id}) }}">
                 <i class="material-icons right">

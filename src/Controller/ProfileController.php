@@ -143,7 +143,7 @@ class ProfileController extends AbstractController
 
         if ($role === '%' . USER::ROLE_TEACHER . '%') {
             $query = $userRepository->findBySearchAndRoleB(USER::ROLE_TEACHER, $searchPhrase);
-        } else if ($role === '%' . USER::ROLE_SUPERVISOR . '%') {
+        } elseif ($role === '%' . USER::ROLE_SUPERVISOR . '%') {
             $query = $userRepository->findBySearchAndRoleB(USER::ROLE_SUPERVISOR, $searchPhrase);
         } else {
             $query = $userRepository->findBySearchAndRolesB(

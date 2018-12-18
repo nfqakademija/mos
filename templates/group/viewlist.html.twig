@@ -18,11 +18,13 @@
     <h2 class="page-title center-align">
         {% trans %}Groups list{% endtrans %}
     </h2>
-    <a class="blue darken-3 hoverable add-button waves-effect waves-light" href="{{ path('group.create') }}">
-        <i class="add-button__icon material-icons">
-            add
-        </i>
-    </a>
+    {% if is_granted('ROLE_TEACHER') %}
+        <a class="blue darken-3 hoverable add-button waves-effect waves-light" href="{{ path('group.create') }}">
+            <i class="add-button__icon material-icons">
+                add
+            </i>
+        </a>
+    {% endif %}
     <form method="get">
         <div class="input-field col s12 filter-input">
             <i class="material-icons prefix">

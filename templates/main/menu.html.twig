@@ -3,7 +3,7 @@
         <a href="#" data-target="mobile-nav" class="sidenav-trigger">
             <i class="material-icons">menu</i>
         </a>
-        {% if is_granted('ROLE_TEACHER') %}
+        {% if is_granted('ROLE_SUPERVISOR') %}
             <ul class="left hide-on-med-and-down">
                 <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
                     <a href="{{ path('group.viewlist') }}">
@@ -62,7 +62,7 @@
     </nav>
 </div>
 <ul class="sidenav" id="mobile-nav">
-    {% if app.user %}
+    {% if is_granted('ROLE_SUPERVISOR') %}
         <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
             <a href="{{ path('group.viewlist') }}">
                 {% trans %}Groups{% endtrans %}
@@ -95,6 +95,8 @@
                 {% trans %}Status report{% endtrans %}
             </a>
         </li>
+    {% endif %}
+    {% if app.user %}
         <li>
             <a href="{{ path('profile.view') }}">
                 {% trans %}My Profile{% endtrans %}
