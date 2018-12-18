@@ -159,7 +159,7 @@ class AppFixtures extends Fixture
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
                 $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
-                $timeSlot->setStartTime(rand(9, 15) . ':' . "00");
+                $timeSlot->setStartTime(rand(9, 20) . ':' . "00");
                 $timeSlot->setDuration(90);
 
                 $group[$i]->addTimeSlot($timeSlot);

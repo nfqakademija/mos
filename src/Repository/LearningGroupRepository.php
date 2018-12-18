@@ -52,4 +52,23 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
 
         return $result;
     }
+
+    /**
+     * Gets groups where exists timeslot in period
+     * @param \DateTime $dateFrom
+     * @param \DateTime $dateTo
+     * @return mixed
+     */
+    public function getGroupsWithTimeSlotInPeriod(\DateTime $dateFrom, \DateTime $dateTo)
+    {
+        $query = $this->createQueryBuilder('gr')
+          ->leftJoin('gr.timeSlots', 'ts')
+          ->Where('ts.date >= :dateFrom AND ts.date <= :dateTo')
+          ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
+          ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+          ->getQuery();
+        $result = $query->execute();
+
+        return $result;
+    }
 }
