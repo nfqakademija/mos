@@ -1,17 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {% trans %}Participants{% endtrans %}
+    {% trans %}Group participants{% endtrans %}
 {% endblock %}
 
 {% block body %}
-    <h2 class="center-align">
-        {% trans %}Participants{% endtrans %}
+    {% for message in app.flashes('create_group') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h2 class="page-title center-align">
+        {% trans %}Group participants{% endtrans %}
     </h2>
     <div class="form">
-        <i class="material-icons form__print">
-            print
-        </i>
+        <div class="alert alert--danger">
+            {% trans %}
+                Alert! Make sure you print or write down users with their passwords because later you wont be able to see them
+            {% endtrans %}
+        </div>
+        <a class="btn right blue lighten-1" href="{{ path('group.viewlist') }}">
+            {% trans %}Finish{% endtrans %}
+        </a>
         <table class="responsive-table" id="form__table">
             <thead>
             <tr>
@@ -33,9 +43,12 @@
             {% endfor %}
         </table>
         <div class="form__submit-button">
-            <a class="btn-large blue darken-3" href="{{ path('group.viewlist') }}">
-                {% trans %}Finish{% endtrans %}
-            </a>
+            <button class="btn-large blue darken-3 form__print">
+                <i class="material-icons left">
+                    print
+                </i>
+                {% trans %}Print{% endtrans %}
+            </button>
         </div>
     </div>
 {% endblock %}

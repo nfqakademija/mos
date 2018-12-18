@@ -51,12 +51,10 @@ const toggleAdditionalSection = e => {
 
   if ($(that).text() === 'Mažiau') {
     $(that).text('Daugiau');
-    $(that).parents().eq(2).removeClass('participant--active');
   } else {
     let count = $(that).data('count') || 0;
 
     $(that).text('Mažiau');
-    $(that).parents().eq(2).addClass('participant--active');
 
     if (count === 0) {
       M.FormSelect.init($(that).parents().eq(2).find('select'));

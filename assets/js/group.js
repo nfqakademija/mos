@@ -251,7 +251,7 @@ export default () => {
       }
     }
   });
-  $('.container .alert').fadeTo(5000, 500).slideUp(500, function () {
+  $('.container .alert').not('.alert--danger').fadeTo(5000, 500).slideUp(500, function () {
     $(this).slideUp(500)
   });
   $('.group-form__import__input').on('change', () => importParticipants(participantCollectionHolder, addParticipantButton));

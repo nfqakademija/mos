@@ -13,6 +13,9 @@
 
   .participant__additional {
     display: none;
+    &.participant__additional--show {
+      display: block;
+    }
   }
 
   .participant__button {

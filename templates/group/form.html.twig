@@ -3,6 +3,11 @@
 
 <div class="group-form form">
     {{ form_start(form) }}
+    {% if form.vars.valid == false %}
+        <div class="alert alert--danger">
+            {% trans %}There are errors in this form{% endtrans %}
+        </div>
+    {% endif %}
     {{ form_row(form._token) }}
     <div class="form__section">
         <h5 class="group-form__title">

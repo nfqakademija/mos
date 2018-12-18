@@ -70,7 +70,7 @@ class User implements UserInterface
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="integer", length=20, nullable=true)
      */
     private $phone;
 

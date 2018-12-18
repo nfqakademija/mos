@@ -6,9 +6,17 @@
     {% endif %}
 {% endmacro %}
 
+{% macro additionalValidation(username, password, email, phone) %}
+    {% if username.vars.valid and password.vars.valid and email.vars.valid and phone.vars.valid %}
+        <div class="participant__additional">
+    {% else %}
+        <div class="participant__additional participant__additional--show">
+    {% endif %}
+{% endmacro %}
+
 {% macro printParticipant(participant, display) %}
-    {% from _self import validate %}
-    <div class="participant participant--with-border">
+    {% from _self import validate, additionalValidation %}
+    <div class="participant participant--active">
         <div class="row">
             <div class="participant__button s2 m1 col push-s10 push-m11">
                 <i class="participant__button--remove material-icons">
@@ -31,7 +39,10 @@
                 </button>
             </div>
         </div>
-        <div class="participant__additional">
+        {{
+            additionalValidation(participant.user.username, participant.user.password,
+                participant.user.email, participant.user.phone)
+        }}
             <div class="row">
                 {% if display == true or participant.user.password.vars.value == '' %}
                     <div class="input-field col s12 m6">
@@ -93,7 +104,7 @@
                 </div>
                 <div class="input-field col s12 m4">
                     {{ form_label(participant.user.phone) }}
-                    {{ form_widget(participant.user.phone, {'attr': {'class': 'validate'}}) }}
+                    {{ validate(participant.user.phone, '') }}
                     {{ form_errors(participant.user.phone) }}
                 </div>
                 <div class="input-field col s12 m4">
