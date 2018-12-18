@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
         $consoleOutput = new ConsoleOutput();
 
         //#### config ####
-        $groupsNumber = 50;
+        $groupsNumber = 10;
         $teachersNumber = 10;
         $maxParticipantsInGroup = 12;
         $maxTimeslotsInGroup = 5;
@@ -141,9 +141,10 @@ class AppFixtures extends Fixture
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
                 $userParticipant
-                    ->setUsername($participantName . '.' . $participantSurname . $unique . '_' . $i)
+                    ->setUsername($participantName . '.' . $participantSurname . $unique . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail($participantName . '.' . $unique . '_' . $i . '@email.com')
+                    ->setEmail( transliterator_transliterate('Any-Latin; Latin-ASCII;', $participantSurname) 
+                      . '.' . $unique . $i . '@email.com')
                     ->setName($participantName)
                     ->setSurname($participantSurname)
                     ->setRegion($region)

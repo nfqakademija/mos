@@ -33,8 +33,3 @@ services:
     App\EventListener\LoginListener:
         tags:
         - { name: 'kernel.event_listener', event: 'security.authentication.success' }
-    
-    App\EventListener\TimeSlotChangedListener:
-        tags:
-        - { name: doctrine.event_listener, event: postUpdate }
-        - { name: doctrine.event_listener, event: postRemove }

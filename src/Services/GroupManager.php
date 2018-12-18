@@ -58,6 +58,7 @@ class GroupManager
                 $participant->setRoles([User::ROLE_PARTICIPANT]);
             }
 
+            $group->updateStartEndDates();
             $this->entityManager->persist($group);
             $this->entityManager->flush();
         }
@@ -147,6 +148,7 @@ class GroupManager
 
             $this->addNewParticipants($originalParticipants, $participants);
 
+            $group->updateStartEndDates();
             $this->entityManager->persist($group);
             $this->entityManager->flush();
 
@@ -154,15 +156,5 @@ class GroupManager
         }
 
         return false;
-    }
-
-    /**
-     * @param LearningGroup $learningGroup
-     */
-    public function updateStartEndDates(LearningGroup $learningGroup)
-    {
-        $learningGroup->updateStartEndDates();
-        $this->entityManager->persist($learningGroup);
-        $this->entityManager->flush();
     }
 }
