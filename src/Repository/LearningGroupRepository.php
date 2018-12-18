@@ -30,6 +30,8 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     public function getAllQueryB($orderBy = 'gr.id', $orderType = 'DESC')
     {
         $queryBuilder = $this->createQueryBuilder('gr')
+            ->leftJoin('gr.region', 'region')
+            ->addSelect('region')
             ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
@@ -63,6 +65,9 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     {
         $query = $this->createQueryBuilder('gr')
           ->leftJoin('gr.timeSlots', 'ts')
+          ->addSelect('ts')
+          ->leftJoin('gr.region', 'region')
+          ->addSelect('region') //reduces doctrine queries where region is used
           ->Where('ts.date >= :dateFrom AND ts.date <= :dateTo')
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
