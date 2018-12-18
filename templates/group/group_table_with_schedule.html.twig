@@ -33,10 +33,12 @@
       <td class="s-hide">
         {% set timeSlots = group.timeSlots %}
         {% for timeSlot in timeSlots %}
-          {% if date(timeSlot.date) >= date('today') %}
-              {{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}
-              <br>
+          {% if timeSlot.date|date('Y-m-d') >= date('today')|date('Y-m-d') %}
+            <strong>{{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}</strong>
+            {% else %}
+                {{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}
           {% endif %}
+          <br>
         {% endfor %}
       </td>
     </tr>

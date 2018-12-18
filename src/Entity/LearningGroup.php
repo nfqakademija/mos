@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningGroupRepository")
+ * @ORM\Table(indexes={@ORM\Index(name="group_address_idx", columns={"address"})})
  */
 class LearningGroup
 {
@@ -29,12 +30,14 @@ class LearningGroup
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="learningGroup", cascade={"persist"})
      * @Assert\Valid
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $participants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TimeSlot", mappedBy="learningGroup", cascade={"persist"})
      * @Assert\Valid
+     * @ORM\OrderBy({"date" = "ASC"})
      */
     private $timeSlots;
 
@@ -57,6 +60,7 @@ class LearningGroup
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="learningGroups")
      * @Assert\NotBlank(message="Nurodykite rajoną / miestą")
+     * @ORM\OrderBy({"title" = "ASC"})
      */
     private $region;
 
