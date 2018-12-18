@@ -15,7 +15,8 @@
                 {{ form_errors(form.group.address) }}
             </div>
             <div class="input-field col s12">
-                {{ form_widget(form.group.region,  {'attr': {'class': 'group-form__region browser-default'} }) }}
+                {{ form_widget(form.group.region) }}
+                {{ form_label(form.group.region) }}
                 {{ form_errors(form.group.region) }}
             </div>
         </div>

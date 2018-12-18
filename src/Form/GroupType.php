@@ -27,16 +27,15 @@ class GroupType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-          ->add('region', EntityType::class, array(
-            'class' => Region::class,
-            'query_builder' => function (RegionRepository $er) {
-                return $er->createQueryBuilder('r');
-            },
-            'choice_label' => function (Region $region) {
-                return $region->getTitle();
-            },
-            'placeholder' => 'Choose a region'
-          ))
+            ->add('region', EntityType::class, array(
+                'class' => Region::class,
+                'query_builder' => function (RegionRepository $er) {
+                    return $er->createQueryBuilder('r');
+                },
+                'choice_label' => function (Region $region) {
+                    return $region->getTitle();
+                }
+            ))
             ->add('teacher', EntityType::class, array(
                 'class' => User::class,
                 'query_builder' => function (UserRepository $er) {
