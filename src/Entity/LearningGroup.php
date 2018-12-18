@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LearningGroupRepository")
+ * @ORM\Table(indexes={@ORM\Index(name="group_address_idx", columns={"address"})})
  */
 class LearningGroup
 {
