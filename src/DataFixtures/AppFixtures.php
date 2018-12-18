@@ -141,9 +141,9 @@ class AppFixtures extends Fixture
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
                 $userParticipant
-                    ->setUsername($participantName . '.' . $participantSurname . $unique . $i)
+                    ->setUsername($this->convertLtToLatin($participantName . '.' . $participantSurname) . '.' . $unique . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail( transliterator_transliterate('Any-Latin; Latin-ASCII;', $participantSurname) 
+                    ->setEmail( $this->convertLtToLatin($participantSurname) 
                       . '.' . $unique . $i . '@email.com')
                     ->setName($participantName)
                     ->setSurname($participantSurname)
@@ -205,4 +205,11 @@ class AppFixtures extends Fixture
         }
         return $phoneNumber;
     }
+
+    private function convertLtToLatin($str) {
+            $a = array('Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž', 'ą', 'č', 'ę', 'ė', 'į', 'š', 'ų', 'ū', 'ž');
+            $b = array('A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z', 'a', 'c', 'e', 'e', 'i', 's', 'u', 'u', 'z');
+            return str_replace($a, $b, $str);
+    }
+
 }
