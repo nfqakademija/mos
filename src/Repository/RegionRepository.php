@@ -23,6 +23,7 @@ class RegionRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('region')
           ->innerJoin('region.learningGroups', 'gr')
+          ->addSelect('gr')
           ->addOrderBy('region.title', 'ASC')
           ->getQuery();
 
