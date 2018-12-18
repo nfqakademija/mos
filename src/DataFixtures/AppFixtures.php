@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Region;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -36,10 +37,12 @@ class AppFixtures extends Fixture
         $femaleNames = $this->getFemaleNames();
         $femaleSurnames = $this->getFemaleSurnames();
         $streets = $this->getStreetNames();
+        $villages = $this->getVillages();
         
         //push all Regions to database
         $allRegionsObjects = [];
         $allRegionsData = $this->getAllRegionsData();
+        $allRegionsDataWithObjId = [];
         foreach ($allRegionsData as $regionTitle => $extraData) {
             $region = new Region();
             $region
@@ -49,6 +52,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($region);
         }
+        $manager->flush();
 
         //generate Manager///////////////////////////////////////////
 
@@ -90,8 +94,8 @@ class AppFixtures extends Fixture
             
             $userTeacher[$i] = new User();
             $userTeacher[$i]
-                ->setUsername($name . $surname. '_' . $i)
-                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'teacher' . $i))
+                ->setUsername('teacher' . $i)
+                ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'labast' . $i))
                 ->setEmail($name . $surname. $i . '@email.com')
                 ->setName($name)
                 ->setSurname($surname)
@@ -104,14 +108,19 @@ class AppFixtures extends Fixture
             //generate Group
             $group[$i] = new LearningGroup();
             $groupStreet = $streets[rand(0, sizeof($streets) - 1)];
-            $group[$i]->setAddress($groupStreet . $i );
-            $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
+            $groupStreet .= ' ' . $i;
             $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects) - 1)];
+            $regionTitle = $region->getTitle();
+            if (strpos($regionTitle, 'raj')) {
+                $groupStreet .= ', ' . $villages[rand(0, sizeof($villages) - 1)];
+            }
+            $group[$i]->setAddress($groupStreet);
+            $group[$i]->setTeacher($userTeacher[rand(0, $teachersNumber)]);
             $group[$i]->setRegion($region);
             $participantsCount = rand(5, $maxParticipantsInGroup);
             for ($j = 0; $j < $participantsCount; $j++) {
                 $participantGender = $genres[array_rand($genres, 1)];
-                if ($participantGender === 'vyras'){
+                if ($participantGender === 'vyras') {
                     $participantName = $maleNames[rand(0, sizeof($maleNames) - 1)];
                     $participantSurname = $maleSurnames[rand(0, sizeof($maleSurnames) - 1)];
                 } else {
@@ -119,12 +128,12 @@ class AppFixtures extends Fixture
                     $participantSurname = $femaleSurnames[rand(0, sizeof($femaleSurnames) - 1)];
                 }
                 $participantStreet = $streets[rand(0, sizeof($streets) - 1)];
-                if (strpos($region->getTitle(), '.m')) 
-                {
-                    $livingAreaType = 'miestas';
-                }
-                else {
+                $participantStreet .= ' ' . rand(1, 49);
+                if (strpos($region->getTitle(), 'raj')) {
                     $livingAreaType = 'kaimas';
+                    $participantStreet .= ', ' . $villages[rand(0, sizeof($villages) - 1)];
+                } else {
+                    $livingAreaType = 'miestas';
                 }
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
@@ -140,7 +149,7 @@ class AppFixtures extends Fixture
                     ->setLivingAreaType($livingAreaType)
                     ->setGender($participantGender)
                     ->setPhone($this->randomPhoneNumber())
-                    ->setAddress($participantStreet . ' ' . $i);
+                    ->setAddress($participantStreet);
                 $manager->persist($userParticipant);
 
                 $group[$i]->addParticipant($userParticipant);
@@ -158,7 +167,6 @@ class AppFixtures extends Fixture
             }
             $group[$i]->updateStartEndDates();
             $manager->persist($group[$i]);
-            $manager->flush();
         }
 
         $manager->flush();
@@ -302,8 +310,7 @@ class AppFixtures extends Fixture
       'Tadas', 'Tadeušas', 'Tamošius', 'Tarasas', 'Tauras', 'Tautginas', 'Tautrimas', 'Tautvydas', 'Tedas', 'Telesforas', 'Teisius', 'Teisutis', 'Teodoras', 'Teofilis', 'Terentijus', 'Tiberijus', 'Timas', 'Timotiejus', 'Timotis', 'Timūras', 'Titas', 'Tomas', 'Tomašas', 'Tonis', 'Tovaldas', 'Traidenis', 'Trofimas', 'Tumas', 
       'Ugnius', 'Ulrikas', 'Uosis', 'Urbonas', 'Utenis', 'Ubaldas', 
       'Ūdrys', 'Ūkas', 
-      'Vacys', 'Vacius', 'Vaclovas', 'Vadimas', 'Vaidas', 'Vaidevutis', 'Vaidila', 'Vaidis', 'Vaidotas', 'Vaidutis', 'Vaigaudas', 'Vaigirdas', 'Vainius', 'Vainoras', 'Vaitiekus', 'Vaižgantas', 'Vakaris', 'Valdas', 'Valdemaras', 'Valdimantas', 'Valdis', 'Valentas', 'Valentinas', 'Valerijonas', 'Valerijus', 'Valys', 'Valius', 'Valteris', 'Vasaris', 'Vasilijus', 'Venantas', 'Verneris', 'Vėjas', 'Vėjūnas', 'Venjaminas', 'Vergilijus', 'Vestas', 'Viačeslavas', 'Vidas', 'Vydas', 'Vidimantas', 'Vydimantas', 'Vidmantas', 'Vydmantas', 'Viesulas', 'Vygaudas', 'Vigilijus', 'Vygintas', 'Vygirdas', 'Vykantas', 'Vykintas', 'Viktas', 'Viktoras', 'Viktorijus', 'Viktorinas', 'Vilenas', 'Vilgaudas', 'Vilhelmas', 'Vilijus', 'Vilius', 'Vylius', 'Vilmantas', 'Vilmas', 'Vilnius', 'Viltaras', 'Viltautas', 'Viltenis', 'Vincas', 'Vincentas', 'Vingaudas', 'Virgaudas', 'Virgilijus', 'Virginijus', 'Virgintas', 'Virgis', 'Virgius', 'Virmantas', 'Vismantas', 'Visvaldas', 'Visvaldis', 'Vitalijus', 'Vitalis', 'Vitalius', 'Vitas', 'Vitoldas', 'Vygandas', 'Vygantas', 'Vykintas', 'Vytaras', 'Vytautas', 'Vytas', 'Vytenis', 'Vytis', 'Vyturys', 'Vladas', 'Vladimiras', 'Vladislavas', 'Vladislovas', 'Vladlenas', 'Voicechas', 'Voldemaras', 'Vsevolodas', '
-      ‘Zacharijus', 'Zakarijus', 'Zbignevas', 'Zdislavas', 'Zenius', 'Zenonas', 'Zigfridas', 'Zygfridas', 'Zigmantas', 'Zigmas', 'Zygmuntas', 'Zinovijus', 
+      'Vacys', 'Vacius', 'Vaclovas', 'Vadimas', 'Vaidas', 'Vaidevutis', 'Vaidila', 'Vaidis', 'Vaidotas', 'Vaidutis', 'Vaigaudas', 'Vaigirdas', 'Vainius', 'Vainoras', 'Vaitiekus', 'Vaižgantas', 'Vakaris', 'Valdas', 'Valdemaras', 'Valdimantas', 'Valdis', 'Valentas', 'Valentinas', 'Valerijonas', 'Valerijus', 'Valys', 'Valius', 'Valteris', 'Vasaris', 'Vasilijus', 'Venantas', 'Verneris', 'Vėjas', 'Vėjūnas', 'Venjaminas', 'Vergilijus', 'Vestas', 'Viačeslavas', 'Vidas', 'Vydas', 'Vidimantas', 'Vydimantas', 'Vidmantas', 'Vydmantas', 'Viesulas', 'Vygaudas', 'Vigilijus', 'Vygintas', 'Vygirdas', 'Vykantas', 'Vykintas', 'Viktas', 'Viktoras', 'Viktorijus', 'Viktorinas', 'Vilenas', 'Vilgaudas', 'Vilhelmas', 'Vilijus', 'Vilius', 'Vylius', 'Vilmantas', 'Vilmas', 'Vilnius', 'Viltaras', 'Viltautas', 'Viltenis', 'Vincas', 'Vincentas', 'Vingaudas', 'Virgaudas', 'Virgilijus', 'Virginijus', 'Virgintas', 'Virgis', 'Virgius', 'Virmantas', 'Vismantas', 'Visvaldas', 'Visvaldis', 'Vitalijus', 'Vitalis', 'Vitalius', 'Vitas', 'Vitoldas', 'Vygandas', 'Vygantas', 'Vykintas', 'Vytaras', 'Vytautas', 'Vytas', 'Vytenis', 'Vytis', 'Vyturys', 'Vladas', 'Vladimiras', 'Vladislavas', 'Vladislovas', 'Vladlenas', 'Voicechas', 'Voldemaras', 'Vsevolodas', 'Zacharijus', 'Zakarijus', 'Zbignevas', 'Zdislavas', 'Zenius', 'Zenonas', 'Zigfridas', 'Zygfridas', 'Zigmantas', 'Zigmas', 'Zygmuntas', 'Zinovijus', 
       'Žanas', 'Žeimantas', 'Žilvinas', 'Žibartas', 'Žybartas', 'Žydrius', 'Žydrūnas', 'Žygaudas', 'Žygimantas', 'Žygintas', 'Žygis', 'Žymantas', 'Žvaigždžius', 
         ];
     }
@@ -320,6 +327,50 @@ class AppFixtures extends Fixture
         return [
           'Sodų g.', 'Vytauto g.', 'Taikos g.', 'Liepų g.', 'Vilniaus g.', 'Žemaitės g.' , 'Aušros g.', 'Birutės g.', 
           'Gėlių g.', 'Statybininkų g.', 'Pievų g.', 'S.Nėries g.', 'Žalioji g.', 'Laisvės g.', 'Naujoji g.', 'Alyvų g.'
+        ];
+    }
+    
+    public function getVillages(){
+        return [
+            'Domeikava', 
+            'Skaidiškės',
+            'Raudondvaris',
+            'Rudamina',
+            'Pagiriai',
+            'Neveronys',
+            'Ginkūnai',
+            'Pravieniškės',
+            'Nemėžis',
+            'Dembava',
+            'Butkeliai',
+            'Ringaudai',
+            'Valčiūnai',
+            'Vydmantai',
+            'Kalveliai',
+            'Juodšiliai',
+            'Šlienava',
+            'Didžiasalis',
+            'Avižieniai',
+            'Gudiena',
+            'Ramučiai',
+            'Buivydiškės',
+            'Vilainiai',
+            'Zujūnai',
+            'Kavoliškis',
+            'Velžys',
+            'Vaidotai',
+            'Kūlupėnai',
+            'Mastaičiai',
+            'Matuizos',
+            'Padvariai',
+            'Grigaičiai',
+            'Traksėdžiai',
+            'Varkaliai',
+            'Aukštelkė',
+            'Noriūnai',
+            'Vijoliai', 
+            'Piniava',
+            'Juknaičiai',
         ];
     }
 }
