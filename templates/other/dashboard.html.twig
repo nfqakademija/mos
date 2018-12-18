@@ -16,7 +16,7 @@
     <div>
         {#only for Teacher#}
         <h3>My groups</h3>
-        (list of groups where I am a teacher)
+        <table class="table highlight">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -30,7 +30,7 @@
                 {% trans %}End date{% endtrans %}
             </th>
             <th scope="col">
-                {% trans %}Participants{% endtrans %}
+                {% trans %}Schedule{% endtrans %}
             </th>
         </tr>
         </thead>
@@ -48,12 +48,16 @@
                 <td class="s-hide">
                     {{ group.endDate ? group.endDate|date('Y-m-d') }}
                 </td>
-                <td>
-                    {{ group.participants|length }}
+                <td class="s-hide">
+                    {% set timeSlots = group.timeSlots %}
+                    {% for timeSlot in timeSlots  %}
+                        {{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}
+                        <br>
+                    {% endfor %}
                 </td>
             </tr>
         {% endfor %}
-        
+        </table>
         <h3>Learning groups today</h3>
         (timeSlots from today)
 
