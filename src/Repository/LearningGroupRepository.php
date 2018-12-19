@@ -65,7 +65,6 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     {
         $query = $this->createQueryBuilder('gr')
           ->leftJoin('gr.timeSlots', 'ts')
-          ->addSelect('ts')
           ->leftJoin('gr.region', 'region')
           ->addSelect('region') //reduces doctrine queries where region is used
           ->Where('ts.date >= :dateFrom AND ts.date <= :dateTo')
@@ -86,8 +85,6 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
     {
         $query = $this->createQueryBuilder('gr')
           ->leftJoin('gr.timeSlots', 'ts')
-          ->addSelect('ts')
-
           ->Where('gr.teacher = :teacher')
           ->setParameter(':teacher', $teacher)
           ->getQuery();

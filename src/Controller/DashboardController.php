@@ -24,7 +24,6 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
         $groupsUserIsTeacher = $groupRepository->getGroupsWhereUserIsTeacher($user);
 
-
         $dateToday = new \DateTime('now');
         $groupsToday = $groupRepository->getGroupsWithTimeSlotInPeriod($dateToday, $dateToday);
 
