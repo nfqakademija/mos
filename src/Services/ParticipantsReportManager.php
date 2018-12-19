@@ -83,9 +83,9 @@ class ParticipantsReportManager extends ReportManager
             $sheet->setCellValue('A' . $row, $participant->getName());
             $sheet->setCellValue('B' . $row, $participant->getSurname());
             $sheet->setCellValue('C' . $row, $participant->getBirthDate());
-            try {
+            if (!empty($participant->getRegion())) {
                 $sheet->setCellValue('D' . $row, $participant->getRegion()->getTitle());
-            } catch (\Exception $e) {
+            } else {
                 $sheet->setCellValue('D' . $row, '');
             }
             $sheet->setCellValue('E' . $row, $participant->getAddress());
