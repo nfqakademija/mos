@@ -12,13 +12,14 @@
   </h2>
   <div>
     {#Teacher can see r#}
-    {% if is_granted('ROLE_TEACHER') %}
+
+    {% if (is_granted('ROLE_TEACHER') == true and  is_granted('ROLE_ADMIN') == false ) %}
         <h5>{% trans %}My groups{% endtrans %}</h5>
         {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsUserIsTeacher} only %}
     {% endif %}
 
-    {# not interesting for teachers#}
-    {% if is_granted('ROLE_TEACHER') == false %}
+    {# not interesting for teachers, only admins and supervisors#}
+    {% if is_granted('ROLE_SUPERVISOR') or is_granted('ROLE_ADMIN') %}
         {% if groupsToday|length %}
             <h5>{% trans %}Learning groups today{% endtrans %}</h5>
                 {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsToday} only %}

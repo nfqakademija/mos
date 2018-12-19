@@ -6,11 +6,8 @@
       <th scope="col">
         {% trans %}Address{% endtrans %}
       </th>
-      <th scope="col" class="s-hide">
-        {% trans %}Group period{% endtrans %}
-      </th>
       <th scope="col">
-        {% trans %}Schedule{% endtrans %}
+        {% trans %}Schedule time{% endtrans %}
       </th>
     </tr>
     </thead>
@@ -24,13 +21,10 @@
           </a>
         </td>
         <td class="s-hide">
-          {{ group.startDate|date('Y-m-d') }} <br> {{ group.endDate|date('Y-m-d') }}
-        </td>
-        <td class="s-hide">
           {% set timeSlots = group.timeSlots %}
           {% for timeSlot in timeSlots %}
             {% if timeSlot.date|date('Y-m-d') >= date('today')|date('Y-m-d') %}
-                  <strong>{{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}</strong>
+                  <strong>{{ timeSlot.date|date('m') }} mėn. {{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}</strong>
               {% else %}
                   {{ timeSlot.date|date('d') }} d. {{ timeSlot.startTime|date('H:i') }}
             {% endif %}
