@@ -7,7 +7,7 @@ set -e # Stop on error
 set -x # Show commands being executed
 
 # Downloading dependencies and building frontend
-APP_ENV=prod composer install --no-dev --no-scripts --no-interaction --optimize-autoloader
+APP_ENV=prod composer install --no-dev --no-scripts --no-interaction  --ignore-platform-reqs --optimize-autoloader
 #temporary install dev bundles to production (for fixtures...), also temporary added -ignore-platform-reqs for phpspreadsheet as Aurelijus suggested
 #composer install --no-interaction --optimize-autoloader --ignore-platform-reqs
 
