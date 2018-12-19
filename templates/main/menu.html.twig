@@ -7,7 +7,9 @@
             <ul class="left hide-on-med-and-down">
               <li class="{{ app.request.get('_route') == 'dashboard' ? 'active' }}">
                 <a href="{{ path('dashboard') }}">
-                  {% trans %}Dashboard{% endtrans %}
+                  <i class="material-icons home-icon">
+                      home
+                  </i>
                 </a>
               </li>
                 <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">
@@ -70,7 +72,9 @@
     {% if is_granted('ROLE_SUPERVISOR') %}
         <li class="{{ app.request.get('_route') == 'dashboard' ? 'active' }}">
             <a href="{{ path('dashboard') }}">
-              {% trans %}Dashboard{% endtrans %}
+                <i class="material-icons">
+                    home
+                </i>
             </a>
         </li>
         <li class="{{ app.request.get('_route') == 'group.viewlist' ? 'active' }}">

@@ -15,6 +15,19 @@
       padding: 0 50px;
     }
 
+    .login__button {
+      padding: 0 25px;
+
+      @media only screen and (max-width: 1200px) {
+        padding: 0 10px;
+        width: 60%;
+      }
+
+      @media only screen and (max-width: 700px) {
+        width: 65%;
+      }
+    }
+
     .form__print {
       @media only screen and (max-width: 601px) {
         padding: 0 10px;

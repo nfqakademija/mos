@@ -24,8 +24,8 @@ $primary-color: #1565C0;
   width: 50%;
   margin: 0 auto;
 
-  @media only screen and (max-width: 601px) {
-    width: 100%;
+  @media only screen and (max-width: 700px) {
+    width: 95%;
   }
 }
 
@@ -68,6 +68,11 @@ $primary-color: #1565C0;
   @media screen and (max-width: 993px) {
     display: none;
   }
+}
+
+nav i.material-icons.home-icon {
+  height: 64px;
+  line-height: 64px;
 }
 
 .center-element {
