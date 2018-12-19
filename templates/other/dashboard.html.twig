@@ -9,27 +9,29 @@
 
 {% block body %}
   <h2 class="page-title center-align">
-    {% trans %}
-      Dashboard
-    {% endtrans %}
   </h2>
   <div>
-    {#only for Teacher#}
-    {% if groupsUserIsTeacher|length %}
-      <h5>{% trans %}My groups{% endtrans %}</h5>
-      {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsUserIsTeacher} only %}
+    {#Teacher can see r#}
+
+    {% if (is_granted('ROLE_TEACHER') == true and  is_granted('ROLE_ADMIN') == false ) %}
+        <h5>{% trans %}My groups{% endtrans %}</h5>
+        {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsUserIsTeacher} only %}
     {% endif %}
-    {% if groupsToday|length %}
-        <h5>{% trans %}Learning groups today{% endtrans %}</h5>
-            {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsToday} only %}
-    {% endif %}
-    {% if groupsTomorrow|length %}
-        <h5>{% trans %}Learning groups tomorrow{% endtrans %}</h5>
-        {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsTomorrow} only %}
-    {% endif %}
-    {% if groupsIn7Days|length %}
-        <h5>{% trans %}Learning groups in 7 days{% endtrans %}</h5>
-        {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsIn7Days} only %}
+
+    {# not interesting for teachers, only admins and supervisors#}
+    {% if is_granted('ROLE_SUPERVISOR') or is_granted('ROLE_ADMIN') %}
+        {% if groupsToday|length %}
+            <h5>{% trans %}Learning groups today{% endtrans %}</h5>
+                {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsToday} only %}
+        {% endif %}
+        {% if groupsTomorrow|length %}
+            <h5>{% trans %}Learning groups tomorrow{% endtrans %}</h5>
+            {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsTomorrow} only %}
+        {% endif %}
+        {% if groupsIn7Days|length %}
+            <h5>{% trans %}Learning groups in 7 days{% endtrans %}</h5>
+            {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsIn7Days} only %}
+        {% endif %}
     {% endif %}
   </div>
 
