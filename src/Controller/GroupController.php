@@ -106,13 +106,17 @@ class GroupController extends AbstractController
     {
         $form = $this->createForm(EditGroupType::class, $group);
 
-        if ($groupFormHandler->handleEdit($form, $request)) {
+        $participants = $groupFormHandler->handleEdit($form, $request);
+
+        if ($participants !== null) {
             $this->addFlash(
                 'edit_group',
                 'Grupė buvo sėkmingai atnaujinta!'
             );
 
-            return $this->redirectToRoute('group.view', array('group' => $group->getId()));
+            return $participants->count() > 0 ? $this->render('group/participants.html.twig', [
+                'participants' => $participants->toArray()
+            ]) : $this->redirectToRoute('group.view', array('group' => $group->getId()));
         }
 
         return $this->render('group/edit.html.twig', [

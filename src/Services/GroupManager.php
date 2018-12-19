@@ -97,15 +97,21 @@ class GroupManager
     /**
      * @param ArrayCollection $originals
      * @param PersistentCollection $newItems
+     * @return ArrayCollection
      */
-    private function addNewParticipants(ArrayCollection $originals, PersistentCollection $newItems): void
+    private function addNewParticipants(ArrayCollection $originals, PersistentCollection $newItems): ArrayCollection
     {
+        $plainParticipants = new ArrayCollection();
+
         foreach ($newItems as $newItem) {
             if (false === $originals->contains($newItem)) {
+                $plainParticipants->add($newItem->getPlainUser());
                 $newItem->setPassword($this->encoder->encodePassword($newItem, $newItem->getPassword()));
                 $newItem->setRoles([User::ROLE_PARTICIPANT]);
             }
         }
+
+        return $plainParticipants;
     }
 
     /**
@@ -129,9 +135,9 @@ class GroupManager
     /**
      * @param FormInterface $form
      * @param Request $request
-     * @return bool
+     * @return ArrayCollection|null
      */
-    public function handleEdit(FormInterface $form, Request $request): bool
+    public function handleEdit(FormInterface $form, Request $request): ?ArrayCollection
     {
         $group = $form->getData();
         $participants = $group->getParticipants();
@@ -140,21 +146,21 @@ class GroupManager
         $originalParticipants = $this->setOriginals($participants);
         $originalTimeSlots = $this->setOriginals($timeSlots);
 
+        $plainParticipants = null;
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->removeDeletedItems($originalParticipants, $participants);
             $this->removeDeletedItems($originalTimeSlots, $timeSlots);
 
-            $this->addNewParticipants($originalParticipants, $participants);
+            $plainParticipants = $this->addNewParticipants($originalParticipants, $participants);
 
             $group->updateStartEndDates();
             $this->entityManager->persist($group);
             $this->entityManager->flush();
-
-            return true;
         }
 
-        return false;
+        return $plainParticipants;
     }
 }

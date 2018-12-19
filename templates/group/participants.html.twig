@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {% trans %}Group participants{% endtrans %}
+    {% trans %}New group participants{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -10,8 +10,13 @@
             {{ message }}
         </div>
     {% endfor %}
+    {% for message in app.flashes('edit_group') %}
+        <div class="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h2 class="page-title center-align">
-        {% trans %}Group participants{% endtrans %}
+        {% trans %}New group participants{% endtrans %}
     </h2>
     <div class="form">
         <div class="alert alert--danger">
