@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return $this->isGranted(User::ROLE_TEACHER) ? $this->redirectToRoute('dashboard')
+        return $this->isGranted(User::ROLE_SUPERVISOR) ? $this->redirectToRoute('dashboard')
             : $this->redirectToRoute('profile.view');
     }
 }
