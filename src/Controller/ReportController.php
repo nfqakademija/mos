@@ -47,22 +47,24 @@ class ReportController extends AbstractController
         $submitButton = $request->query->get('submit_button');
         if ($submitButton === 'export') {
             $response = $this->forward('App\Controller\ReportController::participantsReportToExcel', [
-              'dateFrom' => $dataFromRequest['dateFrom'],
-              'dateTo' => $dataFromRequest['dateTo'],
+                'dateFrom' => $dataFromRequest['dateFrom'],
+                'dateTo' => $dataFromRequest['dateTo'],
             ]);
         } else {
             $page = $helper->getPageFromRequest($request);
-            $query = $ur->getParticipantsByGroupPeriodQueryB($dataFromRequest['dateFrom'],
-              $dataFromRequest['dateTo']);
+            $query = $ur->getParticipantsByGroupPeriodQueryB(
+                $dataFromRequest['dateFrom'],
+                $dataFromRequest['dateTo']
+            );
             $pagination = $paginator->paginate($query, $page, 15);
-            
+
             $response = $this->render('report/participants.html.twig', [
-              'results' => $pagination,
-              'dateFrom' => $dataFromRequest['dateFrom'],
-              'dateTo' => $dataFromRequest['dateTo'],
+                'results' => $pagination,
+                'dateFrom' => $dataFromRequest['dateFrom'],
+                'dateTo' => $dataFromRequest['dateTo'],
             ]);
         }
-        
+
         return $response;
     }
 
@@ -131,7 +133,8 @@ class ReportController extends AbstractController
         } else {
             $page = $helper->getPageFromRequest($request);
 
-            $query = $ts->getTimeSlotsInPeriod($dataFromRequest['dateFrom'], $dataFromRequest['dateTo'], $dataFromRequest['regionIds']);
+            $query = $ts->getTimeSlotsInPeriod($dataFromRequest['dateFrom'], $dataFromRequest['dateTo'],
+                $dataFromRequest['regionIds']);
             $pagination = $paginator->paginate($query, $page, 20);
 
             $response = $this->render('report/schedule.html.twig', [

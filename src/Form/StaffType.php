@@ -17,11 +17,11 @@ class StaffType extends AbstractType
                 'data_class' => User::class,
             ))
             ->add('role', ChoiceType::class, array(
-                'choices'  => array(
+                'choices' => array(
                     'Teacher' => User::ROLE_TEACHER,
                     'Supervisor' => User::ROLE_SUPERVISOR
                 ),
-            ));;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

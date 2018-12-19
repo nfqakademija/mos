@@ -55,25 +55,27 @@ class TimeSlotRepository extends ServiceEntityRepository implements RepositoryIn
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getTimeSlotsInPeriodQueryB($dateFrom, $dateTo, array $regionIds, $orderBy = 'region.title', $orderType = 'ASC')
-    {
+    public function getTimeSlotsInPeriodQueryB(
+        $dateFrom,
+        $dateTo,
+        array $regionIds,
+        $orderBy = 'region.title',
+        $orderType = 'ASC'
+    ) {
         $queryBuilder = $this->createQueryBuilder('ts')
             ->andWhere('ts.date >= :dateFrom AND ts.date <= :dateTo')
             ->leftJoin('ts.learningGroup', 'gr')
             ->leftJoin('gr.region', 'region')
             ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
             ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
-            
-            ->addOrderBy($orderBy, $orderType)
-            ;
-        
+            ->addOrderBy($orderBy, $orderType);
+
         if (sizeof($regionIds)) {
             $queryBuilder
-              ->andWhere('region.id IN (:regionIds)') 
-              ->setParameter(':regionIds', $regionIds)
-            ;
+                ->andWhere('region.id IN (:regionIds)')
+                ->setParameter(':regionIds', $regionIds);
         }
-        
+
         return $queryBuilder;
     }
 }
