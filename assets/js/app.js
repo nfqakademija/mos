@@ -10,10 +10,7 @@ import filter from './filter';
 $(document).ready(function () {
   M.Sidenav.init($('.sidenav'));
   M.FormSelect.init($('select'));
-  M.Datepicker.init($('.datepicker'), {
-    format: 'yyyy-mm-dd',
-    ...pickerOptions
-  });
+  M.Datepicker.init($('.datepicker'), pickerOptions);
 
   initGroupForm();
   groupParticipants();

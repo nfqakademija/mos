@@ -89,7 +89,6 @@ const displayGraphs = data => {
 
 export default () => {
   const initialOptions = {
-    format: 'yyyy-mm-dd',
     defaultDate: new Date(),
     setDefaultDate: true,
     ...pickerOptions

@@ -36,10 +36,7 @@ const addTimeSlotButtonHandler = (e, addTimeSlotButton, timeSlotCollectionHolder
 
   e.preventDefault();
   addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
-  M.Datepicker.init($(that).parent().prev().find('.datepicker'), {
-    format: 'yyyy-mm-dd',
-    ...pickerOptions
-  });
+  M.Datepicker.init($(that).parent().prev().find('.datepicker'), pickerOptions);
   M.Timepicker.init($(that).parent().prev().find('.timepicker'), {
     twelveHour: false,
     ...pickerOptions
@@ -78,10 +75,7 @@ const addParticipant = (that, addParticipantButton, participantCollectionHolder)
 const addTimeSlot = (that, addTimeSlotButton, timeSlotCollectionHolder) => {
   if (!$(that).parents().eq(2).next().is('.time-slot')) {
     addItem(addTimeSlotButton, timeSlotCollectionHolder, 'time-slot');
-    M.Datepicker.init($(that).parents().eq(2).next().find('.datepicker'), {
-      format: 'yyyy-mm-dd',
-      ...pickerOptions
-    });
+    M.Datepicker.init($(that).parents().eq(2).next().find('.datepicker'), pickerOptions);
     M.Timepicker.init($(that).parents().eq(2).next().find('.timepicker'), {
       twelveHour: false,
       ...pickerOptions
@@ -233,10 +227,7 @@ export default () => {
   checkIfCollectionIsEmpty(timeSlotCollectionHolder);
 
   M.Tooltip.init($('.tooltipped'), {outDuration: 0});
-  M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), {
-    format: 'yyyy-mm-dd',
-    ...pickerOptions
-  });
+  M.Datepicker.init(timeSlotCollectionHolder.find('.datepicker'), pickerOptions);
   M.Timepicker.init(timeSlotCollectionHolder.find('.timepicker'), {
     twelveHour: false,
     ...pickerOptions

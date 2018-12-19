@@ -58,10 +58,7 @@ const toggleAdditionalSection = e => {
 
     if (count === 0) {
       M.FormSelect.init($(that).parents().eq(2).find('select'));
-      M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), {
-        format: 'yyyy-mm-dd',
-        ...pickerOptions
-      });
+      M.Datepicker.init($(that).parents().eq(2).find('.datepicker'), pickerOptions);
       $(that).data('count', ++count);
     }
   }

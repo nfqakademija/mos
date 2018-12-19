@@ -1,4 +1,5 @@
 export default {
+  format: 'yyyy-mm-dd',
   i18n: {
     cancel: 'Atšaukti',
     done: 'Gerai',
