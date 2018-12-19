@@ -28,11 +28,11 @@ class AppFixtures extends Fixture
 
         //#### config ####
         $groupsNumber = 10;
-        $teachersNumber = 10;
-        $monthFrom = 9;
+        $teachersNumber = 5;
+        $monthFrom = 12;
         $monthTo = 12;
         $maxParticipantsInGroup = 12;
-        $maxTimeslotsInGroup = 5;
+        $maxTimeslotsInGroup = 6;
 
         $livingAreaTypes = ['miestas', 'kaimas'];
         $genres = ['vyras', 'moteris'];
@@ -113,7 +113,7 @@ class AppFixtures extends Fixture
             //generate Group
             $group[$i] = new LearningGroup();
             $groupStreet = $streets[rand(0, sizeof($streets) - 1)];
-            $groupStreet .= ' ' . $i;
+            $groupStreet .= ' ' . ($i+1);
             $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects) - 1)];
             $regionTitle = $region->getTitle();
             if (strpos($regionTitle, 'raj')) {

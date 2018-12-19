@@ -3,7 +3,7 @@
         <div class="input-field filter__search col l6 s12">
             <i class="material-icons prefix">search</i>
             <label class="filter__search__label" for="search">
-                {% trans %}Search by name or surname{% endtrans %}
+                {% trans %}Search by surname{% endtrans %}
             </label>
             <input class="validate" id="search" value="{{ app.request.query.get('key') }}" type="search" name="key" autocomplete="off">
         </div>

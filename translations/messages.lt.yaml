@@ -50,7 +50,7 @@ Acceptable formats: Tinkami failų formatai
 There are no participants yet: Dalyvių kol kas dar nėra
 There are no time slots yet: Paskaitų laikų kol kas dar nėra
 Date: Data
-Start time: Pradžios laikas
+Start time: Pradžia
 Duration (minutes): Trukmė (minutės)
 Add: Pridėti
 Display: Rodyti ekrane
@@ -122,7 +122,7 @@ ROLE_SUPERVISOR: Tikrintojas
 ROLE_ADMIN: Administratorius
 ROLE_PARTICIPANT: Dalyvis
 My groups: Mano grupės
-Dashboard: Aktualu
+Dashboard: Pradžia
 Schedule: Tvarkaraštis
 Learning groups today: Šiandien vykstantys užsiėmimai
 Learning groups tomorrow: Rytdienos užsiėmimai
