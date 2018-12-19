@@ -7,9 +7,8 @@ set -e # Stop on error
 set -x # Show commands being executed
 
 # Downloading dependencies and building frontend
-#APP_ENV=prod composer install --no-dev --no-scripts --no-interaction  --ignore-platform-reqs --optimize-autoloader
-#temporary install dev bundles to production (for fixtures...), also temporary added -ignore-platform-reqs for phpspreadsheet as Aurelijus suggested
-APP_ENV=prod composer install --no-dev --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs
+#temporary added -ignore-platform-reqs for phpspreadsheet as Aurelijus suggested
+APP_ENV=prod composer install --no-dev --no-scripts --no-interaction --ignore-platform-reqs --optimize-autoloader
 
 yarn
 yarn run encore production
