@@ -24,9 +24,11 @@
                 Alert! Make sure you print or write down users with their passwords because later you wont be able to see them
             {% endtrans %}
         </div>
-        <a class="btn right blue lighten-1" href="{{ path('group.viewlist') }}">
-            {% trans %}Finish{% endtrans %}
-        </a>
+        <div class="clearfix">
+            <a class="btn right blue lighten-1" href="{{ path('group.viewlist') }}">
+                {% trans %}Finish{% endtrans %}
+            </a>
+        </div>
         <table class="responsive-table" id="form__table">
             <thead>
             <tr>

@@ -32,7 +32,7 @@
                     filter_list
                 </i>
                 <select class="sort">
-                    <option value="" disabled selected>{% trans %}Choose filter{% endtrans %}</option>
+                    <option value="" disabled selected>{% trans %}Choose sorting{% endtrans %}</option>
                     {{ knp_pagination_sortable(groups, 'By ID descending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'desc'}) }}
                     {{ knp_pagination_sortable(groups, 'By ID ascending'|trans({}, 'messages'), 'gr.id', {}, {'direction': 'asc'}) }}
                     {{ knp_pagination_sortable(groups, 'By start date descending'|trans({}, 'messages'), 'gr.startDate', {}, {'direction': 'desc'}) }}
@@ -48,7 +48,7 @@
         <table class="table highlight">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" class="s-hide">#</th>
                 <th scope="col">
                     {% trans %}Address{% endtrans %}
                 </th>
@@ -65,7 +65,7 @@
             </thead>
             {% for group in groups %}
                 <tr>
-                    <td scope="row">{{ group.id }}</td>
+                    <td scope="row" class="s-hide">{{ group.id }}</td>
                     <td>
                         <a href="{{ path('group.view', {'group': group.id}) }}">
                             {{ group.address }}, {{ group.region.title }}

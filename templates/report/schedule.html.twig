@@ -49,21 +49,21 @@
         {% if results|length %}
             <table class="highlight table">
                 <tr>
-                    <th>{% trans %}Region{% endtrans %}</th>
-                    <th>{% trans %}Address{% endtrans %}</th>
+                    <th>{% trans %}Group Id{% endtrans %}</th>
+                    <th class="s-hide">{% trans %}Region{% endtrans %}</th>
+                    <th class="s-hide">{% trans %}Address{% endtrans %}</th>
                     <th>{% trans %}Start{% endtrans %}</th>
                     <th class="s-hide">{% trans %}Duration{% endtrans %}</th>
                     <th class="s-hide">{% trans %}Participants count{% endtrans %}</th>
-                    <th class="s-hide">{% trans %}Group Id{% endtrans %}</th>
                 </tr>
                 {% for result in results %}
                     <tr>
-                        <td>{{ result.learningGroup.region.title }}</td>
-                        <td>{{ result.learningGroup.address }}</td>
+                        <td>{{ result.learningGroup.id }}</td>
+                        <td class="s-hide">{{ result.learningGroup.region.title }}</td>
+                        <td class="s-hide">{{ result.learningGroup.address }}</td>
                         <td>{{ result.date ? result.date|date('Y-m-d') }} {{ result.startTime ? result.startTime }}</td>
                         <td class="s-hide">{{ result.duration }}</td>
                         <td class="s-hide">{{ result.learningGroup.participants|length }}</td>
-                        <td class="s-hide">{{ result.learningGroup.id }}</td>
                     </tr>
                 {% endfor %}
             </table>

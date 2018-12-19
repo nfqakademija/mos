@@ -18,26 +18,44 @@
     {% from _self import validate, additionalValidation %}
     <div class="participant participant--active">
         <div class="row">
-            <div class="participant__button s2 m1 col push-s10 push-m11">
-                <i class="participant__button--remove material-icons">
-                    close
-                </i>
-            </div>
-            <div class="input-field col s12 pull-l1 l4">
-                {{ form_label(participant.user.name) }}
-                {{ validate(participant.user.name, 'participant__name') }}
-                {{ form_errors(participant.user.name) }}
-            </div>
-            <div class="input-field col s12 pull-l1 l5">
-                {{ form_label(participant.user.surname) }}
-                {{ validate(participant.user.surname, 'participant__surname') }}
-                {{ form_errors(participant.user.surname) }}
-            </div>
-            <div class="participant__button push-s2 pull-l1 s8 col l2">
-                <button class="participant__button--toggle-additional blue lighten-1 btn hoverable" type="button">
-                    Daugiau
-                </button>
-            </div>
+            {% if display == true %}
+                <div class="participant__button s2 m1 col push-s10 push-m11">
+                    <i class="participant__button--remove material-icons">
+                        close
+                    </i>
+                </div>
+                <div class="input-field col s12 pull-l1 l4">
+                    {{ form_label(participant.user.name) }}
+                    {{ validate(participant.user.name, 'participant__name') }}
+                    {{ form_errors(participant.user.name) }}
+                </div>
+                <div class="input-field col s12 pull-l1 l5">
+                    {{ form_label(participant.user.surname) }}
+                    {{ validate(participant.user.surname, 'participant__surname') }}
+                    {{ form_errors(participant.user.surname) }}
+                </div>
+                <div class="participant__button push-s2 pull-l1 s8 col l2">
+                    <button class="participant__button--toggle-additional blue lighten-1 btn hoverable" type="button">
+                        Daugiau
+                    </button>
+                </div>
+            {% else %}
+             <div class="input-field col s12 l4">
+                    {{ form_label(participant.user.name) }}
+                    {{ validate(participant.user.name, 'participant__name') }}
+                    {{ form_errors(participant.user.name) }}
+                </div>
+                <div class="input-field col s12 l5">
+                    {{ form_label(participant.user.surname) }}
+                    {{ validate(participant.user.surname, 'participant__surname') }}
+                    {{ form_errors(participant.user.surname) }}
+                </div>
+                <div class="participant__button s12 col l3">
+                    <button class="participant__button--toggle-additional blue lighten-1 btn hoverable" type="button">
+                        Daugiau
+                    </button>
+                </div>
+            {% endif %}
         </div>
         {{
             additionalValidation(participant.user.username, participant.user.password,
