@@ -13,6 +13,10 @@
     </th>
   </tr>
   </thead>
+  {% if groupsUserIsTeacher|length %}
+  {% if groups|length == %}
+    {% trans %}You have no groups yet{% endtrans %}
+  {% endif %}
   {% for group in groups %}
     <tr>
       <td scope="row">{{ group.id }}</td>
