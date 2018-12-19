@@ -76,4 +76,23 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
 
         return $result;
     }
+
+
+    /**
+     * Gets groups where user is teacher
+     * @return mixed
+     */
+    public function getGroupsWhereUserIsTeacher($teacher)
+    {
+        $query = $this->createQueryBuilder('gr')
+          ->leftJoin('gr.timeSlots', 'ts')
+          ->addSelect('ts')
+
+          ->Where('gr.teacher = :teacher')
+          ->setParameter(':teacher', $teacher)
+          ->getQuery();
+        $result = $query->execute();
+
+        return $result;
+    }
 }

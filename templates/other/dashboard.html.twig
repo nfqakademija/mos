@@ -8,11 +8,20 @@
 {% endblock %}
 
 {% block body %}
+
+
+  {% for gr in groupsToday %}
+    {% for ts in gr.timeslots %}
+      {% dump(ts) %}
+    {% endfor %}
+  {% endfor %}
+
+
+
+
   <h2 class="page-title center-align">
   </h2>
   <div>
-    {#Teacher can see r#}
-
     {% if (is_granted('ROLE_TEACHER') == true and  is_granted('ROLE_ADMIN') == false ) %}
         <h5>{% trans %}My groups{% endtrans %}</h5>
         {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsUserIsTeacher} only %}
