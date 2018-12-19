@@ -58,7 +58,7 @@
                         <td>{{ result.name }}</td>
                         <td>{{ result.surname }}</td>
                         <td class="l-hide">{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
-                        <td class="m-hide">{{ result.region.title ? result.region.title }}</td>
+                        <td class="m-hide">{{ result.region ? result.region.title }}</td>
                         <td class="m-hide">{{ result.address }}</td>
                         <td class="l-hide">{{ result.phone }}</td>
                         <td class="s-hide">{{ result.learningGroup.startDate ? result.learningGroup.startDate|date('Y-m-d') }}</td>
