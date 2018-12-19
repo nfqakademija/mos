@@ -106,7 +106,7 @@ class ScheduleReportManager extends ReportManager
         $sheet->getStyle('A1')->applyFromArray(['font' => ['bold' => true, 'size' => 24]]);
         $sheet->getRowDimension(1)->setRowHeight(30);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal('center');
-        $sheet->mergeCells('A1:L1');
+        $sheet->mergeCells('A1:F1');
 
         $sheet->setCellValue('A3', 'Projekto vykdytojas:');
         $sheet->setCellValue('B3', $reportHeaderTextOrganizer);
