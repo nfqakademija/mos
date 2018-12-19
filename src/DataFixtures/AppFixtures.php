@@ -143,9 +143,8 @@ class AppFixtures extends Fixture
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
                 $userParticipant
-                    ->setUsername($this->convertLtToLatin(
-                        $participantName . '.' . $participantSurname) . '.' . $unique . $i
-                    )
+                    ->setUsername($this->convertLtToLatin($participantName . '.' . $participantSurname)
+                        . '.' . $unique . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
                     ->setEmail($this->convertLtToLatin($participantSurname)
                         . '.' . $unique . $i . '@email.com')
