@@ -22,7 +22,7 @@
     </thead>
     {% for user in users %}
         <tr>
-            <th scope="row" class="s-hide">{{ user.id }}</th>
+            <td class="s-hide">{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.surname }}</td>
             {% if role == 'staff' %}

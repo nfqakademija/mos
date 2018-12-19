@@ -29,8 +29,10 @@ const handleSubmit = e => {
 
 export default () => {
   const filterHolder =  $('.filter');
+  const reportFilterHolder = $('.report-filter');
 
   filterHolder.submit(handleSubmit);
   $('.filter-toggle-button').on('click', () => filterHolder.slideToggle('fast'));
+  $('.report-filter-toggle-button').on('click', () => reportFilterHolder.slideToggle('fast'));
   $('.sort').on('change', e => window.location = e.currentTarget.value);
 };

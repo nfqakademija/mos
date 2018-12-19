@@ -8,7 +8,16 @@ $primary-color: #1565C0;
 
 .border-shadow {
   @include border;
-  padding: 25px;
+  padding: 15px 25px;
+  margin-bottom: 35px;
+
+  & > * {
+    margin-top: 0;
+  }
+
+  &.border-shadow--no-x-padding {
+    padding: 15px 0;
+  }
 }
 
 .small-container {
@@ -35,6 +44,12 @@ $primary-color: #1565C0;
 
 .btn--action {
   margin-bottom: 15px;
+}
+
+.l-hide {
+  @media screen and (max-width: 1200px) {
+    display: none;
+  }
 }
 
 .s-hide {

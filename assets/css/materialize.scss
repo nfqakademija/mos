@@ -29,6 +29,10 @@ input[type="radio"]:checked+span:after {
   border: 2px solid $primary-color;
 }
 
+.table th {
+  padding-top: 0;
+}
+
 .dropdown-content.select-dropdown {
   max-height: 300px;
 }
@@ -63,4 +67,12 @@ i.right {
 
 button:focus {
   background-color: $primary-color;
+}
+
+.table {
+  table-layout: fixed;
+
+  td {
+    word-wrap: break-word;
+  }
 }

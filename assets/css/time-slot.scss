@@ -1,7 +1,6 @@
 .time-slots {
-  @media screen and (max-width: 993px) {
-    margin-top: 15px;
-  }
+  margin-top: 15px;
+
   .time-slot {
     @media screen and (max-width: 993px) {
       @include border;

@@ -15,7 +15,7 @@
     <h2 class="page-title center-align">
         {% trans %}Profile{% endtrans %}
     </h2>
-    <div class="row">
+    <div class="row page-actions">
         {% if app.user is same as(user) %}
             <a class="btn--action btn blue darken-3" href="{{ path('profile.edit') }}">
                 {% trans %}Edit{% endtrans %}

@@ -7,38 +7,47 @@
     <h2 class="center-align">
         {% trans %}Schedule report{% endtrans %}
     </h2>
-    <form class="border-shadow" action={{ path('report.schedule') }}>
-        <div class="input-field">
-            <select multiple name="regionId[]">
-                <option value="" disabled>{% trans %}Choose a region{% endtrans %}</option>
-                {% for region in regions %}
-                    {% if region.id in selectedRegions %}
-                        <option selected value='{{ region.id }}'>{{ region.title }}</option>
-                    {% else %}
-                        <option value='{{ region.id }}'>{{ region.title }}</option>
-                    {% endif %}
+    <div class="page-actions">
+        <a class="btn--action btn blue darken-3 report-filter-toggle-button">
+            {% trans %}Filter{% endtrans %}
+        </a>
+        <form class="border-shadow report-filter" action={{ path('report.schedule') }}>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select multiple name="regionId[]">
+                        <option value="" disabled>{% trans %}Choose a region{% endtrans %}</option>
+                        {% for region in regions %}
+                            {% if region.id in selectedRegions %}
+                                <option selected value='{{ region.id }}'>{{ region.title }}</option>
+                            {% else %}
+                                <option value='{{ region.id }}'>{{ region.title }}</option>
+                            {% endif %}
 
-                {%  endfor %}
-            </select>
-        </div>
-        <div class="input-field">
-            <input type="text" class="datepicker" name="dateFrom" value={{ dateFrom|date('Y-m-d') }}>
-        </div>
-        <div class="input-field">
-            <input type="text" class="datepicker" name="dateTo" value={{ dateTo|date('Y-m-d') }}>
-        </div>
-        <div class="row">
-            <button class="btn blue darken-3 report__button" type="submit" name="submit_button">
-                {% trans %}Display{% endtrans %}
-            </button>
-            <button class="btn blue darken-3 report__button right s-float-none" type="submit" name="submit_button">
-                {% trans %}Export{% endtrans %}
-            </button>
-        </div>
-    </form>
+                        {%  endfor %}
+                    </select>
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" id="dateFrom" class="datepicker" autocomplete="off" name="dateFrom" value={{ dateFrom|date('Y-m-d') }}>
+                    <label for="dateFrom">{% trans %}Start{% endtrans %}</label>
+                </div>
+                <div class="input-field col s12">
+                    <input type="text" id="dateTo" class="datepicker" autocomplete="off" name="dateTo" value={{ dateTo|date('Y-m-d') }}>
+                    <label for="dateTo">{% trans %}End{% endtrans %}</label>
+                </div>
+                <div class="col s12">
+                    <button class="btn blue darken-3 report__button" type="submit" name="submit_button">
+                        {% trans %}Display{% endtrans %}
+                    </button>
+                    <button class="btn blue darken-3 report__button right s-float-none" type="submit" name="submit_button">
+                        {% trans %}Export{% endtrans %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h5 class="report__count">{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h5>
     <div class="border-shadow">
         {% if results|length %}
-            <h6>{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h6>
             <table class="highlight table">
                 <tr>
                     <th>{% trans %}Region{% endtrans %}</th>

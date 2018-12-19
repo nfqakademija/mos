@@ -18,18 +18,20 @@
     <h2 class="page-title center-align">
         {% trans %}Staff{% endtrans %}
     </h2>
-    <div class="clearfix">
-        <a class="btn--action btn blue darken-3 filter-toggle-button">
-            {% trans %}Filter{% endtrans %}
-        </a>
-        <a class="btn--action s-float-none btn right blue darken-3" href="{{ path('profile.add_staff') }}">
-            {% trans %}Add staff{% endtrans %}
-            <i class="material-icons left">
-                add
-            </i>
-        </a>
+    <div class="page-actions">
+        <div class="clearfix">
+            <a class="btn--action btn blue darken-3 filter-toggle-button">
+                {% trans %}Filter{% endtrans %}
+            </a>
+            <a class="btn--action s-float-none btn right blue darken-3" href="{{ path('profile.add_staff') }}">
+                {% trans %}Add staff{% endtrans %}
+                <i class="material-icons left">
+                    add
+                </i>
+            </a>
+        </div>
+        {% include 'profile/filters.html.twig' with {'search_path': 'profile.staff.search'} %}
     </div>
-    {% include 'profile/filters.html.twig' with {'search_path': 'profile.staff.search'} %}
     <div class="border-shadow">
         {% if users|length > 0 %}
             {% include 'profile/list.html.twig' with {'role': 'staff'} %}

@@ -9,53 +9,60 @@
     <h2 class="center-align">
         {% trans %}Participants report{% endtrans %}
     </h2>
-    <form class="border-shadow" action={{ path('report.participants') }}>
-        <div class="input-field">
-            <input type="text" class="datepicker" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }}>
-        </div>
-        <div class="input-field">
-            <input type="text" class="datepicker" name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }}>
-        </div>
-        <div class="row">
-            <button class="btn blue darken-3 report__button" type="submit" name="submit_button">
-                {% trans %}Display{% endtrans %}
-            </button>
-            <button class="btn blue darken-3 report__button right s-float-none" type="submit" name="submit_button">
-                {% trans %}Export{% endtrans %}
-            </button>
-        </div>
-    </form>
+    <div class="page-actions">
+        <a class="btn--action btn blue darken-3 report-filter-toggle-button">
+            {% trans %}Filter{% endtrans %}
+        </a>
+        <form class="border-shadow report-filter" action={{ path('report.participants') }}>
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field">
+                        <input type="text" id="dateFrom" class="datepicker" autocomplete="off" name="dateFrom" class="form-control" value={{ dateFrom|date('Y-m-d') }}>
+                        <label for="dateFrom">{% trans %}Start{% endtrans %}</label>
+                    </div>
+                </div>
+                <div class="col s12">
+                    <div class="input-field">
+                        <input type="text" id="dateTo" class="datepicker" autocomplete="off"  name="dateTo" class="form-control" value={{ dateTo|date('Y-m-d') }}>
+                        <label for="dateTo">{% trans %}End{% endtrans %}</label>
+                    </div>
+                </div>
+                <div class="col s12">
+                    <button class="btn blue darken-3 report__button" type="submit" name="submit_button">
+                        {% trans %}Display{% endtrans %}
+                    </button>
+                    <button class="btn blue darken-3 report__button right s-float-none" type="submit" name="submit_button">
+                        {% trans %}Export{% endtrans %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h5 class="report__count">{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h5>
     <div class="border-shadow">
         {% if results|length %}
-            <h6>{% trans %}Records{% endtrans %} : {{ results.totalItemCount }}</h6>
             <table>
                 <tr>
                     <th>{% trans %}Name{% endtrans %}</th>
                     <th>{% trans %}Surname{% endtrans %}</th>
-                    <th>{% trans %}Birth date{% endtrans %}</th>
-                    <th>{% trans %}Region/city{% endtrans %}</th>
-                    <th>{% trans %}Living area type{% endtrans %}</th>
-                    <th>{% trans %}Address{% endtrans %}</th>
-                    <th>{% trans %}Phone number{% endtrans %}</th>
-                    <th>{% trans %}Email{% endtrans %}</th>
-                    <th>{% trans %}Gender{% endtrans %}</th>
-                    <th>{% trans %}Course start date{% endtrans %}</th>
-                    <th>{% trans %}Course end date{% endtrans %}</th>
+                    <th class="l-hide">{% trans %}Birth date{% endtrans %}</th>
+                    <th class="m-hide">{% trans %}Region/city{% endtrans %}</th>
+                    <th class="m-hide">{% trans %}Address{% endtrans %}</th>
+                    <th class="l-hide">{% trans %}Phone number{% endtrans %}</th>
+                    <th class="s-hide">{% trans %}Course start date{% endtrans %}</th>
+                    <th class="s-hide">{% trans %}Course end date{% endtrans %}</th>
                     <th>{% trans %}Group Id{% endtrans %}</th>
                 </tr>
                 {% for result in results %}
                     <tr>
                         <td>{{ result.name }}</td>
                         <td>{{ result.surname }}</td>
-                        <td>{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
-                        <td>{{ result.region.title ? result.region.title }}</td>
-                        <td>{{ result.livingAreaType }}</td>
-                        <td>{{ result.address }}</td>
-                        <td>{{ result.phone }}</td>
-                        <td>{{ result.email }}</td>
-                        <td>{{ result.gender }}</td>
-                        <td>{{ result.learningGroup.startDate ? result.learningGroup.startDate|date('Y-m-d') }}</td>
-                        <td>{{ result.learningGroup.endDate ? result.learningGroup.endDate|date('Y-m-d') }}</td>
+                        <td class="l-hide">{{ result.birthDate ? result.birthDate|date('Y-m-d') }}</td>
+                        <td class="m-hide">{{ result.region.title ? result.region.title }}</td>
+                        <td class="m-hide">{{ result.address }}</td>
+                        <td class="l-hide">{{ result.phone }}</td>
+                        <td class="s-hide">{{ result.learningGroup.startDate ? result.learningGroup.startDate|date('Y-m-d') }}</td>
+                        <td class="s-hide">{{ result.learningGroup.endDate ? result.learningGroup.endDate|date('Y-m-d') }}</td>
                         <td>{{ result.learningGroup.id }}</td>
                     </tr>
                 {% endfor %}
