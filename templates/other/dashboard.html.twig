@@ -16,19 +16,19 @@
   <div>
     {#only for Teacher#}
     {% if groupsUserIsTeacher|length %}
-      <h3>{% trans %}My groups{% endtrans %}</h3>
+      <h5>{% trans %}My groups{% endtrans %}</h5>
       {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsUserIsTeacher} only %}
     {% endif %}
     {% if groupsToday|length %}
-        <h3>{% trans %}Learning groups today{% endtrans %}</h3>
+        <h5>{% trans %}Learning groups today{% endtrans %}</h5>
             {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsToday} only %}
     {% endif %}
     {% if groupsTomorrow|length %}
-        <h3>{% trans %}Learning groups tomorrow{% endtrans %}</h3>
+        <h5>{% trans %}Learning groups tomorrow{% endtrans %}</h5>
         {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsTomorrow} only %}
     {% endif %}
     {% if groupsIn7Days|length %}
-        <h3>{% trans %}Learning groups in 7 days{% endtrans %}</h3>
+        <h5>{% trans %}Learning groups in 7 days{% endtrans %}</h5>
         {% include 'group/group_table_with_schedule.html.twig' with { 'groups': groupsIn7Days} only %}
     {% endif %}
   </div>

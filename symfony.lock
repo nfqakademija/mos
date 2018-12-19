@@ -95,9 +95,6 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
     },
-    "markbaker/complex": {
-        "version": "1.4.7"
-    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -109,9 +106,6 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.2"
-    },
-    "phpoffice/phpspreadsheet": {
-        "version": "1.5.2"
     },
     "psr/cache": {
         "version": "1.0.1"

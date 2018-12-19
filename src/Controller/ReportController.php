@@ -94,9 +94,9 @@ class ReportController extends AbstractController
      * @param RegionRepository $regionRepository
      * @return Response
      */
-    public function statusReport(StatusReportManager $report, RegionRepository $regionRepository)
+    public function statusReport(StatusReportManager $report)
     {
-        $status = $report->getStatusReport($regionRepository);
+        $status = $report->getStatusReport();
 
         return $this->render('report/status.html.twig', [
             'status' => $status,

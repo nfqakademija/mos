@@ -34,6 +34,12 @@ class TimeSlot
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank(message="Įveskite laiką minutėmis")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 480,
+     *      minMessage = "Neigiami laikai neleidžiami.",
+     *      maxMessage = "Trukmė negali būti ilgesnė nei 480 min."
+     * )
      */
     private $duration;
 
