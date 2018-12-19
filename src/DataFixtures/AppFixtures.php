@@ -29,6 +29,8 @@ class AppFixtures extends Fixture
         //#### config ####
         $groupsNumber = 10;
         $teachersNumber = 10;
+        $monthFrom = 9;
+        $monthTo = 12;
         $maxParticipantsInGroup = 12;
         $maxTimeslotsInGroup = 5;
 
@@ -141,9 +143,9 @@ class AppFixtures extends Fixture
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
                 $userParticipant
-                    ->setUsername($participantName . '.' . $participantSurname . $unique . $i)
+                    ->setUsername($this->convertLtToLatin($participantName . '.' . $participantSurname) . '.' . $unique . $i)
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail( transliterator_transliterate('Any-Latin; Latin-ASCII;', $participantSurname) 
+                    ->setEmail( $this->convertLtToLatin($participantSurname) 
                       . '.' . $unique . $i . '@email.com')
                     ->setName($participantName)
                     ->setSurname($participantSurname)
@@ -159,7 +161,7 @@ class AppFixtures extends Fixture
                 $group[$i]->addParticipant($userParticipant);
             }
             $timeSlotsCount = rand(3, $maxTimeslotsInGroup);
-            $month = rand(11, 12);
+            $month = rand($monthFrom, $monthTo);
             for ($k = 0; $k < $timeSlotsCount; $k++) {
                 $timeSlot = new TimeSlot();
                 $timeSlot->setDate("2018-" . $month . '-' . rand(1, 29));
@@ -205,4 +207,11 @@ class AppFixtures extends Fixture
         }
         return $phoneNumber;
     }
+
+    private function convertLtToLatin($str) {
+            $a = array('Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž', 'ą', 'č', 'ę', 'ė', 'į', 'š', 'ų', 'ū', 'ž');
+            $b = array('A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z', 'a', 'c', 'e', 'e', 'i', 's', 'u', 'u', 'z');
+            return str_replace($a, $b, $str);
+    }
+
 }

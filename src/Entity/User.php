@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("username")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(indexes={@ORM\Index(name="user_name_idx", columns={"name"})})
+ * @ORM\Table(indexes={@ORM\Index(name="surname_idx", columns={"surname"})})
  */
 class User implements UserInterface
 {
