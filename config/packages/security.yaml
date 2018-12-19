@@ -58,4 +58,5 @@ security:
     - { path: ^/profile/participants/search, roles: ROLE_SUPERVISOR }
     - { path: ^/report, roles: ROLE_SUPERVISOR }
     - { path: ^/group, roles: ROLE_SUPERVISOR }
+    - { path: ^/dashboard, roles: ROLE_SUPERVISOR }
     - { path: ^/, roles: ROLE_USER }

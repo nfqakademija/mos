@@ -197,6 +197,10 @@ class ProfileController extends AbstractController
     {
         $form = $this->createForm(EditUserType::class, $user);
 
+        if ($user->getRole() !== User::ROLE_PARTICIPANT) {
+            $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+        }
+
         if ($manager->handleEdit($form, $request)) {
             $this->addFlash(
                 'edit_user',
