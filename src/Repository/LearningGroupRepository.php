@@ -32,6 +32,7 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
         $queryBuilder = $this->createQueryBuilder('gr')
             ->leftJoin('gr.region', 'region')
             ->addSelect('region')
+            ->addOrderBy('gr.startDate', 'DESC')
             ->addOrderBy($orderBy, $orderType);
 
         return $queryBuilder;
@@ -49,6 +50,7 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
             ->Where('gr.endDate >= :dateFrom AND gr.endDate <= :dateTo')
             ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
             ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+            ->addOrderBy('gr.startDate', 'DESC')
             ->getQuery();
         $result = $query->execute();
 
@@ -70,12 +72,12 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
           ->Where('ts.date >= :dateFrom AND ts.date <= :dateTo')
           ->setParameter(':dateFrom', $dateFrom->format('Y-m-d'))
           ->setParameter(':dateTo', $dateTo->format('Y-m-d'))
+          ->addOrderBy('gr.startDate', 'DESC')
           ->getQuery();
         $result = $query->execute();
 
         return $result;
     }
-
 
     /**
      * Gets groups where user is teacher
@@ -87,6 +89,7 @@ class LearningGroupRepository extends ServiceEntityRepository implements Reposit
           ->leftJoin('gr.timeSlots', 'ts')
           ->Where('gr.teacher = :teacher')
           ->setParameter(':teacher', $teacher)
+          ->addOrderBy('gr.startDate', 'DESC')
           ->getQuery();
         $result = $query->execute();
 
