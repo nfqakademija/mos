@@ -2115,5 +2115,4 @@ class DataSamples
             'Juknaičiai',
         ];
     }
-
 }

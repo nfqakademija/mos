@@ -44,7 +44,7 @@ class AppFixtures extends Fixture
         $femaleSurnames = $this->dataSamples->getFemaleSurnames();
         $streets = $this->dataSamples->getStreetNames();
         $villages = $this->dataSamples->getVillages();
-        
+
         //push all Regions to database
         $allRegionsObjects = [];
         $allRegionsData = $this->dataSamples->getAllRegionsData();
@@ -96,12 +96,12 @@ class AppFixtures extends Fixture
                 $name = $femaleNames[rand(0, sizeof($femaleNames) - 1)];
                 $surname = $femaleSurnames[rand(0, sizeof($femaleSurnames) - 1)];
             }
-            
+
             $userTeacher[$i] = new User();
             $userTeacher[$i]
                 ->setUsername('teacher' . $i)
                 ->setPassword($this->encoder->encodePassword($userTeacher[$i], 'labast' . $i))
-                ->setEmail($surname. $i . '@email.com')
+                ->setEmail($surname . $i . '@email.com')
                 ->setName($name)
                 ->setSurname($surname)
                 ->setRoles([User::ROLE_TEACHER]);
@@ -113,7 +113,7 @@ class AppFixtures extends Fixture
             //generate Group
             $group[$i] = new LearningGroup();
             $groupStreet = $streets[rand(0, sizeof($streets) - 1)];
-            $groupStreet .= ' ' . ($i+1);
+            $groupStreet .= ' ' . ($i + 1);
             $region = $allRegionsObjects[rand(0, sizeof($allRegionsObjects) - 1)];
             $regionTitle = $region->getTitle();
             if (strpos($regionTitle, 'raj')) {
@@ -143,10 +143,12 @@ class AppFixtures extends Fixture
                 $userParticipant = new User();
                 $unique = $this->randomString(3);
                 $userParticipant
-                    ->setUsername($this->convertLtToLatin($participantName . '.' . $participantSurname) . '.' . $unique . $i)
+                    ->setUsername($this->convertLtToLatin(
+                        $participantName . '.' . $participantSurname) . '.' . $unique . $i
+                    )
                     ->setPassword($this->encoder->encodePassword($userParticipant, rand(1000, 1100)))
-                    ->setEmail( $this->convertLtToLatin($participantSurname) 
-                      . '.' . $unique . $i . '@email.com')
+                    ->setEmail($this->convertLtToLatin($participantSurname)
+                        . '.' . $unique . $i . '@email.com')
                     ->setName($participantName)
                     ->setSurname($participantSurname)
                     ->setRegion($region)
@@ -174,7 +176,7 @@ class AppFixtures extends Fixture
             $group[$i]->updateStartEndDates();
             $manager->persist($group[$i]);
 
-            $consoleOutput->writeln('<info>' . 'Created ' . ($i+1) . ' of ' . $groupsNumber . ' groups </info>');
+            $consoleOutput->writeln('<info>' . 'Created ' . ($i + 1) . ' of ' . $groupsNumber . ' groups </info>');
         }
 
         $manager->flush();
@@ -208,10 +210,10 @@ class AppFixtures extends Fixture
         return $phoneNumber;
     }
 
-    private function convertLtToLatin($str) {
-            $a = array('Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž', 'ą', 'č', 'ę', 'ė', 'į', 'š', 'ų', 'ū', 'ž');
-            $b = array('A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z', 'a', 'c', 'e', 'e', 'i', 's', 'u', 'u', 'z');
-            return str_replace($a, $b, $str);
+    private function convertLtToLatin($str)
+    {
+        $a = array('Ą', 'Č', 'Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž', 'ą', 'č', 'ę', 'ė', 'į', 'š', 'ų', 'ū', 'ž');
+        $b = array('A', 'C', 'E', 'E', 'I', 'S', 'U', 'U', 'Z', 'a', 'c', 'e', 'e', 'i', 's', 'u', 'u', 'z');
+        return str_replace($a, $b, $str);
     }
-
 }

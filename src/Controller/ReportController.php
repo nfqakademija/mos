@@ -133,8 +133,11 @@ class ReportController extends AbstractController
         } else {
             $page = $helper->getPageFromRequest($request);
 
-            $query = $ts->getTimeSlotsInPeriod($dataFromRequest['dateFrom'], $dataFromRequest['dateTo'],
-                $dataFromRequest['regionIds']);
+            $query = $ts->getTimeSlotsInPeriod(
+                $dataFromRequest['dateFrom'],
+                $dataFromRequest['dateTo'],
+                $dataFromRequest['regionIds']
+            );
             $pagination = $paginator->paginate($query, $page, 20);
 
             $response = $this->render('report/schedule.html.twig', [
