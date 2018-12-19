@@ -32,12 +32,12 @@
         </div>
         {% include 'profile/filters.html.twig' with {'search_path': 'profile.staff.search'} %}
     </div>
-    <div class="border-shadow">
-        {% if users|length > 0 %}
-            {% include 'profile/list.html.twig' with {'role': 'staff'} %}
-        {% else %}
+    {% if users|length > 0 %}
+        {% include 'profile/list.html.twig' with {'role': 'staff'} %}
+    {% else %}
+        <div class="border-shadow">
             <h5>{% trans %}No staff found{% endtrans %}</h5>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
