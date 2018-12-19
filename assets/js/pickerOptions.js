@@ -1,4 +1,5 @@
 export default {
+  yearRange: 100,
   format: 'yyyy-mm-dd',
   i18n: {
     cancel: 'Atšaukti',
